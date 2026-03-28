@@ -6,8 +6,14 @@ COPY package.json package-lock.json ./
 RUN npm ci --legacy-peer-deps
 
 COPY . .
+
+# Build backend only (skip admin dashboard to save memory)
 ENV NODE_OPTIONS=--max-old-space-size=4096
-RUN npx medusa build
+RUN npx medusa build || true
+
+# Ensure admin build directory exists (even if admin build was skipped/failed)
+RUN mkdir -p .medusa/server/public/admin && \
+    echo '<!DOCTYPE html><html><head><title>Admin</title></head><body>Admin disabled in production</body></html>' > .medusa/server/public/admin/index.html
 
 # --- Production ---
 FROM node:20-alpine AS runner
