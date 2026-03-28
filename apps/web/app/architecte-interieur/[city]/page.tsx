@@ -5,6 +5,8 @@ import { CITIES, getCityBySlug, CITY_SLUGS } from "@/lib/cities";
 import { getArchitectsByCity } from "@/lib/architects";
 import ArchitectCard from "@/components/ArchitectCard";
 
+export const revalidate = 86400;
+
 type Props = { params: Promise<{ city: string }> };
 
 export async function generateStaticParams() {

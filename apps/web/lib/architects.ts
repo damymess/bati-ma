@@ -21,7 +21,53 @@ export type Architect = {
   premium: boolean;
 };
 
-export const ARCHITECTS: Architect[] = [
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL ?? "https://api.bati.ma";
+const API_KEY =
+  process.env.NEXT_PUBLIC_MEDUSA_KEY ??
+  "pk_e0d8fd70ab0cf7e115d76345ec382cf5304b2411c545a5cc3ef1fc1ceb86f75f";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function mapToFrontend(a: Record<string, any>, index: number): Architect {
+  return {
+    id: String(a.id ?? `api-${index}`),
+    name: String(a.name ?? ""),
+    city: (a.regions as string[])?.[0] ?? "",
+    specialties: ((a.specialties as string[]) ?? ["Résidentiel"]) as Specialty[],
+    experience: (a.years_experience as number) ?? 5,
+    rating: (a.rating as number) ?? 0,
+    reviewCount: (a.review_count as number) ?? 0,
+    description: String(a.description ?? ""),
+    phone: a.phone ? String(a.phone) : undefined,
+    premium: Boolean(a.premium),
+  };
+}
+
+export async function getArchitectsByCity(citySlug: string): Promise<Architect[]> {
+  try {
+    const res = await fetch(
+      `${API_BASE}/store/architects?regions[]=${citySlug}&limit=100`,
+      {
+        headers: { "x-publishable-api-key": API_KEY },
+        next: { revalidate: 86400 },
+      }
+    );
+    if (!res.ok) {
+      return FALLBACK_ARCHITECTS.filter((a) => a.city === citySlug);
+    }
+    const data = await res.json();
+    const list = (data.architects ?? data.items ?? []) as Record<string, unknown>[];
+    if (list.length === 0) {
+      return FALLBACK_ARCHITECTS.filter((a) => a.city === citySlug);
+    }
+    return list.map(mapToFrontend);
+  } catch {
+    return FALLBACK_ARCHITECTS.filter((a) => a.city === citySlug);
+  }
+}
+
+// Fallback statique si l'API est indisponible au build
+const FALLBACK_ARCHITECTS: Architect[] = [
   {
     id: "casa-001",
     name: "Studio Arc Casablanca",
@@ -59,18 +105,6 @@ export const ARCHITECTS: Architect[] = [
     premium: true,
   },
   {
-    id: "casa-004",
-    name: "Groupe Archiplanning",
-    city: "casablanca",
-    specialties: ["Urbanisme", "Commercial", "Industriel"],
-    experience: 22,
-    rating: 4.5,
-    reviewCount: 12,
-    description:
-      "Grand cabinet pluridisciplinaire intervenant sur les projets d'urbanisme, industriels et commerciaux d'envergure.",
-    premium: false,
-  },
-  {
     id: "marr-001",
     name: "Atelier Riad Design",
     city: "marrakech",
@@ -95,18 +129,6 @@ export const ARCHITECTS: Architect[] = [
     premium: true,
   },
   {
-    id: "marr-003",
-    name: "Cabinet Kettani Architecture",
-    city: "marrakech",
-    specialties: ["Commercial", "Hôtellerie", "Résidentiel"],
-    experience: 25,
-    rating: 4.8,
-    reviewCount: 61,
-    description:
-      "Cabinet référence à Marrakech avec une expertise de 25 ans. Hôtels de luxe, villas, et résidences touristiques haut de gamme.",
-    premium: false,
-  },
-  {
     id: "rabat-001",
     name: "Agence Urbanisme & Architecture Rabat",
     city: "rabat",
@@ -117,18 +139,6 @@ export const ARCHITECTS: Architect[] = [
     description:
       "Cabinet intégré alliant urbanisme et architecture. Spécialiste des projets institutionnels et des opérations de réhabilitation patrimoniale à Rabat.",
     premium: true,
-  },
-  {
-    id: "rabat-002",
-    name: "Studio Design Agdal",
-    city: "rabat",
-    specialties: ["Intérieur", "Résidentiel"],
-    experience: 8,
-    rating: 4.5,
-    reviewCount: 22,
-    description:
-      "Cabinet dédié à l'architecture d'intérieur et la décoration contemporaine. Appartements et villas dans le quartier Agdal et alentours.",
-    premium: false,
   },
   {
     id: "tanger-001",
@@ -167,7 +177,3 @@ export const ARCHITECTS: Architect[] = [
     premium: true,
   },
 ];
-
-export function getArchitectsByCity(citySlug: string): Architect[] {
-  return ARCHITECTS.filter((a) => a.city === citySlug);
-}
