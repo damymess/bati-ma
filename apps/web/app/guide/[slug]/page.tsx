@@ -976,6 +976,476 @@ function GuideArchitectureMaro() {
   );
 }
 
+function GuideCoutConstruction() {
+  const faq = [
+    {
+      q: "Quel est le prix moyen de construction d'une maison au Maroc en 2026 ?",
+      a: "Le prix moyen de construction varie entre 2 500 et 5 000 MAD/m² selon la région, les matériaux et le niveau de finition. À Casablanca et Rabat, comptez 3 500 à 4 500 MAD/m² pour une finition standard. Dans les villes secondaires (Oujda, Nador, El Jadida), les coûts sont 15 à 25 % moins élevés. Pour une villa de 200 m² avec finitions moyennes à Marrakech, prévoyez un budget total de 700 000 à 900 000 MAD hors terrain.",
+    },
+    {
+      q: "Les honoraires de l'architecte sont-ils inclus dans le coût de construction ?",
+      a: "Non, les honoraires de l'architecte sont en sus du coût de construction. Ils représentent généralement 8 à 15 % du montant des travaux TTC pour une mission complète (conception + permis + suivi de chantier). Pour une maison de 200 m² à 800 000 MAD de travaux, comptez 64 000 à 120 000 MAD d'honoraires architecte.",
+    },
+    {
+      q: "Quels sont les frais annexes à prévoir en plus du coût de construction ?",
+      a: "Aux coûts de construction, ajoutez : les honoraires de l'architecte (8-15 % des travaux), les études de structure/béton armé (bureau d'études, 1-2 % des travaux), les frais de dossier permis de construire (0,5-2 % du coût estimé), les raccordements réseaux (eau, électricité, assainissement : 20 000 à 60 000 MAD), la taxe de premier établissement et les frais notariaux si achat de terrain. Prévoyez en tout 20 à 25 % au-dessus du coût brut de construction.",
+    },
+  ];
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <div className="prose-content">
+        <h2>1. Prix de construction au m² par ville en 2026</h2>
+        <p>
+          Le coût de construction d&apos;une maison au Maroc dépend principalement
+          de la localisation, du niveau de finition et du type de structure.
+          Voici les fourchettes constatées en 2026 :
+        </p>
+        <div className="overflow-x-auto my-4">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="bg-stone-100">
+                <th className="text-left px-3 py-2 border border-stone-200 font-medium">Ville</th>
+                <th className="text-left px-3 py-2 border border-stone-200 font-medium">Finition économique</th>
+                <th className="text-left px-3 py-2 border border-stone-200 font-medium">Finition standard</th>
+                <th className="text-left px-3 py-2 border border-stone-200 font-medium">Finition haut de gamme</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ["Casablanca", "2 800 MAD/m²", "3 500 – 4 500 MAD/m²", "5 000 – 7 000 MAD/m²"],
+                ["Rabat", "2 700 MAD/m²", "3 200 – 4 200 MAD/m²", "4 800 – 6 500 MAD/m²"],
+                ["Marrakech", "2 600 MAD/m²", "3 000 – 4 000 MAD/m²", "4 500 – 7 500 MAD/m²"],
+                ["Tanger", "2 500 MAD/m²", "3 000 – 4 000 MAD/m²", "4 500 – 6 500 MAD/m²"],
+                ["Agadir", "2 400 MAD/m²", "2 800 – 3 800 MAD/m²", "4 000 – 6 000 MAD/m²"],
+                ["Fès / Meknès", "2 200 MAD/m²", "2 500 – 3 500 MAD/m²", "4 000 – 5 500 MAD/m²"],
+                ["Oujda / Nador", "2 000 MAD/m²", "2 300 – 3 000 MAD/m²", "3 500 – 5 000 MAD/m²"],
+                ["El Jadida / Kénitra", "2 200 MAD/m²", "2 500 – 3 400 MAD/m²", "3 800 – 5 500 MAD/m²"],
+              ].map(([ville, eco, std, haut]) => (
+                <tr key={ville} className="hover:bg-stone-50">
+                  <td className="px-3 py-2 border border-stone-200 font-medium">{ville}</td>
+                  <td className="px-3 py-2 border border-stone-200 text-stone-500">{eco}</td>
+                  <td className="px-3 py-2 border border-stone-200">{std}</td>
+                  <td className="px-3 py-2 border border-stone-200 text-[#b5522a] font-medium">{haut}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <h2>2. Budget global par type de maison</h2>
+        <div className="overflow-x-auto my-4">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="bg-stone-100">
+                <th className="text-left px-3 py-2 border border-stone-200 font-medium">Type de projet</th>
+                <th className="text-left px-3 py-2 border border-stone-200 font-medium">Surface</th>
+                <th className="text-left px-3 py-2 border border-stone-200 font-medium">Budget estimatif (Casablanca)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ["Maison simple R+0", "80 – 120 m²", "224 000 – 540 000 MAD"],
+                ["Villa R+1 standard", "150 – 200 m²", "525 000 – 900 000 MAD"],
+                ["Villa R+2 confort", "250 – 350 m²", "875 000 – 1 575 000 MAD"],
+                ["Villa haut de gamme", "400 – 600 m²", "2 000 000 – 4 200 000 MAD"],
+                ["Riad rénové (Marrakech)", "200 – 400 m²", "700 000 – 3 000 000 MAD"],
+              ].map(([type, surface, budget]) => (
+                <tr key={type} className="hover:bg-stone-50">
+                  <td className="px-3 py-2 border border-stone-200 font-medium">{type}</td>
+                  <td className="px-3 py-2 border border-stone-200">{surface}</td>
+                  <td className="px-3 py-2 border border-stone-200 text-[#b5522a]">{budget}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <h2>3. Principaux postes de coût</h2>
+        <ul>
+          <li><strong>Gros œuvre (fondations, structure, maçonnerie)</strong> : 40 à 50 % du budget total</li>
+          <li><strong>Second œuvre (toiture, menuiseries, isolation)</strong> : 20 à 25 %</li>
+          <li><strong>Lots techniques (électricité, plomberie, climatisation)</strong> : 15 à 20 %</li>
+          <li><strong>Finitions (carrelage, peinture, sanitaires, cuisine)</strong> : 15 à 20 %</li>
+          <li><strong>Aménagements extérieurs (piscine, jardin, clôture)</strong> : 5 à 15 % en sus</li>
+        </ul>
+
+        <h2>4. Facteurs qui font varier le prix</h2>
+        <ul>
+          <li><strong>Type de sol</strong> : un terrain argileux ou rocheux nécessite des fondations spéciales (+10 à 30 % du gros œuvre)</li>
+          <li><strong>Nombre de niveaux</strong> : chaque niveau supplémentaire coûte moins cher que le précédent (les fondations étant amorties)</li>
+          <li><strong>Artisanat marocain</strong> : zellige, tadelakt, plâtre sculpté, cèdre — ajouter 10 à 40 % aux finitions standard</li>
+          <li><strong>Piscine</strong> : comptez 80 000 à 250 000 MAD selon la taille et le traitement de l&apos;eau</li>
+          <li><strong>Accès chantier</strong> : en médina ou en zone difficile, la logistique peut augmenter les coûts de 10 à 15 %</li>
+        </ul>
+
+        <h2>5. Frais annexes à ne pas oublier</h2>
+        <ul>
+          <li>Honoraires architecte : 8 – 15 % des travaux</li>
+          <li>Bureau d&apos;études structure : 1 – 2 % des travaux</li>
+          <li>Permis de construire (frais communaux) : 0,5 – 2 %</li>
+          <li>Raccordements eau / électricité / assainissement : 20 000 – 60 000 MAD</li>
+          <li>Taxes et assurances : 1 – 3 %</li>
+          <li><strong>Prévoyez une réserve de 10 à 15 %</strong> pour les imprévus de chantier</li>
+        </ul>
+
+        <div className="bg-[#f4ece7] border border-[#b5522a]/20 rounded-xl p-5 my-6">
+          <p className="font-semibold text-stone-900 mb-1">💡 Le conseil Bati.ma</p>
+          <p className="text-sm text-stone-600">
+            Avant de budgéter votre projet, faites appel à un architecte pour une
+            estimation précise. Sur Bati.ma, trouvez un architecte dans votre
+            ville et demandez un premier devis gratuit — sans engagement.
+          </p>
+        </div>
+      </div>
+
+      <section className="mt-10">
+        <h2 className="text-xl font-bold text-stone-900 mb-5">Questions fréquentes</h2>
+        <div className="space-y-4">
+          {faq.map((f) => (
+            <details key={f.q} className="group border border-stone-200 rounded-lg overflow-hidden">
+              <summary className="flex items-center justify-between px-4 py-3 cursor-pointer text-sm font-medium text-stone-800 hover:bg-stone-50">
+                {f.q}
+                <span className="text-stone-400 group-open:rotate-180 transition-transform">↓</span>
+              </summary>
+              <div className="px-4 pb-4 pt-1 text-sm text-stone-600 leading-relaxed">{f.a}</div>
+            </details>
+          ))}
+        </div>
+      </section>
+    </>
+  );
+}
+
+function GuideMaisonModerne() {
+  const faq = [
+    {
+      q: "Qu'est-ce qu'une maison marocaine moderne ?",
+      a: "Une maison marocaine moderne est une construction qui fusionne les codes architecturaux traditionnels du Maroc (patio central, zellige, moucharabieh, tadelakt, arcs) avec les exigences contemporaines : grandes baies vitrées, espaces ouverts, domotique, isolation thermique et esthétique minimaliste. Elle réinterprète le patrimoine plutôt qu'elle ne le copie.",
+    },
+    {
+      q: "Combien coûte une maison marocaine moderne par rapport à une construction classique ?",
+      a: "Une maison marocaine moderne avec artisanat traditionnel coûte généralement 20 à 40 % plus cher qu'une construction standard, à cause du zellige, du tadelakt, du plâtre sculpté et du bois de cèdre. Comptez 4 000 à 7 000 MAD/m² pour des finitions néo-marocaines de qualité, contre 2 500 à 4 500 MAD/m² pour une construction classique.",
+    },
+    {
+      q: "Faut-il un architecte spécialisé pour une maison marocaine moderne ?",
+      a: "Oui, il est vivement recommandé de faire appel à un architecte ayant une expérience en architecture néo-marocaine. Ce type de projet nécessite une connaissance fine des artisans (zelligeurs, gypsiers, charpentiers cèdre), des matériaux traditionnels et des techniques constructives spécifiques. Sur Bati.ma, filtrez les architectes par spécialité pour trouver les experts.",
+    },
+  ];
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <div className="prose-content">
+        <h2>1. Qu&apos;est-ce qu&apos;une maison marocaine moderne ?</h2>
+        <p>
+          La <strong>maison marocaine moderne</strong> est une réinterprétation
+          contemporaine de l&apos;habitat traditionnel marocain. Elle conserve les
+          principes fondamentaux de l&apos;architecture locale — orientation vers
+          l&apos;intérieur, patio comme cœur de vie, richesse ornementale — tout en
+          intégrant les standards actuels : grandes surfaces vitrées, open
+          space, domotique et isolation thermique performante.
+        </p>
+        <p>
+          Ce style est en forte croissance au Maroc, particulièrement à
+          Marrakech, Rabat et dans les nouvelles zones résidentielles de
+          Casablanca, où les propriétaires souhaitent affirmer leur identité
+          culturelle tout en vivant dans un espace contemporain.
+        </p>
+
+        <h2>2. Les éléments clés de la maison marocaine moderne</h2>
+        <ul>
+          <li>
+            <strong>Patio contemporain</strong> : toujours présent mais réinterprété — verrière zénithale, patio couvert avec verrière coulissante, jardin intérieur avec éclairage LED. Parfois transformé en salon ouvert sur le ciel.
+          </li>
+          <li>
+            <strong>Zellige sélectif</strong> : utilisé en aplats géométriques sur les murs, les bassins ou les façades, plutôt qu&apos;en revêtement intégral. Contraste fort/blanc ou monochrome.
+          </li>
+          <li>
+            <strong>Moucharabieh réinterprété</strong> : claustra en béton, aluminium découpé laser ou bois composite reprenant les motifs géométriques islamiques. Permet d&apos;animer les façades et de filtrer la lumière.
+          </li>
+          <li>
+            <strong>Tadelakt dans les pièces d&apos;eau</strong> : enduit à la chaux poli, imperméable, dans les salles de bain et hammam privatif. Décliné en couleurs douces (blanc cassé, beige, miel).
+          </li>
+          <li>
+            <strong>Grandes baies vitrées</strong> : ouvertures généreuses vers le jardin ou le patio, avec une continuité intérieur-extérieur. Souvent orientées sud ou est pour optimiser l&apos;ensoleillement hivernal.
+          </li>
+          <li>
+            <strong>Toiture terrasse habitable</strong> : prolongement naturel de l&apos;espace de vie, avec pergola, jacuzzi ou lounge extérieur. Vue panoramique sur la ville ou la nature.
+          </li>
+        </ul>
+
+        <h2>3. Les styles de maison marocaine moderne</h2>
+        <ul>
+          <li>
+            <strong>Néo-marocain classique</strong> : patio central avec fontaine, colonnes, arcs, zellige abondant. Matériaux nobles (marbre, onyx, cèdre). Style palatial adapté à l&apos;habitation.
+          </li>
+          <li>
+            <strong>Minimaliste marocain</strong> : lignes droites, volumes épurés, palette de couleurs neutres (blanc, sable, anthracite), touches de zellige ou moucharabieh en élément ponctuel. Le plus répandu dans les nouvelles constructions.
+          </li>
+          <li>
+            <strong>Riad contemporain</strong> : structure de riad (patio + étages en galerie) avec intérieur entièrement modernisé. Très populaire pour les projets touristiques et les résidences secondaires à Marrakech.
+          </li>
+          <li>
+            <strong>Fusion méditerranéenne</strong> : influences marocaines et méditerranéennes mélangées. Enduits ocre ou blancs, pergolas en bois, jardins luxuriants, piscine. Dominant à Agadir et sur la côte atlantique.
+          </li>
+        </ul>
+
+        <h2>4. Les matériaux incontournables</h2>
+        <div className="overflow-x-auto my-4">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="bg-stone-100">
+                <th className="text-left px-3 py-2 border border-stone-200 font-medium">Matériau</th>
+                <th className="text-left px-3 py-2 border border-stone-200 font-medium">Usage typique</th>
+                <th className="text-left px-3 py-2 border border-stone-200 font-medium">Prix indicatif</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ["Zellige artisanal", "Bassins, murs, façades, cuisines", "800 – 1 500 MAD/m²"],
+                ["Tadelakt", "Salles de bain, hammam, patio", "400 – 900 MAD/m²"],
+                ["Marbre de Carrare", "Sols, colonnes, escaliers", "600 – 1 800 MAD/m²"],
+                ["Bois de cèdre sculpté", "Plafonds, portes, moucharabieh", "Sur devis (artisan)"],
+                ["Béton architectonique", "Façades, claustra, escalier", "300 – 700 MAD/m²"],
+                ["Pierre naturelle marocaine", "Revêtements extérieurs, piscine", "400 – 1 000 MAD/m²"],
+              ].map(([mat, usage, prix]) => (
+                <tr key={mat} className="hover:bg-stone-50">
+                  <td className="px-3 py-2 border border-stone-200 font-medium">{mat}</td>
+                  <td className="px-3 py-2 border border-stone-200">{usage}</td>
+                  <td className="px-3 py-2 border border-stone-200 text-[#b5522a]">{prix}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <h2>5. Travailler avec un architecte pour votre projet</h2>
+        <p>
+          La réussite d&apos;une maison marocaine moderne repose sur le choix
+          d&apos;un architecte qui maîtrise à la fois les techniques
+          contemporaines et les savoir-faire artisanaux locaux. Il doit
+          être capable de :
+        </p>
+        <ul>
+          <li>Concevoir un programme fonctionnel intégrant patio, hammam, salons marocain/européen</li>
+          <li>Sélectionner et coordonner les artisans (maâlems zelligeurs, gypsiers, charpentiers)</li>
+          <li>Optimiser le confort thermique naturel (orientation, masses thermiques, ventilation par le patio)</li>
+          <li>Respecter les règles d&apos;urbanisme locales tout en maximisant la surface habitable</li>
+        </ul>
+
+        <div className="bg-[#f4ece7] border border-[#b5522a]/20 rounded-xl p-5 my-6">
+          <p className="font-semibold text-stone-900 mb-1">💡 Le conseil Bati.ma</p>
+          <p className="text-sm text-stone-600">
+            Consultez les portfolios des architectes sur Bati.ma et filtrez
+            par spécialité &quot;Architecture néo-marocaine&quot; pour trouver les
+            professionnels qui ont déjà réalisé des maisons marocaines modernes
+            dans votre ville.
+          </p>
+        </div>
+      </div>
+
+      <section className="mt-10">
+        <h2 className="text-xl font-bold text-stone-900 mb-5">Questions fréquentes</h2>
+        <div className="space-y-4">
+          {faq.map((f) => (
+            <details key={f.q} className="group border border-stone-200 rounded-lg overflow-hidden">
+              <summary className="flex items-center justify-between px-4 py-3 cursor-pointer text-sm font-medium text-stone-800 hover:bg-stone-50">
+                {f.q}
+                <span className="text-stone-400 group-open:rotate-180 transition-transform">↓</span>
+              </summary>
+              <div className="px-4 pb-4 pt-1 text-sm text-stone-600 leading-relaxed">{f.a}</div>
+            </details>
+          ))}
+        </div>
+      </section>
+    </>
+  );
+}
+
+function GuidePlanVillaPdf() {
+  const faq = [
+    {
+      q: "Peut-on télécharger des plans de villa gratuitement au Maroc ?",
+      a: "Il existe des sites qui proposent des plans de villa génériques en PDF, mais ces plans ne sont PAS utilisables directement pour obtenir un permis de construire au Maroc. La loi 16-89 exige que le dossier de permis soit établi et signé par un architecte agréé. Un plan téléchargé peut servir d'inspiration pour votre projet, mais ne remplace pas les plans réglementaires établis par un professionnel.",
+    },
+    {
+      q: "Quels formats de plans l'architecte livre-t-il ?",
+      a: "Un architecte marocain livre généralement les plans en format PDF (pour la lecture et l'impression), en DWG/DXF (format AutoCAD pour les entreprises de construction), et parfois en format 3D (SketchUp, Revit) pour les visualisations. Pour le dossier de permis, les plans sont imprimés sur papier A1 ou A0 et signés à la main par l'architecte.",
+    },
+    {
+      q: "Combien de plans différents contient un dossier de villa complet ?",
+      a: "Un dossier architectural complet pour une villa comprend en général : 1 plan de situation, 1 plan de masse, 2 à 4 plans de niveaux (RDC, R+1, etc.), 2 coupes (longitudinale et transversale), 4 façades, et les plans des réseaux (eau, électricité, assainissement). Pour les plans d'exécution détaillés, ajoutez les plans béton armé établis par le bureau d'études structure.",
+    },
+  ];
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <div className="prose-content">
+        <h2>1. Plans architecturaux vs plans d&apos;exécution : quelle différence ?</h2>
+        <p>
+          Il existe deux grandes catégories de plans pour une villa au Maroc,
+          qui répondent à des usages distincts :
+        </p>
+        <ul>
+          <li>
+            <strong>Plans architecturaux</strong> (établis par l&apos;architecte) :
+            définissent la conception, l&apos;organisation des espaces, les
+            dimensions et l&apos;aspect visuel du projet. Ce sont ces plans qui
+            constituent le dossier de permis de construire.
+          </li>
+          <li>
+            <strong>Plans d&apos;exécution</strong> (établis par le bureau d&apos;études
+            structure) : précisent les dimensions des éléments porteurs
+            (poteaux, poutres, dalles, fondations) et les armatures en béton.
+            Indispensables pour les entreprises de construction.
+          </li>
+        </ul>
+
+        <h2>2. Ce que livre l&apos;architecte pour votre villa</h2>
+        <div className="overflow-x-auto my-4">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="bg-stone-100">
+                <th className="text-left px-3 py-2 border border-stone-200 font-medium">Document</th>
+                <th className="text-left px-3 py-2 border border-stone-200 font-medium">Échelle</th>
+                <th className="text-left px-3 py-2 border border-stone-200 font-medium">Usage</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ["Plan de situation", "1/2 000 ou 1/5 000", "Localisation du terrain dans la commune"],
+                ["Plan de masse", "1/200 ou 1/500", "Implantation sur le terrain, reculs, accès"],
+                ["Plans de niveaux (RDC, R+1...)", "1/50 ou 1/100", "Organisation des espaces, cotes"],
+                ["Coupes transversale et longitudinale", "1/50 ou 1/100", "Hauteurs, niveaux, terrasses"],
+                ["4 façades (N, S, E, O)", "1/50 ou 1/100", "Aspect extérieur, ouvertures, matériaux"],
+                ["Notice descriptive", "—", "Matériaux, finitions, systèmes techniques"],
+                ["Plans des réseaux", "1/100", "Électricité, plomberie, assainissement"],
+              ].map(([doc, echelle, usage]) => (
+                <tr key={doc} className="hover:bg-stone-50">
+                  <td className="px-3 py-2 border border-stone-200 font-medium">{doc}</td>
+                  <td className="px-3 py-2 border border-stone-200 text-stone-500">{echelle}</td>
+                  <td className="px-3 py-2 border border-stone-200">{usage}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <h2>3. Formats de fichiers et supports</h2>
+        <ul>
+          <li><strong>PDF</strong> : pour la lecture, la communication avec le client et l&apos;impression du dossier de permis. C&apos;est le format de référence pour les échanges avec la commune.</li>
+          <li><strong>DWG / DXF</strong> : format AutoCAD utilisé par les bureaux d&apos;études et les entreprises de construction pour les plans d&apos;exécution.</li>
+          <li><strong>SKP (SketchUp)</strong> : pour les vues 3D et les rendus de présentation au client.</li>
+          <li><strong>Plans papier signés</strong> : obligatoires pour le dossier de permis de construire (format A1 ou A0, signature et cachet de l&apos;architecte).</li>
+        </ul>
+
+        <h2>4. Comment obtenir les plans de votre villa</h2>
+        <ul>
+          <li>
+            <strong>Étape 1 — Briefing architecte</strong> : réunion initiale pour définir vos besoins (surface, nombre de chambres, budget, style), le terrain et les contraintes d&apos;urbanisme.
+          </li>
+          <li>
+            <strong>Étape 2 — Esquisse (ESQ)</strong> : l&apos;architecte produit 1 à 3 propositions de plan masse et d&apos;organisation générale. Vous choisissez et ajustez.
+          </li>
+          <li>
+            <strong>Étape 3 — Avant-Projet Définitif (APD)</strong> : plans définitifs à l&apos;échelle, façades, coupes. C&apos;est la version qui sera soumise au permis.
+          </li>
+          <li>
+            <strong>Étape 4 — Dépôt du permis</strong> : l&apos;architecte constitue le dossier, l&apos;imprime, le signe et le dépose en mairie.
+          </li>
+          <li>
+            <strong>Étape 5 — Plans d&apos;exécution</strong> : après obtention du permis, l&apos;architecte complète les plans de détail et coordonne avec le bureau d&apos;études structure.
+          </li>
+        </ul>
+
+        <h2>5. Plans de villa en ligne : utiles mais insuffisants</h2>
+        <p>
+          De nombreux sites proposent des plans de villa en PDF à télécharger.
+          Ces plans peuvent être utiles pour :
+        </p>
+        <ul>
+          <li>S&apos;inspirer et définir vos préférences stylistiques</li>
+          <li>Comprendre les configurations possibles (nombre de pièces, circulations)</li>
+          <li>Estimer approximativement les surfaces dont vous avez besoin</li>
+        </ul>
+        <p>
+          <strong>En revanche, ils ne peuvent PAS</strong> être utilisés
+          directement pour un permis de construire au Maroc, car ils ne
+          correspondent pas à votre terrain, ne respectent pas forcément le
+          plan d&apos;aménagement local, et ne sont pas signés par un architecte agréé.
+        </p>
+
+        <div className="bg-[#f4ece7] border border-[#b5522a]/20 rounded-xl p-5 my-6">
+          <p className="font-semibold text-stone-900 mb-1">💡 Le conseil Bati.ma</p>
+          <p className="text-sm text-stone-600">
+            Apportez vos inspirations de plans à votre premier rendez-vous
+            avec un architecte. Sur Bati.ma, trouvez un architecte spécialisé
+            en villas dans votre ville, consultez son portfolio et demandez
+            un devis gratuit.
+          </p>
+        </div>
+      </div>
+
+      <section className="mt-10">
+        <h2 className="text-xl font-bold text-stone-900 mb-5">Questions fréquentes</h2>
+        <div className="space-y-4">
+          {faq.map((f) => (
+            <details key={f.q} className="group border border-stone-200 rounded-lg overflow-hidden">
+              <summary className="flex items-center justify-between px-4 py-3 cursor-pointer text-sm font-medium text-stone-800 hover:bg-stone-50">
+                {f.q}
+                <span className="text-stone-400 group-open:rotate-180 transition-transform">↓</span>
+              </summary>
+              <div className="px-4 pb-4 pt-1 text-sm text-stone-600 leading-relaxed">{f.a}</div>
+            </details>
+          ))}
+        </div>
+      </section>
+    </>
+  );
+}
+
 const GUIDE_CONTENT: Record<string, React.FC> = {
   "comment-choisir-architecte-maroc": GuideChoisir,
   "honoraires-architecte-maroc": GuideHonoraires,
@@ -984,6 +1454,9 @@ const GUIDE_CONTENT: Record<string, React.FC> = {
   "plan-villa-maroc": GuideVilla,
   "renovation-riad-marrakech": GuideRiadRenovation,
   "architecture-marocaine": GuideArchitectureMaro,
+  "cout-construction-maison-maroc": GuideCoutConstruction,
+  "maison-marocaine-moderne": GuideMaisonModerne,
+  "telecharger-plan-villa-maroc": GuidePlanVillaPdf,
 };
 
 export default async function GuidePage({ params }: Props) {

@@ -71,6 +71,33 @@ export const GUIDES: Guide[] = [
     category: "Architecture",
     content: "",
   },
+  {
+    slug: "cout-construction-maison-maroc",
+    title: "Coût de construction d'une maison au Maroc en 2026",
+    description:
+      "Quel budget pour construire une maison au Maroc ? Prix au m² par ville, coûts des matériaux, honoraires architecte et frais annexes. Estimations 2026 en MAD.",
+    readTime: "9 min",
+    category: "Budget & Tarifs",
+    content: "",
+  },
+  {
+    slug: "maison-marocaine-moderne",
+    title: "Maison marocaine moderne : styles, plans et inspirations 2026",
+    description:
+      "Tout sur la maison marocaine moderne : fusion architecture traditionnelle et contemporaine, éléments clés (patio, zellige, tadelakt), plans types et conseils d'architectes.",
+    readTime: "8 min",
+    category: "Architecture",
+    content: "",
+  },
+  {
+    slug: "telecharger-plan-villa-maroc",
+    title: "Plan de villa au Maroc : comment obtenir les plans de votre projet",
+    description:
+      "Comment obtenir un plan de villa au Maroc ? Différence entre plans architecturaux et plans d'exécution, ce qu'un architecte livre, formats PDF et DWG, et étapes de validation.",
+    readTime: "6 min",
+    category: "Plans & Construction",
+    content: "",
+  },
 ];
 
 export function getGuideBySlug(slug: string): Guide | undefined {
