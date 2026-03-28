@@ -34,6 +34,9 @@ const ArchitectProfile = model.define("architect_profile", {
   // Stats
   rating: model.float().default(0),
   review_count: model.number().default(0),
+
+  // Auth
+  password_hash: model.text().nullable(),
 })
 
 export default ArchitectProfile
