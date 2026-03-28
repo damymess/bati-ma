@@ -6,6 +6,7 @@ COPY package.json package-lock.json ./
 RUN npm ci --legacy-peer-deps
 
 COPY . .
+ENV NODE_OPTIONS=--max-old-space-size=4096
 RUN npx medusa build
 
 # --- Production ---
