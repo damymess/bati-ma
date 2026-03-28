@@ -1,0 +1,12 @@
+{
+  "name": "bati-ma",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bati.ma — Annuaire des Architectes au Maroc",
+  "scripts": {
+    "dev:web": "cd apps/web && pnpm dev",
+    "dev:backend": "cd apps/backend && npx medusa develop",
+    "build:web": "cd apps/web && pnpm build",
+    "install:all": "cd apps/web && pnpm install && cd ../backend && yarn install"
+  }
+}
