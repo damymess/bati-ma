@@ -3,13 +3,13 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 
 FROM base AS deps
 WORKDIR /app
-COPY apps/web/package.json apps/web/pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY apps/web/ .
+COPY . .
 RUN pnpm build
 
 FROM base AS runner

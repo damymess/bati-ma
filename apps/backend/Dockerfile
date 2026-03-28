@@ -2,10 +2,10 @@ FROM node:20-alpine AS base
 RUN apk add --no-cache python3 make g++
 
 WORKDIR /app
-COPY apps/backend/package.json ./
+COPY package.json ./
 RUN npm install --legacy-peer-deps
 
-COPY apps/backend/ .
+COPY . .
 RUN npx medusa build
 
 EXPOSE 9000
