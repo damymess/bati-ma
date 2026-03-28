@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import {
   Search,
@@ -70,12 +71,18 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }}
       />
 
-      {/* ──── HERO — Dark ──── */}
+      {/* ──── HERO — Dark with background image ──── */}
       <section className="relative overflow-hidden bg-stone-950 px-4 pb-20 pt-16 sm:px-6">
-        {/* Gradient glow */}
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-[#b5522a]/10 blur-[120px]" />
-        </div>
+        {/* Background image */}
+        <Image
+          src="/images/hero-villa.jpg"
+          alt="Villa architecte Maroc"
+          fill
+          className="object-cover opacity-20"
+          priority
+        />
+        {/* Gradient overlay */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-stone-950/80 via-stone-950/60 to-stone-950" />
 
         <div className="relative mx-auto max-w-4xl text-center">
           <Badge variant="outline" className="mb-5 border-stone-700 text-stone-400 text-xs">
@@ -167,6 +174,46 @@ export default function HomePage() {
                 </Card>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* ──── GALERIE PROJETS ──── */}
+      <section className="bg-stone-950 px-4 py-16 sm:px-6">
+        <div className="mx-auto max-w-5xl">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold tracking-tight text-white">
+              L&apos;excellence architecturale marocaine
+            </h2>
+            <p className="mt-1 text-sm text-stone-500">
+              Découvrez les projets réalisés par nos architectes partenaires
+            </p>
+          </div>
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div className="group relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image src="/images/hero-villa.jpg" alt="Villa moderne Maroc" fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute bottom-3 left-3">
+                <p className="text-sm font-semibold text-white">Villas & Résidentiel</p>
+                <p className="text-xs text-stone-300">Casablanca, Marrakech</p>
+              </div>
+            </div>
+            <div className="group relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image src="/images/interieur-luxe.jpg" alt="Architecture intérieur Maroc" fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute bottom-3 left-3">
+                <p className="text-sm font-semibold text-white">Architecture d&apos;intérieur</p>
+                <p className="text-xs text-stone-300">Design contemporain marocain</p>
+              </div>
+            </div>
+            <div className="group relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image src="/images/marrakech-skyline.jpg" alt="Marrakech architecture" fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute bottom-3 left-3">
+                <p className="text-sm font-semibold text-white">Patrimoine & Rénovation</p>
+                <p className="text-xs text-stone-300">Riads, médinas, patrimoine</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

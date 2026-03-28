@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -20,9 +21,7 @@ export default function Nav() {
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-stone-900">
-            <span className="text-xs font-bold text-white">B</span>
-          </div>
+          <Image src="/images/logo-bati.jpg" alt="Bati.ma" width={28} height={28} className="rounded-lg" />
           <span className="text-[15px] font-semibold tracking-tight text-stone-900">
             Bati<span className="text-stone-400">.ma</span>
           </span>
