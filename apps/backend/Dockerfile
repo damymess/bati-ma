@@ -7,13 +7,10 @@ RUN npm ci --legacy-peer-deps
 
 COPY . .
 
-# Build backend only (skip admin dashboard to save memory)
+# Disable admin dashboard build (saves ~2GB RAM + 5min build time)
+ENV DISABLE_ADMIN=true
 ENV NODE_OPTIONS=--max-old-space-size=4096
-RUN npx medusa build || true
-
-# Ensure admin build directory exists (even if admin build was skipped/failed)
-RUN mkdir -p .medusa/server/public/admin && \
-    echo '<!DOCTYPE html><html><head><title>Admin</title></head><body>Admin disabled in production</body></html>' > .medusa/server/public/admin/index.html
+RUN npx medusa build
 
 # --- Production ---
 FROM node:20-alpine AS runner
@@ -27,6 +24,7 @@ COPY --from=builder /app/medusa-config.ts ./
 COPY --from=builder /app/tsconfig.json ./
 
 ENV NODE_ENV=production
+ENV DISABLE_ADMIN=true
 EXPOSE 9000
 
 CMD ["npx", "medusa", "start"]
