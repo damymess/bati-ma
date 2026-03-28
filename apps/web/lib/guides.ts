@@ -35,6 +35,42 @@ export const GUIDES: Guide[] = [
     category: "Réglementation",
     content: "",
   },
+  {
+    slug: "plan-amenagement-maroc",
+    title: "Plan d'aménagement au Maroc : zonage, règles et démarches 2026",
+    description:
+      "Tout comprendre sur le plan d'aménagement au Maroc : zones réglementaires, COS, CES, hauteurs maximales et démarches auprès de l'agence urbaine.",
+    readTime: "8 min",
+    category: "Urbanisme",
+    content: "",
+  },
+  {
+    slug: "plan-villa-maroc",
+    title: "Plan de villa au Maroc : styles, superficies et coûts 2026",
+    description:
+      "Guide complet pour concevoir votre plan de villa au Maroc : styles architecturaux, superficies courantes, étapes de conception et coûts par m² selon les villes.",
+    readTime: "8 min",
+    category: "Plans & Construction",
+    content: "",
+  },
+  {
+    slug: "renovation-riad-marrakech",
+    title: "Rénover un riad à Marrakech : guide complet et budget 2026",
+    description:
+      "Comment rénover un riad à Marrakech ? Spécificités de la médina, règles ADER/UNESCO, budget rénovation (50 000–500 000 MAD), artisans et rentabilité.",
+    readTime: "10 min",
+    category: "Rénovation",
+    content: "",
+  },
+  {
+    slug: "architecture-marocaine",
+    title: "Architecture marocaine : styles, éléments et traditions",
+    description:
+      "Découvrez l'architecture marocaine à travers ses dynasties, ses éléments emblématiques (zellige, moucharabieh, patio) et ses styles régionaux de Fès à Casablanca.",
+    readTime: "10 min",
+    category: "Architecture",
+    content: "",
+  },
 ];
 
 export function getGuideBySlug(slug: string): Guide | undefined {
