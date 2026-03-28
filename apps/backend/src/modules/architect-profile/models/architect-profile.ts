@@ -2,7 +2,6 @@ import { model } from "@medusajs/framework/utils"
 
 const ArchitectProfile = model.define("architect_profile", {
   id: model.id().primaryKey(),
-  // Link to auth user
   name: model.text(),
   email: model.text(),
   phone: model.text().nullable(),
@@ -12,14 +11,14 @@ const ArchitectProfile = model.define("architect_profile", {
   professional_body: model.text().default("Ordre des Architectes du Maroc"),
   years_experience: model.number().default(0),
 
-  // Specialties & coverage
-  specialties: model.json().default([]),
-  regions: model.json().default([]),
-  languages: model.json().default(["Français"]),
+  // Specialties & coverage (stored as JSON objects)
+  specialties: model.json().default({} as Record<string, unknown>),
+  regions: model.json().default({} as Record<string, unknown>),
+  languages: model.json().default({} as Record<string, unknown>),
 
   // Portfolio
   description: model.text().nullable(),
-  portfolio_images: model.json().default([]),
+  portfolio_images: model.json().default({} as Record<string, unknown>),
   website: model.text().nullable(),
 
   // Rates
