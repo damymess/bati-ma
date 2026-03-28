@@ -42,7 +42,7 @@ export default async function InteriorCityPage({ params }: Props) {
   const data = getCityBySlug(city);
   if (!data) notFound();
 
-  const allArchitects = getArchitectsByCity(city);
+  const allArchitects = await getArchitectsByCity(city);
   const interiorArchitects = allArchitects.filter((a) =>
     a.specialties.includes("Intérieur")
   );

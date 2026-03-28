@@ -37,7 +37,7 @@ export default async function CityPage({ params }: Props) {
   const data = getCityBySlug(city);
   if (!data) notFound();
 
-  const architects = getArchitectsByCity(city);
+  const architects = await getArchitectsByCity(city);
   const otherCities = CITIES.filter((c) => c.slug !== city).slice(0, 5);
 
   const faq = [

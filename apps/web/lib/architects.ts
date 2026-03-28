@@ -67,7 +67,8 @@ export async function getArchitectsByCity(citySlug: string): Promise<Architect[]
 }
 
 // Fallback statique si l'API est indisponible au build
-const FALLBACK_ARCHITECTS: Architect[] = [
+// Also exported as ARCHITECTS for backward compat (homepage featured section)
+export const FALLBACK_ARCHITECTS: Architect[] = [
   {
     id: "casa-001",
     name: "Studio Arc Casablanca",
@@ -177,3 +178,6 @@ const FALLBACK_ARCHITECTS: Architect[] = [
     premium: true,
   },
 ];
+
+// Backward-compat alias used by homepage featured architects section
+export const ARCHITECTS = FALLBACK_ARCHITECTS;
