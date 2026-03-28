@@ -25,6 +25,9 @@ export const metadata: Metadata = {
     "cabinet architecture maroc",
     "architecte d'intérieur maroc",
   ],
+  alternates: {
+    canonical: "https://bati.ma",
+  },
   openGraph: {
     type: "website",
     locale: "fr_MA",
@@ -32,6 +35,20 @@ export const metadata: Metadata = {
     title: "Bati.ma — Annuaire des Architectes au Maroc",
     description:
       "Trouvez un architecte qualifié au Maroc. Portfolios, avis clients et demande de devis gratuite.",
+    images: [
+      {
+        url: "/images/hero-villa.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Bati.ma — Annuaire Architectes Maroc",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bati.ma — Annuaire des Architectes au Maroc",
+    description: "800+ architectes vérifiés au Maroc. Portfolios, avis et devis gratuit.",
+    images: ["/images/hero-villa.jpg"],
   },
   robots: {
     index: true,
