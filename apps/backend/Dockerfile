@@ -2,10 +2,10 @@ FROM node:20-alpine AS base
 RUN apk add --no-cache python3 make g++
 
 WORKDIR /app
-COPY package.json yarn.lock* ./
+COPY apps/backend/package.json ./
 RUN npm install --legacy-peer-deps
 
-COPY . .
+COPY apps/backend/ .
 RUN npx medusa build
 
 EXPOSE 9000
