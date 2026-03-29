@@ -28,11 +28,8 @@ export default function Nav() {
     <header className="sticky top-0 z-50 w-full border-b border-stone-200/60 bg-white/80 backdrop-blur-xl">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <Image src="/images/logo-bati.jpg" alt="Bati.ma" width={28} height={28} className="rounded-lg" />
-          <span className="text-[15px] font-semibold tracking-tight text-stone-900">
-            Bati<span className="text-stone-400">.ma</span>
-          </span>
+        <Link href="/" className="flex items-center">
+          <Image src="/images/logo-bati.jpg" alt="Bati.ma" width={100} height={28} className="h-7 w-auto" />
         </Link>
 
         {/* Desktop nav */}
