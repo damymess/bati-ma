@@ -55,42 +55,33 @@ export default function MobileTabBar() {
         {/* Left tabs */}
         {TABS_LEFT.map(renderTab)}
 
-        {/* Center: Publier button (elevated) */}
-        <div className="flex flex-1 items-center justify-center">
-          <Link
-            href="/soumettre-projet"
-            className={`-mt-5 flex h-12 w-12 items-center justify-center rounded-full shadow-lg transition-all active:scale-95 ${
-              isPublishActive
-                ? "bg-[#b5522a] shadow-[#b5522a]/30"
-                : "bg-[#b5522a] shadow-stone-300/50 hover:bg-[#a0471f]"
-            }`}
-          >
-            {/* Moroccan 8-pointed star (zellige) with upward arrow */}
-            <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" aria-hidden="true">
-              {/* 8-pointed star (rub el hizb) */}
-              <path
-                d="M12 2L14.1 8.3L20.5 7.5L15.9 12L20.5 16.5L14.1 15.7L12 22L9.9 15.7L3.5 16.5L8.1 12L3.5 7.5L9.9 8.3Z"
-                stroke="white"
-                strokeWidth="1.5"
-                strokeLinejoin="round"
-                fill="rgba(255,255,255,0.15)"
-              />
-              {/* Upward arrow */}
-              <path
-                d="M12 15V7M9 9.5L12 6.5L15 9.5"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </Link>
-          <span className={`absolute bottom-1 text-[9px] font-medium ${
-            isPublishActive ? "text-[#b5522a]" : "text-stone-400"
-          }`}>
-            Publier
-          </span>
-        </div>
+        {/* Center: Publier — same style as other tabs but terracotta accent */}
+        <Link
+          href="/soumettre-projet"
+          className={`flex flex-1 flex-col items-center gap-0.5 py-1 text-[10px] font-medium transition-colors ${
+            isPublishActive
+              ? "text-[#b5522a]"
+              : "text-[#b5522a]/70 active:text-[#b5522a]"
+          }`}
+        >
+          <svg viewBox="0 0 24 24" fill="none" className={`h-5 w-5 transition-transform ${isPublishActive ? "scale-110" : ""}`} aria-hidden="true">
+            <path
+              d="M12 3V16M8 7L12 3L16 7"
+              stroke="currentColor"
+              strokeWidth={isPublishActive ? 2.2 : 1.5}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M4 14V19C4 20.1 4.9 21 6 21H18C19.1 21 20 20.1 20 19V14"
+              stroke="currentColor"
+              strokeWidth={isPublishActive ? 2.2 : 1.5}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <span>Publier</span>
+        </Link>
 
         {/* Right tabs */}
         {TABS_RIGHT.map(renderTab)}
