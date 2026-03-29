@@ -193,9 +193,9 @@ export default async function CityPage({ params }: Props) {
               Inscrivez votre cabinet gratuitement et recevez des demandes de
               devis qualifiées.
             </p>
-            <button className="bg-[#b5522a] text-white text-sm font-medium px-6 py-2.5 rounded-full hover:bg-[#9a4522] transition-colors">
+            <Link href="/inscription-architecte" className="inline-block bg-[#b5522a] text-white text-sm font-medium px-6 py-2.5 rounded-full hover:bg-[#9a4522] transition-colors">
               Inscrire mon cabinet — Gratuit
-            </button>
+            </Link>
           </div>
         </div>
       </section>

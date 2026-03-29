@@ -12,11 +12,9 @@ export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
       return res.status(400).json({ error: "email et password requis" })
     }
 
-    // Find architect by email
-    const all = await architectService.listArchitectProfiles()
-    const architect = (all as any[]).find(
-      (a: any) => a.email?.toLowerCase() === email.toLowerCase()
-    )
+    // Find architect by email (DB-level filter, not in-memory scan)
+    const results = await architectService.listArchitectProfiles({ email: email.toLowerCase() })
+    const architect = (results as any[])[0]
 
     if (!architect) {
       return res.status(401).json({ error: "Email ou mot de passe incorrect" })

@@ -14,9 +14,12 @@ const API_KEY =
 
 const DRY_RUN = process.argv.includes("--dry-run");
 
+const ADMIN_SECRET = process.env.ADMIN_SECRET || "";
+
 const HEADERS = {
   "Content-Type": "application/json",
   "x-publishable-api-key": API_KEY,
+  "x-admin-secret": ADMIN_SECRET,
 };
 
 function sleep(ms) {

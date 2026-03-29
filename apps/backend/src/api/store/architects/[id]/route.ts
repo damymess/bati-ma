@@ -12,6 +12,10 @@ export const GET = async (req: MedusaRequest, res: MedusaResponse) => {
 }
 
 export const DELETE = async (req: MedusaRequest, res: MedusaResponse) => {
+  const secret = req.headers["x-admin-secret"]
+  if (!secret || secret !== process.env.ADMIN_SECRET) {
+    return res.status(403).json({ error: "Accès refusé" })
+  }
   try {
     const architectService = req.scope.resolve(ARCHITECT_PROFILE_MODULE) as any
     await architectService.deleteArchitectProfiles(req.params.id)
