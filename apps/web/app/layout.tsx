@@ -82,7 +82,7 @@ export default function RootLayout({
     <html lang="fr" className={inter.variable}>
       <body className="min-h-screen flex flex-col font-sans antialiased">
         <Nav />
-        <main className="flex-1 pb-[72px] lg:pb-0">{children}</main>
+        <main className="flex-1 pb-24 lg:pb-0">{children}</main>
         <div className="hidden lg:block">
           <Footer />
         </div>

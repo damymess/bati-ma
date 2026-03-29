@@ -87,8 +87,8 @@ export default function HomePage() {
 
         <div className="relative mx-auto flex max-w-7xl flex-col items-center lg:flex-row lg:items-stretch">
           {/* ── Left: Text + Search ── */}
-          <div className="flex flex-1 flex-col justify-center px-4 py-16 sm:px-8 lg:py-20 lg:pr-12">
-            <Badge variant="outline" className="mb-5 w-fit border-stone-700 text-stone-400 text-xs">
+          <div className="flex flex-1 flex-col justify-center px-4 pt-6 pb-16 sm:px-8 lg:py-20 lg:pr-12">
+            <Badge variant="outline" className="mb-5 w-fit border-stone-700 text-stone-400 text-xs sm:text-sm">
               Annuaire Architectes Maroc — 2026
             </Badge>
 
@@ -119,14 +119,16 @@ export default function HomePage() {
               </Button>
             </div>
 
-            {/* City pills */}
+            {/* City pills — 3 on mobile, 5 on sm+ */}
             <div className="mt-6 flex flex-wrap items-center gap-2">
-              <span className="text-xs text-stone-600">Villes populaires :</span>
-              {CITIES.slice(0, 5).map((c) => (
+              <span className="text-xs text-stone-600">Villes :</span>
+              {CITIES.slice(0, 5).map((c, i) => (
                 <Link
                   key={c.slug}
                   href={`/architecte/${c.slug}`}
-                  className="rounded-full border border-stone-800 px-3 py-1 text-xs text-stone-400 transition-colors hover:border-[#b5522a]/60 hover:text-[#b5522a]"
+                  className={`rounded-full border border-stone-800 px-3 py-1 text-xs text-stone-400 transition-colors hover:border-[#b5522a]/60 hover:text-[#b5522a] ${
+                    i >= 3 ? "hidden sm:inline-flex" : ""
+                  }`}
                 >
                   {c.name}
                 </Link>
@@ -134,7 +136,19 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* ── Right: Animated skyline ── */}
+          {/* ── Mobile: compact skyline illustration ── */}
+          <div className="relative flex h-36 w-full items-end justify-center overflow-hidden lg:hidden">
+            <Image
+              src="/images/hero-skyline.svg"
+              alt=""
+              width={400}
+              height={200}
+              className="h-full w-auto object-contain opacity-30"
+              aria-hidden="true"
+            />
+          </div>
+
+          {/* ── Desktop: Animated skyline (right panel) ── */}
           <div className="relative hidden min-h-[400px] w-full items-end justify-center overflow-hidden lg:flex lg:w-[45%]">
             <HeroSkyline />
           </div>
