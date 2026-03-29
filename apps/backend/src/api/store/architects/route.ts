@@ -21,7 +21,7 @@ export const GET = async (req: MedusaRequest, res: MedusaResponse) => {
     let filtered = all
     if (regionsFilter.length > 0) {
       filtered = all.filter((a: any) => {
-        const regions: string[] = Array.isArray(a.regions) ? a.regions : Object.values(a.regions ?? {})
+        const regions: string[] = Array.isArray(a.regions) ? a.regions : Object.keys(a.regions ?? {})
         return regions.some((r: string) =>
           regionsFilter.some((f) => r.toLowerCase() === f.toLowerCase())
         )

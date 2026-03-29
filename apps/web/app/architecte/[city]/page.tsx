@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { CITIES, getCityBySlug, CITY_SLUGS } from "@/lib/cities";
 import { getArchitectsByCity } from "@/lib/architects";
-import ArchitectCard from "@/components/ArchitectCard";
+import ArchitectFilters from "@/components/ArchitectFilters";
 
 export const revalidate = 86400;
 
@@ -149,37 +149,7 @@ export default async function CityPage({ params }: Props) {
       {/* Listings */}
       <section className="py-10 px-4 sm:px-6 bg-white">
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-semibold text-stone-900">
-              {architects.length > 0
-                ? `${architects.length} architectes à ${data.name}`
-                : `Architectes à ${data.name}`}
-            </h2>
-            <div className="text-sm text-stone-500">
-              Triés par : <span className="text-stone-800 font-medium">Recommandés</span>
-            </div>
-          </div>
-
-          {architects.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-              {architects.map((a) => (
-                <ArchitectCard key={a.id} architect={a} />
-              ))}
-            </div>
-          ) : (
-            <div className="bg-stone-50 border border-stone-100 rounded-xl p-8 text-center mb-8">
-              <p className="text-stone-500 mb-3">
-                La liste des architectes de {data.name} est en cours de
-                constitution.
-              </p>
-              <p className="text-sm text-stone-400">
-                Vous êtes architecte à {data.name} ?{" "}
-                <a href="#inscription" className="text-[#b5522a] hover:underline">
-                  Inscrivez votre cabinet gratuitement
-                </a>
-              </p>
-            </div>
-          )}
+          <ArchitectFilters architects={architects} cityName={data.name} />
 
           {/* CTA inscription */}
           <div
