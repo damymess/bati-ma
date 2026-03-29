@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import HeroSkyline from "@/components/HeroSkyline";
 
 export const metadata: Metadata = {
   title: "Bati.ma — Annuaire des Architectes au Maroc",
@@ -71,64 +72,88 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }}
       />
 
-      {/* ──── HERO — Dark with background image ──── */}
-      <section className="relative overflow-hidden bg-stone-950 px-4 pb-20 pt-16 sm:px-6">
+      {/* ──── HERO — Split layout: text left, skyline right ──── */}
+      <section className="relative overflow-hidden bg-stone-950">
         {/* Background image */}
         <Image
           src="/images/hero-villa.jpg"
           alt="Villa architecte Maroc"
           fill
-          className="object-cover opacity-20"
+          className="object-cover opacity-15"
           priority
         />
         {/* Gradient overlay */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-stone-950/80 via-stone-950/60 to-stone-950" />
 
-        <div className="relative mx-auto max-w-4xl text-center">
-          <Badge variant="outline" className="mb-5 border-stone-700 text-stone-400 text-xs">
-            Annuaire Architectes Maroc — 2026
-          </Badge>
+        <div className="relative mx-auto flex max-w-7xl flex-col items-center lg:flex-row lg:items-stretch">
+          {/* ── Left: Text + Search ── */}
+          <div className="flex flex-1 flex-col justify-center px-4 py-16 sm:px-8 lg:py-20 lg:pr-12">
+            <Badge variant="outline" className="mb-5 w-fit border-stone-700 text-stone-400 text-xs">
+              Annuaire Architectes Maroc — 2026
+            </Badge>
 
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-            Trouvez votre architecte
-            <br />
-            <span className="bg-gradient-to-r from-[#b5522a] to-[#e07a55] bg-clip-text text-transparent">
-              au Maroc
-            </span>
-          </h1>
+            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+              Trouvez votre architecte
+              <br />
+              <span className="bg-gradient-to-r from-[#b5522a] to-[#e07a55] bg-clip-text text-transparent">
+                au Maroc
+              </span>
+            </h1>
 
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-stone-400 sm:text-lg">
-            800+ architectes et designers d&apos;intérieur vérifiés. Portfolios réels,
-            avis clients vérifiés et demande de devis gratuite.
-          </p>
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-stone-400 sm:text-lg">
+              800+ architectes et designers d&apos;intérieur vérifiés. Portfolios réels,
+              avis clients vérifiés et demande de devis gratuite.
+            </p>
 
-          {/* Search */}
-          <div className="mx-auto mt-8 flex max-w-lg flex-col gap-2 sm:flex-row" id="devis">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-500" />
-              <Input
-                placeholder="Votre ville (ex: Casablanca)"
-                className="h-11 rounded-full border-stone-700 bg-stone-900 pl-10 text-white placeholder:text-stone-500 focus-visible:ring-[#b5522a]"
-              />
+            {/* Search */}
+            <div className="mt-8 flex max-w-lg flex-col gap-2 sm:flex-row" id="devis">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-500" />
+                <Input
+                  placeholder="Votre ville (ex: Casablanca)"
+                  className="h-11 rounded-full border-stone-700 bg-stone-900 pl-10 text-white placeholder:text-stone-500 focus-visible:ring-[#b5522a]"
+                />
+              </div>
+              <Button size="lg" className="h-11 rounded-full px-6">
+                Trouver <ArrowRight className="ml-1 h-4 w-4" />
+              </Button>
             </div>
-            <Button size="lg" className="h-11 rounded-full px-6">
-              Trouver <ArrowRight className="ml-1 h-4 w-4" />
-            </Button>
+
+            {/* City pills */}
+            <div className="mt-6 flex flex-wrap items-center gap-2">
+              <span className="text-xs text-stone-600">Villes populaires :</span>
+              {CITIES.slice(0, 5).map((c) => (
+                <Link
+                  key={c.slug}
+                  href={`/architecte/${c.slug}`}
+                  className="rounded-full border border-stone-800 px-3 py-1 text-xs text-stone-400 transition-colors hover:border-[#b5522a]/60 hover:text-[#b5522a]"
+                >
+                  {c.name}
+                </Link>
+              ))}
+            </div>
           </div>
 
-          {/* City pills */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
-            <span className="text-xs text-stone-600">Villes populaires :</span>
-            {CITIES.slice(0, 5).map((c) => (
-              <Link
-                key={c.slug}
-                href={`/architecte/${c.slug}`}
-                className="rounded-full border border-stone-800 px-3 py-1 text-xs text-stone-400 transition-colors hover:border-[#b5522a]/60 hover:text-[#b5522a]"
-              >
-                {c.name}
-              </Link>
-            ))}
+          {/* ── Right: Animated skyline ── */}
+          <div className="relative hidden min-h-[400px] w-full items-end justify-center overflow-hidden lg:flex lg:w-[45%]">
+            <HeroSkyline />
           </div>
+        </div>
+
+        {/* ── Mobile: zellige border at bottom ── */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-center lg:hidden">
+          <svg viewBox="0 0 400 45" fill="none" className="w-full opacity-40" aria-hidden="true">
+            <line x1="0" y1="28" x2="400" y2="28" stroke="#b5522a" strokeWidth="1" />
+            <path d="M15 28 L25 13 L35 28 L45 13 L55 28 L65 13 L75 28" stroke="#b5522a" strokeWidth="1.5" strokeLinejoin="round" fill="none" />
+            <path d="M165 28 V16 Q165 3 180 3 Q195 3 195 16 V28" stroke="#b5522a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            <path d="M205 28 V16 Q205 3 220 3 Q235 3 235 16 V28" stroke="#b5522a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            <path d="M200 10 L202 16 L208 16 L203 20 L205 26 L200 22 L195 26 L197 20 L192 16 L198 16 Z" stroke="#b5522a" strokeWidth="0.8" strokeLinejoin="round" fill="none" />
+            <path d="M325 28 L335 13 L345 28 L355 13 L365 28 L375 13 L385 28" stroke="#b5522a" strokeWidth="1.5" strokeLinejoin="round" fill="none" />
+            <path d="M100 28 L112 18 L124 28" stroke="#b5522a" strokeWidth="1" fill="none" />
+            <path d="M135 28 L145 20 L155 28" stroke="#b5522a" strokeWidth="1" fill="none" />
+            <path d="M245 28 L255 20 L265 28" stroke="#b5522a" strokeWidth="1" fill="none" />
+            <path d="M276 28 L288 18 L300 28" stroke="#b5522a" strokeWidth="1" fill="none" />
+          </svg>
         </div>
       </section>
 
