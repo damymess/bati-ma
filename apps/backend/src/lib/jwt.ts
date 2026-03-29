@@ -1,7 +1,11 @@
 import jwt from "jsonwebtoken"
 
-const JWT_SECRET = process.env.JWT_SECRET || "bati-ma-secret-2026"
-const JWT_EXPIRES = "30d"
+const JWT_SECRET = process.env.JWT_SECRET
+if (!JWT_SECRET) {
+  throw new Error("FATAL: JWT_SECRET environment variable is not set. Refusing to start with an insecure default.")
+}
+
+const JWT_EXPIRES = "7d"
 
 export interface JwtPayload {
   architect_id: string
