@@ -2,22 +2,49 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Search, PlusCircle, BookOpen, Menu } from "lucide-react";
+import { Home, Search, Plus, BookOpen, User } from "lucide-react";
 
-const TABS = [
+const TABS_LEFT = [
   { href: "/", label: "Accueil", icon: Home },
   { href: "/architecte", label: "Architectes", icon: Search },
-  { href: "/soumettre-projet", label: "Projet", icon: PlusCircle },
+];
+
+const TABS_RIGHT = [
   { href: "/guide/comment-choisir-architecte-maroc", label: "Guides", icon: BookOpen },
-  { href: "/contact", label: "Plus", icon: Menu },
+  { href: "/contact", label: "Profil", icon: User },
 ];
 
 /**
- * iOS-style bottom tab bar — visible only on mobile (< lg).
+ * iOS-style bottom tab bar with centered "Publier" CTA button.
  * Fixed to bottom with safe-area-inset support for notched devices.
  */
 export default function MobileTabBar() {
   const pathname = usePathname();
+  const isPublishActive = pathname === "/soumettre-projet";
+
+  const renderTab = (tab: { href: string; label: string; icon: typeof Home }) => {
+    const Icon = tab.icon;
+    const isActive =
+      tab.href === "/" ? pathname === "/" : pathname.startsWith(tab.href);
+
+    return (
+      <Link
+        key={tab.href}
+        href={tab.href}
+        className={`flex flex-1 flex-col items-center gap-0.5 py-1 text-[10px] font-medium transition-colors ${
+          isActive
+            ? "text-[#b5522a]"
+            : "text-stone-400 active:text-stone-600"
+        }`}
+      >
+        <Icon
+          className={`h-5 w-5 transition-transform ${isActive ? "scale-110" : ""}`}
+          strokeWidth={isActive ? 2.2 : 1.5}
+        />
+        <span>{tab.label}</span>
+      </Link>
+    );
+  };
 
   return (
     <nav
@@ -25,33 +52,30 @@ export default function MobileTabBar() {
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
       <div className="mx-auto flex h-[56px] max-w-lg items-center justify-around px-2">
-        {TABS.map((tab) => {
-          const Icon = tab.icon;
-          const isActive =
-            tab.href === "/"
-              ? pathname === "/"
-              : pathname.startsWith(tab.href);
+        {/* Left tabs */}
+        {TABS_LEFT.map(renderTab)}
 
-          return (
-            <Link
-              key={tab.href}
-              href={tab.href}
-              className={`flex flex-1 flex-col items-center gap-0.5 rounded-lg py-1 text-[10px] font-medium transition-colors ${
-                isActive
-                  ? "text-[#b5522a]"
-                  : "text-stone-400 active:text-stone-600"
-              }`}
-            >
-              <Icon
-                className={`h-5 w-5 transition-transform ${
-                  isActive ? "scale-110" : ""
-                }`}
-                strokeWidth={isActive ? 2.2 : 1.5}
-              />
-              <span>{tab.label}</span>
-            </Link>
-          );
-        })}
+        {/* Center: Publier button (elevated) */}
+        <div className="flex flex-1 items-center justify-center">
+          <Link
+            href="/soumettre-projet"
+            className={`-mt-5 flex h-12 w-12 items-center justify-center rounded-full shadow-lg transition-all active:scale-95 ${
+              isPublishActive
+                ? "bg-[#b5522a] shadow-[#b5522a]/30"
+                : "bg-[#b5522a] shadow-stone-300/50 hover:bg-[#a0471f]"
+            }`}
+          >
+            <Plus className="h-6 w-6 text-white" strokeWidth={2.5} />
+          </Link>
+          <span className={`absolute bottom-1 text-[9px] font-medium ${
+            isPublishActive ? "text-[#b5522a]" : "text-stone-400"
+          }`}>
+            Publier
+          </span>
+        </div>
+
+        {/* Right tabs */}
+        {TABS_RIGHT.map(renderTab)}
       </div>
     </nav>
   );
