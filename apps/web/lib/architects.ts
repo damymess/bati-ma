@@ -43,6 +43,22 @@ function mapToFrontend(a: Record<string, any>, index: number): Architect {
   };
 }
 
+export async function getArchitectById(id: string): Promise<Architect | null> {
+  try {
+    const res = await fetch(`${API_BASE}/store/architects/${id}`, {
+      headers: { "x-publishable-api-key": API_KEY },
+      next: { revalidate: 86400 },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const a = data.architect;
+    if (!a) return null;
+    return mapToFrontend(a, 0);
+  } catch {
+    return null;
+  }
+}
+
 export async function getArchitectsByCity(citySlug: string): Promise<Architect[]> {
   try {
     const res = await fetch(
