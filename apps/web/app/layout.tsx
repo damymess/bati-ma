@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import { AuthProvider } from "@/components/AuthProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -65,9 +66,11 @@ export default function RootLayout({
   return (
     <html lang="fr" className={inter.variable}>
       <body className="min-h-screen flex flex-col font-sans antialiased">
-        <Nav />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <AuthProvider>
+          <Nav />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

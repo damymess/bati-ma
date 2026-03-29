@@ -98,6 +98,51 @@ export const GUIDES: Guide[] = [
     category: "Plans & Construction",
     content: "",
   },
+  {
+    slug: "concours-architecture-maroc-2026",
+    title: "7 concours d'architecture ouverts aux architectes marocains en 2026",
+    description:
+      "Découvrez les concours internationaux d'architecture accessibles aux professionnels et étudiants marocains en 2026 : prix, conditions et calendrier.",
+    readTime: "7 min",
+    category: "Actualité",
+    content: "",
+  },
+  {
+    slug: "architecture-coupe-du-monde-2030-maroc",
+    title: "Les grands projets architecturaux du Mondial 2030 au Maroc",
+    description:
+      "Stades, infrastructures, hôtels : les méga-projets architecturaux liés à la Coupe du Monde 2030 au Maroc. Opportunités pour les architectes.",
+    readTime: "9 min",
+    category: "Actualité",
+    content: "",
+  },
+  {
+    slug: "marche-btp-maroc-2026",
+    title: "Le marché BTP au Maroc en 2026 : chiffres clés et opportunités",
+    description:
+      "550 milliards DH d'investissements, CAN 2025, Mondial 2030 : analyse du marché de la construction au Maroc et opportunités pour les architectes.",
+    readTime: "8 min",
+    category: "Business",
+    content: "",
+  },
+  {
+    slug: "eco-construction-maroc",
+    title: "L'éco-construction au Maroc : matériaux, normes et architectes spécialisés",
+    description:
+      "Guide de l'éco-construction au Maroc : RTCM 2024, matériaux durables, certification HQE et architectes spécialisés par ville.",
+    readTime: "10 min",
+    category: "Guide pratique",
+    content: "",
+  },
+  {
+    slug: "renovation-riad-maroc",
+    title: "Guide complet de la rénovation de riad au Maroc",
+    description:
+      "Tout savoir pour rénover un riad au Maroc : réglementation, artisans, coûts, techniques traditionnelles (zellige, tadelakt) et erreurs à éviter.",
+    readTime: "12 min",
+    category: "Guide pratique",
+    content: "",
+  },
 ];
 
 export function getGuideBySlug(slug: string): Guide | undefined {

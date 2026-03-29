@@ -79,25 +79,30 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Guides */}
+          {/* Ressources */}
           <div>
             <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-stone-500">
               Ressources
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/guide/comment-choisir-architecte-maroc" className="text-stone-500 hover:text-white transition-colors">
-                  Choisir son architecte
+                <Link href="/guide" className="text-stone-500 hover:text-white transition-colors">
+                  Guides & articles
                 </Link>
               </li>
               <li>
-                <Link href="/guide/honoraires-architecte-maroc" className="text-stone-500 hover:text-white transition-colors">
-                  Tarifs & honoraires
+                <Link href="/appels-offres" className="text-stone-500 hover:text-white transition-colors">
+                  Appels d&apos;offres
                 </Link>
               </li>
               <li>
-                <Link href="/guide/permis-de-construire-maroc" className="text-stone-500 hover:text-white transition-colors">
-                  Permis de construire
+                <Link href="/forum" className="text-stone-500 hover:text-white transition-colors">
+                  Communauté / Forum
+                </Link>
+              </li>
+              <li>
+                <Link href="/inscription-architecte" className="text-stone-500 hover:text-white transition-colors">
+                  Inscription architecte
                 </Link>
               </li>
               <li>

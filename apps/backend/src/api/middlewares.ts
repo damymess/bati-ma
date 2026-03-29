@@ -28,5 +28,20 @@ export default defineMiddlewares({
       middlewares: [],
       bodyParser: { sizeLimit: "1mb" },
     },
+    {
+      matcher: "/store/forum*",
+      middlewares: [],
+      bodyParser: { sizeLimit: "1mb" },
+    },
+    {
+      matcher: "/store/appels-offres*",
+      middlewares: [],
+      bodyParser: { sizeLimit: "1mb" },
+    },
+    {
+      matcher: "/store/projects*",
+      middlewares: [],
+      bodyParser: { sizeLimit: "2mb" },
+    },
   ],
 })

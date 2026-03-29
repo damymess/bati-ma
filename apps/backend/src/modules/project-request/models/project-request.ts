@@ -31,6 +31,11 @@ const ProjectRequest = model.define("project_request", {
   architect_response: model.text().nullable(),
   proposed_fee: model.number().nullable(),
 
+  // Marketplace
+  is_public: model.boolean().default(false),
+  images: model.json().default({} as Record<string, unknown>),
+  responses_count: model.number().default(0),
+
   // Metadata
   source: model.text().default("website"),
 })

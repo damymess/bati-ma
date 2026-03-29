@@ -23,5 +23,11 @@ module.exports = defineConfig({
     {
       resolve: "./src/modules/project-request",
     },
+    {
+      resolve: "./src/modules/forum",
+    },
+    {
+      resolve: "./src/modules/appel-offre",
+    },
   ],
 })

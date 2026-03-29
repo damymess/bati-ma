@@ -1446,6 +1446,22 @@ function GuidePlanVillaPdf() {
   );
 }
 
+function GuideConcours2026() {
+  return (<div className="prose-content"><h2>Pourquoi participer à des concours internationaux ?</h2><p>Les concours d&apos;architecture offrent aux professionnels marocains une plateforme mondiale. En 2026, plusieurs compétitions prestigieuses sont ouvertes.</p><h2>1. Prix Aga Khan d&apos;Architecture</h2><p>Décerné tous les 3 ans, dotation : <strong>1 000 000 USD</strong>.</p><h2>2. World Architecture Festival (WAF)</h2><p>Le plus grand festival d&apos;architecture au monde. 30+ catégories.</p><h2>3. Prix Tamayouz d&apos;Excellence</h2><p>Jeunes architectes du monde arabe. Inscription gratuite.</p><h2>4. LafargeHolcim Awards</h2><p>Construction durable, Afrique & Moyen-Orient. <strong>200 000 USD</strong> par région.</p><h2>5. Concours national CNOA</h2><p>Projets publics organisés par l&apos;Ordre des Architectes.</p></div>);
+}
+function GuideMondial2030() {
+  return (<div className="prose-content"><h2>Le Mondial 2030 : catalyseur architectural</h2><p>Le Maroc prévoit <strong>6 stades</strong> et des milliers de projets connexes.</p><h2>Stades</h2><ul><li><strong>Grand Stade Casablanca</strong> (93 000 places)</li><li><strong>Stade Rabat</strong> — extension 75 000</li><li><strong>Stade Marrakech</strong> — 65 000 places</li><li><strong>Tanger, Fès, Agadir</strong> — rénovation</li></ul><h2>Infrastructures</h2><p>Extension <strong>LGV</strong>, tramways, aéroports, <strong>200 000 lits</strong> supplémentaires.</p></div>);
+}
+function GuideMarcheBTP2026() {
+  return (<div className="prose-content"><h2>Marché BTP en expansion</h2><ul><li><strong>550 milliards MAD</strong> investissements privés</li><li><strong>500 000 emplois</strong> ciblés</li><li><strong>2 700+ architectes</strong> à l&apos;Ordre</li><li>Croissance <strong>5-7%</strong> annuels</li></ul><h2>Projets moteurs</h2><ul><li><strong>Reconstruction Al Haouz</strong> : 120 Mds MAD</li><li><strong>Zenata</strong> : éco-ville 1 700 ha</li><li><strong>Tanger Tech</strong> : 2 000 ha</li></ul></div>);
+}
+function GuideEcoConstruction() {
+  return (<div className="prose-content"><h2>RTCM : la réglementation</h2><p>Performance thermique obligatoire, 6 zones climatiques.</p><h2>Matériaux durables au Maroc</h2><ul><li><strong>Pisé</strong> : excellent isolant</li><li><strong>BTC</strong> : alternative moderne</li><li><strong>Béton bas carbone</strong></li><li><strong>Cèdre Atlas</strong> : charpente</li></ul><h2>Certifications</h2><ul><li><strong>HQE International</strong></li><li><strong>LEED</strong></li><li><strong>Label ADEREE</strong></li></ul></div>);
+}
+function GuideRenovationRiad() {
+  return (<div className="prose-content"><h2>Rénover un riad</h2><p>Investissement prisé à <strong>Marrakech, Fès, Essaouira</strong>.</p><h2>Techniques traditionnelles</h2><ul><li><strong>Zellige</strong> : mosaïque émaillée</li><li><strong>Tadelakt</strong> : enduit imperméable</li><li><strong>Moucharabieh</strong> : claustra bois</li><li><strong>Gebs</strong> : plâtre sculpté</li></ul><h2>Coûts</h2><ul><li>Légère : 3-5 000 MAD/m²</li><li>Moyenne : 5-8 000 MAD/m²</li><li>Complète : 8-15 000 MAD/m²</li><li>Maison d&apos;hôtes : 10-20 000 MAD/m²</li></ul></div>);
+}
+
 const GUIDE_CONTENT: Record<string, React.FC> = {
   "comment-choisir-architecte-maroc": GuideChoisir,
   "honoraires-architecte-maroc": GuideHonoraires,
@@ -1457,6 +1473,11 @@ const GUIDE_CONTENT: Record<string, React.FC> = {
   "cout-construction-maison-maroc": GuideCoutConstruction,
   "maison-marocaine-moderne": GuideMaisonModerne,
   "telecharger-plan-villa-maroc": GuidePlanVillaPdf,
+  "concours-architecture-maroc-2026": GuideConcours2026,
+  "architecture-coupe-du-monde-2030-maroc": GuideMondial2030,
+  "marche-btp-maroc-2026": GuideMarcheBTP2026,
+  "eco-construction-maroc": GuideEcoConstruction,
+  "renovation-riad-maroc": GuideRenovationRiad,
 };
 
 export default async function GuidePage({ params }: Props) {
