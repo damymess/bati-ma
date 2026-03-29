@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Search, Plus, BookOpen, User } from "lucide-react";
+import { Home, Search, BookOpen, User } from "lucide-react";
 
 const TABS_LEFT = [
   { href: "/", label: "Accueil", icon: Home },
@@ -65,7 +65,30 @@ export default function MobileTabBar() {
                 : "bg-[#b5522a] shadow-stone-300/50 hover:bg-[#a0471f]"
             }`}
           >
-            <Plus className="h-6 w-6 text-white" strokeWidth={2.5} />
+            {/* Moroccan arch icon (keyhole arch / bab) */}
+            <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" aria-hidden="true">
+              <path
+                d="M6 22V12C6 8.68 8.68 6 12 6C15.32 6 18 8.68 18 12V22"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M6 6L12 2L18 6"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M9.5 22V16C9.5 14.62 10.62 13.5 12 13.5C13.38 13.5 14.5 14.62 14.5 16V22"
+                stroke="white"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </Link>
           <span className={`absolute bottom-1 text-[9px] font-medium ${
             isPublishActive ? "text-[#b5522a]" : "text-stone-400"
