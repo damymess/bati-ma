@@ -65,26 +65,21 @@ export default function MobileTabBar() {
                 : "bg-[#b5522a] shadow-stone-300/50 hover:bg-[#a0471f]"
             }`}
           >
-            {/* Moroccan arch icon (keyhole arch / bab) */}
+            {/* Moroccan 8-pointed star (zellige) with upward arrow */}
             <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" aria-hidden="true">
+              {/* 8-pointed star (rub el hizb) */}
               <path
-                d="M6 22V12C6 8.68 8.68 6 12 6C15.32 6 18 8.68 18 12V22"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M6 6L12 2L18 6"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M9.5 22V16C9.5 14.62 10.62 13.5 12 13.5C13.38 13.5 14.5 14.62 14.5 16V22"
+                d="M12 2L14.1 8.3L20.5 7.5L15.9 12L20.5 16.5L14.1 15.7L12 22L9.9 15.7L3.5 16.5L8.1 12L3.5 7.5L9.9 8.3Z"
                 stroke="white"
                 strokeWidth="1.5"
+                strokeLinejoin="round"
+                fill="rgba(255,255,255,0.15)"
+              />
+              {/* Upward arrow */}
+              <path
+                d="M12 15V7M9 9.5L12 6.5L15 9.5"
+                stroke="white"
+                strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
