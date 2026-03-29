@@ -2,16 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Search, BookOpen, User } from "lucide-react";
+import { Home, Search, BookOpen, User, FileText } from "lucide-react";
 
 const TABS_LEFT = [
   { href: "/", label: "Accueil", icon: Home },
-  { href: "/architecte", label: "Architectes", icon: Search },
+  { href: "/demandes-devis", label: "Devis", icon: FileText },
 ];
 
 const TABS_RIGHT = [
-  { href: "/guide/comment-choisir-architecte-maroc", label: "Guides", icon: BookOpen },
-  { href: "/contact", label: "Profil", icon: User },
+  { href: "/architecte", label: "Architectes", icon: Search },
+  { href: "/connexion", label: "Compte", icon: User },
 ];
 
 /**
@@ -20,7 +20,7 @@ const TABS_RIGHT = [
  */
 export default function MobileTabBar() {
   const pathname = usePathname();
-  const isPublishActive = pathname === "/soumettre-projet";
+  const isPublishActive = pathname === "/demande-devis";
 
   const renderTab = (tab: { href: string; label: string; icon: typeof Home }) => {
     const Icon = tab.icon;
@@ -57,7 +57,7 @@ export default function MobileTabBar() {
 
         {/* Center: Publier — same style as other tabs but terracotta accent */}
         <Link
-          href="/soumettre-projet"
+          href="/demande-devis"
           className={`flex flex-1 flex-col items-center gap-0.5 py-1 text-[10px] font-medium transition-colors ${
             isPublishActive
               ? "text-[#b5522a]"

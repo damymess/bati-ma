@@ -37,6 +37,12 @@ const ArchitectProfile = model.define("architect_profile", {
 
   // Auth
   password_hash: model.text().nullable(),
+
+  // Subscription
+  subscription_tier: model.text().default("free"), // free | standard | premium
+  subscription_expires_at: model.dateTime().nullable(),
+  contacts_used_this_month: model.number().default(0),
+  contacts_limit: model.number().default(0), // 0=none, 5=standard, 9999=premium
 })
 
 export default ArchitectProfile

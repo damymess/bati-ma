@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import {
   LayoutDashboard,
@@ -10,6 +10,7 @@ import {
   MessageSquare,
   LogOut,
   Building2,
+  Crown,
 } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 
@@ -20,6 +21,7 @@ export default function DashboardLayout({
 }) {
   const { user, loading, logout } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (!loading && !user) {
@@ -44,7 +46,8 @@ export default function DashboardLayout({
     ? [
         { href: basePath, icon: LayoutDashboard, label: "Vue d'ensemble" },
         { href: `${basePath}/profil`, icon: User, label: "Mon profil" },
-        { href: `${basePath}/projets`, icon: FolderOpen, label: "Projets reçus" },
+        { href: `${basePath}/projets`, icon: FolderOpen, label: "Demandes de devis" },
+        { href: `${basePath}/abonnement`, icon: Crown, label: "Abonnement" },
         { href: `${basePath}/forum`, icon: MessageSquare, label: "Forum" },
       ]
     : [
@@ -87,13 +90,21 @@ export default function DashboardLayout({
             <ul className="space-y-1">
               {navItems.map((item) => {
                 const Icon = item.icon;
+                const isActive =
+                  item.href === basePath
+                    ? pathname === basePath
+                    : pathname.startsWith(item.href);
                 return (
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-stone-600 hover:bg-stone-100 hover:text-stone-900 transition-colors"
+                      className={`flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-colors ${
+                        isActive
+                          ? "bg-stone-100 text-stone-900 font-medium"
+                          : "text-stone-600 hover:bg-stone-100 hover:text-stone-900"
+                      }`}
                     >
-                      <Icon className="h-4 w-4" />
+                      <Icon className={`h-4 w-4 ${isActive ? "text-[#b5522a]" : ""}`} />
                       {item.label}
                     </Link>
                   </li>

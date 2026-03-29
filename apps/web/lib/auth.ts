@@ -1,4 +1,4 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://api.bati.ma"
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:9000"
 const API_KEY = process.env.NEXT_PUBLIC_MEDUSA_KEY ?? "pk_e0d8fd70ab0cf7e115d76345ec382cf5304b2411c545a5cc3ef1fc1ceb86f75f"
 const TOKEN_KEY = "bati_architect_token"
 
