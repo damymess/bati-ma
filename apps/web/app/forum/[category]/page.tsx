@@ -8,7 +8,24 @@ import {
   CATEGORY_SLUGS,
   getCategoryBySlug,
   getThreadsByCategory,
+  type ForumThread,
 } from "@/lib/forum";
+import { fetchForumThreads, type APIForumThread } from "@/lib/api-client";
+
+function apiToLocal(t: APIForumThread): ForumThread {
+  return {
+    id: t.id,
+    title: t.title,
+    author: t.author_name,
+    authorRole: t.author_role ?? "",
+    category: t.category,
+    createdAt: t.created_at.split("T")[0],
+    replies: t.replies_count,
+    views: t.views,
+    lastActivity: t.updated_at?.split("T")[0] ?? t.created_at.split("T")[0],
+    pinned: t.pinned,
+  };
+}
 
 type Props = { params: Promise<{ category: string }> };
 
@@ -36,7 +53,11 @@ export default async function ForumCategoryPage({ params }: Props) {
   const cat = getCategoryBySlug(category);
   if (!cat) notFound();
 
-  const threads = getThreadsByCategory(category);
+  // Try API first, fallback to hardcoded
+  const apiThreads = await fetchForumThreads(category);
+  const threads = apiThreads.length > 0
+    ? apiThreads.map(apiToLocal)
+    : getThreadsByCategory(category);
   const Icon = cat.icon;
 
   return (

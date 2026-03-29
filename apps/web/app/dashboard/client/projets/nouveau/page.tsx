@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/components/AuthProvider";
+import { submitProject } from "@/lib/api-client";
 
 const PROJECT_TYPES = [
   "Villa", "Appartement", "Immeuble", "Commercial", "Hôtel/Riad",
@@ -45,26 +46,20 @@ export default function NouveauProjetPage() {
     setLoading(true);
 
     try {
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:9000";
-      const res = await fetch(`${API_URL}/store/project-requests`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title,
-          description,
-          project_type: projectType,
-          location: city,
-          budget_min: 0,
-          budget_max: 0,
-          timeline,
-          client_name: `${user?.first_name} ${user?.last_name}`,
-          client_email: user?.email,
-          is_public: isPublic,
-          source: "marketplace",
-        }),
+      const ok = await submitProject({
+        title,
+        description,
+        project_type: projectType,
+        location: city,
+        budget_min: 0,
+        budget_max: 0,
+        timeline,
+        client_name: `${user?.first_name} ${user?.last_name}`,
+        client_email: user?.email ?? "",
+        is_public: isPublic,
       });
 
-      if (!res.ok) throw new Error("Erreur lors de la publication");
+      if (!ok) throw new Error("Erreur lors de la publication");
 
       router.push("/dashboard/client/projets");
     } catch (err: any) {

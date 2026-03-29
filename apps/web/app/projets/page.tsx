@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Search, Filter, MapPin, Calendar, Banknote, FolderOpen, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { fetchPublicProjects } from "@/lib/api-client";
 
 // Sample marketplace data (hardcoded for now, will fetch from API)
 const SAMPLE_PROJECTS = [
@@ -100,12 +101,36 @@ function timeAgo(dateStr: string) {
   return `Il y a ${days}j`;
 }
 
+type Project = typeof SAMPLE_PROJECTS[number];
+
 export default function MarketplacePage() {
+  const [projects, setProjects] = useState<Project[]>(SAMPLE_PROJECTS);
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [cityFilter, setCityFilter] = useState("");
 
-  const filtered = SAMPLE_PROJECTS.filter((p) => {
+  // Fetch from API, fallback to hardcoded
+  useEffect(() => {
+    fetchPublicProjects().then((apiData) => {
+      if (apiData.length > 0) {
+        setProjects(apiData.map((p) => ({
+          id: p.id,
+          title: p.title,
+          project_type: p.project_type,
+          location: p.location,
+          budget: p.budget_max ? `${(p.budget_min ?? 0).toLocaleString()} - ${p.budget_max.toLocaleString()} MAD` : "",
+          timeline: p.timeline ?? "",
+          description: p.description,
+          client_name: p.client_name,
+          created_at: p.created_at.split("T")[0],
+          responses_count: p.responses_count,
+          status: p.status,
+        })));
+      }
+    });
+  }, []);
+
+  const filtered = projects.filter((p) => {
     if (search && !p.title.toLowerCase().includes(search.toLowerCase())) return false;
     if (typeFilter && p.project_type !== typeFilter) return false;
     if (cityFilter && p.location !== cityFilter) return false;

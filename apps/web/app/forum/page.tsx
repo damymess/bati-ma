@@ -4,7 +4,8 @@ import { ArrowRight, Users, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import ForumThreadCard from "@/components/ForumThreadCard";
-import { FORUM_CATEGORIES, getRecentThreads, FORUM_THREADS } from "@/lib/forum";
+import { FORUM_CATEGORIES, getRecentThreads, FORUM_THREADS, type ForumThread } from "@/lib/forum";
+import { fetchForumThreads, type APIForumThread } from "@/lib/api-client";
 
 export const metadata: Metadata = {
   title: "Forum Architectes Maroc — Communauté Bati.ma",
@@ -18,9 +19,28 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://bati.ma/forum" },
 };
 
-export default function ForumPage() {
-  const recentThreads = getRecentThreads(6);
-  const totalThreads = FORUM_THREADS.length;
+function apiToLocal(t: APIForumThread): ForumThread {
+  return {
+    id: t.id,
+    title: t.title,
+    author: t.author_name,
+    authorRole: t.author_role ?? "",
+    category: t.category,
+    createdAt: t.created_at.split("T")[0],
+    replies: t.replies_count,
+    views: t.views,
+    lastActivity: t.updated_at?.split("T")[0] ?? t.created_at.split("T")[0],
+    pinned: t.pinned,
+  };
+}
+
+export default async function ForumPage() {
+  // Try API first, fallback to hardcoded data
+  const apiThreads = await fetchForumThreads();
+  const recentThreads = apiThreads.length > 0
+    ? apiThreads.slice(0, 6).map(apiToLocal)
+    : getRecentThreads(6);
+  const totalThreads = apiThreads.length > 0 ? apiThreads.length : FORUM_THREADS.length;
 
   const forumSchema = {
     "@context": "https://schema.org",

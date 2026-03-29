@@ -1,24 +1,52 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Search, Filter, Bell, Landmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import AppelOffreCard from "@/components/AppelOffreCard";
-import { APPELS_OFFRES } from "@/lib/appels-offres";
+import { APPELS_OFFRES, type AppelOffre } from "@/lib/appels-offres";
 import type { AOStatus, AOSector } from "@/lib/appels-offres";
+import { fetchAppelsOffres, type APIAppelOffre } from "@/lib/api-client";
 
 const SECTORS: AOSector[] = ["Architecture", "BTP", "Urbanisme", "Intérieur"];
 const STATUSES: AOStatus[] = ["Ouvert", "Clôturé", "Attribué"];
 
+function apiToLocal(ao: APIAppelOffre): AppelOffre {
+  return {
+    id: ao.id,
+    title: ao.title,
+    description: ao.description,
+    organism: ao.organism,
+    city: ao.city,
+    reference: ao.reference ?? undefined,
+    type: ao.type as AppelOffre["type"],
+    sector: ao.sector as AppelOffre["sector"],
+    budget: ao.budget ?? undefined,
+    deadline: ao.deadline,
+    publishDate: ao.publish_date,
+    source: ao.source,
+    sourceUrl: ao.source_url ?? "",
+    status: ao.status as AppelOffre["status"],
+  };
+}
+
 export default function AppelsOffresPage() {
+  const [allAO, setAllAO] = useState<AppelOffre[]>(APPELS_OFFRES);
   const [search, setSearch] = useState("");
   const [sectorFilter, setSectorFilter] = useState<AOSector | "">("");
   const [statusFilter, setStatusFilter] = useState<AOStatus | "">("");
 
-  const filtered = APPELS_OFFRES.filter((ao) => {
+  // Fetch from API on mount, fallback to hardcoded
+  useEffect(() => {
+    fetchAppelsOffres().then((apiData) => {
+      if (apiData.length > 0) setAllAO(apiData.map(apiToLocal));
+    });
+  }, []);
+
+  const filtered = allAO.filter((ao) => {
     if (search && !ao.title.toLowerCase().includes(search.toLowerCase()) && !ao.organism.toLowerCase().includes(search.toLowerCase())) return false;
     if (sectorFilter && ao.sector !== sectorFilter) return false;
     if (statusFilter && ao.status !== statusFilter) return false;
@@ -29,7 +57,7 @@ export default function AppelsOffresPage() {
     return new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
   });
 
-  const openCount = APPELS_OFFRES.filter((ao) => ao.status === "Ouvert").length;
+  const openCount = allAO.filter((ao) => ao.status === "Ouvert").length;
 
   return (
     <>

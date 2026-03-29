@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Save, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/components/AuthProvider";
+import { getMe, updateMe } from "@/lib/auth";
 
 const SPECIALTIES = [
   "Résidentiel", "Commercial", "Intérieur", "Riad & Patrimoine",
@@ -28,6 +29,24 @@ export default function ProfilArchitectePage() {
   const [selectedSpecs, setSelectedSpecs] = useState<string[]>([]);
   const [selectedCities, setSelectedCities] = useState<string[]>([]);
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState("");
+
+  // Load existing profile from API
+  useEffect(() => {
+    getMe().then((profile) => {
+      if (profile) {
+        setName(profile.name || "");
+        setPhone(profile.phone || "");
+        setLicense(profile.license_number || "");
+        setExperience(String(profile.years_experience || ""));
+        setDescription(profile.description || "");
+        setWebsite(profile.website || "");
+        setHourlyRate(profile.hourly_rate ? String(profile.hourly_rate) : "");
+        setSelectedSpecs(profile.specialties || []);
+        setSelectedCities(profile.regions || []);
+      }
+    });
+  }, []);
 
   function toggleSpec(s: string) {
     setSelectedSpecs((prev) =>
@@ -41,11 +60,26 @@ export default function ProfilArchitectePage() {
     );
   }
 
-  function handleSave(e: React.FormEvent) {
+  async function handleSave(e: React.FormEvent) {
     e.preventDefault();
-    // TODO: call API to save profile
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+    setError("");
+    try {
+      await updateMe({
+        name,
+        phone: phone || null,
+        license_number: license || null,
+        years_experience: Number(experience) || 0,
+        description: description || null,
+        website: website || null,
+        hourly_rate: Number(hourlyRate) || null,
+        specialties: selectedSpecs,
+        regions: selectedCities,
+      });
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Erreur de sauvegarde");
+    }
   }
 
   return (
