@@ -29,7 +29,7 @@ export default function Nav() {
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <Image src="/images/logo-bati.jpg" alt="Bati.ma" width={100} height={28} className="h-7 w-auto" />
+          <Image src="/images/logo-bati.jpg" alt="Bati.ma" width={100} height={28} className="h-7 w-auto rounded" />
         </Link>
 
         {/* Desktop nav */}
