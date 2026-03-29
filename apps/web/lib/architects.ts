@@ -27,18 +27,27 @@ const API_KEY =
   process.env.NEXT_PUBLIC_MEDUSA_KEY ??
   "pk_e0d8fd70ab0cf7e115d76345ec382cf5304b2411c545a5cc3ef1fc1ceb86f75f";
 
+function cleanText(s: string | null | undefined): string {
+  if (!s) return "";
+  // Remove Unicode replacement characters (encoding corruption)
+  const cleaned = String(s).replace(/\uFFFD/g, "").trim();
+  // If more than 20% of chars were garbage, discard the string
+  if (cleaned.length < String(s).trim().length * 0.8) return "";
+  return cleaned;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapToFrontend(a: Record<string, any>, index: number): Architect {
   return {
     id: String(a.id ?? `api-${index}`),
-    name: String(a.name ?? ""),
+    name: cleanText(a.name) || `Architecte ${index + 1}`,
     city: (a.regions as string[])?.[0] ?? "",
     specialties: ((a.specialties as string[]) ?? ["Résidentiel"]) as Specialty[],
     experience: (a.years_experience as number) ?? 5,
     rating: (a.rating as number) ?? 0,
     reviewCount: (a.review_count as number) ?? 0,
-    description: String(a.description ?? ""),
-    phone: a.phone ? String(a.phone) : undefined,
+    description: cleanText(a.description),
+    phone: a.phone ? cleanText(a.phone) || undefined : undefined,
     premium: Boolean(a.premium),
   };
 }
