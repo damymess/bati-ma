@@ -73,6 +73,73 @@ function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
+// ---------------------------------------------------------------------------
+// Address validation — reject non-Moroccan listings before insertion
+// ---------------------------------------------------------------------------
+
+const MOROCCAN_INDICATORS = [
+  "Casablanca","Marrakech","Rabat","Tanger","Agadir","Fès","Fes","Meknès","Meknes",
+  "Oujda","Kénitra","Kenitra","Tétouan","Tetouan","Nador","Jadida","Hay ","Quartier",
+  "Lotissement","Résidence","Médina","Medina","Guéliz","Gueliz","Ain ","Beni ","Sidi ",
+  "Hoceima","Bouskoura","Témara","Temara","Salé","Sale","Mohammedia","Khémisset","Settat",
+  "Berrechid","Khouribga","Laâyoune","Laayoune","Dakhla","Errachidia","Ouarzazate",
+  "Mellal","Taounate","Taza","Guelmim","Tiznit","Taroudant","Essaouira","Larache",
+  "Chefchaouen","Kalaat","Benslimane","Benguérir","Safi","Oulad","Maroc",
+  "Rue ","Avenue ","Boulevard ","Bd ","Av.",
+];
+
+const FOREIGN_KEYWORDS = [
+  "Jl.","Jalan","District,","Prefecture","Rua ","Centro,","Sukamaju","Depok",
+  "Jakarta","Surabaya","Bandung","Minamiaizu","Kanagawa","Saitama","Osaka","Fukuoka",
+  "Punjab","Karachi","Lahore","Philippines","Manila","Lagos","Abuja","Nairobi",
+  "Brazil","Argentina","Colombia","Santander","Bogotá","Lima,","Kildare","Romford",
+  "Lemont, IL","Porter Ranch","Owings Mills","Katy, TX","Multan","Meerut","Bareilly",
+  "Gariaha","Goethestraße","Augsburg","Ratingen","Pontoise","Szombathely","Keflav",
+  "London","Paris ","Lyon ","Marseille","Toulouse","Bordeaux","Nantes","Strasbourg",
+];
+
+const NON_ARCH_KEYWORDS = [
+  "Assurance","Insurance","Events ","Catering","Nail ","Hair ","Beauty","Spa ",
+  "Gym ","Fitness","Pharmacie","Dentist","Dental","Medical","Hospital","Car Rental",
+  "SwissLife","AXA ","Allianz","MAAF","ATM","Parking","Charging","Telecom",
+  "Restaurant","Hotel ","Hostel","Bar ","Café","Cafe ","Supermarché","Supermarket",
+];
+
+// French postal codes (75xxx Paris, 69xxx Lyon, etc.)
+const FRENCH_POSTAL = /\b(75|69|13|31|33|59|67|76|77|78|91|92|93|94|95|44|06|38|34|35|57|62|63)\d{3}\b/;
+
+// Non-Latin scripts: CJK, Japanese, Korean, Devanagari, Thai, Myanmar
+const HAS_CJK = /[\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af\u0900-\u097f\u0e00-\u0e7f\u1000-\u109f]/;
+
+function isMoroccanBusiness(item, cityName) {
+  const name = (item.title ?? "").trim();
+  const address = (item.address ?? "").trim();
+  const category = (item.category ?? "") + " " + (item.additional_categories ?? []).join(" ");
+  const text = name + " " + category;
+
+  // Reject CJK / non-Latin scripts in name
+  if (HAS_CJK.test(name)) return false;
+
+  // Reject non-architecture businesses
+  if (NON_ARCH_KEYWORDS.some((k) => text.includes(k))) return false;
+
+  // Reject known foreign address patterns
+  if (FOREIGN_KEYWORDS.some((k) => address.includes(k))) return false;
+
+  // Reject French postal codes
+  if (FRENCH_POSTAL.test(address)) return false;
+
+  // If there's an address, it must contain at least one Moroccan indicator OR the queried city name
+  if (address.length > 0) {
+    const hasMoroccan =
+      MOROCCAN_INDICATORS.some((k) => address.includes(k)) ||
+      address.toLowerCase().includes(cityName.toLowerCase());
+    if (!hasMoroccan) return false;
+  }
+
+  return true;
+}
+
 async function searchBusinessListings(keyword, cityName) {
   const payload = [
     {
@@ -157,7 +224,7 @@ async function main() {
       await sleep(500);
 
       const items = await searchBusinessListings(keyword, city.name);
-      console.log(`  Got ${items.length} results from DataForSEO`);
+      console.log(`  Got ${items.length} results from DataForSEO (filtering non-Moroccan...)`);
 
       for (const item of items) {
         const name = item.title?.trim();
@@ -165,6 +232,13 @@ async function main() {
 
         const key = `${city.slug}::${name.toLowerCase()}`;
         if (seenNames.has(key)) continue;
+
+        // Validate Moroccan business before insertion
+        if (!isMoroccanBusiness(item, city.name)) {
+          console.log(`  [SKIP] Non-Moroccan: "${name}" — ${(item.address ?? "no address").slice(0, 60)}`);
+          continue;
+        }
+
         seenNames.add(key);
 
         const categories = item.category ? [item.category] : (item.additional_categories ?? []);
@@ -189,7 +263,7 @@ async function main() {
     }
   }
 
-  console.log(`\n✅ Collected ${allArchitects.length} unique architects`);
+  console.log(`\n✅ Collected ${allArchitects.length} unique Moroccan architects (non-Moroccan filtered at source)`);
   console.log("📊 City breakdown:");
 
   const byCityCount = {};
