@@ -1,0 +1,24 @@
+{
+  "name": "Bati.ma — Architectes au Maroc",
+  "short_name": "Bati.ma",
+  "description": "Trouvez votre architecte au Maroc. 800+ professionnels vérifiés.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#0c0a09",
+  "background_color": "#0c0a09",
+  "lang": "fr",
+  "categories": ["business", "lifestyle"],
+  "icons": [
+    {
+      "src": "/images/logo-bati.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/images/logo-bati.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

@@ -1,13 +1,23 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import MobileTabBar from "@/components/MobileTabBar";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: "cover",
+  themeColor: "#0c0a09",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://bati.ma"),
@@ -17,6 +27,12 @@ export const metadata: Metadata = {
   },
   description:
     "Trouvez un architecte qualifié au Maroc. Annuaire complet des cabinets d'architecture et architectes d'intérieur à Casablanca, Marrakech, Rabat et dans toutes les villes du Maroc.",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Bati.ma",
+  },
   keywords: [
     "architecte maroc",
     "architecte casablanca",
@@ -66,8 +82,11 @@ export default function RootLayout({
     <html lang="fr" className={inter.variable}>
       <body className="min-h-screen flex flex-col font-sans antialiased">
         <Nav />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <main className="flex-1 pb-[72px] lg:pb-0">{children}</main>
+        <div className="hidden lg:block">
+          <Footer />
+        </div>
+        <MobileTabBar />
       </body>
     </html>
   );
