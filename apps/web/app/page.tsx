@@ -186,6 +186,90 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ──── 2 PARCOURS ──── */}
+      <section className="bg-[#f5f0ea] px-4 py-14 sm:px-6">
+        <div className="mx-auto max-w-4xl">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold tracking-tight text-stone-900">
+              Comment utiliser Bati.ma ?
+            </h2>
+            <p className="mt-1 text-sm text-stone-500">
+              Deux espaces dédiés, un seul objectif : connecter les bons projets aux bons architectes
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Client */}
+            <Link href="/demande-devis" className="group block">
+              <Card className="h-full border-2 border-stone-200 transition-all group-hover:border-[#b5522a] group-hover:shadow-lg">
+                <CardContent className="p-6 text-center">
+                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 mb-4">
+                    <Home className="h-7 w-7" />
+                  </div>
+                  <h3 className="text-lg font-bold text-stone-900 mb-2">
+                    Je cherche un architecte
+                  </h3>
+                  <p className="text-sm text-stone-500 mb-4">
+                    Décrivez votre projet et recevez des propositions d&apos;architectes qualifiés dans votre ville
+                  </p>
+                  <ul className="text-left space-y-2 mb-5">
+                    <li className="flex items-center gap-2 text-sm text-stone-600">
+                      <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />
+                      Demande de devis gratuite
+                    </li>
+                    <li className="flex items-center gap-2 text-sm text-stone-600">
+                      <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />
+                      Comparez les architectes
+                    </li>
+                    <li className="flex items-center gap-2 text-sm text-stone-600">
+                      <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />
+                      Suivez vos projets en ligne
+                    </li>
+                  </ul>
+                  <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#b5522a] group-hover:gap-2 transition-all">
+                    Demander un devis <ArrowRight className="h-4 w-4" />
+                  </span>
+                </CardContent>
+              </Card>
+            </Link>
+
+            {/* Architecte */}
+            <Link href="/inscription-architecte" className="group block">
+              <Card className="h-full border-2 border-stone-200 transition-all group-hover:border-[#b5522a] group-hover:shadow-lg">
+                <CardContent className="p-6 text-center">
+                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-50 text-[#b5522a] mb-4">
+                    <Compass className="h-7 w-7" />
+                  </div>
+                  <h3 className="text-lg font-bold text-stone-900 mb-2">
+                    Je suis architecte
+                  </h3>
+                  <p className="text-sm text-stone-500 mb-4">
+                    Créez votre profil, recevez des demandes de devis et développez votre activité
+                  </p>
+                  <ul className="text-left space-y-2 mb-5">
+                    <li className="flex items-center gap-2 text-sm text-stone-600">
+                      <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />
+                      Profil et portfolio en ligne
+                    </li>
+                    <li className="flex items-center gap-2 text-sm text-stone-600">
+                      <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />
+                      Recevez des demandes de devis
+                    </li>
+                    <li className="flex items-center gap-2 text-sm text-stone-600">
+                      <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />
+                      Inscription gratuite
+                    </li>
+                  </ul>
+                  <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#b5522a] group-hover:gap-2 transition-all">
+                    Inscrire mon cabinet <ArrowRight className="h-4 w-4" />
+                  </span>
+                </CardContent>
+              </Card>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ──── SPÉCIALITÉS ──── */}
       <section className="bg-white px-4 py-16 sm:px-6">
         <div className="mx-auto max-w-5xl">
