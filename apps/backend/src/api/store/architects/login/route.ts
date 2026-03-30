@@ -31,7 +31,7 @@ export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
       return res.status(401).json({ error: "Email ou mot de passe incorrect" })
     }
 
-    const token = signToken({ architect_id: architect.id, email: architect.email })
+    const token = signToken({ id: architect.id, email: architect.email, role: "architect" })
 
     const { password_hash: _, ...profile } = architect
     res.json({ architect: profile, token })

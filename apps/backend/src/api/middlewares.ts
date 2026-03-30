@@ -58,6 +58,11 @@ export default defineMiddlewares({
       bodyParser: { sizeLimit: "1mb" },
     },
     {
+      matcher: "/store/clients*",
+      middlewares: [],
+      bodyParser: { sizeLimit: "1mb" },
+    },
+    {
       matcher: "/store/forum*",
       middlewares: [],
       bodyParser: { sizeLimit: "1mb" },

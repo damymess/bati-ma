@@ -1,7 +1,14 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { getMe, logout as authLogout, type ArchitectProfile } from "@/lib/auth";
+import {
+  getMe,
+  getMeClient,
+  logout as authLogout,
+  decodeToken,
+  type ArchitectProfile,
+  type ClientProfile,
+} from "@/lib/auth";
 
 export type User = {
   id: string;
@@ -26,7 +33,7 @@ const AuthContext = createContext<AuthContextType>({
   logout: () => {},
 });
 
-function profileToUser(profile: ArchitectProfile): User {
+function architectToUser(profile: ArchitectProfile): User {
   const parts = profile.name.split(" ");
   return {
     id: profile.id,
@@ -38,15 +45,43 @@ function profileToUser(profile: ArchitectProfile): User {
   };
 }
 
+function clientToUser(profile: ClientProfile): User {
+  const parts = profile.name.split(" ");
+  return {
+    id: profile.id,
+    email: profile.email,
+    first_name: parts[0] || "",
+    last_name: parts.slice(1).join(" ") || "",
+    role: "client",
+  };
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   const refresh = async () => {
     setLoading(true);
-    const me = await getMe();
-    setUser(me ? profileToUser(me) : null);
-    setLoading(false);
+    try {
+      const decoded = decodeToken();
+      if (!decoded) {
+        setUser(null);
+        setLoading(false);
+        return;
+      }
+
+      if (decoded.role === "client") {
+        const me = await getMeClient();
+        setUser(me ? clientToUser(me) : null);
+      } else {
+        const me = await getMe();
+        setUser(me ? architectToUser(me) : null);
+      }
+    } catch {
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const logout = () => {

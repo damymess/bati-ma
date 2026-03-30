@@ -1,17 +1,34 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { FolderOpen, FileText, Plus } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/components/AuthProvider";
+import { fetchClientProjets } from "@/lib/auth";
 
 export default function ClientDashboard() {
   const { user } = useAuth();
+  const [projetsCount, setProjetsCount] = useState(0);
+  const [devisCount, setDevisCount] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const projets = await fetchClientProjets();
+        setProjetsCount(projets.length);
+        setDevisCount(projets.filter((p: any) => p.architect_response).length);
+      } catch {}
+      setLoading(false);
+    };
+    load();
+  }, []);
 
   const stats = [
-    { label: "Projets publiés", value: "0", icon: FolderOpen, color: "text-blue-600 bg-blue-50" },
-    { label: "Devis reçus", value: "0", icon: FileText, color: "text-emerald-600 bg-emerald-50" },
+    { label: "Projets publiés", value: loading ? "..." : String(projetsCount), icon: FolderOpen, color: "text-blue-600 bg-blue-50" },
+    { label: "Devis reçus", value: loading ? "..." : String(devisCount), icon: FileText, color: "text-emerald-600 bg-emerald-50" },
   ];
 
   return (
@@ -45,9 +62,9 @@ export default function ClientDashboard() {
       </div>
 
       <Button className="rounded-full" asChild>
-        <Link href="/dashboard/client/projets/nouveau">
+        <Link href="/demande-devis">
           <Plus className="mr-2 h-4 w-4" />
-          Publier un nouveau projet
+          Publier une demande de devis
         </Link>
       </Button>
     </div>

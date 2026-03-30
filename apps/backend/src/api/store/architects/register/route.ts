@@ -46,7 +46,7 @@ export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
       is_active: true,
     })
 
-    const token = signToken({ architect_id: architect.id, email: architect.email })
+    const token = signToken({ id: architect.id, email: architect.email, role: "architect" })
 
     // Return profile without password_hash
     const { password_hash: _, ...profile } = architect

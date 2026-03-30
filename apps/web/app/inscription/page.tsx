@@ -3,23 +3,20 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { UserPlus, Building2, User } from "lucide-react";
+import { UserPlus, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/components/AuthProvider";
-import { register } from "@/lib/auth";
-
-type UserRole = "architect" | "client";
+import { registerClient } from "@/lib/auth";
 
 export default function InscriptionPage() {
   const router = useRouter();
   const { refresh } = useAuth();
-  const [step, setStep] = useState<1 | 2>(1);
-  const [role, setRole] = useState<UserRole>("client");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -28,13 +25,14 @@ export default function InscriptionPage() {
     setError("");
     setLoading(true);
     try {
-      await register({
+      await registerClient({
         name: `${firstName} ${lastName}`,
         email,
         password,
+        phone: phone || undefined,
       });
       await refresh();
-      router.push(role === "architect" ? "/dashboard/architecte" : "/dashboard/client");
+      router.push("/dashboard/client");
     } catch (err: any) {
       setError(err.message || "Erreur lors de l'inscription");
     } finally {
@@ -49,110 +47,85 @@ export default function InscriptionPage() {
           <div className="inline-flex items-center justify-center h-12 w-12 rounded-xl bg-stone-100 mb-4">
             <UserPlus className="h-6 w-6 text-[#b5522a]" />
           </div>
-          <h1 className="text-2xl font-bold text-stone-900">Créer un compte</h1>
+          <h1 className="text-2xl font-bold text-stone-900">Créer un compte client</h1>
           <p className="text-sm text-stone-500 mt-1">
-            Rejoignez la communauté Bati.ma gratuitement
+            Publiez vos projets et recevez des devis d&apos;architectes
           </p>
         </div>
 
-        {step === 1 && (
-          <div className="space-y-4">
-            <p className="text-sm font-medium text-stone-700 text-center mb-2">
-              Vous êtes :
-            </p>
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                onClick={() => { setRole("architect"); setStep(2); }}
-                className="flex flex-col items-center gap-3 rounded-xl border-2 border-stone-200 p-6 hover:border-[#b5522a] transition-colors"
-              >
-                <Building2 className="h-8 w-8 text-[#b5522a]" />
-                <div className="text-center">
-                  <p className="text-sm font-semibold text-stone-900">Architecte</p>
-                  <p className="text-xs text-stone-500 mt-0.5">
-                    Gérez votre profil, portfolio et répondez aux projets
-                  </p>
-                </div>
-              </button>
-              <button
-                onClick={() => { setRole("client"); setStep(2); }}
-                className="flex flex-col items-center gap-3 rounded-xl border-2 border-stone-200 p-6 hover:border-[#b5522a] transition-colors"
-              >
-                <User className="h-8 w-8 text-[#b5522a]" />
-                <div className="text-center">
-                  <p className="text-sm font-semibold text-stone-900">Particulier</p>
-                  <p className="text-xs text-stone-500 mt-0.5">
-                    Publiez vos projets et recevez des devis d&apos;architectes
-                  </p>
-                </div>
-              </button>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {error && (
+            <div className="rounded-lg bg-red-50 border border-red-200 p-3 text-sm text-red-700">
+              {error}
+            </div>
+          )}
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label htmlFor="reg-firstname" className="text-xs font-medium text-stone-700 mb-1 block">Prénom *</label>
+              <Input id="reg-firstname" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+            </div>
+            <div>
+              <label htmlFor="reg-lastname" className="text-xs font-medium text-stone-700 mb-1 block">Nom *</label>
+              <Input id="reg-lastname" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
             </div>
           </div>
-        )}
 
-        {step === 2 && (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {error && (
-              <div className="rounded-lg bg-red-50 border border-red-200 p-3 text-sm text-red-700">
-                {error}
-              </div>
-            )}
+          <div>
+            <label htmlFor="reg-email" className="text-xs font-medium text-stone-700 mb-1 block">Email *</label>
+            <Input
+              id="reg-email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="votre@email.com"
+              required
+            />
+          </div>
 
-            <div className="rounded-lg bg-stone-50 border border-stone-200 p-3 text-sm text-center">
-              Inscription en tant que{" "}
-              <strong>{role === "architect" ? "Architecte" : "Particulier"}</strong>
-              {" · "}
-              <button
-                type="button"
-                onClick={() => setStep(1)}
-                className="text-[#b5522a] hover:underline"
-              >
-                Changer
-              </button>
-            </div>
+          <div>
+            <label htmlFor="reg-phone" className="text-xs font-medium text-stone-700 mb-1 block">Téléphone</label>
+            <Input
+              id="reg-phone"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="+212 6XX XXX XXX"
+            />
+          </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="text-xs font-medium text-stone-700 mb-1 block">Prénom</label>
-                <Input value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
-              </div>
-              <div>
-                <label className="text-xs font-medium text-stone-700 mb-1 block">Nom</label>
-                <Input value={lastName} onChange={(e) => setLastName(e.target.value)} required />
-              </div>
-            </div>
+          <div>
+            <label htmlFor="reg-password" className="text-xs font-medium text-stone-700 mb-1 block">
+              Mot de passe (min. 8 caractères) *
+            </label>
+            <Input
+              id="reg-password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              minLength={8}
+              required
+            />
+          </div>
 
-            <div>
-              <label className="text-xs font-medium text-stone-700 mb-1 block">Email</label>
-              <Input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="votre@email.com"
-                required
-              />
-            </div>
+          <Button type="submit" className="w-full rounded-full" disabled={loading}>
+            {loading ? "Création du compte..." : "Créer mon compte"}
+          </Button>
+        </form>
 
-            <div>
-              <label className="text-xs font-medium text-stone-700 mb-1 block">
-                Mot de passe (min. 8 caractères)
-              </label>
-              <Input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                minLength={8}
-                required
-              />
-            </div>
+        <div className="mt-6 rounded-lg border border-stone-200 bg-stone-50 p-4 text-center">
+          <p className="text-sm text-stone-600 mb-2">
+            Vous êtes architecte ?
+          </p>
+          <Button variant="outline" size="sm" className="rounded-full" asChild>
+            <Link href="/inscription-architecte">
+              <Building2 className="mr-1 h-4 w-4" />
+              Inscription architecte
+            </Link>
+          </Button>
+        </div>
 
-            <Button type="submit" className="w-full rounded-full" disabled={loading}>
-              {loading ? "Création du compte..." : "Créer mon compte"}
-            </Button>
-          </form>
-        )}
-
-        <p className="text-center text-sm text-stone-500 mt-6">
+        <p className="text-center text-sm text-stone-500 mt-4">
           Déjà un compte ?{" "}
           <Link href="/connexion" className="text-[#b5522a] font-medium hover:underline">
             Se connecter
