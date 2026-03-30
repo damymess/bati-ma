@@ -3,15 +3,19 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { LogIn, Eye, EyeOff } from "lucide-react";
+import { LogIn, Eye, EyeOff, Building2, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { login } from "@/lib/auth";
+import { login, loginClient } from "@/lib/auth";
+import { useAuth } from "@/components/AuthProvider";
+
+type Role = "architect" | "client";
 
 export default function ConnexionPage() {
   const router = useRouter();
+  const { refresh } = useAuth();
+  const [role, setRole] = useState<Role>("client");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPwd, setShowPwd] = useState(false);
@@ -23,8 +27,13 @@ export default function ConnexionPage() {
     setError("");
     setLoading(true);
     try {
-      await login(email, password);
-      router.push("/mon-espace");
+      if (role === "architect") {
+        await login(email, password);
+      } else {
+        await loginClient(email, password);
+      }
+      await refresh();
+      router.push(role === "architect" ? "/dashboard/architecte" : "/dashboard/client");
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Erreur de connexion");
     } finally {
@@ -36,47 +45,72 @@ export default function ConnexionPage() {
     <>
       <section className="bg-stone-950 px-4 py-12 sm:px-6">
         <div className="mx-auto max-w-md text-center">
-          <Badge variant="outline" className="border-stone-700 text-stone-400 text-xs mb-4">
-            Espace Architecte
-          </Badge>
           <h1 className="text-3xl font-bold text-white">Connexion</h1>
           <p className="mt-2 text-stone-400 text-sm">
-            Accédez à votre espace professionnel
+            Accédez à votre espace personnel
           </p>
         </div>
       </section>
 
       <section className="px-4 py-12 sm:px-6">
         <div className="mx-auto max-w-md">
+          {/* Role tabs */}
+          <div className="flex rounded-lg border border-stone-200 p-1 mb-6 bg-stone-50">
+            <button
+              onClick={() => setRole("client")}
+              className={`flex-1 flex items-center justify-center gap-2 rounded-md py-2.5 text-sm font-medium transition-colors ${
+                role === "client"
+                  ? "bg-white text-stone-900 shadow-sm"
+                  : "text-stone-500 hover:text-stone-700"
+              }`}
+            >
+              <User className="h-4 w-4" />
+              Particulier
+            </button>
+            <button
+              onClick={() => setRole("architect")}
+              className={`flex-1 flex items-center justify-center gap-2 rounded-md py-2.5 text-sm font-medium transition-colors ${
+                role === "architect"
+                  ? "bg-white text-stone-900 shadow-sm"
+                  : "text-stone-500 hover:text-stone-700"
+              }`}
+            >
+              <Building2 className="h-4 w-4" />
+              Architecte
+            </button>
+          </div>
+
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <LogIn className="h-5 w-5 text-[#b5522a]" />
-                Se connecter
+                {role === "architect" ? "Espace Architecte" : "Espace Client"}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="mb-1 block text-sm font-medium text-stone-700">
-                    Email professionnel
+                  <label htmlFor="login-email" className="mb-1 block text-sm font-medium text-stone-700">
+                    Email
                   </label>
                   <Input
+                    id="login-email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="contact@votre-cabinet.ma"
+                    placeholder={role === "architect" ? "contact@votre-cabinet.ma" : "votre@email.com"}
                     required
                     autoComplete="email"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium text-stone-700">
+                  <label htmlFor="login-password" className="mb-1 block text-sm font-medium text-stone-700">
                     Mot de passe
                   </label>
                   <div className="relative">
                     <Input
+                      id="login-password"
                       type={showPwd ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -106,13 +140,16 @@ export default function ConnexionPage() {
                   className="w-full bg-[#b5522a] hover:bg-[#9e4725]"
                   disabled={loading}
                 >
-                  {loading ? "Connexion…" : "Se connecter"}
+                  {loading ? "Connexion..." : "Se connecter"}
                 </Button>
               </form>
 
               <p className="mt-4 text-center text-sm text-stone-500">
                 Pas encore de compte ?{" "}
-                <Link href="/inscription-architecte" className="text-[#b5522a] font-medium hover:underline">
+                <Link
+                  href={role === "architect" ? "/inscription-architecte" : "/inscription"}
+                  className="text-[#b5522a] font-medium hover:underline"
+                >
                   S&apos;inscrire gratuitement
                 </Link>
               </p>

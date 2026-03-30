@@ -1,6 +1,11 @@
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:9000"
-const API_KEY = process.env.NEXT_PUBLIC_MEDUSA_KEY ?? "pk_e0d8fd70ab0cf7e115d76345ec382cf5304b2411c545a5cc3ef1fc1ceb86f75f"
-const TOKEN_KEY = "bati_architect_token"
+const API_KEY = process.env.NEXT_PUBLIC_MEDUSA_KEY ?? ""
+const TOKEN_KEY = "bati_token"
+// Migrate old key
+if (typeof window !== "undefined" && localStorage.getItem("bati_architect_token") && !localStorage.getItem(TOKEN_KEY)) {
+  localStorage.setItem(TOKEN_KEY, localStorage.getItem("bati_architect_token")!)
+  localStorage.removeItem("bati_architect_token")
+}
 
 export type ArchitectProfile = {
   id: string
@@ -24,14 +29,25 @@ export type ArchitectProfile = {
   created_at: string
 }
 
+export type ClientProfile = {
+  id: string
+  name: string
+  email: string
+  phone: string | null
+  city: string | null
+  is_active: boolean
+  created_at: string
+}
+
 function headers() {
   return {
     "Content-Type": "application/json",
-    "x-publishable-api-key": API_KEY,
+    ...(API_KEY ? { "x-publishable-api-key": API_KEY } : {}),
   }
 }
 
-// ─── Token management (localStorage — client-side only) ─────────────────────
+// ─── Token management ───────────────────────────────────────────────────────
+
 export function getToken(): string | null {
   if (typeof window === "undefined") return null
   return localStorage.getItem(TOKEN_KEY)
@@ -49,7 +65,25 @@ export function isLoggedIn(): boolean {
   return !!getToken()
 }
 
-// ─── API calls ───────────────────────────────────────────────────────────────
+/** Decode JWT payload without verifying signature (client-side only) */
+export function decodeToken(): { id: string; email: string; role: "architect" | "client" } | null {
+  const token = getToken()
+  if (!token) return null
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]))
+    // Legacy compat: old tokens have architect_id but no role
+    if (!payload.role && payload.architect_id) {
+      payload.role = "architect"
+      payload.id = payload.architect_id
+    }
+    return payload
+  } catch {
+    return null
+  }
+}
+
+// ─── Architect auth ─────────────────────────────────────────────────────────
+
 export async function register(data: {
   name: string
   email: string
@@ -107,6 +141,62 @@ export async function updateMe(data: Partial<ArchitectProfile>): Promise<Archite
   if (!res.ok) throw new Error(json.error || "Erreur mise à jour")
   return json.architect
 }
+
+// ─── Client auth ────────────────────────────────────────────────────────────
+
+export async function registerClient(data: {
+  name: string
+  email: string
+  password: string
+  phone?: string
+  city?: string
+}): Promise<{ client: ClientProfile; token: string }> {
+  const res = await fetch(`${API_BASE}/store/clients/register`, {
+    method: "POST",
+    headers: headers(),
+    body: JSON.stringify(data),
+  })
+  const json = await res.json()
+  if (!res.ok) throw new Error(json.error || "Erreur inscription")
+  setToken(json.token)
+  return json
+}
+
+export async function loginClient(email: string, password: string): Promise<{ client: ClientProfile; token: string }> {
+  const res = await fetch(`${API_BASE}/store/clients/login`, {
+    method: "POST",
+    headers: headers(),
+    body: JSON.stringify({ email, password }),
+  })
+  const json = await res.json()
+  if (!res.ok) throw new Error(json.error || "Identifiants incorrects")
+  setToken(json.token)
+  return json
+}
+
+export async function getMeClient(): Promise<ClientProfile | null> {
+  const token = getToken()
+  if (!token) return null
+  const res = await fetch(`${API_BASE}/store/clients/me`, {
+    headers: { ...headers(), Authorization: `Bearer ${token}` },
+  })
+  if (!res.ok) return null
+  const json = await res.json()
+  return json.client
+}
+
+export async function fetchClientProjets(): Promise<any[]> {
+  const token = getToken()
+  if (!token) return []
+  const res = await fetch(`${API_BASE}/store/clients/projets`, {
+    headers: { ...headers(), Authorization: `Bearer ${token}` },
+  })
+  if (!res.ok) return []
+  const json = await res.json()
+  return json.projets || []
+}
+
+// ─── Shared ─────────────────────────────────────────────────────────────────
 
 export function logout() {
   clearToken()

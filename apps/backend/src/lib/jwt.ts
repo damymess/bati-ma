@@ -8,16 +8,35 @@ if (!JWT_SECRET) {
 const JWT_EXPIRES = "7d"
 
 export interface JwtPayload {
-  architect_id: string
+  id: string
   email: string
+  role: "architect" | "client"
+  // Legacy compat
+  architect_id?: string
 }
 
-export function signToken(payload: JwtPayload): string {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES })
+export function signToken(payload: { id: string; email: string; role: "architect" | "client" }): string {
+  return jwt.sign(
+    {
+      id: payload.id,
+      email: payload.email,
+      role: payload.role,
+      // Legacy compat for existing architect code
+      ...(payload.role === "architect" ? { architect_id: payload.id } : {}),
+    },
+    JWT_SECRET,
+    { expiresIn: JWT_EXPIRES }
+  )
 }
 
 export function verifyToken(token: string): JwtPayload {
-  return jwt.verify(token, JWT_SECRET) as JwtPayload
+  const payload = jwt.verify(token, JWT_SECRET) as JwtPayload
+  // Legacy compat: old tokens have architect_id but no role/id
+  if (!payload.role && payload.architect_id) {
+    payload.role = "architect"
+    payload.id = payload.architect_id
+  }
+  return payload
 }
 
 export function extractToken(authHeader?: string): string | null {

@@ -32,5 +32,8 @@ module.exports = defineConfig({
     {
       resolve: "./src/modules/contact-unlock",
     },
+    {
+      resolve: "./src/modules/client-profile",
+    },
   ],
 })
