@@ -72,8 +72,38 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }}
       />
 
-      {/* ──── HERO — Split layout: text left, skyline right ──── */}
-      <section className="relative overflow-hidden bg-stone-950">
+      {/* ──── MOBILE HERO — Compact app style (Airbnb pattern) ──── */}
+      <section className="bg-stone-950 px-4 pt-4 pb-6 lg:hidden" id="devis">
+        <h1 className="text-xl font-bold text-white">
+          Trouvez votre architecte{" "}
+          <span className="text-[#b5522a]">au Maroc</span>
+        </h1>
+
+        {/* Search bar — large, prominent */}
+        <div className="relative mt-4">
+          <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-stone-500" />
+          <Input
+            placeholder="Ville, quartier ou spécialité..."
+            className="h-12 rounded-2xl border-stone-700 bg-stone-900 pl-12 text-base text-white placeholder:text-stone-500 focus-visible:ring-[#b5522a]"
+          />
+        </div>
+
+        {/* City shortcuts — horizontal scroll */}
+        <div className="mt-3 flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+          {CITIES.slice(0, 5).map((c) => (
+            <Link
+              key={c.slug}
+              href={`/architecte/${c.slug}`}
+              className="shrink-0 rounded-full border border-stone-800 px-3 py-1.5 text-xs text-stone-400 transition-colors active:border-[#b5522a]/60 active:text-[#b5522a]"
+            >
+              {c.name}
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* ──── DESKTOP HERO — Split layout: text left, skyline right ──── */}
+      <section className="relative hidden overflow-hidden bg-stone-950 lg:block">
         {/* Background image */}
         <Image
           src="/images/hero-villa.jpg"
@@ -85,14 +115,14 @@ export default function HomePage() {
         {/* Gradient overlay */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-stone-950/80 via-stone-950/60 to-stone-950" />
 
-        <div className="relative mx-auto flex max-w-7xl flex-col items-center lg:flex-row lg:items-stretch">
+        <div className="relative mx-auto flex max-w-7xl flex-row items-stretch">
           {/* ── Left: Text + Search ── */}
-          <div className="flex flex-1 flex-col justify-center px-4 pt-6 pb-16 sm:px-8 lg:py-20 lg:pr-12">
-            <Badge variant="outline" className="mb-5 w-fit border-stone-700 text-stone-400 text-xs sm:text-sm">
+          <div className="flex flex-1 flex-col justify-center px-8 py-20 pr-12">
+            <Badge variant="outline" className="mb-5 w-fit border-stone-700 text-stone-400 text-sm">
               Annuaire Architectes Maroc — 2026
             </Badge>
 
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            <h1 className="text-6xl font-bold tracking-tight text-white">
               Trouvez votre architecte
               <br />
               <span className="bg-gradient-to-r from-[#b5522a] to-[#e07a55] bg-clip-text text-transparent">
@@ -100,13 +130,13 @@ export default function HomePage() {
               </span>
             </h1>
 
-            <p className="mt-5 max-w-xl text-base leading-relaxed text-stone-400 sm:text-lg">
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-stone-400">
               800+ architectes et designers d&apos;intérieur vérifiés. Portfolios réels,
               avis clients vérifiés et demande de devis gratuite.
             </p>
 
             {/* Search */}
-            <div className="mt-8 flex max-w-lg flex-col gap-2 sm:flex-row" id="devis">
+            <div className="mt-8 flex max-w-lg flex-row gap-2" id="devis">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-500" />
                 <Input
@@ -119,16 +149,14 @@ export default function HomePage() {
               </Button>
             </div>
 
-            {/* City pills — 3 on mobile, 5 on sm+ */}
+            {/* City pills */}
             <div className="mt-6 flex flex-wrap items-center gap-2">
-              <span className="text-xs text-stone-600">Villes :</span>
-              {CITIES.slice(0, 5).map((c, i) => (
+              <span className="text-xs text-stone-600">Villes populaires :</span>
+              {CITIES.slice(0, 5).map((c) => (
                 <Link
                   key={c.slug}
                   href={`/architecte/${c.slug}`}
-                  className={`rounded-full border border-stone-800 px-3 py-1 text-xs text-stone-400 transition-colors hover:border-[#b5522a]/60 hover:text-[#b5522a] ${
-                    i >= 3 ? "hidden sm:inline-flex" : ""
-                  }`}
+                  className="rounded-full border border-stone-800 px-3 py-1 text-xs text-stone-400 transition-colors hover:border-[#b5522a]/60 hover:text-[#b5522a]"
                 >
                   {c.name}
                 </Link>
@@ -136,39 +164,14 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* ── Mobile: compact skyline illustration ── */}
-          <div className="relative flex h-36 w-full items-end justify-center overflow-hidden lg:hidden">
-            <Image
-              src="/images/hero-skyline.svg"
-              alt=""
-              width={400}
-              height={200}
-              className="h-full w-auto object-contain opacity-30"
-              aria-hidden="true"
-            />
-          </div>
-
-          {/* ── Desktop: Animated skyline (right panel) ── */}
-          <div className="relative hidden min-h-[400px] w-full items-end justify-center overflow-hidden lg:flex lg:w-[45%]">
+          {/* ── Right: Animated skyline ── */}
+          <div className="relative flex min-h-[400px] w-[45%] items-end justify-center overflow-hidden">
             <HeroSkyline />
           </div>
         </div>
 
-        {/* ── Mobile: zellige border at bottom ── */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-center lg:hidden">
-          <svg viewBox="0 0 400 45" fill="none" className="w-full opacity-40" aria-hidden="true">
-            <line x1="0" y1="28" x2="400" y2="28" stroke="#b5522a" strokeWidth="1" />
-            <path d="M15 28 L25 13 L35 28 L45 13 L55 28 L65 13 L75 28" stroke="#b5522a" strokeWidth="1.5" strokeLinejoin="round" fill="none" />
-            <path d="M165 28 V16 Q165 3 180 3 Q195 3 195 16 V28" stroke="#b5522a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-            <path d="M205 28 V16 Q205 3 220 3 Q235 3 235 16 V28" stroke="#b5522a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-            <path d="M200 10 L202 16 L208 16 L203 20 L205 26 L200 22 L195 26 L197 20 L192 16 L198 16 Z" stroke="#b5522a" strokeWidth="0.8" strokeLinejoin="round" fill="none" />
-            <path d="M325 28 L335 13 L345 28 L355 13 L365 28 L375 13 L385 28" stroke="#b5522a" strokeWidth="1.5" strokeLinejoin="round" fill="none" />
-            <path d="M100 28 L112 18 L124 28" stroke="#b5522a" strokeWidth="1" fill="none" />
-            <path d="M135 28 L145 20 L155 28" stroke="#b5522a" strokeWidth="1" fill="none" />
-            <path d="M245 28 L255 20 L265 28" stroke="#b5522a" strokeWidth="1" fill="none" />
-            <path d="M276 28 L288 18 L300 28" stroke="#b5522a" strokeWidth="1" fill="none" />
-          </svg>
-        </div>
+        {/* Separator */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#b5522a]/30 to-transparent" />
       </section>
 
       {/* ──── STATS ──── */}
