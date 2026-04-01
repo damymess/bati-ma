@@ -286,7 +286,7 @@ export const GUIDES: Guide[] = [
     content: "",
   },
   {
-    slug: "maison-bois-maroc-guide",
+    slug: "maison-bois-maroc",
     title: "Maison en bois au Maroc : guide, prix et autorisation 2026",
     description:
       "Construire une maison en bois au Maroc : est-ce autorisé ? Types de construction, prix au m², isolation, durabilité et fournisseurs.",
@@ -313,7 +313,7 @@ export const GUIDES: Guide[] = [
     content: "",
   },
   {
-    slug: "facade-maison-villa-maroc",
+    slug: "facade-maison-maroc",
     title: "Façade de maison et villa au Maroc : styles et tendances 2026",
     description:
       "Styles de façade au Maroc : traditionnelle, moderne, néo-marocaine. Matériaux (enduit, pierre, moucharabieh), réglementation et prix.",
@@ -331,7 +331,7 @@ export const GUIDES: Guide[] = [
     content: "",
   },
   {
-    slug: "prix-construction-m2-maroc-2026",
+    slug: "prix-construction-m2-maroc",
     title: "Prix de construction au m² au Maroc en 2026",
     description:
       "Prix de construction au m² au Maroc par ville et type de finition. Facteurs influençant le coût, budget prévisionnel et astuces pour économiser.",
@@ -340,7 +340,7 @@ export const GUIDES: Guide[] = [
     content: "",
   },
   {
-    slug: "villa-moderne-maroc-tendances",
+    slug: "villa-moderne-maroc",
     title: "Villa moderne au Maroc : styles, plans et tendances 2026",
     description:
       "Tendances villa moderne au Maroc : architecture minimaliste, piscine, jardin méditerranéen. Plans types, matériaux et coûts de construction.",
@@ -349,7 +349,7 @@ export const GUIDES: Guide[] = [
     content: "",
   },
   {
-    slug: "devis-construction-maroc-comprendre",
+    slug: "devis-construction-maroc",
     title: "Comprendre un devis de construction au Maroc",
     description:
       "Comment lire un devis de construction au Maroc ? Postes principaux, pièges à éviter, négociation et comparaison de devis.",
@@ -358,7 +358,7 @@ export const GUIDES: Guide[] = [
     content: "",
   },
   {
-    slug: "lotissement-maroc-reglementation",
+    slug: "lotissement-maroc",
     title: "Lotissement au Maroc : réglementation et démarches 2026",
     description:
       "Tout sur les lotissements au Maroc : loi 25-90, procédure d'autorisation, cahier des charges, rôle de l'architecte urbaniste.",
@@ -367,7 +367,7 @@ export const GUIDES: Guide[] = [
     content: "",
   },
   {
-    slug: "prix-terrain-maroc-2026",
+    slug: "prix-terrain-maroc",
     title: "Prix du terrain au Maroc : guide d'achat 2026",
     description:
       "Prix au m² du terrain au Maroc par ville et zone. Vérifications avant achat, conservation foncière, rôle du notaire et pièges à éviter.",
@@ -376,7 +376,7 @@ export const GUIDES: Guide[] = [
     content: "",
   },
   {
-    slug: "construction-villa-maroc-budget",
+    slug: "construction-villa-budget",
     title: "Budget construction villa au Maroc : guide complet 2026",
     description:
       "Budget global pour construire une villa au Maroc : terrain, construction, honoraires, taxes. Tableaux par gamme et conseils financement.",
@@ -385,7 +385,7 @@ export const GUIDES: Guide[] = [
     content: "",
   },
   {
-    slug: "credit-construction-maroc-2026",
+    slug: "credit-construction-maroc",
     title: "Crédit construction au Maroc : guide bancaire 2026",
     description:
       "Crédit construction au Maroc : banques (CIH, Attijariwafa, BMCE), taux, conditions, dossier et programme Al Omrane.",

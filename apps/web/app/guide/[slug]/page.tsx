@@ -3,6 +3,20 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getGuideBySlug, GUIDE_SLUGS, GUIDES } from "@/lib/guides";
 import { CITIES } from "@/lib/cities";
+import GuideConstructionModulaire from "./guides/construction-modulaire-maroc";
+import GuideMaisonBois from "./guides/maison-bois-maroc";
+import GuideCertificatConformite from "./guides/certificat-conformite-maroc";
+import GuideMeilleurArchitecteMarrakech from "./guides/meilleur-architecte-marrakech";
+import GuideFacadeMaison from "./guides/facade-maison-maroc";
+import GuideMaisonPrefabriquee from "./guides/maison-prefabriquee-maroc";
+import GuidePrixConstructionM2 from "./guides/prix-construction-m2-maroc";
+import GuideVillaModerneMaroc from "./guides/villa-moderne-maroc";
+import GuideDevisConstructionMaroc from "./guides/devis-construction-maroc";
+import GuideLotissementMaroc from "./guides/lotissement-maroc";
+import GuidePrixTerrainMaroc from "./guides/prix-terrain-maroc";
+import GuideConstructionVillaBudget from "./guides/construction-villa-budget";
+import GuideCreditConstructionMaroc from "./guides/credit-construction-maroc";
+import GuidePlanMaison100m2Maroc from "./guides/plan-maison-100m2-maroc";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -1478,6 +1492,20 @@ const GUIDE_CONTENT: Record<string, React.FC> = {
   "marche-btp-maroc-2026": GuideMarcheBTP2026,
   "eco-construction-maroc": GuideEcoConstruction,
   "renovation-riad-maroc": GuideRenovationRiad,
+  "construction-modulaire-maroc": GuideConstructionModulaire,
+  "maison-bois-maroc": GuideMaisonBois,
+  "certificat-conformite-maroc": GuideCertificatConformite,
+  "meilleur-architecte-marrakech": GuideMeilleurArchitecteMarrakech,
+  "facade-maison-maroc": GuideFacadeMaison,
+  "maison-prefabriquee-maroc": GuideMaisonPrefabriquee,
+  "prix-construction-m2-maroc": GuidePrixConstructionM2,
+  "villa-moderne-maroc": GuideVillaModerneMaroc,
+  "devis-construction-maroc": GuideDevisConstructionMaroc,
+  "lotissement-maroc": GuideLotissementMaroc,
+  "prix-terrain-maroc": GuidePrixTerrainMaroc,
+  "construction-villa-budget": GuideConstructionVillaBudget,
+  "credit-construction-maroc": GuideCreditConstructionMaroc,
+  "plan-maison-100m2-maroc": GuidePlanMaison100m2Maroc,
 };
 
 export default async function GuidePage({ params }: Props) {

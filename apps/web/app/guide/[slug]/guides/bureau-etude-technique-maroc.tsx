@@ -4,15 +4,15 @@ export default function GuideBureauEtudeTechniqueMaroc() {
   const faq = [
     {
       q: "Quelle est la diff\u00e9rence entre un architecte et un BET au Maroc ?",
-      a: "L&apos;architecte con\u00e7oit le projet (esth\u00e9tique, fonctionnalit\u00e9, plans) et g\u00e8re le permis de construire. Le BET calcule la structure (b\u00e9ton arm\u00e9, charpente) et les lots techniques (\u00e9lectricit\u00e9, plomberie, climatisation). Les deux sont compl\u00e9mentaires et travaillent ensemble sur chaque projet.",
+      a: "L&apos;architecte con\u00e7oit le projet (plans, esth\u00e9tique, fonctionnalit\u00e9, permis de construire). Le BET calcule la structure (b\u00e9ton arm\u00e9, fondations) et les lots techniques (\u00e9lectricit\u00e9, plomberie, climatisation). Les deux sont compl\u00e9mentaires : l&apos;architecte dessine, le BET v\u00e9rifie que \u00e7a tient debout.",
     },
     {
-      q: "Combien co\u00fbte un BET pour une villa au Maroc ?",
-      a: "Pour une villa de 150 \u00e0 300 m\u00b2, les honoraires du BET varient de 8 000 \u00e0 30 000 MAD pour l&apos;\u00e9tude b\u00e9ton arm\u00e9 seule. Une \u00e9tude compl\u00e8te (structure + \u00e9lectricit\u00e9 + plomberie + thermique) co\u00fbte entre 15 000 et 50 000 MAD selon la complexit\u00e9.",
+      q: "Combien co\u00fbte un bureau d&apos;\u00e9tudes techniques au Maroc ?",
+      a: "Pour une villa, comptez 8 000 \u00e0 25 000 MAD pour l&apos;\u00e9tude b\u00e9ton arm\u00e9 seule. Pour un immeuble R+4, les tarifs montent \u00e0 40 000 \u00e0 80 000 MAD. Les lots techniques (CVC, \u00e9lectricit\u00e9, plomberie) sont factur\u00e9s s\u00e9par\u00e9ment, g\u00e9n\u00e9ralement entre 1 % et 3 % du co\u00fbt des travaux.",
     },
     {
-      q: "Est-ce obligatoire de faire appel \u00e0 un BET au Maroc ?",
-      a: "Pour les constructions de plus de R+2 ou de plus de 300 m\u00b2, le recours \u00e0 un BET est obligatoire. Pour les villas R+1 ou R+2, il est fortement recommand\u00e9 et souvent exig\u00e9 par la commune pour le d\u00e9p\u00f4t du permis de construire.",
+      q: "Le BET est-il obligatoire pour construire au Maroc ?",
+      a: "Oui, pour toute construction de plus de R+2 ou de plus de 150 m\u00b2, le recours \u00e0 un BET agr\u00e9\u00e9 est obligatoire pour les plans de b\u00e9ton arm\u00e9. Les communes exigent les plans BET vis\u00e9s pour d\u00e9livrer le permis de construire. M\u00eame pour des projets plus petits, le BET est fortement recommand\u00e9.",
     },
   ];
 
@@ -33,61 +33,61 @@ export default function GuideBureauEtudeTechniqueMaroc() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>Qu&apos;est-ce qu&apos;un bureau d&apos;\u00e9tudes techniques (BET) ?</h2>
+        <h2>Qu&apos;est-ce qu&apos;un Bureau d&apos;\u00c9tudes Techniques (BET) ?</h2>
         <p>
-          Le bureau d&apos;\u00e9tudes techniques est un acteur incontournable de la construction au Maroc. Il intervient en compl\u00e9ment de l&apos;architecte pour calculer et dimensionner les \u00e9l\u00e9ments structurels et techniques d&apos;un b\u00e2timent : fondations, poteaux, poutres, dalles, r\u00e9seaux \u00e9lectriques, plomberie, climatisation et performance thermique.
+          Le BET est un cabinet d&apos;ing\u00e9nieurs sp\u00e9cialis\u00e9s qui calcule et dimensionne les \u00e9l\u00e9ments techniques d&apos;un b\u00e2timent. Au Maroc, le BET intervient apr\u00e8s l&apos;architecte pour transformer les plans architecturaux en plans d&apos;ex\u00e9cution techniques : structure b\u00e9ton arm\u00e9, \u00e9lectricit\u00e9, plomberie, climatisation et thermique.
         </p>
 
         <h2>Les missions du BET au Maroc</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
-              <th className="border border-stone-200 px-3 py-2 text-left">Sp\u00e9cialit\u00e9</th>
+              <th className="border border-stone-200 px-3 py-2 text-left">Lot technique</th>
               <th className="border border-stone-200 px-3 py-2 text-left">Missions</th>
-              <th className="border border-stone-200 px-3 py-2 text-left">Tarif villa (indicatif)</th>
+              <th className="border border-stone-200 px-3 py-2 text-left">Tarif villa</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td className="border border-stone-200 px-3 py-2">B\u00e9ton arm\u00e9 (structure)</td><td className="border border-stone-200 px-3 py-2">Calcul fondations, poteaux, poutres, dalles</td><td className="border border-stone-200 px-3 py-2">8 000 \u00e0 25 000 MAD</td></tr>
-            <tr><td className="border border-stone-200 px-3 py-2">\u00c9lectricit\u00e9</td><td className="border border-stone-200 px-3 py-2">Plans \u00e9lectriques, dimensionnement, conformit\u00e9</td><td className="border border-stone-200 px-3 py-2">3 000 \u00e0 10 000 MAD</td></tr>
-            <tr><td className="border border-stone-200 px-3 py-2">Plomberie / assainissement</td><td className="border border-stone-200 px-3 py-2">R\u00e9seaux eau, \u00e9vacuation, fosse septique</td><td className="border border-stone-200 px-3 py-2">3 000 \u00e0 8 000 MAD</td></tr>
-            <tr><td className="border border-stone-200 px-3 py-2">Thermique / climatisation</td><td className="border border-stone-200 px-3 py-2">Conformit\u00e9 RTCM, CVC, bilan thermique</td><td className="border border-stone-200 px-3 py-2">5 000 \u00e0 15 000 MAD</td></tr>
-            <tr><td className="border border-stone-200 px-3 py-2">VRD (voiries et r\u00e9seaux)</td><td className="border border-stone-200 px-3 py-2">Acc\u00e8s, voiries, r\u00e9seaux ext\u00e9rieurs</td><td className="border border-stone-200 px-3 py-2">5 000 \u00e0 12 000 MAD</td></tr>
+            <tr><td className="border border-stone-200 px-3 py-2">B\u00e9ton arm\u00e9 (BA)</td><td className="border border-stone-200 px-3 py-2">Calcul fondations, poteaux, dalles, escaliers</td><td className="border border-stone-200 px-3 py-2">8 000 \u00e0 25 000 MAD</td></tr>
+            <tr><td className="border border-stone-200 px-3 py-2">\u00c9lectricit\u00e9</td><td className="border border-stone-200 px-3 py-2">Dimensionnement, sch\u00e9mas, bilan de puissance</td><td className="border border-stone-200 px-3 py-2">5 000 \u00e0 12 000 MAD</td></tr>
+            <tr><td className="border border-stone-200 px-3 py-2">Plomberie</td><td className="border border-stone-200 px-3 py-2">R\u00e9seaux eau froide/chaude, \u00e9vacuation</td><td className="border border-stone-200 px-3 py-2">4 000 \u00e0 10 000 MAD</td></tr>
+            <tr><td className="border border-stone-200 px-3 py-2">CVC (Climatisation)</td><td className="border border-stone-200 px-3 py-2">Bilan thermique, dimensionnement clim/chauffage</td><td className="border border-stone-200 px-3 py-2">6 000 \u00e0 15 000 MAD</td></tr>
+            <tr><td className="border border-stone-200 px-3 py-2">Thermique (RTCM)</td><td className="border border-stone-200 px-3 py-2">Conformit\u00e9 r\u00e9glementation thermique</td><td className="border border-stone-200 px-3 py-2">5 000 \u00e0 10 000 MAD</td></tr>
           </tbody>
         </table>
 
-        <h2>BET vs architecte : r\u00f4les compl\u00e9mentaires</h2>
-        <p>
-          L&apos;architecte est le chef d&apos;orchestre du projet : il con\u00e7oit l&apos;espace, g\u00e8re l&apos;esth\u00e9tique et coordonne les intervenants. Le BET est l&apos;ing\u00e9nieur qui garantit la solidit\u00e9 et le bon fonctionnement technique. Sur un projet de villa, l&apos;architecte choisit souvent le BET et coordonne son intervention. Pour les grands projets, le ma\u00eetre d&apos;ouvrage peut mandater le BET directement.
-        </p>
-
         <h2>Comment choisir son BET au Maroc</h2>
         <p>
-          V\u00e9rifiez l&apos;agr\u00e9ment du BET aupr\u00e8s du Minist\u00e8re de l&apos;\u00c9quipement. Privil\u00e9giez un BET ayant de l&apos;exp\u00e9rience dans votre type de projet (villa, immeuble, industriel). Demandez des r\u00e9f\u00e9rences et v\u00e9rifiez la couverture assurance. Les BET de Casablanca, Rabat et Marrakech sont les plus nombreux, mais chaque ville dispose de bureaux comp\u00e9tents.
+          V\u00e9rifiez l&apos;agr\u00e9ment du BET aupr\u00e8s du Minist\u00e8re de l&apos;\u00c9quipement. Assurez-vous qu&apos;il dispose d&apos;une assurance responsabilit\u00e9 civile professionnelle. Demandez des r\u00e9f\u00e9rences de projets similaires au v\u00f4tre. Un bon BET utilise des logiciels de calcul modernes (Robot, ETABS, Revit) et fournit des plans d\u00e9taill\u00e9s exploitables par les entreprises de construction.
+        </p>
+
+        <h2>BET et architecte : compl\u00e9mentarit\u00e9</h2>
+        <p>
+          L&apos;architecte d\u00e9finit le projet, le BET le rend techniquement r\u00e9alisable. L&apos;architecte dessine les espaces, le BET calcule les porteurs. Sur les grands projets, le BET peut aussi intervenir en VRD (voiries et r\u00e9seaux divers) et en \u00e9tude de sol. La coordination entre architecte et BET est essentielle pour \u00e9viter les incoh\u00e9rences entre plans architecturaux et plans d&apos;ex\u00e9cution.
         </p>
 
         <div className="bg-[#f4ece7] border border-[#b5522a]/20 rounded-xl p-5 my-6">
           <p className="text-sm font-semibold text-[#b5522a] mb-1">Conseil Bati.ma</p>
           <p className="text-sm text-stone-700">
-            Demandez \u00e0 votre architecte de vous recommander un BET avec lequel il a d\u00e9j\u00e0 travaill\u00e9 : la coordination sera plus fluide. Trouvez votre architecte sur{" "}
+            Demandez \u00e0 votre architecte de vous recommander un BET avec lequel il a l&apos;habitude de travailler. La bonne coordination architecte-BET \u00e9vite les erreurs co\u00fbteuses en chantier. Comparez les profils sur{" "}
             <Link href="/architectes" className="text-[#b5522a] underline">Bati.ma</Link>.
           </p>
         </div>
 
-        <h2>Tarifs des BET au Maroc en 2026</h2>
+        <h2>Tarifs des BET selon la taille du projet</h2>
         <p>
-          Les honoraires du BET repr\u00e9sentent en moyenne 1 \u00e0 3 % du co\u00fbt total des travaux pour une mission compl\u00e8te. Pour une villa de 200 m\u00b2 \u00e0 1 500 000 MAD, comptez entre 15 000 et 45 000 MAD. Les tarifs sont n\u00e9gociables, surtout pour les \u00e9tudes group\u00e9es (structure + \u00e9lectricit\u00e9 + plomberie).
+          Pour une villa standard (150 \u00e0 300 m\u00b2), le co\u00fbt total du BET (tous lots confondus) se situe entre 15 000 et 50 000 MAD. Pour un immeuble R+4, comptez 50 000 \u00e0 120 000 MAD. Pour les projets commerciaux ou industriels, les tarifs sont g\u00e9n\u00e9ralement calcul\u00e9s en pourcentage du co\u00fbt des travaux (1 \u00e0 3 %).
         </p>
 
-        <h2>Quand faire appel au BET dans votre projet</h2>
+        <h2>\u00c9tude thermique RTCM : nouvelle obligation</h2>
         <p>
-          Le BET intervient d\u00e8s la phase APD (avant-projet d\u00e9taill\u00e9), apr\u00e8s la validation de l&apos;esquisse par l&apos;architecte. Ses plans d&apos;ex\u00e9cution sont n\u00e9cessaires au d\u00e9p\u00f4t du permis de construire. Pendant le chantier, le BET peut assurer le suivi technique des lots concern\u00e9s.
+          Depuis l&apos;entr\u00e9e en vigueur de la RTCM (R\u00e9glementation Thermique de Construction au Maroc), toute nouvelle construction doit respecter des performances \u00e9nerg\u00e9tiques minimales selon sa zone climatique. Le BET thermique calcule les besoins en isolation, fen\u00eatres et syst\u00e8mes de chauffage/climatisation pour obtenir la conformit\u00e9.
         </p>
 
         <p className="mt-6 text-sm text-stone-500">
-          Trouvez un architecte qui coordonne votre projet sur{" "}
+          Trouvez votre architecte sur{" "}
           <Link href="/architectes" className="text-[#b5522a] underline">
-            Bati.ma \u2014 Architectes au Maroc
+            Bati.ma \u2014 Annuaire professionnel
           </Link>
         </p>
       </div>
