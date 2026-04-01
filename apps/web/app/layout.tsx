@@ -41,9 +41,7 @@ export const metadata: Metadata = {
     "cabinet architecture maroc",
     "architecte d'intérieur maroc",
   ],
-  alternates: {
-    canonical: "https://bati.ma",
-  },
+  alternates: {},
   openGraph: {
     type: "website",
     locale: "fr_MA",
