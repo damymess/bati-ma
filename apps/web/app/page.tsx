@@ -21,7 +21,6 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import HeroSkyline from "@/components/HeroSkyline";
 
 export const metadata: Metadata = {
   title: "Bati.ma — Annuaire des Architectes au Maroc",
@@ -102,27 +101,27 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ──── DESKTOP HERO — Split layout: text left, skyline right ──── */}
-      <section className="relative hidden overflow-hidden bg-stone-950 lg:block">
-        {/* Background image */}
+      {/* ──── DESKTOP HERO — Full image with text overlay ──── */}
+      <section className="relative hidden overflow-hidden lg:block min-h-[520px]">
+        {/* Background image — 100% visible */}
         <Image
           src="/images/hero-villa.jpg"
           alt="Villa architecte Maroc"
           fill
-          className="object-cover opacity-15"
+          className="object-cover"
           priority
         />
-        {/* Gradient overlay */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-stone-950/80 via-stone-950/60 to-stone-950" />
+        {/* Left gradient for text readability */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-stone-950/85 via-stone-950/50 to-transparent" />
 
-        <div className="relative mx-auto flex max-w-7xl flex-row items-stretch">
+        <div className="relative mx-auto flex max-w-7xl flex-row items-center min-h-[520px]">
           {/* ── Left: Text + Search ── */}
-          <div className="flex flex-1 flex-col justify-center px-8 py-20 pr-12">
-            <Badge variant="outline" className="mb-5 w-fit border-stone-700 text-stone-400 text-sm">
+          <div className="flex max-w-xl flex-col justify-center px-8 py-20">
+            <Badge variant="outline" className="mb-5 w-fit border-white/20 text-white/70 text-sm">
               Annuaire Architectes Maroc — 2026
             </Badge>
 
-            <h1 className="text-6xl font-bold tracking-tight text-white">
+            <h1 className="text-6xl font-bold tracking-tight text-white drop-shadow-lg">
               Trouvez votre architecte
               <br />
               <span className="bg-gradient-to-r from-[#b5522a] to-[#e07a55] bg-clip-text text-transparent">
@@ -130,7 +129,7 @@ export default function HomePage() {
               </span>
             </h1>
 
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-stone-400">
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/80 drop-shadow">
               800+ architectes et designers d&apos;intérieur vérifiés. Portfolios réels,
               avis clients vérifiés et demande de devis gratuite.
             </p>
@@ -138,10 +137,10 @@ export default function HomePage() {
             {/* Search */}
             <div className="mt-8 flex max-w-lg flex-row gap-2" id="devis">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-500" />
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400" />
                 <Input
                   placeholder="Votre ville (ex: Casablanca)"
-                  className="h-11 rounded-full border-stone-700 bg-stone-900 pl-10 text-white placeholder:text-stone-500 focus-visible:ring-[#b5522a]"
+                  className="h-11 rounded-full border-white/20 bg-white/10 backdrop-blur-md pl-10 text-white placeholder:text-white/50 focus-visible:ring-[#b5522a]"
                 />
               </div>
               <Button size="lg" className="h-11 rounded-full px-6">
@@ -151,22 +150,17 @@ export default function HomePage() {
 
             {/* City pills */}
             <div className="mt-6 flex flex-wrap items-center gap-2">
-              <span className="text-xs text-stone-600">Villes populaires :</span>
+              <span className="text-xs text-white/40">Villes populaires :</span>
               {CITIES.slice(0, 5).map((c) => (
                 <Link
                   key={c.slug}
                   href={`/architecte/${c.slug}`}
-                  className="rounded-full border border-stone-800 px-3 py-1 text-xs text-stone-400 transition-colors hover:border-[#b5522a]/60 hover:text-[#b5522a]"
+                  className="rounded-full border border-white/20 px-3 py-1 text-xs text-white/70 transition-colors hover:border-[#b5522a]/60 hover:text-[#b5522a]"
                 >
                   {c.name}
                 </Link>
               ))}
             </div>
-          </div>
-
-          {/* ── Right: Animated skyline ── */}
-          <div className="relative flex min-h-[400px] w-[45%] items-end justify-center overflow-hidden">
-            <HeroSkyline />
           </div>
         </div>
 
