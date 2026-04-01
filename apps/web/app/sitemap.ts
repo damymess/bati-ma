@@ -3,7 +3,6 @@ import { CITY_SLUGS } from "@/lib/cities";
 import { GUIDE_SLUGS } from "@/lib/guides";
 import { CATEGORY_SLUGS } from "@/lib/forum";
 import { AO_IDS } from "@/lib/appels-offres";
-import { FALLBACK_ARCHITECTS } from "@/lib/architects";
 
 const BASE = "https://bati.ma";
 
@@ -24,13 +23,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
   ]);
-
-  const architectPages = FALLBACK_ARCHITECTS.map(({ id, city }) => ({
-    url: `${BASE}/architecte/${city}/${id}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.85,
-  }));
 
   const guidePages = GUIDE_SLUGS.map((slug) => ({
     url: `${BASE}/guide/${slug}`,
@@ -61,10 +53,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/forum`, lastModified: now, changeFrequency: "daily", priority: 0.8 },
     { url: `${BASE}/guide`, lastModified: now, changeFrequency: "weekly", priority: 0.75 },
     { url: `${BASE}/projets`, lastModified: now, changeFrequency: "daily", priority: 0.85 },
-    { url: `${BASE}/connexion`, lastModified: now, changeFrequency: "monthly", priority: 0.3 },
-    { url: `${BASE}/inscription`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
     ...cityPages,
-    ...architectPages,
     ...guidePages,
     ...forumPages,
     ...aoPages,
