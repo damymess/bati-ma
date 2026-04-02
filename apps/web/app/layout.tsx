@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -78,6 +79,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={inter.variable}>
+      <head>
+        <Script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="324ea11e-394a-4420-be95-b52b1a7fcc15"
+          strategy="afterInteractive"
+        />
+      </head>
       <body className="min-h-screen flex flex-col font-sans antialiased">
         <Nav />
         <main className="flex-1 pb-24 lg:pb-0">{children}</main>
