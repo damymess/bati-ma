@@ -14,6 +14,8 @@ export default function GuideEtapesConstruireVilla() {
       q: "Faut-il obligatoirement un architecte pour construire une villa au Maroc ?",
       a: "Oui, la loi marocaine impose le recours \u00e0 un architecte inscrit \u00e0 l&apos;Ordre pour toute construction de plus de 150 m\u00b2 ou de plus de 3 niveaux (R+2). L&apos;architecte est indispensable pour le d\u00e9p\u00f4t du permis de construire et la signature des plans.",
     },
+    { q: "Faut-il un architecte pour un projet de etapes construire villa ?", a: "Conform\u00e9ment \u00e0 la loi 16-89, le recours \u00e0 un architecte inscrit \u00e0 l\u2019Ordre est obligatoire pour toute construction au Maroc. M\u00eame pour les projets techniques, l\u2019architecte coordonne le permis de construire et assure la conformit\u00e9. Consultez les profils v\u00e9rifi\u00e9s sur Bati.ma." },
+    { q: "Comment obtenir un devis pour etapes construire villa ?", a: "Demandez au minimum 3 devis d\u00e9taill\u00e9s aupr\u00e8s de professionnels diff\u00e9rents. Comparez les postes ligne par ligne, v\u00e9rifiez les r\u00e9f\u00e9rences et exigez un calendrier d\u2019ex\u00e9cution. Sur Bati.ma, vous pouvez contacter directement les architectes sp\u00e9cialis\u00e9s et demander vos devis gratuitement." },
   ];
 
   const faqSchema = {

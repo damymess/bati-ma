@@ -14,6 +14,8 @@ export default function GuideRenovationRiad() {
       q: "Combien de temps dure la r\u00e9novation d&apos;un riad ?",
       a: "Une r\u00e9novation l\u00e9g\u00e8re prend 2 \u00e0 4 mois. Une r\u00e9novation compl\u00e8te n\u00e9cessite 6 \u00e0 12 mois. La transformation en maison d&apos;h\u00f4tes peut prendre 12 \u00e0 18 mois en raison des normes de s\u00e9curit\u00e9 et d&apos;accessibilit\u00e9 \u00e0 respecter. L&apos;acc\u00e8s difficile en m\u00e9dina rallonge souvent les d\u00e9lais.",
     },
+    { q: "Faut-il un architecte pour un projet de renovation riad ?", a: "Conform\u00e9ment \u00e0 la loi 16-89, le recours \u00e0 un architecte inscrit \u00e0 l\u2019Ordre est obligatoire pour toute construction au Maroc. M\u00eame pour les projets techniques, l\u2019architecte coordonne le permis de construire et assure la conformit\u00e9. Consultez les profils v\u00e9rifi\u00e9s sur Bati.ma." },
+    { q: "Comment obtenir un devis pour renovation riad ?", a: "Demandez au minimum 3 devis d\u00e9taill\u00e9s aupr\u00e8s de professionnels diff\u00e9rents. Comparez les postes ligne par ligne, v\u00e9rifiez les r\u00e9f\u00e9rences et exigez un calendrier d\u2019ex\u00e9cution. Sur Bati.ma, vous pouvez contacter directement les architectes sp\u00e9cialis\u00e9s et demander vos devis gratuitement." },
   ];
 
   const faqSchema = {

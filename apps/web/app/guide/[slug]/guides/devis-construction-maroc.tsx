@@ -14,6 +14,8 @@ export default function GuideDevisConstructionMaroc() {
       q: "Quels postes repr\u00e9sentent la plus grande part du devis ?",
       a: "Le gros \u0153uvre (fondations, structure, ma\u00e7onnerie) repr\u00e9sente 40 \u00e0 50 % du budget total. Le second \u0153uvre (\u00e9lectricit\u00e9, plomberie, \u00e9tanch\u00e9it\u00e9) compte pour 25 \u00e0 30 %, et les finitions (rev\u00eatements, peinture, menuiserie) pour 20 \u00e0 30 %.",
     },
+    { q: "Faut-il un architecte pour un projet de devis construction au Maroc ?", a: "Conform\u00e9ment \u00e0 la loi 16-89, le recours \u00e0 un architecte inscrit \u00e0 l\u2019Ordre est obligatoire pour toute construction au Maroc. M\u00eame pour les projets techniques, l\u2019architecte coordonne le permis de construire et assure la conformit\u00e9. Consultez les profils v\u00e9rifi\u00e9s sur Bati.ma." },
+    { q: "Comment obtenir un devis pour devis construction au Maroc ?", a: "Demandez au minimum 3 devis d\u00e9taill\u00e9s aupr\u00e8s de professionnels diff\u00e9rents. Comparez les postes ligne par ligne, v\u00e9rifiez les r\u00e9f\u00e9rences et exigez un calendrier d\u2019ex\u00e9cution. Sur Bati.ma, vous pouvez contacter directement les architectes sp\u00e9cialis\u00e9s et demander vos devis gratuitement." },
   ];
 
   const faqSchema = {
@@ -41,7 +43,7 @@ export default function GuideDevisConstructionMaroc() {
           structur\u00e9 est votre meilleure protection contre les d\u00e9passements de budget.
         </p>
 
-        <h2>Les postes principaux d&apos;un devis</h2>
+        <h2>Quels sont les postes principaux d&apos;un devis ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">

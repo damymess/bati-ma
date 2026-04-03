@@ -3,6 +3,8 @@ export default function GuideArchitecteSafi() {
     { q: "Comment integrer la ceramique de Safi dans un projet architectural moderne ?", a: "La Colline des Potiers regroupe plus de 800 artisans capables de produire des elements sur mesure : facades en ceramique emaille (350 a 600 MAD/m\u00B2), zellige safiote aux motifs geometriques distincts du zellige fassi, vasques et fontaines decoratives. Pour un projet moderne, prevoyez un budget de 15 000 a 40 000 MAD pour l\u2019habillage ceramique d\u2019une facade de 20 m\u00B2. L\u2019avantage : travailler directement avec l\u2019artisan sans intermediaire, ce qui reduit les couts de 30 a 40 % par rapport a une commande depuis Casablanca ou Marrakech." },
     { q: "Quel budget pour renover un riad dans la medina de Safi ?", a: "Un riad de 100 a 150 m\u00B2 dans la medina de Safi s\u2019acquiert entre 200 000 et 500 000 MAD, soit 5 a 10 fois moins qu\u2019a Essaouira (1 a 3 millions MAD) ou Marrakech (2 a 8 millions MAD). La renovation complete coute entre 2 000 et 5 000 MAD/m\u00B2 selon le niveau de finition. Budget total pour un riad transforme en maison d\u2019hotes de 5 chambres : 600 000 a 1 200 000 MAD tout compris, contre 3 a 6 millions MAD a Essaouira. Le retour sur investissement est plus rapide grace au cout d\u2019entree tres bas." },
     { q: "Les projets OCP a Jorf Lasfar generent-ils du travail pour les architectes locaux ?", a: "Oui, l\u2019extension de Jorf Lasfar Sud cree un double marche. D\u2019un cote, les projets industriels (usines, bureaux, infrastructures portuaires) sont attribues a de grands cabinets nationaux. De l\u2019autre, la demande en logements pour cadres et ingenieurs OCP genere des commandes locales : villas haut standing (6 000 a 9 000 MAD/m\u00B2), residences d\u2019entreprise, equipements de loisirs. Les architectes de Safi captent environ 40 % de cette demande residentielle, le reste allant a des cabinets de Casablanca ou El Jadida." },
+    { q: "Combien coutent les honoraires d\u2019un architecte a Safi ?", a: "Les honoraires a Safi se situent entre 3 et 5 % du montant des travaux, contre 6 a 10 % a Marrakech. Pour une villa de 200 m\u00B2, prevoyez 25 000 a 60 000 MAD tout compris. Les cabinets locaux offrent un rapport qualite-prix tres competitif grace a des charges de fonctionnement reduites." },
+    { q: "Faut-il une etude de sol avant de construire a Safi ?", a: "Oui, l\u2019etude geotechnique est fortement recommandee a Safi en raison des sols argileux et de la proximite de la nappe phreatique dans certaines zones. Elle coute entre 4 000 et 10 000 MAD et permet a l\u2019architecte de dimensionner correctement les fondations pour eviter les fissures." },
   ];
 
   const faqSchema = {
@@ -22,7 +24,7 @@ export default function GuideArchitecteSafi() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>Safi, capitale de la ceramique : quand l&apos;artisanat faconne l&apos;architecture</h2>
+        <h2>Comment la ceramique de Safi influence-t-elle l&apos;architecture locale ?</h2>
         <p>
           Aucune autre ville marocaine ne porte son identite aussi litteralement
           dans ses murs. A <strong>Safi</strong>, la ceramique n&apos;est pas un
@@ -48,7 +50,7 @@ export default function GuideArchitecteSafi() {
           uniques fabriques a la commande.
         </p>
 
-        <h2>Le port et la sardine : construire dans une ville industrielle</h2>
+        <h2>Comment construire dans une ville industrielle comme Safi ?</h2>
         <p>
           Safi est le <strong>premier port sardinier du Maroc</strong> et l&apos;un
           des plus importants au monde. Cette realite industrielle facon ne un
@@ -71,7 +73,7 @@ export default function GuideArchitecteSafi() {
           peripherie et des renovations en medina a 2 000 a 5 000 MAD/m&sup2;.
         </p>
 
-        <h2>La medina de Safi : le dernier territoire abordable de la cote</h2>
+        <h2>Pourquoi la medina de Safi est-elle le dernier territoire abordable de la cote ?</h2>
         <p>
           Quand Essaouira affiche des riads a 2 millions MAD minimum et que
           Marrakech depasse allegrement les 5 millions, la <strong>medina de
@@ -128,7 +130,7 @@ export default function GuideArchitecteSafi() {
           structures sans demonter les murs mitoyens.
         </p>
 
-        <h2>L&apos;effet OCP : Jorf Lasfar Sud et la nouvelle Safi</h2>
+        <h2>Quel est l&apos;impact de l&apos;OCP sur l&apos;architecture a Safi ?</h2>
         <p>
           Le complexe industriel de <strong>Jorf Lasfar</strong>, situe a 20 km
           au nord de Safi, est le plus grand site de transformation de
@@ -150,7 +152,7 @@ export default function GuideArchitecteSafi() {
           que rarement.
         </p>
 
-        <h2>Construire face au vent d&apos;Alize : specificites techniques de Safi</h2>
+        <h2>Quelles sont les contraintes techniques pour construire face aux alizes a Safi ?</h2>
         <p>
           Safi est balayee par les <strong>alizés atlantiques</strong> quasiment
           toute l&apos;annee, avec des vents dominants nord/nord-ouest atteignant

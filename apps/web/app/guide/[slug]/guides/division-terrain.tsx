@@ -12,6 +12,14 @@ export default function GuideDivisionTerrain() {
       q: "Peut-on diviser un terrain non titré ?",
       a: "La division d&apos;un terrain non titré (melk) est juridiquement risquée et fortement déconseillée. Il est recommandé de procéder d&apos;abord à l&apos;immatriculation foncière auprès de la conservation foncière (réquisition), puis de diviser une fois le titre foncier obtenu. Sans titre, la vente des lots séparés est impossible à enregistrer et ne protège pas les acquéreurs.",
     },
+    {
+      q: "Quel est le rôle du géomètre-topographe dans la division de terrain ?",
+      a: "Le géomètre agréé réalise le bornage, le levé topographique et le plan de morcellement. Il assure la liaison avec la conservation foncière pour créer les nouveaux titres. Son intervention est obligatoire pour toute modification des limites d&apos;un titre foncier.",
+    },
+    {
+      q: "Faut-il une autorisation de la commune pour diviser un terrain ?",
+      a: "Oui, toute division de terrain nécessite une autorisation de morcellement délivrée par le président de la commune, après avis de l&apos;agence urbaine. Sans cette autorisation, la vente des lots est nulle et expose le vendeur à des sanctions pénales.",
+    },
   ];
 
   const faqSchema = {
@@ -31,7 +39,7 @@ export default function GuideDivisionTerrain() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>Comprendre la division de terrain au Maroc</h2>
+        <h2>Comment fonctionne la division de terrain au Maroc ?</h2>
         <p>
           La division de terrain est une opération foncière courante au Maroc, qu&apos;il s&apos;agisse de partager un héritage familial, de vendre une partie d&apos;un terrain ou de créer un lotissement. Encadrée par la loi 25-90 relative aux lotissements, groupes d&apos;habitations et morcellements, cette procédure nécessite l&apos;intervention de plusieurs professionnels : géomètre-topographe agréé, architecte, et la conservation foncière.
         </p>
@@ -39,7 +47,7 @@ export default function GuideDivisionTerrain() {
           Avant de diviser un terrain, il faut distinguer deux situations : le morcellement simple (division sans travaux d&apos;aménagement) et le lotissement (division avec viabilisation). Le choix dépend du nombre de lots, de la destination des parcelles et des exigences de la commune.
         </p>
 
-        <h2>La procédure de morcellement</h2>
+        <h2>Quelle est la procédure de morcellement ?</h2>
         <p>
           Le morcellement est la forme la plus simple de division foncière. Il consiste à diviser une propriété titrée en deux lots ou plus, sans obligation de réaliser des travaux d&apos;équipement. La procédure se déroule comme suit :
         </p>
@@ -64,7 +72,7 @@ export default function GuideDivisionTerrain() {
           Le dossier de lotissement comprend : un plan de masse signé par un architecte agréé, une note de présentation, un cahier des charges, un programme d&apos;équipement, un plan des réseaux (eau, électricité, assainissement) et une étude géotechnique. L&apos;instruction du dossier est réalisée par la commission préfectorale ou provinciale qui réunit l&apos;agence urbaine, la commune, l&apos;ONEE, la Lydec/Amendis et la protection civile.
         </p>
 
-        <h2>Frais et coûts de la division de terrain</h2>
+        <h2>Combien coûte la division d&apos;un terrain ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -102,7 +110,7 @@ export default function GuideDivisionTerrain() {
           </tbody>
         </table>
 
-        <h2>Le rôle du géomètre-topographe</h2>
+        <h2>Quel est le rôle du géomètre-topographe ?</h2>
         <p>
           Le géomètre-topographe agréé est l&apos;acteur central de toute division de terrain au Maroc. Seul habilité à réaliser les opérations de bornage et de levé, il est inscrit à l&apos;Ordre national des ingénieurs géomètres-topographes (ONIGT). Son intervention est obligatoire pour toute modification des limites d&apos;un titre foncier. Il assure la liaison technique avec la conservation foncière et garantit la conformité géométrique des lots créés.
         </p>
@@ -117,7 +125,7 @@ export default function GuideDivisionTerrain() {
           </p>
         </div>
 
-        <h2>Erreurs fréquentes à éviter</h2>
+        <h2>Quelles erreurs éviter lors d&apos;une division de terrain ?</h2>
         <p>
           La première erreur est de diviser un terrain sans autorisation : toute vente d&apos;un lot non autorisé est nulle et expose le vendeur à des sanctions. La deuxième est de négliger la vérification du zonage : certains terrains ont une superficie minimale de lot (parfois 100 m², parfois 300 m²) qui empêche la division souhaitée. La troisième erreur est de ne pas anticiper les servitudes de passage : chaque lot doit avoir un accès direct à la voie publique ou bénéficier d&apos;une servitude de passage inscrite au titre foncier.
         </p>

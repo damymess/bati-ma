@@ -12,6 +12,8 @@ export default function GuideInvestissementLocatif() {
       q: "Faut-il cr\u00e9er une SCI pour investir dans l&apos;immobilier locatif au Maroc ?",
       a: "La SCI (Soci\u00e9t\u00e9 Civile Immobili\u00e8re) n&apos;est int\u00e9ressante qu&apos;\u00e0 partir de 3-4 biens ou pour faciliter la transmission. Elle est soumise \u00e0 l&apos;IS (10 \u00e0 31 %) au lieu de l&apos;IR. Les frais de cr\u00e9ation sont d&apos;environ 5 000 \u00e0 10 000 MAD. Pour un premier investissement, l&apos;achat en nom propre reste plus simple et souvent plus avantageux fiscalement.",
     },
+    { q: "Faut-il un architecte pour un projet de investissement locatif ?", a: "Conform\u00e9ment \u00e0 la loi 16-89, le recours \u00e0 un architecte inscrit \u00e0 l\u2019Ordre est obligatoire pour toute construction au Maroc. M\u00eame pour les projets techniques, l\u2019architecte coordonne le permis de construire et assure la conformit\u00e9. Consultez les profils v\u00e9rifi\u00e9s sur Bati.ma." },
+    { q: "Comment obtenir un devis pour investissement locatif ?", a: "Demandez au minimum 3 devis d\u00e9taill\u00e9s aupr\u00e8s de professionnels diff\u00e9rents. Comparez les postes ligne par ligne, v\u00e9rifiez les r\u00e9f\u00e9rences et exigez un calendrier d\u2019ex\u00e9cution. Sur Bati.ma, vous pouvez contacter directement les architectes sp\u00e9cialis\u00e9s et demander vos devis gratuitement." },
   ];
 
   const faqSchema = {

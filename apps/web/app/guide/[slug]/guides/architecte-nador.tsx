@@ -3,6 +3,8 @@ export default function GuideArchitecteNador() {
     { q: "Quelles sont les contraintes sp\u00e9cifiques de Marchica pour construire ?", a: "Tout projet situ\u00e9 dans le p\u00e9rim\u00e8tre Marchica doit respecter le cahier des charges de la Soci\u00e9t\u00e9 de D\u00e9veloppement de Marchica (SDM). Ce document impose des hauteurs maximales (R+2 \u00e0 R+3 selon les lots), des mat\u00e9riaux de fa\u00e7ade sp\u00e9cifiques (enduit ton pierre, bois ou composite), l\u2019interdiction du b\u00e9ton apparent, un coefficient d\u2019emprise au sol limit\u00e9 \u00e0 40-50 %, et l\u2019obligation de soumettre les plans \u00e0 la commission architecturale de la SDM avant tout d\u00e9p\u00f4t de permis. Le d\u00e9lai de validation SDM ajoute 4 \u00e0 8 semaines au calendrier classique." },
     { q: "Comment g\u00e9rer un chantier \u00e0 Nador depuis l\u2019Europe ?", a: "Le d\u00e9fi sp\u00e9cifique \u00e0 Nador est la concentration des chantiers en juillet-ao\u00fbt, quand tous les MRE veulent d\u00e9marrer simultan\u00e9ment. Les entreprises fiables sont sur-r\u00e9serv\u00e9es et les prix grimpent de 10 \u00e0 15 %. Strat\u00e9gie recommand\u00e9e : mandater votre architecte d\u00e8s mars-avril, lancer le gros \u0153uvre en mai (hors saison), et pr\u00e9voir vos visites de contr\u00f4le en \u00e9t\u00e9 quand vous \u00eates au Maroc. Exigez un contrat avec reporting photo hebdomadaire et un m\u00e9treur ind\u00e9pendant pour valider les situations de travaux." },
     { q: "Pourquoi construire \u00e0 Nador co\u00fbte-t-il plus cher que la moyenne de l\u2019Oriental ?", a: "Trois facteurs se cumulent : la classification en zone sismique 4 (la plus \u00e9lev\u00e9e au Maroc) impose 15 \u00e0 20 % d\u2019acier suppl\u00e9mentaire et des fondations renforc\u00e9es, ce qui ajoute 300 \u00e0 500 MAD/m\u00b2 au gros \u0153uvre. Les terrains en pente dans le Rif n\u00e9cessitent des murs de sout\u00e8nement (50 000 \u00e0 150 000 MAD selon le d\u00e9nivel\u00e9). Enfin, l\u2019acheminement des mat\u00e9riaux depuis Casablanca ou F\u00e8s co\u00fbte 8 \u00e0 12 % de plus que dans les villes de plaine, la route nationale traversant les cols du Rif." },
+    { q: "Pourquoi la zone sismique 4 rend-elle la construction plus ch\u00e8re \u00e0 Nador ?", a: "La zone 4 du RPS 2011 impose des fondations renforc\u00e9es, plus d\u2019acier dans les poteaux, des joints de dilatation et des calculs parasismiques obligatoires. Ce surco\u00fbt repr\u00e9sente 15 \u00e0 20 % du gros \u0153uvre par rapport \u00e0 une zone 1 comme Casablanca." },
+    { q: "Comment g\u00e9rer un chantier \u00e0 Nador depuis l\u2019Europe en \u00e9t\u00e9 ?", a: "R\u00e9servez votre architecte d\u00e8s mars pour \u00e9viter le rush estival. Exigez un contrat avec reporting photo hebdomadaire et visioconf\u00e9rences. Pr\u00e9voyez une procuration notari\u00e9e. Les meilleurs ma\u00e2lems sont pris 3 mois \u00e0 l\u2019avance en p\u00e9riode juin-septembre." },
   ];
 
   const faqSchema = {
@@ -22,7 +24,7 @@ export default function GuideArchitecteNador() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>Marchica : le m&eacute;ga-projet qui redessine Nador</h2>
+        <h2>Comment Marchica redessine-t-il Nador ?</h2>
         <p>
           Chercher un <strong>architecte &agrave; Nador</strong> aujourd&apos;hui, c&apos;est
           entrer dans une ville en pleine m&eacute;tamorphose. Le moteur de cette
@@ -47,7 +49,7 @@ export default function GuideArchitecteNador() {
           allers-retours co&ucirc;teux avec la commission.
         </p>
 
-        <h2>Construire pour la diaspora rifaine : un march&eacute; unique</h2>
+        <h2>Comment les MRE construisent-ils &agrave; Nador depuis l&apos;Europe ?</h2>
         <p>
           Nador d&eacute;tient le <strong>ratio MRE/population le plus &eacute;lev&eacute; du
           Maroc</strong>. On estime que 70 &agrave; 75 % des villas neuves dans la
@@ -71,7 +73,7 @@ export default function GuideArchitecteNador() {
           30 %.
         </p>
 
-        <h2>La contrainte sismique : construire sur la faille du Rif</h2>
+        <h2>Quelles sont les contraintes sismiques pour construire &agrave; Nador ?</h2>
         <p>
           Nador est class&eacute;e en <strong>zone sismique 4</strong> selon le
           r&egrave;glement parasismique marocain RPS 2000 &mdash; le niveau le plus
@@ -130,7 +132,7 @@ export default function GuideArchitecteNador() {
           parasismique.
         </p>
 
-        <h2>Architecture rifaine : entre tradition berb&egrave;re et modernit&eacute;</h2>
+        <h2>Comment l&apos;architecture rifaine allie-t-elle tradition et modernit&eacute; ?</h2>
         <p>
           Le Rif poss&egrave;de une identit&eacute; architecturale propre, distincte de
           l&apos;architecture arabo-andalouse de F&egrave;s ou du style Art d&eacute;co de
@@ -151,7 +153,7 @@ export default function GuideArchitecteNador() {
           aux villas &laquo; catalogue &raquo; standardis&eacute;es.
         </p>
 
-        <h2>Prix et r&eacute;alit&eacute;s du march&eacute; nadorien</h2>
+        <h2>Combien co&ucirc;te la construction &agrave; Nador ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">

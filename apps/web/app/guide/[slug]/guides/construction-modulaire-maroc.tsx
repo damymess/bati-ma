@@ -3,6 +3,8 @@ export default function GuideConstructionModulaire() {
     { q: "Quelle est la dur\u00e9e de construction d\u2019un b\u00e2timent modulaire au Maroc ?", a: "Un b\u00e2timent modulaire peut \u00eatre assembl\u00e9 sur site en 2 \u00e0 8 semaines selon la taille, contre 6 \u00e0 18 mois pour une construction traditionnelle. La fabrication en usine se fait en parall\u00e8le des travaux de fondation, ce qui r\u00e9duit consid\u00e9rablement le d\u00e9lai global." },
     { q: "Les b\u00e2timents modulaires sont-ils autoris\u00e9s par la r\u00e9glementation marocaine ?", a: "Oui, les constructions modulaires sont autoris\u00e9es au Maroc \u00e0 condition de respecter le RPS 2000 (r\u00e8glement parasismique), la r\u00e9glementation thermique RTCM, et d\u2019obtenir un permis de construire classique sign\u00e9 par un architecte agr\u00e9\u00e9." },
     { q: "Quel est le co\u00fbt moyen au m\u00b2 d\u2019une construction modulaire au Maroc ?", a: "Le co\u00fbt varie entre 2 500 et 6 000 MAD/m\u00b2 selon le type (conteneur am\u00e9nag\u00e9, pr\u00e9fabriqu\u00e9 b\u00e9ton, modulaire bois). C\u2019est en moyenne 20 \u00e0 40 % moins cher qu\u2019une construction traditionnelle \u00e0 finition \u00e9quivalente." },
+    { q: "Peut-on obtenir un cr\u00e9dit immobilier pour une construction modulaire ?", a: "Les banques marocaines financent les constructions modulaires \u00e0 condition qu\u2019elles disposent d\u2019un permis de construire et d\u2019une assurance d\u00e9cennale. Le b\u00e9ton pr\u00e9fabriqu\u00e9 est le mieux accept\u00e9. Les conteneurs am\u00e9nag\u00e9s et le bois sont plus difficiles \u00e0 financer." },
+    { q: "Quelle est la dur\u00e9e de vie r\u00e9elle d\u2019un b\u00e2timent modulaire ?", a: "Un b\u00e2timent modulaire en b\u00e9ton pr\u00e9fabriqu\u00e9 dure 50 ans et plus, comparable au traditionnel. Les conteneurs am\u00e9nag\u00e9s durent 20 \u00e0 30 ans avec un entretien r\u00e9gulier. Le modulaire bois atteint 40 ans minimum avec un traitement anti-termites." },
   ];
   const faqSchema = {
     "@context": "https://schema.org",
@@ -53,21 +55,21 @@ export default function GuideConstructionModulaire() {
           </p>
         </div>
 
-        <h2>Principaux fournisseurs au Maroc</h2>
+        <h2>Quels sont les principaux fournisseurs modulaires au Maroc ?</h2>
         <p>
           Le march\u00e9 marocain compte plusieurs acteurs sp\u00e9cialis\u00e9s : <strong>TGCC Pr\u00e9fa</strong> (pr\u00e9fabriqu\u00e9 b\u00e9ton, Casablanca),
           <strong> Batipro Modulaire</strong> (conteneurs, Tanger), <strong>Woodia Maroc</strong> (ossature bois, Marrakech)
           et <strong>SAEMOG</strong> (structures m\u00e9talliques, K\u00e9nitra). Comparez toujours au moins 3 devis et v\u00e9rifiez les r\u00e9f\u00e9rences chantier.
         </p>
 
-        <h2>Cas d&apos;usage populaires en 2026</h2>
+        <h2>Quels sont les cas d&apos;usage populaires du modulaire en 2026 ?</h2>
         <p>
           Les b\u00e2timents modulaires sont particuli\u00e8rement adapt\u00e9s aux <strong>h\u00e9bergements touristiques</strong> (glamping, \u00e9co-lodges),
           aux <strong>logements sociaux</strong> (programmes ALEM), aux <strong>extensions d&apos;\u00e9tablissements scolaires</strong>
           et aux <strong>bureaux de chantier</strong> pour les grands projets d&apos;infrastructure.
         </p>
 
-        <h2>Comment lancer votre projet modulaire</h2>
+        <h2>Comment lancer un projet de construction modulaire ?</h2>
         <ol>
           <li>D\u00e9finissez votre programme (surface, usage, budget)</li>
           <li>Consultez un architecte sur Bati.ma pour l&apos;\u00e9tude de faisabilit\u00e9</li>

@@ -3,6 +3,8 @@ export default function GuideBetonArme() {
     { q: "Quel est le dosage standard du b\u00e9ton arm\u00e9 au Maroc ?", a: "Le dosage courant pour les \u00e9l\u00e9ments structurels (poteaux, poutres, dalles) est de 350 kg de ciment par m\u00b3 de b\u00e9ton (classe C25/30). Pour les fondations, on utilise 300 kg/m\u00b3. Le b\u00e9ton de propret\u00e9 (non arm\u00e9) est dos\u00e9 \u00e0 150 kg/m\u00b3. Ces dosages sont conformes \u00e0 la norme marocaine NM 10.1.008 et au BAEL 91 r\u00e9vis\u00e9." },
     { q: "Comment fonctionne le RPS 2011 ?", a: "Le R\u00e8glement de Construction Parasismique RPS 2011 classe le Maroc en 5 zones sismiques (0 \u00e0 4). Chaque zone impose des r\u00e8gles de ferraillage, de contreventement et de d\u00e9tails constructifs sp\u00e9cifiques. La zone 4 (Al Hoce\u00efma, R\u00e9gion du Rif) est la plus contraignante. Le respect du RPS est obligatoire et v\u00e9rifi\u00e9 par le bureau de contr\u00f4le." },
     { q: "Quel est le prix du b\u00e9ton pr\u00eat \u00e0 l&apos;emploi au Maroc ?", a: "Le b\u00e9ton pr\u00eat \u00e0 l&apos;emploi (BPE) livr\u00e9 par camion-toupie co\u00fbte entre 900 et 1 200 MAD/m\u00b3 en classe C25/30, selon la r\u00e9gion et les volumes command\u00e9s. Le b\u00e9ton fabriqu\u00e9 sur chantier revient \u00e0 700 \u2013 900 MAD/m\u00b3 mais sa qualit\u00e9 est moins contr\u00f4l\u00e9e. Pour les projets importants, le BPE est fortement recommand\u00e9." },
+    { q: "Quel dosage de b\u00e9ton utiliser pour une villa au Maroc ?", a: "Pour une villa standard, le b\u00e9ton C25/30 (dos\u00e9 \u00e0 350 kg/m\u00b3 de ciment) est le minimum recommand\u00e9. En zone c\u00f4ti\u00e8re, passez au C30/37 (400 kg/m\u00b3) pour r\u00e9sister \u00e0 la corrosion. Le BPE (b\u00e9ton pr\u00eat \u00e0 l\u2019emploi) garantit un dosage pr\u00e9cis et homog\u00e8ne." },
+    { q: "Comment v\u00e9rifier la qualit\u00e9 du b\u00e9ton sur un chantier marocain ?", a: "Exigez des \u00e9prouvettes cylindriques (16x32 cm) coul\u00e9es \u00e0 chaque livraison et test\u00e9es en laboratoire agr\u00e9\u00e9 (LPEE) \u00e0 7 et 28 jours. V\u00e9rifiez le bon de livraison BPE (dosage, adjuvants, rapport E/C). Un slump test sur site mesure la consistance." },
   ];
   const faqSchema = {
     "@context": "https://schema.org",
@@ -23,7 +25,7 @@ export default function GuideBetonArme() {
           La construction en b\u00e9ton arm\u00e9 au Maroc est encadr\u00e9e par plusieurs textes : le BAEL 91 r\u00e9vis\u00e9 99 (r\u00e8gles de calcul), le RPS 2011 (construction parasismique), les normes marocaines NM 10.1.008 (b\u00e9ton) et NM 10.1.012 (aciers d&apos;armature). Depuis 2002, le contr\u00f4le technique obligatoire par un organisme agr\u00e9\u00e9 (Bureau Veritas, Socotec, LPEE) s&apos;applique \u00e0 toute construction de plus de R+2 ou recevant du public.
         </p>
 
-        <h2>Zones sismiques du Maroc (RPS 2011)</h2>
+        <h2>Quelles sont les zones sismiques du Maroc selon le RPS 2011 ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">

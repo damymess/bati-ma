@@ -12,6 +12,8 @@ export default function GuideTinyHouse() {
       q: "O\u00f9 installer sa tiny house au Maroc ?",
       a: "Les meilleurs emplacements sont les terrains agricoles avec autorisation du propri\u00e9taire, les campings et aires de caravaning, les \u00e9co-villages en d\u00e9veloppement (r\u00e9gion de Chefchaouen, Atlas), et les terrains priv\u00e9s en zone rurale. \u00c9vitez les zones urbaines o\u00f9 le stationnement permanent de structures alternatives est g\u00e9n\u00e9ralement interdit.",
     },
+    { q: "Faut-il un architecte pour un projet de tiny house ?", a: "Conform\u00e9ment \u00e0 la loi 16-89, le recours \u00e0 un architecte inscrit \u00e0 l\u2019Ordre est obligatoire pour toute construction au Maroc. M\u00eame pour les projets techniques, l\u2019architecte coordonne le permis de construire et assure la conformit\u00e9. Consultez les profils v\u00e9rifi\u00e9s sur Bati.ma." },
+    { q: "Comment obtenir un devis pour tiny house ?", a: "Demandez au minimum 3 devis d\u00e9taill\u00e9s aupr\u00e8s de professionnels diff\u00e9rents. Comparez les postes ligne par ligne, v\u00e9rifiez les r\u00e9f\u00e9rences et exigez un calendrier d\u2019ex\u00e9cution. Sur Bati.ma, vous pouvez contacter directement les architectes sp\u00e9cialis\u00e9s et demander vos devis gratuitement." },
   ];
 
   const faqSchema = {

@@ -12,6 +12,8 @@ export default function GuideDecorationInterieure() {
       q: "O\u00f9 trouver des artisans d\u00e9co traditionnels au Maroc ?",
       a: "Les meilleurs artisans sont \u00e0 F\u00e8s (zellige, sculpt\u00e9 sur pl\u00e2tre), Marrakech (tadelakt, fer forg\u00e9), Essaouira (bois de thuya), Sal\u00e9 (poterie), et Ouarzazate (tapis). Pour les trouver, passez par les coop\u00e9ratives artisanales, les maalems recommand\u00e9s par votre architecte d&apos;int\u00e9rieur, ou les showrooms sp\u00e9cialis\u00e9s comme Loft Design \u00e0 Casablanca.",
     },
+    { q: "Faut-il un architecte pour un projet de decoration interieure tendances ?", a: "Conform\u00e9ment \u00e0 la loi 16-89, le recours \u00e0 un architecte inscrit \u00e0 l\u2019Ordre est obligatoire pour toute construction au Maroc. M\u00eame pour les projets techniques, l\u2019architecte coordonne le permis de construire et assure la conformit\u00e9. Consultez les profils v\u00e9rifi\u00e9s sur Bati.ma." },
+    { q: "Comment obtenir un devis pour decoration interieure tendances ?", a: "Demandez au minimum 3 devis d\u00e9taill\u00e9s aupr\u00e8s de professionnels diff\u00e9rents. Comparez les postes ligne par ligne, v\u00e9rifiez les r\u00e9f\u00e9rences et exigez un calendrier d\u2019ex\u00e9cution. Sur Bati.ma, vous pouvez contacter directement les architectes sp\u00e9cialis\u00e9s et demander vos devis gratuitement." },
   ];
 
   const faqSchema = {
@@ -57,7 +59,7 @@ export default function GuideDecorationInterieure() {
           Le n\u00e9o-artisanal est la tendance la plus sophistiqu\u00e9e. Elle r\u00e9interpr\u00e8te les savoir-faire traditionnels marocains dans un langage contemporain : zellige aux formats XXL ou aux couleurs pastel inhabituelles, moucharabiehs en m\u00e9tal d\u00e9coup\u00e9 au laser, pl\u00e2tre sculpt\u00e9 aux motifs g\u00e9om\u00e9triques minimalistes. Les designers marocains comme Hicham Lahlou ou Amina Agueznay sont les figures de proue de ce mouvement.
         </p>
 
-        <h2>Palettes de couleurs 2026</h2>
+        <h2>Quelles palettes de couleurs adopter en 2026 ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -90,7 +92,7 @@ export default function GuideDecorationInterieure() {
           </tbody>
         </table>
 
-        <h2>Les artisans incontournables</h2>
+        <h2>Quels artisans sont incontournables pour la déco au Maroc ?</h2>
         <p>
           Le Maroc poss\u00e8de un r\u00e9seau d&apos;artisans (maalems) parmi les plus talentueux au monde. Pour votre projet de d\u00e9coration, faites appel aux sp\u00e9cialistes de chaque m\u00e9tier : le malem zellige de F\u00e8s pour le carrelage artisanal (200 \u00e0 600 MAD/m\u00b2), le malem tadelakt de Marrakech pour les enduits (300 \u00e0 800 MAD/m\u00b2), le sculpteur sur pl\u00e2tre (gebs) pour les moulures et arcs (500 \u00e0 1 500 MAD/m lin\u00e9aire), et les ferroniers de la m\u00e9dina pour le mobilier sur mesure.
         </p>

@@ -12,6 +12,14 @@ export default function GuideAssuranceConstruction() {
       q: "Combien coûte l\u0027assurance construction au Maroc ?",
       a: "Le coût total des assurances construction au Maroc se situe entre 0,5 et 2 % du montant des travaux. La TRC coûte 0,15 à 0,30 % du montant chantier, la RC Pro de l\u0027entreprise est intégrée dans ses charges (impacte le devis), et l\u0027assurance dommages-ouvrage (quand disponible) coûte 1 à 3 % du montant des travaux.",
     },
+    {
+      q: "Comment vérifier que mon architecte est bien assuré au Maroc ?",
+      a: "Demandez une attestation d\u0027assurance RC Professionnelle en cours de validité avant de signer le contrat. Tout architecte inscrit à l\u0027Ordre National est tenu de détenir cette assurance. Vous pouvez vérifier son inscription auprès du CNOA ou sur les profils vérifiés de Bati.ma.",
+    },
+    {
+      q: "Que couvre exactement la garantie décennale en cas de fissures ?",
+      a: "La garantie décennale couvre uniquement les fissures structurelles compromettant la solidité du bâtiment ou le rendant impropre à sa destination. Les fissures superficielles d\u0027enduit ou de peinture ne sont pas couvertes. En cas de doute, un expert judiciaire peut déterminer si le désordre relève de la décennale.",
+    },
   ];
 
   const faqSchema = {
@@ -31,12 +39,12 @@ export default function GuideAssuranceConstruction() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>Les assurances construction au Maroc : protéger votre investissement</h2>
+        <h2>Pourquoi souscrire une assurance construction au Maroc ?</h2>
         <p>
           Construire une maison au Maroc représente souvent l&apos;investissement d&apos;une vie. Les assurances construction protègent cet investissement contre les aléas du chantier et les malfaçons post-livraison. Pourtant, de nombreux maîtres d&apos;ouvrage marocains négligent ces protections, s&apos;exposant à des risques financiers considérables. Ce guide détaille les différentes assurances disponibles, leurs obligations légales et leurs coûts au Maroc.
         </p>
 
-        <h2>Les principales assurances construction</h2>
+        <h2>Quelles sont les principales assurances construction au Maroc ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -80,22 +88,22 @@ export default function GuideAssuranceConstruction() {
           </tbody>
         </table>
 
-        <h2>L&apos;assurance Tous Risques Chantier (TRC)</h2>
+        <h2>Que couvre l&apos;assurance Tous Risques Chantier (TRC) ?</h2>
         <p>
           La TRC est l&apos;assurance la plus importante pendant la phase de construction. Elle protège contre les dommages matériels survenant sur le chantier : effondrement partiel ou total, incendie, foudre et explosion, dégâts des eaux et inondations, vol et vandalisme, et catastrophes naturelles (séisme, tempête). La prime est calculée sur le montant total des travaux. Pour une villa à 1 000 000 MAD, comptez une prime de 1 500 à 3 000 MAD. La couverture démarre à l&apos;ouverture du chantier et se termine à la réception des travaux.
         </p>
 
-        <h2>La garantie décennale au Maroc</h2>
+        <h2>Comment fonctionne la garantie décennale au Maroc ?</h2>
         <p>
           Le Dahir des Obligations et Contrats (DOC) prévoit une responsabilité décennale pour les architectes et entrepreneurs. Cette garantie couvre les défauts qui compromettent la solidité de l&apos;ouvrage ou le rendent impropre à sa destination. Les désordres couverts incluent les fissures structurelles importantes, les problèmes d&apos;étanchéité de la toiture et des terrasses, les affaissements de fondations, et les défauts de gros œuvre. La prescription est de 10 ans à compter de la réception définitive des travaux.
         </p>
 
-        <h2>La RC Professionnelle de l&apos;architecte</h2>
+        <h2>Pourquoi la RC Professionnelle de l&apos;architecte est-elle importante ?</h2>
         <p>
           Au Maroc, tout architecte inscrit à l&apos;Ordre National des Architectes doit détenir une assurance RC Professionnelle. Cette assurance couvre les erreurs de conception, les fautes dans le suivi de chantier et les manquements aux obligations professionnelles. Avant de signer un contrat avec un architecte, demandez une attestation d&apos;assurance en cours de validité. Les honoraires de l&apos;architecte (8 à 12 % du montant des travaux) incluent cette couverture.
         </p>
 
-        <h2>Comment choisir ses assurances construction ?</h2>
+        <h2>Comment bien choisir ses assurances construction au Maroc ?</h2>
         <p>
           Les principales compagnies d&apos;assurance proposant des produits construction au Maroc sont Wafa Assurance, MAMDA, RMA, Saham Assurance et Atlanta. Pour obtenir le meilleur tarif, comparez au moins 3 devis, vérifiez les exclusions de garantie (travaux en sous-traitance, retard de livraison), assurez-vous que les montants de couverture correspondent au coût réel des travaux, et négociez la franchise (montant restant à votre charge en cas de sinistre).
         </p>
@@ -107,7 +115,7 @@ export default function GuideAssuranceConstruction() {
           </p>
         </div>
 
-        <h2>Que faire en cas de sinistre ?</h2>
+        <h2>Que faire en cas de sinistre sur un chantier au Maroc ?</h2>
         <p>
           En cas de sinistre pendant ou après la construction, déclarez-le à votre assureur dans les 5 jours ouvrables par lettre recommandée. Documentez les dégâts avec des photos et des constats. Ne commencez aucune réparation avant le passage de l&apos;expert mandaté par l&apos;assureur. Si le sinistre relève de la décennale, envoyez une mise en demeure à l&apos;entreprise par courrier recommandé et saisissez un expert judiciaire si nécessaire. Les délais d&apos;indemnisation varient de 1 à 6 mois selon la complexité du dossier.
         </p>

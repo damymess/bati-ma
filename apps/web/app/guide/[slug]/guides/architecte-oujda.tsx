@@ -3,6 +3,8 @@ export default function GuideArchitecteOujda() {
     { q: "Un architecte d\u2019Oujda peut-il g\u00e9rer un projet pour un MRE vivant en Europe ?", a: "Oui, c\u2019est m\u00eame une sp\u00e9cialit\u00e9 locale. Pr\u00e8s de 60 % des constructions neuves \u00e0 Oujda sont command\u00e9es par des MRE. Les cabinets oujdis proposent un suivi \u00e0 distance (visioconf\u00e9rence, photos de chantier hebdomadaires, comptes-rendus \u00e9crits) et peuvent g\u00e9rer la proc\u00e9dure de permis via procuration notari\u00e9e. Pr\u00e9voyez toutefois au moins deux d\u00e9placements : au d\u00e9marrage et \u00e0 la r\u00e9ception des travaux." },
     { q: "Comment l\u2019architecte adapte-t-il la maison au climat extr\u00eame d\u2019Oujda ?", a: "Le climat continental d\u2019Oujda (jusqu\u2019\u00e0 47\u00b0C en \u00e9t\u00e9, gel en hiver) impose des choix sp\u00e9cifiques : double mur en brique de 10+15 cm avec lame d\u2019air, double vitrage obligatoire, orientation nord-sud pour limiter l\u2019ensoleillement ouest, patio central pour la ventilation naturelle, et isolation de toiture en polystyr\u00e8ne extrud\u00e9 de 6 cm minimum. Un bon architecte oujdi int\u00e8gre ces solutions d\u00e8s l\u2019avant-projet." },
     { q: "Quel budget pr\u00e9voir pour construire une villa \u00e0 Oujda ?", a: "Pour une villa de 200 m\u00b2 habitable \u00e0 Oujda (hors terrain) : gros \u0153uvre 440 000 \u00e0 640 000 MAD, finitions standard 240 000 \u00e0 400 000 MAD, am\u00e9nagements ext\u00e9rieurs 50 000 \u00e0 100 000 MAD, honoraires architecte 50 000 \u00e0 70 000 MAD. Total : 780 000 \u00e0 1 210 000 MAD, soit 20 \u00e0 25 % moins cher qu\u2019\u00e0 Casablanca pour une prestation \u00e9quivalente." },
+    { q: "Pourquoi Oujda est-elle la ville pr\u00e9f\u00e9r\u00e9e des MRE pour construire ?", a: "Oujda offre le meilleur rapport qualit\u00e9/prix du Maroc : terrains \u00e0 800-4 500 MAD/m\u00b2, construction 20-25 % moins ch\u00e8re que Casablanca, et des architectes sp\u00e9cialis\u00e9s dans la gestion de projet \u00e0 distance. Pr\u00e8s de 60 % des constructions sont financ\u00e9es par la diaspora." },
+    { q: "Quel syst\u00e8me de chauffage choisir \u00e0 Oujda ?", a: "Le chauffage central au gaz est le plus adapt\u00e9 au climat continental d\u2019Oujda (gel en hiver). Budget : 35 000 \u00e0 80 000 MAD pour une villa. Alternative \u00e9conomique : climatisation r\u00e9versible (chaud/froid) \u00e0 20 000-40 000 MAD. L\u2019isolation est prioritaire avant tout." },
   ];
   const faqSchema = {
     "@context": "https://schema.org",
@@ -55,7 +57,7 @@ export default function GuideArchitecteOujda() {
           Un architecte oujdi exp\u00e9riment\u00e9 conna\u00eet ce cahier des charges par c\u0153ur et propose des plans optimis\u00e9s pour cette double vie de la maison. Sur Bati.ma, filtrez les architectes de l&apos;Oriental pour trouver ceux qui affichent des r\u00e9alisations de ce type.
         </p>
 
-        <h2>Les grands projets qui transforment Oujda</h2>
+        <h2>Quels grands projets transforment Oujda ?</h2>
         <p>
           Oujda n&apos;est plus seulement une ville de passage vers l&apos;Alg\u00e9rie. Plusieurs projets structurants red\u00e9finissent son paysage :
         </p>

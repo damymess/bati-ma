@@ -14,6 +14,8 @@ export default function GuideArchitecteCasablanca() {
       q: "Comment v\u00e9rifier qu\u2019un architecte \u00e0 Casablanca est bien inscrit \u00e0 l\u2019Ordre ?",
       a: "Vous pouvez v\u00e9rifier l\u2019inscription de tout architecte sur le site de l\u2019Ordre des Architectes du Maroc (ordre-architectes.ma) ou sur Bati.ma o\u00f9 chaque profil est v\u00e9rifi\u00e9. Demandez le num\u00e9ro d\u2019inscription au Conseil R\u00e9gional de Casablanca-Settat.",
     },
+    { q: "Quel est le quartier le plus demand\u00e9 pour construire \u00e0 Casablanca ?", a: "Bouskoura Ville Verte est le quartier le plus demand\u00e9 pour les villas neuves, suivi d\u2019Anfa et Dar Bouazza. Pour les immeubles de rapport, Maarif et Gauthier restent les zones phares. Les prix du terrain varient de 3 000 \u00e0 15 000 MAD/m\u00b2 selon le quartier." },
+    { q: "Est-ce que tous les architectes \u00e0 Casablanca sont inscrits \u00e0 l\u2019Ordre ?", a: "Non, seuls les architectes inscrits au Conseil R\u00e9gional de l\u2019Ordre de Casablanca-Settat peuvent l\u00e9galement signer un permis de construire. V\u00e9rifiez toujours le num\u00e9ro d\u2019inscription. Sur Bati.ma, tous les profils sont v\u00e9rifi\u00e9s aupr\u00e8s de l\u2019Ordre." },
   ];
 
   const faqSchema = {

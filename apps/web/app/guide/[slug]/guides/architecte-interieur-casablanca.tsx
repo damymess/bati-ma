@@ -14,6 +14,8 @@ export default function GuideArchitecteInterieurCasablanca() {
       q: "Quelles sont les tendances d\u2019architecture int\u00e9rieure \u00e0 Casablanca en 2026 ?",
       a: "Les tendances 2026 \u00e0 Casablanca incluent le style minimaliste m\u00e9diterran\u00e9en, l\u2019int\u00e9gration de mat\u00e9riaux naturels (tadelakt, bois, pierre), les cuisines ouvertes, le japandi (m\u00e9lange japonais-scandinave) et les espaces multifonctionnels avec home office int\u00e9gr\u00e9.",
     },
+    { q: "Quelle diff\u00e9rence entre architecte d\u2019int\u00e9rieur et d\u00e9corateur \u00e0 Casablanca ?", a: "L\u2019architecte d\u2019int\u00e9rieur peut modifier les volumes (abattre des cloisons, cr\u00e9er des mezzanines) et coordonner les corps de m\u00e9tier. Le d\u00e9corateur intervient uniquement sur le mobilier, les couleurs et les accessoires. Les honoraires diff\u00e8rent : 3-8 % pour l\u2019architecte, forfait pour le d\u00e9corateur." },
+    { q: "Combien co\u00fbte un architecte d\u2019int\u00e9rieur \u00e0 Casablanca ?", a: "Les honoraires varient de 500 \u00e0 2 000 MAD/m\u00b2 selon le standing. Pour un appartement de 120 m\u00b2, comptez 60 000 \u00e0 240 000 MAD pour une mission compl\u00e8te (conception, plans, suivi). Les projets haut standing \u00e0 Anfa ou CIL peuvent d\u00e9passer 3 000 MAD/m\u00b2." },
   ];
 
   const faqSchema = {

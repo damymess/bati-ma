@@ -3,6 +3,8 @@ export default function GuideCertificatConformite() {
     { q: "Quand faut-il demander le certificat de conformit\u00e9 au Maroc ?", a: "Le certificat de conformit\u00e9 doit \u00eatre demand\u00e9 d\u00e8s l\u2019ach\u00e8vement des travaux de construction. Le propri\u00e9taire dispose d\u2019un d\u00e9lai de 30 jours apr\u00e8s la fin du chantier pour d\u00e9poser la demande aupr\u00e8s de la commune." },
     { q: "Peut-on vendre un bien sans certificat de conformit\u00e9 au Maroc ?", a: "Non, depuis la loi 66-12, le certificat de conformit\u00e9 est obligatoire pour \u00e9tablir le titre foncier d\u00e9finitif et proc\u00e9der \u00e0 toute transaction immobili\u00e8re (vente, donation). Les notaires exigent ce document pour la r\u00e9daction des actes." },
     { q: "Combien de temps faut-il pour obtenir le certificat de conformit\u00e9 ?", a: "Le d\u00e9lai l\u00e9gal est de 60 jours \u00e0 compter du d\u00e9p\u00f4t du dossier complet. En pratique, cela prend 2 \u00e0 4 mois selon la commune et la complexit\u00e9 du projet. L\u2019absence de r\u00e9ponse dans le d\u00e9lai l\u00e9gal vaut acceptation tacite." },
+    { q: "Combien de temps faut-il pour obtenir le certificat de conformit\u00e9 ?", a: "Le d\u00e9lai l\u00e9gal est de 60 jours apr\u00e8s d\u00e9p\u00f4t du dossier complet. En pratique, comptez 2 \u00e0 4 mois selon la commune. Le dossier comprend le PV de r\u00e9ception, l\u2019attestation de l\u2019architecte et les plans de r\u00e9colement. Le silence vaut accord pass\u00e9 le d\u00e9lai." },
+    { q: "Que se passe-t-il si on ne demande pas le certificat de conformit\u00e9 ?", a: "Sans certificat de conformit\u00e9, vous ne pouvez pas obtenir le titre foncier d\u00e9finitif, ni raccorder le b\u00e2timent aux r\u00e9seaux (ONEE, Lydec). La vente est aussi bloqu\u00e9e. Des amendes de 10 000 \u00e0 100 000 MAD sont pr\u00e9vues par la loi 12-90." },
   ];
   const faqSchema = {
     "@context": "https://schema.org",
@@ -21,7 +23,7 @@ export default function GuideCertificatConformite() {
           et la <strong>loi 66-12</strong> sur le contr\u00f4le des constructions.
         </p>
 
-        <h2>Pourquoi est-il indispensable ?</h2>
+        <h2>Pourquoi le certificat de conformité est-il indispensable ?</h2>
         <ul>
           <li><strong>Titre foncier</strong> : impossible d&apos;\u00e9tablir le titre d\u00e9finitif sans ce certificat</li>
           <li><strong>Transactions immobili\u00e8res</strong> : obligatoire pour toute vente ou donation</li>
@@ -79,7 +81,7 @@ export default function GuideCertificatConformite() {
           et blocage des raccordements d\u00e9finitifs. La loi 66-12 a consid\u00e9rablement renforc\u00e9 les sanctions depuis 2016.
         </p>
 
-        <h2>Lien avec le permis de construire</h2>
+        <h2>Quel est le lien entre certificat de conformité et permis de construire ?</h2>
         <p>
           Le certificat de conformit\u00e9 est la <strong>derni\u00e8re \u00e9tape du cycle du permis de construire</strong>.
           Le permis autorise les travaux, le certificat atteste que les travaux r\u00e9alis\u00e9s respectent l&apos;autorisation.

@@ -12,6 +12,8 @@ export default function GuideMurVegetal() {
       q: "Un mur v\u00e9g\u00e9tal n\u00e9cessite-t-il beaucoup d&apos;entretien ?",
       a: "L&apos;entretien d\u00e9pend du syst\u00e8me d&apos;irrigation. Avec un syst\u00e8me automatique (goutte-\u00e0-goutte connect\u00e9), l&apos;entretien se limite \u00e0 une taille mensuelle et un contr\u00f4le des nutriments. Sans automatisation, l&apos;arrosage est quotidien en \u00e9t\u00e9. Pr\u00e9voyez un budget de 100 \u00e0 300 MAD/m\u00b2/an pour l&apos;entretien professionnel, ou g\u00e9rez-le vous-m\u00eame avec un syst\u00e8me automatique.",
     },
+    { q: "Faut-il un architecte pour un projet de jardin vertical mur vegetal ?", a: "Conform\u00e9ment \u00e0 la loi 16-89, le recours \u00e0 un architecte inscrit \u00e0 l\u2019Ordre est obligatoire pour toute construction au Maroc. M\u00eame pour les projets techniques, l\u2019architecte coordonne le permis de construire et assure la conformit\u00e9. Consultez les profils v\u00e9rifi\u00e9s sur Bati.ma." },
+    { q: "Comment obtenir un devis pour jardin vertical mur vegetal ?", a: "Demandez au minimum 3 devis d\u00e9taill\u00e9s aupr\u00e8s de professionnels diff\u00e9rents. Comparez les postes ligne par ligne, v\u00e9rifiez les r\u00e9f\u00e9rences et exigez un calendrier d\u2019ex\u00e9cution. Sur Bati.ma, vous pouvez contacter directement les architectes sp\u00e9cialis\u00e9s et demander vos devis gratuitement." },
   ];
 
   const faqSchema = {

@@ -3,6 +3,8 @@ export default function GuideArchitecteMeknes() {
     { q: "Un architecte à Meknès peut-il restaurer un bâtiment en pisé ?", a: "Oui, mais il faut un spécialiste. Le pisé (terre crue compactée) exige des techniques de restauration spécifiques : injection de coulis de chaux, reprise des fondations en pierres sèches et application d\u2019enduits terre-paille compatibles. Les murs en pisé ismaélien atteignent 60 à 80 cm d\u2019épaisseur et ne supportent pas le ciment Portland, qui les asphyxie et provoque des fissurations. Comptez 3 500 à 6 000 MAD/m² pour une restauration pisé dans les règles, contre 2 500 MAD/m² pour une rénovation classique en parpaing." },
     { q: "Quelle est la particularité des riads de Meknès par rapport à ceux de Marrakech ?", a: "Les riads meknassis sont d\u2019héritage ismaélien (XVII\u1D49 siècle) tandis que ceux de Marrakech relèvent majoritairement de l\u2019architecture saadienne. Concrètement, à Meknès les murs porteurs sont en pisé massif (60-80 cm), les patios sont plus étroits et les plafonds plus bas. Les éléments décoratifs privilégient la sobriété militaire : arcs en plein cintre plutôt qu\u2019outrepassés, zellige géométrique plutôt que floral. La restauration coûte souvent 20 à 30 % de moins qu\u2019à Marrakech car le foncier et la main-d\u2019œuvre sont plus accessibles." },
     { q: "Meknès est-elle intéressante pour l\u2019investissement locatif ?", a: "Meknès offre un ratio prix/rendement parmi les meilleurs du Maroc. Avec l\u2019Université Moulay Ismaïl (plus de 60 000 étudiants), la demande locative étudiante est forte. Un appartement T2 à Hamria s\u2019acquiert entre 350 000 et 500 000 MAD et se loue 2 500 à 3 500 MAD/mois, soit un rendement brut de 7 à 9 %. Le tourisme culturel monte en puissance grâce aux musées rénovés et au Festival international de Volubilis. Les maisons d\u2019hôtes en médina se négocient entre 600 000 et 1 200 000 MAD, nettement sous les prix de Fès ou Marrakech." },
+    { q: "Combien coûte un architecte à Meknès ?", a: "Les honoraires varient entre 3 et 6 % du montant des travaux pour une mission complète, soit 15 à 25 % moins cher qu\u2019à Casablanca ou Rabat. Pour un simple dépôt de permis de construire, comptez 15 000 à 30 000 MAD. Les tarifs reflètent le coût de la vie plus accessible dans la région Fès-Meknès." },
+    { q: "Pourquoi ne faut-il pas utiliser de ciment sur un mur en pisé à Meknès ?", a: "Le ciment Portland emprisonne l\u2019humidité dans le pisé, provoque des remontées capillaires et détruit la structure de l\u2019intérieur. Il faut utiliser des enduits à base de chaux aérienne ou terre-paille, compatibles avec la respiration naturelle du matériau. Un architecte spécialisé en patrimoine ismaélien connaît ces contraintes." },
   ];
 
   const faqSchema = {
@@ -22,7 +24,7 @@ export default function GuideArchitecteMeknes() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>Meknès, la ville impériale qui se réinvente</h2>
+        <h2>Comment Meknès se réinvente-t-elle sur le plan architectural ?</h2>
         <p>
           Quand Moulay Ismaïl choisit Meknès comme capitale en 1672, il ne
           construisait pas simplement un palais : il bâtissait une cité
@@ -39,7 +41,7 @@ export default function GuideArchitecteMeknes() {
           <strong> architecte à Meknès</strong> digne de ce nom.
         </p>
 
-        <h2>Rénover un riad impérial : les pièges du patrimoine ismaélien</h2>
+        <h2>Quels sont les pièges à éviter en rénovant un riad ismaélien ?</h2>
         <p>
           Restaurer un riad à Meknès n&apos;a rien à voir avec la rénovation
           d&apos;un riad marrakchi. L&apos;architecture ismaélienne repose sur
@@ -67,7 +69,7 @@ export default function GuideArchitecteMeknes() {
           classique en maçonnerie moderne.
         </p>
 
-        <h2>La ville nouvelle : Hamria, l&apos;axe commercial de demain</h2>
+        <h2>Pourquoi Hamria est-il le quartier le plus dynamique de Meknès ?</h2>
         <p>
           Pendant que la médina attire les passionnés de patrimoine, la ville
           nouvelle concentre l&apos;essentiel de la dynamique immobilière. Le
@@ -116,7 +118,7 @@ export default function GuideArchitecteMeknes() {
           </tbody>
         </table>
 
-        <h2>L&apos;agriculture qui finance l&apos;architecture</h2>
+        <h2>Comment l&apos;agriculture finance-t-elle l&apos;architecture à Meknès ?</h2>
         <p>
           Meknès n&apos;est pas qu&apos;une ville : c&apos;est la porte
           d&apos;entrée de la <strong>plaine du Saïss</strong>, grenier à blé
@@ -141,7 +143,7 @@ export default function GuideArchitecteMeknes() {
           <li><strong>Villa de domaine avec piscine</strong> : 5 000 à 8 000 MAD/m²</li>
         </ul>
 
-        <h2>Construire avec le pisé : la renaissance d&apos;un matériau ancestral</h2>
+        <h2>Pourquoi le pisé contemporain revient-il en force à Meknès ?</h2>
         <p>
           Paradoxalement, le matériau qui pose tant de défis en rénovation
           connaît un renouveau en construction neuve. Une poignée
@@ -167,7 +169,7 @@ export default function GuideArchitecteMeknes() {
           thermique naturelle.
         </p>
 
-        <h2>Budget construction neuve à Meknès</h2>
+        <h2>Combien coûte une construction neuve à Meknès ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -223,7 +225,7 @@ export default function GuideArchitecteMeknes() {
           </p>
         </div>
 
-        <h2>Permis de construire et réglementation locale</h2>
+        <h2>Comment obtenir un permis de construire à Meknès ?</h2>
         <p>
           Tout projet à Meknès nécessite un permis de construire délivré par
           la commune après avis de l&apos;<strong>Agence urbaine de

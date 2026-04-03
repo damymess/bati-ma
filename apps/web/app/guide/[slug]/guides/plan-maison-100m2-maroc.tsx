@@ -14,6 +14,8 @@ export default function GuidePlanMaison100m2Maroc() {
       q: "Faut-il un architecte pour une maison de 100 m\u00b2 au Maroc ?",
       a: "La loi n\u2019impose un architecte qu\u2019au-del\u00e0 de 150 m\u00b2. Toutefois, un architecte est fortement recommand\u00e9 m\u00eame pour 100 m\u00b2 : il optimise l\u2019espace, assure la conformit\u00e9 au plan d\u2019am\u00e9nagement et facilite l\u2019obtention du permis de construire. Ses honoraires repr\u00e9sentent 5 \u00e0 8 % du co\u00fbt des travaux.",
     },
+    { q: "Faut-il un architecte pour un projet de plan maison 100m2 au Maroc ?", a: "Conform\u00e9ment \u00e0 la loi 16-89, le recours \u00e0 un architecte inscrit \u00e0 l\u2019Ordre est obligatoire pour toute construction au Maroc. M\u00eame pour les projets techniques, l\u2019architecte coordonne le permis de construire et assure la conformit\u00e9. Consultez les profils v\u00e9rifi\u00e9s sur Bati.ma." },
+    { q: "Comment obtenir un devis pour plan maison 100m2 au Maroc ?", a: "Demandez au minimum 3 devis d\u00e9taill\u00e9s aupr\u00e8s de professionnels diff\u00e9rents. Comparez les postes ligne par ligne, v\u00e9rifiez les r\u00e9f\u00e9rences et exigez un calendrier d\u2019ex\u00e9cution. Sur Bati.ma, vous pouvez contacter directement les architectes sp\u00e9cialis\u00e9s et demander vos devis gratuitement." },
   ];
 
   const faqSchema = {

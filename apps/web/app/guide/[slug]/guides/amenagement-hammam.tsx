@@ -3,6 +3,8 @@ export default function GuideAmenagementHammam() {
     { q: "Quel budget pr\u00e9voir pour un hammam priv\u00e9 au Maroc ?", a: "Un hammam priv\u00e9 co\u00fbte entre 30 000 MAD pour une cabine simple avec g\u00e9n\u00e9rateur de vapeur et 150 000 MAD pour un espace complet avec tadelakt, banquette chauffante, douche \u00e0 l&apos;italienne et vestiaire. Le poste le plus \u00e9lev\u00e9 est g\u00e9n\u00e9ralement le rev\u00eatement en tadelakt (400 \u00e0 800 MAD/m\u00b2 pos\u00e9)." },
     { q: "Quelles sont les dimensions minimales pour un hammam \u00e0 domicile ?", a: "Un hammam individuel fonctionnel n\u00e9cessite au minimum 4 m\u00b2 (2 m x 2 m) avec une hauteur sous plafond de 2,20 m. Pour un hammam familial avec banquette, pr\u00e9voyez 6 \u00e0 9 m\u00b2. La salle doit \u00eatre adjacente \u00e0 une arriv\u00e9e d&apos;eau et une \u00e9vacuation, id\u00e9alement au rez-de-chauss\u00e9e." },
     { q: "Le tadelakt est-il indispensable pour un hammam ?", a: "Non, mais c&apos;est le rev\u00eatement traditionnel id\u00e9al. Le tadelakt \u00e0 base de chaux de Marrakech est naturellement \u00e9tanche, antibact\u00e9rien et r\u00e9sistant \u00e0 la vapeur. Les alternatives incluent le carrelage en gr\u00e8s c\u00e9rame (moins esth\u00e9tique mais moins cher) ou la r\u00e9sine \u00e9poxy (plus facile d&apos;entretien)." },
+    { q: "Quelle surface minimale pr\u00e9voir pour un hammam \u00e0 domicile ?", a: "Un hammam privatif fonctionnel n\u00e9cessite au minimum 6 m\u00b2, id\u00e9alement 8 \u00e0 12 m\u00b2 pour inclure un espace froid, un espace chaud et un coin douche. Pr\u00e9voyez \u00e9galement un local technique de 2 m\u00b2 pour le g\u00e9n\u00e9rateur de vapeur et la ventilation." },
+    { q: "Quel type de rev\u00eatement choisir pour un hammam au Maroc ?", a: "Le tadelakt est le rev\u00eatement traditionnel id\u00e9al : imperm\u00e9able, antibact\u00e9rien et esth\u00e9tique. Le zellige est \u00e9galement utilis\u00e9 pour les murs. \u00c9vitez le carrelage classique qui r\u00e9siste mal \u00e0 la vapeur. Comptez 400 \u00e0 800 MAD/m\u00b2 pour le tadelakt pos\u00e9." },
   ];
   const faqSchema = {
     "@context": "https://schema.org",
@@ -18,7 +20,7 @@ export default function GuideAmenagementHammam() {
           Le hammam est un \u00e9l\u00e9ment central de la culture marocaine. Autrefois r\u00e9serv\u00e9 aux \u00e9tablissements publics et aux riads de luxe, il s&apos;invite d\u00e9sormais dans les maisons individuelles. Am\u00e9nager un hammam chez soi, c&apos;est allier bien-\u00eatre quotidien et valorisation immobili\u00e8re \u2014 un atout consid\u00e9rable pour la revente ou la location touristique. \u00c0 Marrakech et F\u00e8s, un hammam priv\u00e9 peut augmenter la valeur d&apos;un bien de 10 \u00e0 20 %.
         </p>
 
-        <h2>Conception et dimensions</h2>
+        <h2>Quelles dimensions prévoir pour un hammam à domicile ?</h2>
         <p>
           Un hammam domestique se compose g\u00e9n\u00e9ralement de deux \u00e0 trois espaces : la salle ti\u00e8de (bayt el-bared), la salle chaude (bayt el-skhoun) et \u00e9ventuellement un espace de repos. Pour un usage familial, pr\u00e9voyez 6 \u00e0 12 m\u00b2 au total. La hauteur sous plafond id\u00e9ale est de 2,20 \u00e0 2,40 m avec un plafond vo\u00fbt\u00e9 ou en d\u00f4me pour favoriser la condensation et \u00e9viter les gouttes.
         </p>
@@ -87,7 +89,7 @@ export default function GuideAmenagementHammam() {
           </p>
         </div>
 
-        <h2>Entretien du hammam</h2>
+        <h2>Comment entretenir son hammam au quotidien ?</h2>
         <p>
           Le tadelakt doit \u00eatre trait\u00e9 au savon noir une fois par mois pour maintenir son \u00e9tanch\u00e9it\u00e9 et son lustre. Nettoyez les parois \u00e0 l&apos;eau claire apr\u00e8s chaque utilisation et a\u00e9rez la pi\u00e8ce pendant au moins 30 minutes. D\u00e9tartrez le g\u00e9n\u00e9rateur de vapeur tous les 3 mois (l&apos;eau calcaire au Maroc acc\u00e9l\u00e8re l&apos;entartrage). Un adoucisseur d&apos;eau en amont est un investissement judicieux (3 000 \u00e0 8 000 MAD).
         </p>

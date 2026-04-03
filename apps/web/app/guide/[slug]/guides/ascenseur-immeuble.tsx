@@ -12,6 +12,14 @@ export default function GuideAscenseur() {
       q: "Quel est le coût de maintenance annuel d\u0027un ascenseur au Maroc ?",
       a: "Le contrat de maintenance annuel d\u0027un ascenseur au Maroc coûte entre 12 000 et 30 000 MAD, selon le type de contrat (simple entretien ou tout inclus) et la marque. La maintenance est obligatoire et doit être réalisée par une société agréée. Un contrôle technique annuel par un organisme accrédité (Bureau Veritas, Apave) est également requis.",
     },
+    {
+      q: "Est-ce que l\u0027ascenseur augmente la valeur d\u0027un immeuble au Maroc ?",
+      a: "Oui, un ascenseur valorise un immeuble de 10 à 20 % en moyenne. Les appartements en étages élevés sans ascenseur perdent jusqu\u0027à 30 % de leur valeur. Pour les promoteurs, c\u0027est un investissement rentabilisé dès la commercialisation des logements aux derniers niveaux.",
+    },
+    {
+      q: "Comment choisir entre un ascenseur électrique et hydraulique ?",
+      a: "L\u0027ascenseur électrique à câbles convient aux immeubles de plus de 4 étages, avec un coût d\u0027exploitation inférieur. L\u0027hydraulique est adapté aux immeubles bas (R+2 à R+6) sans possibilité de local machine en toiture. Le modèle MRL (sans local machine) combine les avantages des deux technologies.",
+    },
   ];
 
   const faqSchema = {
@@ -31,7 +39,7 @@ export default function GuideAscenseur() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>Les ascenseurs au Maroc : réglementation et obligations</h2>
+        <h2>Quelles sont les obligations légales pour les ascenseurs au Maroc ?</h2>
         <p>
           L&apos;ascenseur est un équipement incontournable dans la construction d&apos;immeubles au Maroc. La réglementation marocaine impose son installation pour tout bâtiment dépassant le R+4. Avec l&apos;urbanisation croissante de Casablanca, Rabat, Tanger et Marrakech, la demande en ascenseurs a fortement augmenté, entraînant l&apos;arrivée de nombreux acteurs sur le marché.
         </p>
@@ -39,12 +47,12 @@ export default function GuideAscenseur() {
           Que vous soyez promoteur, syndic de copropriété ou propriétaire d&apos;immeuble, ce guide vous aide à comprendre les obligations, les coûts et les critères de choix pour un ascenseur au Maroc.
         </p>
 
-        <h2>Réglementation et normes de sécurité</h2>
+        <h2>Quelles normes de sécurité s&apos;appliquent aux ascenseurs au Maroc ?</h2>
         <p>
           La réglementation marocaine encadre strictement l&apos;installation et l&apos;exploitation des ascenseurs. Les principaux textes de référence sont le décret n° 2-14-841 relatif à la sécurité des ascenseurs et les normes marocaines NM. Tout ascenseur doit être installé par une entreprise agréée, faire l&apos;objet d&apos;un contrôle technique initial avant mise en service, subir un contrôle technique annuel par un organisme accrédité, et disposer d&apos;un contrat de maintenance obligatoire.
         </p>
 
-        <h2>Types d&apos;ascenseurs disponibles au Maroc</h2>
+        <h2>Quels types d&apos;ascenseurs sont disponibles au Maroc ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -82,12 +90,12 @@ export default function GuideAscenseur() {
           </tbody>
         </table>
 
-        <h2>Marques et fabricants présents au Maroc</h2>
+        <h2>Quelles marques d&apos;ascenseurs sont présentes au Maroc ?</h2>
         <p>
           Le marché marocain des ascenseurs est partagé entre les grandes marques internationales et des fabricants locaux ou régionaux. Otis, Schindler et Kone dominent le segment haut de gamme et tertiaire. ThyssenKrupp est bien implanté dans le résidentiel de standing. Des marques turques (Asansor) et chinoises proposent des alternatives plus abordables pour le résidentiel économique. Pour le choix de la marque, les critères déterminants sont la disponibilité des pièces détachées au Maroc, la réactivité du SAV et la solidité financière du représentant local.
         </p>
 
-        <h2>Coûts d&apos;exploitation et maintenance</h2>
+        <h2>Combien coûtent l&apos;exploitation et la maintenance d&apos;un ascenseur ?</h2>
         <p>
           Au-delà du coût d&apos;achat, l&apos;ascenseur génère des charges récurrentes qu&apos;il faut anticiper dans le budget de la copropriété :
         </p>
@@ -129,7 +137,7 @@ export default function GuideAscenseur() {
           </p>
         </div>
 
-        <h2>Prévoir la gaine dès la conception</h2>
+        <h2>Pourquoi faut-il prévoir la gaine d&apos;ascenseur dès la conception ?</h2>
         <p>
           La gaine d&apos;ascenseur doit être prévue dès la phase de conception architecturale. Les dimensions minimales de la gaine sont de 1,50 m x 1,60 m pour un ascenseur standard de 6 personnes. La fosse en partie basse doit avoir une profondeur de 1,20 à 1,50 m. Prévoyez également un dégagement en partie haute (course morte) d&apos;au moins 3,50 m. Ces contraintes impactent directement le plan de l&apos;immeuble et doivent être intégrées par l&apos;architecte dès le permis de construire.
         </p>

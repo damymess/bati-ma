@@ -3,6 +3,8 @@ export default function GuideEtancheiteToiture() {
     { q: "Pourquoi les toitures au Maroc ont-elles autant de probl\u00e8mes d&apos;\u00e9tanch\u00e9it\u00e9 ?", a: "La toiture-terrasse, typique de l&apos;architecture marocaine, est expos\u00e9e aux UV intenses (d\u00e9gradation des membranes), aux \u00e9carts thermiques (fissuration), et aux pluies torrentielles concentr\u00e9es sur quelques mois. S&apos;ajoutent des d\u00e9fauts d&apos;ex\u00e9cution fr\u00e9quents : absence de forme de pente, relev\u00e9s d&apos;\u00e9tanch\u00e9it\u00e9 insuffisants et mat\u00e9riaux de mauvaise qualit\u00e9." },
     { q: "Combien co\u00fbte la r\u00e9fection d&apos;\u00e9tanch\u00e9it\u00e9 d&apos;une terrasse au Maroc ?", a: "Le co\u00fbt varie selon la technique : 80 \u00e0 150 MAD/m\u00b2 pour un rev\u00eatement bitumineux multicouche, 150 \u00e0 250 MAD/m\u00b2 pour une membrane PVC ou TPO, et 200 \u00e0 350 MAD/m\u00b2 pour une r\u00e9sine polyur\u00e9thane liquide. La d\u00e9pose de l&apos;ancien rev\u00eatement ajoute 30 \u00e0 60 MAD/m\u00b2. Pour une terrasse de 100 m\u00b2, pr\u00e9voyez 15 000 \u00e0 35 000 MAD tout compris." },
     { q: "Quelle est la dur\u00e9e de vie d&apos;une \u00e9tanch\u00e9it\u00e9 de toiture ?", a: "Un rev\u00eatement bitumineux bien pos\u00e9 dure 10 \u00e0 15 ans. Les membranes PVC/TPO atteignent 20 \u00e0 25 ans. La r\u00e9sine polyur\u00e9thane offre 15 \u00e0 20 ans de protection. Ces dur\u00e9es supposent une pose dans les r\u00e8gles de l&apos;art et un entretien minimal (nettoyage annuel, v\u00e9rification des relev\u00e9s et des joints)." },
+    { q: "Faut-il un architecte pour un projet de etancheite toiture ?", a: "Conform\u00e9ment \u00e0 la loi 16-89, le recours \u00e0 un architecte inscrit \u00e0 l\u2019Ordre est obligatoire pour toute construction au Maroc. M\u00eame pour les projets techniques, l\u2019architecte coordonne le permis de construire et assure la conformit\u00e9. Consultez les profils v\u00e9rifi\u00e9s sur Bati.ma." },
+    { q: "Comment obtenir un devis pour etancheite toiture ?", a: "Demandez au minimum 3 devis d\u00e9taill\u00e9s aupr\u00e8s de professionnels diff\u00e9rents. Comparez les postes ligne par ligne, v\u00e9rifiez les r\u00e9f\u00e9rences et exigez un calendrier d\u2019ex\u00e9cution. Sur Bati.ma, vous pouvez contacter directement les architectes sp\u00e9cialis\u00e9s et demander vos devis gratuitement." },
   ];
   const faqSchema = {
     "@context": "https://schema.org",
@@ -18,7 +20,7 @@ export default function GuideEtancheiteToiture() {
           Les infiltrations d&apos;eau par la toiture sont la pathologie la plus fr\u00e9quente dans la construction marocaine. Selon les experts du LPEE (Laboratoire Public d&apos;Essais et d&apos;\u00c9tudes), plus de 60 % des litiges en construction concernent des d\u00e9fauts d&apos;\u00e9tanch\u00e9it\u00e9. La toiture-terrasse, omnipr\u00e9sente dans l&apos;architecture marocaine, est particuli\u00e8rement vuln\u00e9rable si elle n&apos;est pas correctement trait\u00e9e.
         </p>
 
-        <h2>Causes principales des infiltrations</h2>
+        <h2>Quelles sont les causes principales des infiltrations ?</h2>
         <p>
           Les d\u00e9fauts d&apos;\u00e9tanch\u00e9it\u00e9 au Maroc ont des causes multiples. L&apos;absence de forme de pente (minimum 1,5 % selon le DTU) provoque la stagnation d&apos;eau. Les relev\u00e9s d&apos;\u00e9tanch\u00e9it\u00e9 insuffisants (hauteur minimale 15 cm au-dessus du niveau fini) laissent passer l&apos;eau en cas de forte pluie. Les joints de dilatation mal trait\u00e9s, les traverses de toiture non \u00e9tanch\u00e9es et le vieillissement acc\u00e9l\u00e9r\u00e9 par les UV compl\u00e8tent le tableau.
         </p>
@@ -90,7 +92,7 @@ export default function GuideEtancheiteToiture() {
           </p>
         </div>
 
-        <h2>Garanties et assurances</h2>
+        <h2>Quelles garanties et assurances exiger ?</h2>
         <p>
           La garantie d\u00e9cennale (article 769 du DOC marocain) couvre les d\u00e9fauts d&apos;\u00e9tanch\u00e9it\u00e9 pendant 10 ans apr\u00e8s r\u00e9ception des travaux. L&apos;assurance Tous Risques Chantier (TRC) est obligatoire pour les travaux de plus de 5 millions MAD. Pour les petits chantiers, exigez au minimum un PV de r\u00e9ception et une garantie \u00e9crite de l&apos;entreprise.
         </p>

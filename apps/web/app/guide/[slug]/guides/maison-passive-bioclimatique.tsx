@@ -12,6 +12,8 @@ export default function GuideMaisonPassive() {
       q: "La RTCM impose-t-elle la construction passive au Maroc ?",
       a: "La RTCM (R\u00e9glementation Thermique de Construction au Maroc) n&apos;impose pas le standard passif mais fixe des performances thermiques minimales selon 6 zones climatiques. La maison passive va bien au-del\u00e0 des exigences RTCM. Respecter la RTCM est obligatoire depuis 2015 pour le neuf, mais atteindre le niveau passif est un choix volontaire qui apporte un confort et des \u00e9conomies sup\u00e9rieurs.",
     },
+    { q: "Faut-il un architecte pour un projet de maison passive bioclimatique ?", a: "Conform\u00e9ment \u00e0 la loi 16-89, le recours \u00e0 un architecte inscrit \u00e0 l\u2019Ordre est obligatoire pour toute construction au Maroc. M\u00eame pour les projets techniques, l\u2019architecte coordonne le permis de construire et assure la conformit\u00e9. Consultez les profils v\u00e9rifi\u00e9s sur Bati.ma." },
+    { q: "Comment obtenir un devis pour maison passive bioclimatique ?", a: "Demandez au minimum 3 devis d\u00e9taill\u00e9s aupr\u00e8s de professionnels diff\u00e9rents. Comparez les postes ligne par ligne, v\u00e9rifiez les r\u00e9f\u00e9rences et exigez un calendrier d\u2019ex\u00e9cution. Sur Bati.ma, vous pouvez contacter directement les architectes sp\u00e9cialis\u00e9s et demander vos devis gratuitement." },
   ];
 
   const faqSchema = {

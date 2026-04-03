@@ -3,6 +3,8 @@ export default function GuideArchitecteFes() {
     { q: "Combien coûte un architecte à Fès ?", a: "Les honoraires d\u2019un architecte à Fès se situent entre 3 % et 8 % du montant des travaux pour une mission complète. Pour une mission limitée à la conception et au permis de construire, comptez entre 15 000 et 35 000 MAD. Les tarifs sont légèrement inférieurs à ceux de Casablanca ou Rabat." },
     { q: "Peut-on rénover un riad dans la médina de Fès sans architecte ?", a: "Non, toute rénovation structurelle dans la médina de Fès nécessite un architecte inscrit à l\u2019Ordre. De plus, la médina étant classée au patrimoine mondial de l\u2019UNESCO, les travaux sont soumis à l\u2019approbation de l\u2019Agence pour la Dédensification et la Réhabilitation de la Médina de Fès (ADER-Fès) et doivent respecter des contraintes patrimoniales strictes." },
     { q: "Quelles sont les spécialités des architectes de Fès ?", a: "Les architectes de Fès se distinguent par leur expertise en rénovation patrimoniale (riads, fondouks, médersas), en architecture mérinide et andalouse, et en intégration de l\u2019artisanat fassi (zellige de Fès, plâtre sculpté, bois de cèdre peint). Beaucoup sont également spécialisés dans les projets touristiques (maisons d\u2019hôtes, boutique-hôtels)." },
+    { q: "Quel est le coût de rénovation d\u2019un riad à Fès ?", a: "La rénovation d\u2019un riad à Fès coûte entre 5 000 et 10 000 MAD/m² selon l\u2019état du bâtiment et le niveau de finition. Les honoraires d\u2019architecte pour un riad en médina sont de 5 à 10 % du montant des travaux. Prévoyez 6 à 18 mois de travaux en raison des contraintes patrimoniales et des autorisations ADER-Fès." },
+    { q: "Comment trouver un architecte spécialisé en patrimoine à Fès ?", a: "Sur Bati.ma, filtrez les architectes de Fès par spécialité « rénovation » ou « patrimoine ». Vérifiez que le professionnel a déjà travaillé avec l\u2019ADER-Fès et qu\u2019il maîtrise les techniques traditionnelles (zellige, plâtre sculpté, bois de cèdre). Demandez à voir ses réalisations en médina avant de vous engager." },
   ];
 
   const faqSchema = {
@@ -22,7 +24,7 @@ export default function GuideArchitecteFes() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>Fès : capitale spirituelle et patrimoine architectural unique</h2>
+        <h2>Pourquoi Fès possède-t-elle un patrimoine architectural unique ?</h2>
         <p>
           Fès abrite la plus ancienne médina du monde encore habitée, classée
           au patrimoine mondial de l&apos;UNESCO depuis 1981. L&apos;architecture
@@ -32,7 +34,7 @@ export default function GuideArchitecteFes() {
           que les exigences contemporaines.
         </p>
 
-        <h2>Rénovation dans la médina : un savoir-faire spécifique</h2>
+        <h2>Comment rénover dans la médina de Fès ?</h2>
         <p>
           La rénovation de riads et de bâtiments historiques dans la médina de
           Fès est une spécialité locale. L&apos;architecte doit travailler en
@@ -48,7 +50,7 @@ export default function GuideArchitecteFes() {
           <li>Respect des gabarits et des matériaux imposés par l&apos;ADER-Fès</li>
         </ul>
 
-        <h2>Les zones modernes de Fès</h2>
+        <h2>Quelles sont les zones modernes de Fès pour construire ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -66,7 +68,7 @@ export default function GuideArchitecteFes() {
           </tbody>
         </table>
 
-        <h2>L&apos;architecture mérinide : un héritage vivant</h2>
+        <h2>Qu&apos;est-ce que l&apos;architecture mérinide ?</h2>
         <p>
           Fès est le berceau de l&apos;art mérinide, caractérisé par la finesse du
           zellige (mosaïque de céramique), le plâtre sculpté (gebs), le bois
@@ -76,7 +78,7 @@ export default function GuideArchitecteFes() {
           tout en répondant aux besoins actuels.
         </p>
 
-        <h2>Tarifs des architectes à Fès</h2>
+        <h2>Combien coûte un architecte à Fès ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -103,7 +105,7 @@ export default function GuideArchitecteFes() {
           </p>
         </div>
 
-        <h2>Fès-Shore : le nouveau visage de Fès</h2>
+        <h2>Comment Fès-Shore transforme-t-il la ville ?</h2>
         <p>
           Le technopôle Fès-Shore, situé à Ain Chkef, symbolise la modernisation
           de la ville. Ce pôle d&apos;offshoring attire des entreprises internationales

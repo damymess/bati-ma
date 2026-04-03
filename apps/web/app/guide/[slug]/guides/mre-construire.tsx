@@ -12,6 +12,8 @@ export default function GuideMREConstruire() {
       q: "Comment surveiller un chantier au Maroc \u00e0 distance ?",
       a: "Plusieurs solutions existent : mandater un architecte pour le suivi de chantier (3 \u00e0 5 % du co\u00fbt des travaux), installer des cam\u00e9ras de chantier connect\u00e9es (1 500 \u00e0 3 000 MAD), exiger des rapports photo hebdomadaires de l&apos;entreprise, et utiliser des applications de suivi de projet. La pr\u00e9sence d&apos;un architecte de confiance reste la solution la plus fiable.",
     },
+    { q: "Faut-il un architecte pour un projet de mre construire ?", a: "Conform\u00e9ment \u00e0 la loi 16-89, le recours \u00e0 un architecte inscrit \u00e0 l\u2019Ordre est obligatoire pour toute construction au Maroc. M\u00eame pour les projets techniques, l\u2019architecte coordonne le permis de construire et assure la conformit\u00e9. Consultez les profils v\u00e9rifi\u00e9s sur Bati.ma." },
+    { q: "Comment obtenir un devis pour mre construire ?", a: "Demandez au minimum 3 devis d\u00e9taill\u00e9s aupr\u00e8s de professionnels diff\u00e9rents. Comparez les postes ligne par ligne, v\u00e9rifiez les r\u00e9f\u00e9rences et exigez un calendrier d\u2019ex\u00e9cution. Sur Bati.ma, vous pouvez contacter directement les architectes sp\u00e9cialis\u00e9s et demander vos devis gratuitement." },
   ];
 
   const faqSchema = {

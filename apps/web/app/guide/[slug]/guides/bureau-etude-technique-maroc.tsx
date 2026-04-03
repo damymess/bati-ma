@@ -14,6 +14,8 @@ export default function GuideBureauEtudeTechniqueMaroc() {
       q: "Le BET est-il obligatoire pour construire au Maroc ?",
       a: "Oui, pour toute construction de plus de R+2 ou de plus de 150 m\u00b2, le recours \u00e0 un BET agr\u00e9\u00e9 est obligatoire pour les plans de b\u00e9ton arm\u00e9. Les communes exigent les plans BET vis\u00e9s pour d\u00e9livrer le permis de construire. M\u00eame pour des projets plus petits, le BET est fortement recommand\u00e9.",
     },
+    { q: "Quelle diff\u00e9rence entre un BET et un architecte au Maroc ?", a: "L\u2019architecte con\u00e7oit le projet (plans, esth\u00e9tique, fonctionnalit\u00e9) et d\u00e9pose le permis. Le BET calcule la structure (b\u00e9ton arm\u00e9, charpente) et dimensionne les lots techniques (\u00e9lectricit\u00e9, plomberie, CVC). Les deux sont compl\u00e9mentaires et obligatoires pour un immeuble." },
+    { q: "Combien co\u00fbte un bureau d\u2019\u00e9tudes techniques au Maroc ?", a: "Les honoraires d\u2019un BET varient de 1,5 \u00e0 4 % du montant des travaux. Pour une villa, comptez 15 000 \u00e0 40 000 MAD. Pour un immeuble R+4, entre 50 000 et 150 000 MAD. Les \u00e9tudes thermiques RTCM co\u00fbtent 5 000 \u00e0 15 000 MAD en suppl\u00e9ment." },
   ];
 
   const faqSchema = {
@@ -38,7 +40,7 @@ export default function GuideBureauEtudeTechniqueMaroc() {
           Le BET est un cabinet d&apos;ing\u00e9nieurs sp\u00e9cialis\u00e9s qui calcule et dimensionne les \u00e9l\u00e9ments techniques d&apos;un b\u00e2timent. Au Maroc, le BET intervient apr\u00e8s l&apos;architecte pour transformer les plans architecturaux en plans d&apos;ex\u00e9cution techniques : structure b\u00e9ton arm\u00e9, \u00e9lectricit\u00e9, plomberie, climatisation et thermique.
         </p>
 
-        <h2>Les missions du BET au Maroc</h2>
+        <h2>Quelles sont les missions d&apos;un BET au Maroc ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -56,7 +58,7 @@ export default function GuideBureauEtudeTechniqueMaroc() {
           </tbody>
         </table>
 
-        <h2>Comment choisir son BET au Maroc</h2>
+        <h2>Comment bien choisir son BET au Maroc ?</h2>
         <p>
           V\u00e9rifiez l&apos;agr\u00e9ment du BET aupr\u00e8s du Minist\u00e8re de l&apos;\u00c9quipement. Assurez-vous qu&apos;il dispose d&apos;une assurance responsabilit\u00e9 civile professionnelle. Demandez des r\u00e9f\u00e9rences de projets similaires au v\u00f4tre. Un bon BET utilise des logiciels de calcul modernes (Robot, ETABS, Revit) et fournit des plans d\u00e9taill\u00e9s exploitables par les entreprises de construction.
         </p>
@@ -74,7 +76,7 @@ export default function GuideBureauEtudeTechniqueMaroc() {
           </p>
         </div>
 
-        <h2>Tarifs des BET selon la taille du projet</h2>
+        <h2>Combien coûte un BET selon la taille du projet ?</h2>
         <p>
           Pour une villa standard (150 \u00e0 300 m\u00b2), le co\u00fbt total du BET (tous lots confondus) se situe entre 15 000 et 50 000 MAD. Pour un immeuble R+4, comptez 50 000 \u00e0 120 000 MAD. Pour les projets commerciaux ou industriels, les tarifs sont g\u00e9n\u00e9ralement calcul\u00e9s en pourcentage du co\u00fbt des travaux (1 \u00e0 3 %).
         </p>

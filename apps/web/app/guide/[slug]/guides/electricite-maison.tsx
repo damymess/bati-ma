@@ -12,6 +12,14 @@ export default function GuideElectriciteMaison() {
       q: "Comment se raccorder au réseau ONEE ?",
       a: "Pour obtenir un branchement ONEE, il faut déposer une demande auprès de l\u0027agence locale avec le permis de construire, le plan de masse et l\u0027attestation d\u0027achèvement du gros œuvre. Le coût de raccordement varie de 3 000 à 15 000 MAD selon la puissance demandée et la distance au réseau. Le délai moyen est de 2 à 6 semaines.",
     },
+    {
+      q: "Faut-il un certificat de conformité électrique au Maroc ?",
+      a: "Oui, le certificat de conformité (équivalent du Consuel français) est exigé par l&apos;ONEE pour le raccordement définitif. Il atteste que l&apos;installation respecte la norme NFC 15-100. Seul un électricien qualifié peut le délivrer après vérification complète.",
+    },
+    {
+      q: "Quel type de compteur électrique choisir pour une villa au Maroc ?",
+      a: "Le compteur monophasé (3,5 à 10 kVA) suffit pour les logements standards. Le triphasé (10 à 40 kVA) est recommandé pour les villas avec climatisation centralisée ou piscine. L&apos;ONEE déploie progressivement des compteurs intelligents pour le suivi en temps réel.",
+    },
   ];
 
   const faqSchema = {
@@ -44,7 +52,7 @@ export default function GuideElectriciteMaison() {
           Le Maroc a adopté la norme NFC 15-100 comme référence pour les installations électriques basse tension. Cette norme impose des exigences minimales de sécurité que tout électricien doit respecter. Les points clés incluent : un tableau électrique avec disjoncteur général et différentiels 30 mA, un minimum de 5 prises par séjour et 3 par chambre, des circuits séparés pour l&apos;éclairage, les prises et les gros appareils (climatiseur, chauffe-eau), et le respect des volumes de sécurité dans les salles de bain.
         </p>
 
-        <h2>Composants d&apos;une installation électrique</h2>
+        <h2>Quels sont les composants d&apos;une installation électrique ?</h2>
         <p>
           Une installation résidentielle complète comprend plusieurs éléments essentiels dont le coût varie selon la qualité et la marque choisie :
         </p>
@@ -85,12 +93,12 @@ export default function GuideElectriciteMaison() {
           </tbody>
         </table>
 
-        <h2>Types de compteurs et tarification ONEE</h2>
+        <h2>Quels types de compteurs et tarification propose l&apos;ONEE ?</h2>
         <p>
           L&apos;ONEE (Office National de l&apos;Électricité et de l&apos;Eau potable) propose plusieurs formules d&apos;abonnement. Le compteur monophasé (3,5 à 10 kVA) convient aux logements standards. Le compteur triphasé (10 à 40 kVA) est recommandé pour les villas avec climatisation centralisée ou piscine. Depuis 2020, l&apos;ONEE déploie progressivement des compteurs intelligents (smart meters) permettant un suivi en temps réel de la consommation. La tarification est progressive : les premières tranches (0-100 kWh) bénéficient d&apos;un tarif social, tandis que les tranches supérieures sont facturées à des tarifs plus élevés.
         </p>
 
-        <h2>Sécurité électrique : les règles essentielles</h2>
+        <h2>Quelles sont les règles essentielles de sécurité électrique ?</h2>
         <p>
           La sécurité électrique est primordiale au Maroc où les accidents domestiques liés à l&apos;électricité restent fréquents. Les règles fondamentales incluent : toujours installer un différentiel 30 mA (protection contre l&apos;électrocution), réaliser une mise à la terre efficace (résistance inférieure à 10 ohms), utiliser des câbles de section adaptée à l&apos;intensité (2,5 mm² pour les prises, 1,5 mm² pour l&apos;éclairage, 6 mm² pour les gros appareils), et ne jamais surcharger un circuit.
         </p>
@@ -105,7 +113,7 @@ export default function GuideElectriciteMaison() {
           </p>
         </div>
 
-        <h2>Coûts de main-d&apos;œuvre et planning</h2>
+        <h2>Combien coûtent la main-d&apos;œuvre et quel planning prévoir ?</h2>
         <p>
           Un électricien qualifié au Maroc facture entre 300 et 600 MAD par jour. Pour une maison de 200 m², prévoyez 2 à 3 semaines de travail pour l&apos;installation complète. Le chantier électrique se déroule en deux phases : le premier passage (gaines et câbles) pendant le gros œuvre, et le second passage (branchements, prises, interrupteurs) après les enduits. Prévoyez 15 à 20 % de câble supplémentaire pour les modifications éventuelles et les ajouts futurs.
         </p>

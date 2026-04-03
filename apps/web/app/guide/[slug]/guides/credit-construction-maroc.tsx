@@ -14,6 +14,8 @@ export default function GuideCreditConstructionMaroc() {
       q: "Quel apport personnel faut-il pour un cr\u00e9dit construction au Maroc ?",
       a: "Les banques exigent g\u00e9n\u00e9ralement un apport personnel de 20 \u00e0 30 % du co\u00fbt total du projet (terrain + construction). Certaines banques comme CIH peuvent descendre \u00e0 10 % pour les fonctionnaires ou les professions lib\u00e9rales avec de bons revenus.",
     },
+    { q: "Quel apport personnel pour un cr\u00e9dit construction au Maroc ?", a: "Les banques marocaines exigent g\u00e9n\u00e9ralement 20 \u00e0 30 % d\u2019apport personnel pour un cr\u00e9dit construction. Certaines offres (CIH, Attijariwafa) descendent \u00e0 10 % pour les salari\u00e9s avec CDI. Le terrain peut servir d\u2019apport si vous en \u00eates propri\u00e9taire." },
+    { q: "Comment fonctionne le d\u00e9blocage des fonds pour un cr\u00e9dit construction ?", a: "Le cr\u00e9dit construction est d\u00e9bloqu\u00e9 par tranches li\u00e9es \u00e0 l\u2019avancement du chantier : fondations (20 %), gros \u0153uvre (40 %), finitions (30 %), r\u00e9ception (10 %). Un expert de la banque visite le chantier avant chaque d\u00e9blocage pour v\u00e9rifier la conformit\u00e9." },
   ];
 
   const faqSchema = {
@@ -41,7 +43,7 @@ export default function GuideCreditConstructionMaroc() {
           ce qu&apos;il faut savoir pour obtenir les meilleures conditions.
         </p>
 
-        <h2>Comparatif des banques en 2026</h2>
+        <h2>Quelle banque choisir pour un crédit construction en 2026 ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -80,7 +82,7 @@ export default function GuideCreditConstructionMaroc() {
           <li>Devis d\u00e9taill\u00e9 de l&apos;entreprise de construction</li>
         </ul>
 
-        <h2>Assurance et garanties</h2>
+        <h2>Quelles assurances et garanties sont exigées ?</h2>
         <p>
           L&apos;assurance d\u00e9c\u00e8s-invalidit\u00e9 (ADI) est obligatoire. Son co\u00fbt varie de 0,3 \u00e0
           0,5 % du capital emprunt\u00e9. La banque exige aussi une hypoth\u00e8que de premier

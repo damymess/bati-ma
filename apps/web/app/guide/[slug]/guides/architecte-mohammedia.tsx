@@ -3,6 +3,8 @@ export default function GuideArchitecteMohammedia() {
     { q: "Combien coûte un architecte à Mohammedia ?", a: "Les honoraires d\u2019un architecte à Mohammedia se situent entre 3 % et 7 % du montant des travaux pour une mission complète. Pour une conception avec dépôt de permis de construire, comptez entre 18 000 et 40 000 MAD. Les tarifs sont proches de ceux de Casablanca en raison de la proximité géographique, mais certains architectes locaux proposent des offres plus compétitives." },
     { q: "Quels sont les meilleurs quartiers pour construire à Mohammedia ?", a: "Les quartiers les plus prisés sont le Secteur balnéaire (front de mer, villas de standing), Ville Verte (nouveau lotissement résidentiel), le quartier des Crêtes (vue mer, résidentiel calme), et la zone de Mannesmann pour les projets industriels ou commerciaux. Chaque secteur a ses propres règles d\u2019urbanisme à vérifier avec votre architecte." },
     { q: "Mohammedia est-elle un bon choix pour construire une villa balnéaire ?", a: "Oui, Mohammedia est réputée pour sa qualité de vie balnéaire à seulement 25 km de Casablanca. La ville offre un front de mer attractif, un climat agréable et des prix fonciers inférieurs à ceux de Casablanca pour des terrains en bord de mer. Les architectes locaux sont spécialisés dans les villas balnéaires avec terrasses, piscines et orientations optimisées vers l\u2019océan." },
+    { q: "Quelles sont les contraintes pour construire en front de mer à Mohammedia ?", a: "Le recul obligatoire par rapport au domaine public maritime et les servitudes de passage sont à vérifier. Les matériaux doivent résister à la corrosion saline : aluminium traité, pierres naturelles, béton avec enrobage renforcé. Un architecte local expérimenté anticipe ces contraintes dès la conception." },
+    { q: "Pourquoi Mohammedia est-elle moins chère que Casablanca pour construire ?", a: "Les prix fonciers à Mohammedia sont inférieurs de 20 à 30 % par rapport aux quartiers équivalents de Casablanca, tout en offrant un cadre de vie balnéaire à seulement 25 km. Cela permet de construire des villas plus spacieuses pour un budget comparable, avec l\u2019avantage d\u2019un environnement plus calme." },
   ];
 
   const faqSchema = {
@@ -22,7 +24,7 @@ export default function GuideArchitecteMohammedia() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>Mohammedia : la ville balnéaire aux portes de Casablanca</h2>
+        <h2>Pourquoi construire à Mohammedia plutôt qu&apos;à Casablanca ?</h2>
         <p>
           Mohammedia est une ville côtière résidentielle située à seulement
           25 km de Casablanca. Surnommée la « ville des fleurs et des sports »,
@@ -42,7 +44,7 @@ export default function GuideArchitecteMohammedia() {
           construction de confiance dans la région.
         </p>
 
-        <h2>Les zones de construction à Mohammedia</h2>
+        <h2>Quelles sont les zones de construction à Mohammedia ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -60,7 +62,7 @@ export default function GuideArchitecteMohammedia() {
           </tbody>
         </table>
 
-        <h2>La villa balnéaire : spécialité des architectes de Mohammedia</h2>
+        <h2>Comment concevoir une villa balnéaire à Mohammedia ?</h2>
         <p>
           La conception de villas balnéaires est la spécialité phare des
           architectes de Mohammedia. Ces projets se caractérisent par :
@@ -73,7 +75,7 @@ export default function GuideArchitecteMohammedia() {
           <li>Une ventilation naturelle optimisée grâce à l&apos;orientation des vents</li>
         </ul>
 
-        <h2>Tarifs des architectes à Mohammedia</h2>
+        <h2>Combien coûte un architecte à Mohammedia ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -99,7 +101,7 @@ export default function GuideArchitecteMohammedia() {
           </p>
         </div>
 
-        <h2>Proximité Casablanca : un avantage stratégique</h2>
+        <h2>Quel est l&apos;avantage stratégique de la proximité avec Casablanca ?</h2>
         <p>
           La proximité de Casablanca (25 km, 20 minutes par autoroute) fait de
           Mohammedia un choix judicieux pour ceux qui travaillent dans la

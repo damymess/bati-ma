@@ -14,6 +14,8 @@ export default function GuideArchitecteRabat() {
       q: "Les architectes de Rabat travaillent-ils aussi \u00e0 Sal\u00e9 et T\u00e9mara ?",
       a: "Oui, la majorit\u00e9 des architectes install\u00e9s \u00e0 Rabat interviennent sur l\u2019ensemble de l\u2019agglom\u00e9ration Rabat-Sal\u00e9-T\u00e9mara. Cette m\u00e9tropole partage le m\u00eame Conseil R\u00e9gional de l\u2019Ordre des Architectes et les m\u00eames r\u00e8gles d\u2019urbanisme.",
     },
+    { q: "Quels sont les quartiers les plus pris\u00e9s pour construire \u00e0 Rabat ?", a: "Hay Riad, Souissi et Agdal sont les quartiers haut standing. Les nouveaux lotissements de Sala Al Jadida et Temara attirent les projets \u00e0 budget mod\u00e9r\u00e9. Les prix du terrain varient de 4 000 MAD/m\u00b2 \u00e0 T\u00e9mara \u00e0 15 000+ MAD/m\u00b2 \u00e0 Souissi." },
+    { q: "Est-ce que Rabat est en zone sismique ?", a: "Rabat est class\u00e9e en zone sismique 1 (risque faible) selon le RPS 2011. Les normes parasismiques s\u2019appliquent n\u00e9anmoins, particuli\u00e8rement pour les immeubles de plus de R+2. Le bureau d\u2019\u00e9tudes techniques int\u00e8gre ces calculs dans le dimensionnement de la structure." },
   ];
 
   const faqSchema = {
@@ -33,7 +35,7 @@ export default function GuideArchitecteRabat() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>Rabat : la capitale de l&apos;architecture institutionnelle</h2>
+        <h2>Pourquoi Rabat est-elle la capitale de l&apos;architecture institutionnelle ?</h2>
         <p>
           Rabat, capitale administrative du Royaume, concentre les projets institutionnels
           les plus prestigieux du Maroc. La ville abrite \u00e9galement des quartiers r\u00e9sidentiels

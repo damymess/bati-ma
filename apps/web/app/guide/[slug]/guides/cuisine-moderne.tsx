@@ -12,6 +12,14 @@ export default function GuideCuisineModerne() {
       q: "Quels matériaux résistent le mieux au climat marocain ?",
       a: "Le quartz et le granit sont les meilleurs choix pour les plans de travail : ils résistent à la chaleur, aux taches et à l&apos;humidité. Pour les façades, le MDF laqué est populaire mais sensible aux rayures ; le MDF mélaminé haute pression (HPL) offre un bon rapport qualité-prix. Évitez le bois massif non traité dans les cuisines exposées à l&apos;humidité, sauf en teck ou en iroko traité.",
     },
+    {
+      q: "Comment optimiser l&apos;agencement d&apos;une petite cuisine au Maroc ?",
+      a: "Pour les cuisines de 6 à 10 m², privilégiez la configuration en L qui libère l&apos;espace central. Respectez le triangle d&apos;activité (évier-plaque-réfrigérateur) avec une somme des côtés inférieure à 7 mètres. Les meubles hauts jusqu&apos;au plafond maximisent le rangement.",
+    },
+    {
+      q: "Est-ce que l&apos;électroménager encastrable vaut le surcoût au Maroc ?",
+      a: "Oui, l&apos;encastrable valorise la cuisine de 10 à 15 % et offre une esthétique épurée. Le surcoût de 30 à 50 % par rapport au pose-libre est compensé par l&apos;intégration harmonieuse et la durabilité. Privilégiez four, hotte et lave-vaisselle encastrables en priorité.",
+    },
   ];
 
   const faqSchema = {
@@ -31,7 +39,7 @@ export default function GuideCuisineModerne() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>Les tendances cuisine 2026 au Maroc</h2>
+        <h2>Quelles sont les tendances cuisine 2026 au Maroc ?</h2>
         <p>
           La cuisine moderne marocaine évolue vers des espaces ouverts, fonctionnels et esthétiques. En 2026, les tendances phares sont les cuisines ouvertes sur le salon avec îlot central, les teintes neutres (beige, gris taupe, vert sauge) associées à des touches de bois naturel, et l&apos;intégration de la domotique (éclairage LED sous meubles, prises USB intégrées). Les cuisines en U et en L restent les configurations les plus demandées dans les appartements marocains.
         </p>
@@ -39,7 +47,7 @@ export default function GuideCuisineModerne() {
           L&apos;influence du design européen est forte, mais les cuisines marocaines conservent leurs spécificités : un espace généreux pour la préparation des plats traditionnels (couscous, tagines), une ventilation renforcée pour les cuissons longues, et souvent une arrière-cuisine (bit lma) pour le stockage et le lavage.
         </p>
 
-        <h2>Choix des matériaux : plans de travail et façades</h2>
+        <h2>Quels matériaux choisir pour les plans de travail et façades ?</h2>
         <p>
           Le choix des matériaux détermine le budget, la durabilité et l&apos;esthétique de votre cuisine. Voici un comparatif des options disponibles au Maroc :
         </p>
@@ -86,7 +94,7 @@ export default function GuideCuisineModerne() {
           </tbody>
         </table>
 
-        <h2>Budgets détaillés par gamme</h2>
+        <h2>Quel budget prévoir selon la gamme ?</h2>
         <p>
           <strong>Entrée de gamme (20 000 - 40 000 MAD) :</strong> Meubles en MDF mélaminé, plan de travail en granit local, évier inox simple, robinetterie basique. Convient pour un premier équipement ou une location.
         </p>
@@ -97,7 +105,7 @@ export default function GuideCuisineModerne() {
           <strong>Haut de gamme (80 000 - 120 000 MAD et plus) :</strong> Façades en bois massif ou laqué mat avec poignées intégrées, plan de travail en Corian ou Dekton, électroménager encastrable (Bosch, Siemens, Smeg), îlot central avec plaque induction, éclairage LED intégré et système de rangement optimisé (tiroirs à l&apos;anglaise, organiseurs).
         </p>
 
-        <h2>Conception et agencement optimal</h2>
+        <h2>Comment concevoir un agencement optimal ?</h2>
         <p>
           La règle du triangle d&apos;activité reste fondamentale : les trois pôles principaux (évier, plaque de cuisson, réfrigérateur) doivent former un triangle dont la somme des côtés n&apos;excède pas 7 mètres. Dans les appartements marocains, la configuration en L est la plus adaptée aux petites surfaces (6 à 10 m²), tandis que la cuisine en U convient aux espaces de 10 m² et plus.
         </p>

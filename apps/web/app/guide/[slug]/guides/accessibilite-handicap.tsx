@@ -3,6 +3,8 @@ export default function GuideAccessibiliteHandicap() {
     { q: "L\u2019accessibilité PMR est-elle obligatoire pour les constructions neuves au Maroc ?", a: "Oui, la loi 10-03 relative aux accessibilités impose que tout bâtiment recevant du public (ERP) et tout immeuble d\u2019habitation collective neuf intègre des aménagements pour les personnes à mobilité réduite. Les maisons individuelles ne sont pas soumises à cette obligation, mais il est fortement recommandé d\u2019y penser dès la conception." },
     { q: "Quels sont les aménagements PMR obligatoires dans un immeuble au Maroc ?", a: "Les aménagements obligatoires comprennent : une rampe d\u2019accès (pente max 5 %), un ascenseur à partir du R+4, des portes d\u2019une largeur minimale de 90 cm, des sanitaires adaptés au rez-de-chaussée, un parking réservé (3 % minimum des places) et une signalétique tactile et visuelle." },
     { q: "Quelles sanctions en cas de non-respect des normes PMR au Maroc ?", a: "Le non-respect des normes d\u2019accessibilité peut entraîner le refus de délivrance du certificat de conformité, des amendes de 10 000 à 100 000 MAD et l\u2019obligation de mise en conformité à la charge du promoteur. L\u2019architecte engage également sa responsabilité professionnelle." },
+    { q: "Combien coûte la mise en accessibilité PMR d\u2019un bâtiment existant au Maroc ?", a: "La mise en conformité PMR d\u2019un bâtiment existant coûte entre 50 000 et 500 000 MAD selon l\u2019ampleur des travaux. L\u2019ajout d\u2019une rampe revient à 5 000-25 000 MAD, un ascenseur PMR à 200 000-500 000 MAD. Pour une construction neuve, le surcoût est de seulement 1 à 3 % du budget total." },
+    { q: "Est-ce que les maisons individuelles doivent respecter les normes PMR au Maroc ?", a: "Non, les maisons individuelles ne sont pas soumises à l\u2019obligation légale d\u2019accessibilité PMR au Maroc. Seuls les ERP, immeubles collectifs et bâtiments administratifs sont concernés. Il est toutefois recommandé d\u2019intégrer l\u2019accessibilité dès la conception, notamment pour les personnes âgées." },
   ];
   const faqSchema = {
     "@context": "https://schema.org",
@@ -13,7 +15,7 @@ export default function GuideAccessibiliteHandicap() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <div className="prose-content">
-        <h2>Accessibilité PMR au Maroc : cadre juridique</h2>
+        <h2>Quel est le cadre juridique de l&apos;accessibilité PMR au Maroc ?</h2>
         <p>
           L&apos;accessibilité des personnes à mobilité réduite (PMR) dans les bâtiments au Maroc est encadrée par la <strong>loi 10-03 relative aux accessibilités</strong>, promulguée en 2003 et complétée par ses décrets d&apos;application. Cette loi vise à garantir l&apos;accès des personnes en situation de handicap aux espaces publics, aux bâtiments administratifs, aux commerces et aux immeubles d&apos;habitation collective. Au Maroc, environ <strong>6,8 % de la population</strong> vit avec un handicap selon le dernier recensement, ce qui représente plus de 2,5 millions de personnes concernées.
         </p>
@@ -21,7 +23,7 @@ export default function GuideAccessibiliteHandicap() {
           La loi 10-03 s&apos;inscrit dans le cadre de la <strong>Convention des Nations Unies relative aux droits des personnes handicapées</strong>, ratifiée par le Maroc en 2009. Elle impose aux maîtres d&apos;ouvrage et aux architectes d&apos;intégrer les normes d&apos;accessibilité dès la phase de conception.
         </p>
 
-        <h2>Normes techniques d&apos;accessibilité PMR</h2>
+        <h2>Quelles sont les normes techniques d&apos;accessibilité PMR ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead><tr className="bg-stone-100"><th className="border border-stone-200 px-3 py-2 text-left">Aménagement</th><th className="border border-stone-200 px-3 py-2 text-left">Norme</th><th className="border border-stone-200 px-3 py-2 text-left">Coût estimé</th></tr></thead>
           <tbody>
@@ -34,7 +36,7 @@ export default function GuideAccessibiliteHandicap() {
           </tbody>
         </table>
 
-        <h2>Bâtiments concernés par l&apos;obligation PMR</h2>
+        <h2>Quels bâtiments sont concernés par l&apos;obligation PMR ?</h2>
         <p>
           La réglementation distingue plusieurs catégories de bâtiments soumis aux normes d&apos;accessibilité :
         </p>
@@ -46,7 +48,7 @@ export default function GuideAccessibiliteHandicap() {
           <li><strong>Maisons individuelles</strong> : non obligatoire mais recommandé, surtout pour les personnes âgées ou en prévision</li>
         </ul>
 
-        <h2>Rôle de l&apos;architecte dans l&apos;accessibilité</h2>
+        <h2>Quel est le rôle de l&apos;architecte dans l&apos;accessibilité ?</h2>
         <p>
           L&apos;architecte inscrit à l&apos;Ordre (loi 16-89) a une <strong>responsabilité directe</strong> dans le respect des normes PMR. Dès la phase d&apos;avant-projet, il doit intégrer les circulations accessibles, les dimensions réglementaires et les équipements adaptés. Le dossier de permis de construire doit inclure un <strong>plan d&apos;accessibilité</strong> détaillant les aménagements prévus.
         </p>
@@ -54,7 +56,7 @@ export default function GuideAccessibiliteHandicap() {
           Lors du suivi de chantier, l&apos;architecte vérifie la conformité des réalisations : pentes de rampe, largeurs de passage, hauteur des interrupteurs (entre 0,90 et 1,30 m), positionnement des barres d&apos;appui. Le certificat de conformité ne peut être délivré sans validation des normes PMR pour les ERP.
         </p>
 
-        <h2>Coût global de la mise en accessibilité</h2>
+        <h2>Combien coûte la mise en accessibilité d&apos;un bâtiment ?</h2>
         <p>
           Pour une construction neuve, l&apos;intégration des normes PMR représente un <strong>surcoût de 1 à 3 %</strong> du budget total, soit un investissement minime par rapport au coût d&apos;une mise en conformité ultérieure (5 à 10 fois plus cher). Pour un immeuble R+4 de 20 appartements, le budget accessibilité se situe entre <strong>80 000 et 200 000 MAD</strong>, incluant rampe, ascenseur adapté, sanitaires et signalétique.
         </p>
@@ -69,7 +71,7 @@ export default function GuideAccessibiliteHandicap() {
           </p>
         </div>
 
-        <h2>Perspectives et évolutions réglementaires</h2>
+        <h2>Quelles sont les évolutions réglementaires à venir ?</h2>
         <p>
           Le Maroc renforce progressivement son cadre réglementaire en matière d&apos;accessibilité. Le <strong>Plan National pour l&apos;Intégration des Personnes Handicapées</strong> prévoit l&apos;accessibilité de tous les bâtiments publics d&apos;ici 2030. Les grands projets liés au <strong>Mondial 2030</strong> (stades, gares, hôtels) intègrent d&apos;ores et déjà les standards internationaux d&apos;accessibilité universelle, créant un effet d&apos;entraînement sur l&apos;ensemble du secteur BTP.
         </p>

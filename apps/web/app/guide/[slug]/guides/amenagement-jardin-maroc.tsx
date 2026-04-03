@@ -14,6 +14,8 @@ export default function GuideAmenagementJardinMaroc() {
       q: "Faut-il un paysagiste ou un architecte pour am\u00e9nager son jardin ?",
       a: "Pour un jardin simple, un paysagiste suffit. Pour un am\u00e9nagement int\u00e9gr\u00e9 \u00e0 la construction (terrasse, piscine, murs de cl\u00f4ture, \u00e9clairage ext\u00e9rieur), un architecte coordonne l&apos;ensemble. Certains architectes sur Bati.ma se sp\u00e9cialisent en am\u00e9nagement ext\u00e9rieur et paysagisme.",
     },
+    { q: "Quelles plantes r\u00e9sistent le mieux au climat marocain ?", a: "Les plantes m\u00e9diterran\u00e9ennes s\u2019adaptent parfaitement : bougainvillier, jasmin, laurier-rose, olivier, palmier et agrumes. En zone aride, privil\u00e9giez les plantes succulentes et les esp\u00e8ces locales comme le thuya et l\u2019arganier. L\u2019irrigation goutte-\u00e0-goutte est recommand\u00e9e." },
+    { q: "Combien co\u00fbte un paysagiste au Maroc ?", a: "Les honoraires d\u2019un paysagiste au Maroc varient de 5 000 \u00e0 30 000 MAD pour la conception d\u2019un jardin de 100 \u00e0 500 m\u00b2. La r\u00e9alisation compl\u00e8te (plantes, am\u00e9nagements, irrigation) co\u00fbte entre 200 et 800 MAD/m\u00b2 selon la complexit\u00e9 et le choix des v\u00e9g\u00e9taux." },
   ];
 
   const faqSchema = {
@@ -38,7 +40,7 @@ export default function GuideAmenagementJardinMaroc() {
           Le jardin occupe une place centrale dans l&apos;habitat marocain. Du riad traditionnel avec son patio plant\u00e9 aux villas modernes avec piscine et terrasse, l&apos;am\u00e9nagement ext\u00e9rieur est un v\u00e9ritable art de vivre. Le climat marocain, avec ses \u00e9t\u00e9s chauds et ses hivers doux, permet de profiter du jardin presque toute l&apos;ann\u00e9e.
         </p>
 
-        <h2>Styles de jardins populaires au Maroc</h2>
+        <h2>Quels styles de jardins sont populaires au Maroc ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">

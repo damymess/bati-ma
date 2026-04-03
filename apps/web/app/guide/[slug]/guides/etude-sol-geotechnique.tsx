@@ -12,6 +12,14 @@ export default function GuideEtudeSol() {
       q: "Quels types de tests sont réalisés lors d\u0027une étude de sol ?",
       a: "Les principaux essais géotechniques utilisés au Maroc sont : l\u0027essai pressiométrique (le plus courant, mesure la résistance du sol en profondeur), l\u0027essai pénétrométrique (évalue la compacité du sol), les sondages carottés (prélèvement d\u0027échantillons pour analyse en laboratoire), et les essais de plaque. Le choix des essais dépend du type de projet et de la nature présumée du sol.",
     },
+    {
+      q: "Comment choisir un laboratoire géotechnique au Maroc ?",
+      a: "Privilégiez un laboratoire certifié ISO 17025 avec des références dans votre zone géographique. Le LPEE est l&apos;organisme public de référence. Les bureaux privés comme LABO-SOL et GEOSOL sont également reconnus. Demandez toujours des références de projets similaires.",
+    },
+    {
+      q: "Quelles zones du Maroc nécessitent impérativement une étude de sol ?",
+      a: "Les zones à sols gonflants (Gharb, Doukkala, Béni Mellal), les zones sismiques (Al Hoceima, Agadir, Nador), les zones côtières avec remontées de nappe et les terrains en pente nécessitent une étude géotechnique obligatoire pour éviter des sinistres coûteux.",
+    },
   ];
 
   const faqSchema = {
@@ -41,7 +49,7 @@ export default function GuideEtudeSol() {
           Les sinistres liés aux fondations sont parmi les plus coûteux dans la construction. Au Maroc, les sols gonflants (argiles) provoquent des fissures dans des milliers de maisons chaque année, notamment dans les régions de Kénitra, Meknès et Béni Mellal. Une étude de sol permet d&apos;adapter les fondations au terrain réel, d&apos;éviter le surdimensionnement inutile des fondations (économie de 10 à 30 % sur le poste fondations), de détecter la présence d&apos;eau souterraine, et d&apos;identifier les risques de glissement ou de tassement.
         </p>
 
-        <h2>Types d&apos;essais géotechniques</h2>
+        <h2>Quels types d&apos;essais géotechniques sont utilisés ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -90,7 +98,7 @@ export default function GuideEtudeSol() {
           Les études géotechniques au Maroc suivent généralement la classification normative en missions progressives. La mission G1 (étude préliminaire) est suffisante pour une villa individuelle : elle comprend 2 à 3 sondages et fournit les premières recommandations sur le type de fondations. La mission G2 (étude de conception) est requise pour les immeubles : elle détaille le dimensionnement des fondations et le calcul de la capacité portante. La mission G3 (suivi d&apos;exécution) est optionnelle et intervient pendant les travaux de terrassement.
         </p>
 
-        <h2>Laboratoires géotechniques accrédités au Maroc</h2>
+        <h2>Quels laboratoires géotechniques sont accrédités au Maroc ?</h2>
         <p>
           Plusieurs laboratoires sont accrédités pour réaliser des études géotechniques au Maroc. Le LPEE (Laboratoire Public d&apos;Essais et d&apos;Études) est l&apos;organisme public de référence avec des antennes dans toutes les régions. Les bureaux privés comme LABO-SOL, GEOSOL, AGM Géotechnique et SIREQ sont également reconnus. Choisissez un laboratoire certifié ISO 17025 et demandez des références de projets similaires dans votre zone géographique, car la connaissance du contexte géologique local est un atout majeur.
         </p>
@@ -102,7 +110,7 @@ export default function GuideEtudeSol() {
           </p>
         </div>
 
-        <h2>Zones à risques particuliers au Maroc</h2>
+        <h2>Quelles zones du Maroc présentent des risques géotechniques ?</h2>
         <p>
           Certaines zones au Maroc nécessitent une attention géotechnique particulière : les régions à sols gonflants (Gharb, Doukkala, Béni Mellal) où les argiles expansives provoquent des mouvements de terrain, les zones sismiques (Al Hoceima, Agadir, Nador) classées en zone II et III du RPS 2000, les zones côtières avec des remontées de nappe phréatique, et les terrains en pente nécessitant une étude de stabilité. Dans ces zones, l&apos;étude de sol n&apos;est pas une option mais une nécessité absolue.
         </p>

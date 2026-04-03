@@ -14,6 +14,8 @@ export default function GuideArchitecteMarrakech() {
       q: "Quels sont les d\u00e9lais pour obtenir un permis de construire \u00e0 Marrakech ?",
       a: "Le d\u00e9lai moyen pour obtenir un permis de construire \u00e0 Marrakech est de 2 \u00e0 4 mois. Dans la m\u00e9dina, les d\u00e9lais peuvent \u00eatre plus longs en raison des contraintes patrimoniales et de l\u2019avis obligatoire des B\u00e2timents de France marocains (Minist\u00e8re de la Culture).",
     },
+    { q: "Quel style architectural domine \u00e0 Marrakech en 2026 ?", a: "Le style dominant est le \u00ab n\u00e9o-marocain \u00bb : lignes contemporaines avec \u00e9l\u00e9ments traditionnels (arcs, moucharabiehs, patios). La Palmeraie et la route d\u2019Ourika concentrent les villas les plus audacieuses. Les architectes locaux ma\u00eetrisent cette fusion unique." },
+    { q: "Est-ce plus cher de construire \u00e0 Marrakech qu\u2019\u00e0 Casablanca ?", a: "Les co\u00fbts sont comparables pour le gros \u0153uvre (3 000 \u00e0 4 500 MAD/m\u00b2). En revanche, les finitions traditionnelles (zellige, tadelakt, bois sculpt\u00e9) co\u00fbtent 20 \u00e0 40 % plus cher \u00e0 Marrakech en raison de la demande touristique et de la qualit\u00e9 artisanale exig\u00e9e." },
   ];
 
   const faqSchema = {

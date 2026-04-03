@@ -14,6 +14,8 @@ export default function GuideContratArchitecteMaroc() {
       q: "Peut-on r\u00e9silier un contrat d\u2019architecte en cours de projet ?",
       a: "Oui, les deux parties peuvent r\u00e9silier. Le ma\u00eetre d&apos;ouvrage devra payer les honoraires des phases r\u00e9alis\u00e9es. Si l&apos;architecte r\u00e9silie sans motif l\u00e9gitime, il peut \u00eatre tenu de verser des dommages. Le contrat doit pr\u00e9voir les modalit\u00e9s pr\u00e9cises.",
     },
+    { q: "Quelles clauses v\u00e9rifier en priorit\u00e9 dans un contrat d\u2019architecte ?", a: "V\u00e9rifiez : le p\u00e9rim\u00e8tre exact de la mission (conception seule ou suivi de chantier), le mode de calcul des honoraires (pourcentage ou forfait), les d\u00e9lais de chaque phase, les conditions de r\u00e9siliation et les p\u00e9nalit\u00e9s de retard. Le contrat CNOA est la r\u00e9f\u00e9rence." },
+    { q: "Peut-on rompre un contrat d\u2019architecte au Maroc ?", a: "Oui, les deux parties peuvent r\u00e9silier avec un pr\u00e9avis \u00e9crit. Le client doit payer les phases d\u00e9j\u00e0 r\u00e9alis\u00e9es. L\u2019architecte qui rompt sans motif l\u00e9gitime engage sa responsabilit\u00e9 professionnelle. Les litiges sont arbitr\u00e9s par le Conseil de l\u2019Ordre des Architectes." },
   ];
 
   const faqSchema = {
@@ -38,7 +40,7 @@ export default function GuideContratArchitecteMaroc() {
           Le contrat de ma\u00eetrise d&apos;\u0153uvre est le document fondateur de toute collaboration avec un architecte. Au Maroc, m\u00eame si la loi 16-89 n&apos;impose pas formellement un contrat \u00e9crit, le Conseil National de l&apos;Ordre des Architectes (CNOA) recommande syst\u00e9matiquement sa signature. Ce document prot\u00e8ge le ma\u00eetre d&apos;ouvrage comme l&apos;architecte en d\u00e9finissant clairement les engagements de chacun.
         </p>
 
-        <h2>Les types de contrats d&apos;architecte au Maroc</h2>
+        <h2>Quels sont les types de contrats d&apos;architecte au Maroc ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -55,12 +57,12 @@ export default function GuideContratArchitecteMaroc() {
           </tbody>
         </table>
 
-        <h2>Les clauses essentielles du contrat</h2>
+        <h2>Quelles sont les clauses essentielles du contrat ?</h2>
         <p>
           Tout contrat d&apos;architecte au Maroc doit comporter au minimum : l&apos;identification des parties, la d\u00e9finition pr\u00e9cise de la mission, le programme d\u00e9taill\u00e9 du projet, le montant et le mode de calcul des honoraires, le calendrier pr\u00e9visionnel, les conditions de modification du programme, les modalit\u00e9s de r\u00e9siliation et la juridiction comp\u00e9tente en cas de litige.
         </p>
 
-        <h2>Mode de calcul des honoraires</h2>
+        <h2>Comment sont calculés les honoraires de l&apos;architecte ?</h2>
         <p>
           Au Maroc, trois modes de r\u00e9mun\u00e9ration sont courants : le pourcentage du co\u00fbt des travaux (le plus r\u00e9pandu, entre 3 % et 8 %), le forfait global (fix\u00e9 d\u00e8s la signature), et la r\u00e9mun\u00e9ration au temps pass\u00e9 (facturation horaire ou journali\u00e8re). Le contrat doit pr\u00e9ciser les \u00e9ch\u00e9ances de paiement : g\u00e9n\u00e9ralement 20 % \u00e0 la signature, 30 % au d\u00e9p\u00f4t du permis, 30 % en cours de chantier et 20 % \u00e0 la r\u00e9ception.
         </p>

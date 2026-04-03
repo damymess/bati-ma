@@ -12,6 +12,14 @@ export default function GuideClimatisation() {
       q: "Quelle marque de climatisation est la plus fiable au Maroc ?",
       a: "Les marques les plus répandues et fiables au Maroc sont Samsung, LG et Daikin. Samsung domine le segment résidentiel avec un bon rapport qualité-prix. Daikin est la référence pour le haut de gamme et les systèmes VRV. Carrier et Midea sont populaires pour les projets tertiaires. Vérifiez la disponibilité du service après-vente dans votre ville avant d\u0027acheter.",
     },
+    {
+      q: "Faut-il prévoir les gaines de climatisation dès le gros œuvre ?",
+      a: "Oui, c\u0027est fortement recommandé. Intégrer les passages de gaines et les évacuations de condensats dès la phase de construction évite des travaux coûteux et inesthétiques par la suite. Pour un système gainable, c\u0027est obligatoire car les gaines passent dans le faux plafond prévu à cet effet.",
+    },
+    {
+      q: "Comment réduire la consommation de sa climatisation au Maroc ?",
+      a: "Investissez dans la technologie Inverter qui réduit la consommation de 30 à 50 %. Réglez le thermostat à 24-25°C, nettoyez les filtres toutes les deux semaines en été, et améliorez l\u0027isolation du logement (double vitrage, stores extérieurs). Chaque degré en moins augmente la consommation de 7 %.",
+    },
   ];
 
   const faqSchema = {
@@ -31,12 +39,12 @@ export default function GuideClimatisation() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>La climatisation au Maroc : un équipement devenu indispensable</h2>
+        <h2>Pourquoi la climatisation est-elle devenue indispensable au Maroc ?</h2>
         <p>
           Avec des températures estivales dépassant régulièrement les 40°C à Marrakech, Fès ou Oujda, la climatisation n&apos;est plus un luxe mais une nécessité au Maroc. Même à Casablanca et Rabat, les pics de chaleur rendent la climatisation de plus en plus courante. Le marché marocain de la climatisation a connu une croissance de 15 % par an ces dernières années, avec une gamme de solutions adaptées à tous les budgets.
         </p>
 
-        <h2>Types de systèmes de climatisation</h2>
+        <h2>Quels types de climatisation existent au Maroc ?</h2>
         <p>
           Le choix du système dépend de la surface à climatiser, du budget et du niveau de confort souhaité. Voici les principales technologies disponibles au Maroc :
         </p>
@@ -83,12 +91,12 @@ export default function GuideClimatisation() {
           </tbody>
         </table>
 
-        <h2>Comment dimensionner sa climatisation ?</h2>
+        <h2>Comment bien dimensionner sa climatisation ?</h2>
         <p>
           Le dimensionnement correct est crucial pour éviter la surconsommation ou le sous-refroidissement. La règle de base au Maroc est de compter 100 à 150 watts frigorifiques par m², selon l&apos;exposition et l&apos;isolation. Une pièce de 20 m² nécessite donc environ 9 000 BTU (2,6 kW). Pour les façades exposées plein sud ou ouest, majorez de 20 %. Une villa mal dimensionnée surconsomme et s&apos;use prématurément.
         </p>
 
-        <h2>Marques et distributeurs au Maroc</h2>
+        <h2>Quelles marques de climatisation sont disponibles au Maroc ?</h2>
         <p>
           Le marché marocain est dominé par les grandes marques internationales, chacune positionnée sur un segment :
         </p>
@@ -129,7 +137,7 @@ export default function GuideClimatisation() {
           </tbody>
         </table>
 
-        <h2>Consommation énergétique et économies</h2>
+        <h2>Combien consomme une climatisation et comment économiser ?</h2>
         <p>
           La consommation d&apos;un climatiseur représente 40 à 60 % de la facture électrique estivale au Maroc. Pour réduire les coûts, investissez dans la technologie Inverter (30 à 50 % d&apos;économies), entretenez le filtre toutes les 2 semaines en été, réglez le thermostat à 24-25°C (chaque degré en moins augmente la consommation de 7 %), et améliorez l&apos;isolation de votre logement (double vitrage, stores extérieurs, brise-soleil).
         </p>
@@ -141,7 +149,7 @@ export default function GuideClimatisation() {
           </p>
         </div>
 
-        <h2>Entretien et maintenance</h2>
+        <h2>Comment entretenir sa climatisation au Maroc ?</h2>
         <p>
           Un entretien régulier prolonge la durée de vie de votre climatiseur (10 à 15 ans) et maintient ses performances. Nettoyez les filtres toutes les deux semaines en période d&apos;utilisation. Faites réaliser un entretien annuel par un professionnel (300 à 500 MAD) incluant le nettoyage des unités intérieure et extérieure, la vérification du fluide frigorigène et le contrôle des performances. Un climatiseur mal entretenu consomme jusqu&apos;à 30 % de plus.
         </p>

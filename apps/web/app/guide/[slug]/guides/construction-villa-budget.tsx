@@ -14,6 +14,8 @@ export default function GuideConstructionVillaBudget() {
       q: "Peut-on construire une villa au Maroc par tranches pour \u00e9taler le budget ?",
       a: "Oui, il est courant de construire en deux phases : le gros \u0153uvre et la mise hors d\u2019eau d\u2019abord, puis les finitions dans un second temps. Pr\u00e9voyez n\u00e9anmoins les fondations et la structure pour la version finale d\u00e8s le d\u00e9part.",
     },
+    { q: "Comment r\u00e9duire le co\u00fbt de construction d\u2019une villa au Maroc ?", a: "Optimisez la forme (plan compact sans recoins), limitez les niveaux \u00e0 R+1, utilisez des mat\u00e9riaux locaux, groupez les pi\u00e8ces d\u2019eau, et comparez 3 devis minimum. Un architecte comp\u00e9tent peut r\u00e9duire le budget de 15 \u00e0 20 % sans sacrifier la qualit\u00e9." },
+    { q: "Quel est le poste le plus co\u00fbteux dans la construction d\u2019une villa ?", a: "Le gros \u0153uvre repr\u00e9sente 35 \u00e0 45 % du budget total (fondations, structure, dalle). Les finitions arrivent en deuxi\u00e8me position (25 \u00e0 35 %). L\u2019\u00e9lectricit\u00e9 et la plomberie comptent pour 10 \u00e0 15 %. Les am\u00e9nagements ext\u00e9rieurs (cl\u00f4ture, jardin) ajoutent 5 \u00e0 10 %." },
   ];
 
   const faqSchema = {
@@ -33,7 +35,7 @@ export default function GuideConstructionVillaBudget() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>Comprendre le budget global d&apos;une villa au Maroc</h2>
+        <h2>Comment comprendre le budget global d&apos;une villa au Maroc ?</h2>
         <p>
           Le budget d&apos;une villa ne se limite pas au co\u00fbt de construction. Il comprend
           l&apos;achat du terrain, les frais de construction, les honoraires des professionnels,
@@ -59,7 +61,7 @@ export default function GuideConstructionVillaBudget() {
           </tbody>
         </table>
 
-        <h2>Budget par gamme de standing</h2>
+        <h2>Quel budget selon la gamme de standing ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -85,7 +87,7 @@ export default function GuideConstructionVillaBudget() {
           \u00e9tude pr\u00e9alable rigoureuse.
         </p>
 
-        <h2>Solutions de financement</h2>
+        <h2>Quelles sont les solutions de financement disponibles ?</h2>
         <ul>
           <li><strong>Cr\u00e9dit immobilier</strong> : taux entre 4 % et 5,5 % en 2026, dur\u00e9e jusqu&apos;\u00e0 25 ans</li>
           <li><strong>Cr\u00e9dit construction</strong> : d\u00e9blocage par tranches selon l&apos;avancement</li>

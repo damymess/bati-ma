@@ -14,6 +14,8 @@ export default function GuideEnergieSolaireMaisonMaroc() {
       q: "Quels panneaux solaires choisir au Maroc ?",
       a: "Les panneaux monocristallins offrent le meilleur rendement (20-22 %) et sont recommand\u00e9s pour les toitures limit\u00e9es. Les polycristallins (16-18 %) sont plus abordables. Pour l&apos;eau chaude, les capteurs thermiques \u00e0 tubes sous vide sont les plus performants au Maroc gr\u00e2ce \u00e0 l&apos;ensoleillement exceptionnel.",
     },
+    { q: "Faut-il un architecte pour un projet de energie solaire maison au Maroc ?", a: "Conform\u00e9ment \u00e0 la loi 16-89, le recours \u00e0 un architecte inscrit \u00e0 l\u2019Ordre est obligatoire pour toute construction au Maroc. M\u00eame pour les projets techniques, l\u2019architecte coordonne le permis de construire et assure la conformit\u00e9. Consultez les profils v\u00e9rifi\u00e9s sur Bati.ma." },
+    { q: "Comment obtenir un devis pour energie solaire maison au Maroc ?", a: "Demandez au minimum 3 devis d\u00e9taill\u00e9s aupr\u00e8s de professionnels diff\u00e9rents. Comparez les postes ligne par ligne, v\u00e9rifiez les r\u00e9f\u00e9rences et exigez un calendrier d\u2019ex\u00e9cution. Sur Bati.ma, vous pouvez contacter directement les architectes sp\u00e9cialis\u00e9s et demander vos devis gratuitement." },
   ];
 
   const faqSchema = {
@@ -74,7 +76,7 @@ export default function GuideEnergieSolaireMaisonMaroc() {
           </p>
         </div>
 
-        <h2>Choisir un installateur fiable</h2>
+        <h2>Comment choisir un installateur solaire fiable ?</h2>
         <p>
           Privil\u00e9giez les installateurs certifi\u00e9s ADEREE ou agr\u00e9\u00e9s par les fabricants de panneaux. V\u00e9rifiez les garanties (minimum 10 ans sur l&apos;installation, 25 ans sur les panneaux). Demandez au moins 3 devis et v\u00e9rifiez les r\u00e9f\u00e9rences locales. Les principales villes (Casablanca, Marrakech, Rabat, Tanger) disposent de nombreux installateurs qualifi\u00e9s.
         </p>

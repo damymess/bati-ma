@@ -12,6 +12,8 @@ export default function GuideMaisonContainer() {
       q: "Comment isoler un container dans le climat marocain ?",
       a: "L&apos;isolation est le d\u00e9fi num\u00e9ro un. Sans isolation, un container m\u00e9tallique devient un four en \u00e9t\u00e9 (60\u00b0C+). Solutions recommand\u00e9es : mousse polyur\u00e9thane projet\u00e9e (80-120 mm, 150-250 MAD/m\u00b2), laine de roche (100 mm, 80-150 MAD/m\u00b2), ou isolation ext\u00e9rieure avec bardage ventil\u00e9. Pr\u00e9voyez aussi une toiture surplombante pour cr\u00e9er de l&apos;ombre.",
     },
+    { q: "Faut-il un architecte pour un projet de maison container ?", a: "Conform\u00e9ment \u00e0 la loi 16-89, le recours \u00e0 un architecte inscrit \u00e0 l\u2019Ordre est obligatoire pour toute construction au Maroc. M\u00eame pour les projets techniques, l\u2019architecte coordonne le permis de construire et assure la conformit\u00e9. Consultez les profils v\u00e9rifi\u00e9s sur Bati.ma." },
+    { q: "Comment obtenir un devis pour maison container ?", a: "Demandez au minimum 3 devis d\u00e9taill\u00e9s aupr\u00e8s de professionnels diff\u00e9rents. Comparez les postes ligne par ligne, v\u00e9rifiez les r\u00e9f\u00e9rences et exigez un calendrier d\u2019ex\u00e9cution. Sur Bati.ma, vous pouvez contacter directement les architectes sp\u00e9cialis\u00e9s et demander vos devis gratuitement." },
   ];
 
   const faqSchema = {

@@ -12,6 +12,14 @@ export default function GuideEscalierInterieur() {
       q: "Quel matériau choisir pour un escalier dans une villa marocaine ?",
       a: "Le béton armé est le choix le plus courant et le plus économique au Maroc. Il peut être habillé de marbre marocain, de bois ou de carrelage. Le métal (acier ou fer forgé) offre des possibilités esthétiques modernes ou traditionnelles. Le bois massif (chêne, hêtre importé ou bois rouge local) est apprécié pour sa chaleur mais coûte plus cher. Pour un style marocain traditionnel, le fer forgé avec des motifs arabesques est un classique indémodable.",
     },
+    {
+      q: "Comment entretenir un escalier en fer forgé au Maroc ?",
+      a: "Appliquez une sous-couche antirouille puis deux couches de peinture epoxy ou glycéro. Un entretien annuel avec vernis protecteur prolonge la durée de vie. Les finitions vont du noir mat classique au patiné doré ou bronze vieilli selon le style souhaité.",
+    },
+    {
+      q: "Faut-il prévoir l&apos;escalier dès les plans de la maison ?",
+      a: "Oui, l&apos;escalier doit être conçu dès les premières esquisses car sa position influence la distribution de toutes les pièces. La trémie nécessaire (2,50 x 2,50 m minimum) doit être intégrée au plan de structure pour éviter des modifications coûteuses.",
+    },
   ];
 
   const faqSchema = {
@@ -39,7 +47,7 @@ export default function GuideEscalierInterieur() {
           Le choix du type d&apos;escalier dépend de la configuration de la maison, de la surface disponible, du budget et du style recherché. Au Maroc, les escaliers droits et les escaliers à quart tournant sont les plus courants dans les constructions résidentielles, tandis que les escaliers hélicoïdaux sont réservés aux espaces restreints ou aux effets architecturaux.
         </p>
 
-        <h2>Types d&apos;escaliers et configurations</h2>
+        <h2>Quels types d&apos;escaliers et configurations choisir ?</h2>
         <p>
           <strong>Escalier droit :</strong> Le plus simple et le plus économique. Il nécessite une trémie de 3 à 4 m de longueur pour une hauteur d&apos;étage standard (2,80 à 3,00 m). Idéal pour les couloirs et les entrées spacieuses.
         </p>
@@ -53,7 +61,7 @@ export default function GuideEscalierInterieur() {
           <strong>Escalier hélicoïdal (colimaçon) :</strong> Il s&apos;enroule autour d&apos;un noyau central. Très compact (diamètre de 1,40 à 2,00 m), il est esthétique mais moins confortable pour le passage de meubles. En fer forgé artisanal, il constitue une pièce maîtresse du décor.
         </p>
 
-        <h2>Matériaux et coûts comparés</h2>
+        <h2>Quels sont les matériaux et coûts comparés ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -97,7 +105,7 @@ export default function GuideEscalierInterieur() {
           </tbody>
         </table>
 
-        <h2>Dimensions réglementaires et confort</h2>
+        <h2>Quelles sont les dimensions réglementaires d&apos;un escalier ?</h2>
         <p>
           La conception d&apos;un escalier confortable repose sur la formule de Blondel : 2H + G = 60 à 64 cm, où H est la hauteur de la marche et G le giron (profondeur). Pour une hauteur d&apos;étage de 3,00 m (courante au Maroc), un escalier de 17 marches de 17,6 cm avec un giron de 27 cm offre un confort optimal. La largeur minimale réglementaire est de 80 cm, mais 100 cm est recommandé pour les habitations et 120 cm pour les parties communes d&apos;immeubles.
         </p>

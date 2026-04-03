@@ -3,6 +3,8 @@ export default function GuideMaisonCampagne() {
     { q: "Peut-on construire sur un terrain agricole au Maroc ?", a: "En principe, les terrains agricoles (terrain falachiya) ne sont pas constructibles. Cependant, il est possible d&apos;obtenir une d\u00e9rogation aupr\u00e8s de la commune rurale et de la Direction R\u00e9gionale de l&apos;Agriculture, \u00e0 condition que la construction soit li\u00e9e \u00e0 l&apos;exploitation agricole (ferme, logement de l&apos;exploitant). Le Dahir du 25 juin 1960 et la loi 12-90 encadrent ces d\u00e9rogations." },
     { q: "Combien co\u00fbte la construction d&apos;une maison \u00e0 la campagne au Maroc ?", a: "Le co\u00fbt au m\u00b2 en zone rurale est inf\u00e9rieur de 20 \u00e0 40 % par rapport aux villes. Comptez entre 2 500 et 4 500 MAD/m\u00b2 pour le gros \u0153uvre et les finitions standard. Le terrain est \u00e9galement beaucoup moins cher : de 50 \u00e0 300 MAD/m\u00b2 selon la r\u00e9gion et la proximit\u00e9 des routes." },
     { q: "Faut-il un architecte pour construire en zone rurale ?", a: "La loi 016-89 impose le recours \u00e0 un architecte pour toute construction de plus de 150 m\u00b2 de surface plancher. En dessous de ce seuil en zone rurale, un plan vis\u00e9 par un technicien agr\u00e9\u00e9 peut suffire, mais l&apos;accompagnement d&apos;un architecte reste vivement recommand\u00e9 pour la d\u00e9rogation et la conformit\u00e9 parasismique." },
+    { q: "Peut-on construire sur un terrain agricole au Maroc ?", a: "En principe non, sauf d\u00e9rogation. Le terrain agricole est prot\u00e9g\u00e9 par la loi 12-90. Une d\u00e9rogation peut \u00eatre obtenue aupr\u00e8s du gouverneur si le projet est li\u00e9 \u00e0 l\u2019activit\u00e9 agricole (logement d\u2019exploitation). Les projets d\u2019agritourisme b\u00e9n\u00e9ficient aussi de d\u00e9rogations." },
+    { q: "Faut-il un architecte pour construire en zone rurale ?", a: "Oui, la loi 16-89 impose un architecte pour toute construction au Maroc, y compris en zone rurale. Le permis de construire est d\u00e9livr\u00e9 par la commune rurale. Les d\u00e9lais sont souvent plus longs qu\u2019en ville en raison de l\u2019\u00e9loignement de l\u2019agence urbaine." },
   ];
   const faqSchema = {
     "@context": "https://schema.org",
@@ -18,7 +20,7 @@ export default function GuideMaisonCampagne() {
           De plus en plus de Marocains et de MRE (Marocains r\u00e9sidant \u00e0 l&apos;\u00e9tranger) choisissent de construire en zone rurale. Les raisons sont multiples : prix du foncier 5 \u00e0 10 fois inf\u00e9rieur aux villes, cadre de vie paisible, possibilit\u00e9 de grandes surfaces et potentiel agritouristique. Cependant, construire \u00e0 la campagne implique des contraintes sp\u00e9cifiques qu&apos;il faut anticiper.
         </p>
 
-        <h2>Le statut du terrain agricole</h2>
+        <h2>Quel est le statut juridique d&apos;un terrain agricole au Maroc ?</h2>
         <p>
           Au Maroc, le foncier rural se d\u00e9cline en plusieurs statuts juridiques : melk (propri\u00e9t\u00e9 priv\u00e9e titris\u00e9e), collectif (terres de tribus g\u00e9r\u00e9es par le Minist\u00e8re de l&apos;Int\u00e9rieur), guich (terrains de l&apos;\u00c9tat) et habous (biens religieux). Seuls les terrains melk titris\u00e9s permettent une construction s\u00e9curis\u00e9e juridiquement. V\u00e9rifiez syst\u00e9matiquement le titre foncier aupr\u00e8s de la Conservation Fonci\u00e8re.
         </p>
@@ -75,7 +77,7 @@ export default function GuideMaisonCampagne() {
           L&apos;\u00e9co-construction gagne du terrain en milieu rural : maisons en pis\u00e9 stabilis\u00e9 (terre + 5 \u00e0 8 % de ciment), briques de terre compress\u00e9e (BTC), toitures v\u00e9g\u00e9talis\u00e9es. Ces techniques r\u00e9duisent le co\u00fbt de construction de 20 \u00e0 30 % et offrent une excellente isolation thermique naturelle.
         </p>
 
-        <h2>Infrastructures et autonomie</h2>
+        <h2>Comment assurer l&apos;autonomie en infrastructures ?</h2>
         <p>
           En zone isol\u00e9e, l&apos;autonomie \u00e9nerg\u00e9tique est une option s\u00e9rieuse. Un syst\u00e8me solaire photovolta\u00efque de 3 \u00e0 5 kWc co\u00fbte entre 40 000 et 80 000 MAD et couvre les besoins d&apos;une maison familiale. L&apos;eau peut \u00eatre fournie par un puits ou un forage (10 000 \u00e0 30 000 MAD selon la profondeur) compl\u00e9t\u00e9 par un syst\u00e8me de r\u00e9cup\u00e9ration d&apos;eau de pluie.
         </p>

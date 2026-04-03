@@ -3,6 +3,8 @@ export default function GuideArchitecteBeniMellal() {
     { q: "Peut-on construire en pierre locale à Béni Mellal ?", a: "Oui, la région du Tadla dispose d\u2019abondantes carrières de calcaire et de grès. La construction en moellons de pierre locale reste courante et conforme au RPS 2011 à condition de respecter les épaisseurs minimales (40 cm pour les murs porteurs) et d\u2019intégrer des chaînages en béton armé. Le coût des moellons tourne autour de 80 à 120 MAD/m² posé, soit 30 à 40 % moins cher que le parpaing importé. Un architecte inscrit à l\u2019Ordre peut certifier la conformité structurelle du projet." },
     { q: "Comment l\u2019altitude affecte-t-elle la construction à Béni Mellal ?", a: "Béni Mellal se situe à environ 500 m d\u2019altitude au pied du Jbel Tassemit (2 248 m). Les hivers sont froids avec des gelées fréquentes et parfois de la neige. Les fondations doivent descendre à 80 cm minimum pour éviter le gel superficiel. L\u2019isolation thermique est indispensable : double cloison avec lame d\u2019air de 10 cm ou polystyrène extrudé de 5 cm. La surcharge de neige doit être prise en compte dans le calcul des toitures plates selon le RPS 2011, avec un coefficient de 0,4 kN/m² minimum." },
     { q: "Y a-t-il des aides pour construire un gîte rural dans la région ?", a: "Le programme Biladi soutient le tourisme intérieur avec des subventions pouvant atteindre 40 % du coût d\u2019aménagement pour les gîtes ruraux labellisés. L\u2019INDH (Initiative Nationale pour le Développement Humain) finance aussi des projets d\u2019hébergement touristique en milieu rural. Le CRI de Béni Mellal-Khénifra accompagne les porteurs de projets dans les démarches administratives. Le dossier nécessite un plan architectural validé par un architecte agréé et une étude d\u2019impact environnemental simplifiée." },
+    { q: "Combien coûte un architecte à Béni Mellal ?", a: "Les honoraires à Béni Mellal sont parmi les plus bas du Maroc : 2,5 à 5 % du montant des travaux pour une mission complète, contre 4 à 8 % à Casablanca. Pour un simple dépôt de permis de construire, comptez entre 12 000 et 25 000 MAD. Cette compétitivité reflète le coût de la vie plus accessible dans la région." },
+    { q: "Pourquoi le foncier est-il si abordable à Béni Mellal ?", a: "Béni Mellal n\u2019a pas subi la spéculation des grandes métropoles. Le terrain se négocie entre 300 et 1 500 MAD/m², contre 3 000 à 12 000 MAD/m² à Casablanca. La main-d\u2019œuvre locale est aussi 30 à 40 % moins chère, et les matériaux proviennent directement des carrières de l\u2019Atlas, réduisant les coûts de transport." },
   ];
 
   const faqSchema = {
@@ -22,7 +24,7 @@ export default function GuideArchitecteBeniMellal() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>Béni Mellal : la ville la moins chère pour construire au Maroc</h2>
+        <h2>Pourquoi Béni Mellal est-elle la ville la moins chère pour construire ?</h2>
         <p>
           Faire appel à un <strong>architecte à Béni Mellal</strong>, c&apos;est
           accéder au marché de la construction le plus compétitif du Maroc. Là où
@@ -78,7 +80,7 @@ export default function GuideArchitecteBeniMellal() {
           </tbody>
         </table>
 
-        <h2>Construire au pied de l&apos;Atlas : le défi de l&apos;eau et de la pente</h2>
+        <h2>Quels sont les défis de construction au pied de l&apos;Atlas ?</h2>
         <p>
           Béni Mellal s&apos;étale à 500 m d&apos;altitude, adossée au Jbel Tassemit
           qui culmine à 2 248 m. Cette position au carrefour de la montagne et de
@@ -100,7 +102,7 @@ export default function GuideArchitecteBeniMellal() {
           intégrée dans le calcul de la toiture.
         </p>
 
-        <h2>L&apos;agritourisme : le nouveau marché des architectes de Béni Mellal</h2>
+        <h2>Comment l&apos;agritourisme transforme-t-il le marché architectural à Béni Mellal ?</h2>
         <p>
           La région Béni Mellal-Khénifra est le grenier du Maroc : olives du
           Tadla, agrumes de Fquih Ben Salah, céréales de la plaine irriguée par
@@ -121,7 +123,7 @@ export default function GuideArchitecteBeniMellal() {
           Maroc.
         </p>
 
-        <h2>Le béton de pierre locale : une tradition constructive du Tadla</h2>
+        <h2>Quels sont les avantages de la construction en pierre locale du Tadla ?</h2>
         <p>
           Avant le béton industriel, les bâtisseurs du Tadla construisaient en
           moellons de calcaire extraits des carrières de l&apos;Atlas. Cette
@@ -153,7 +155,7 @@ export default function GuideArchitecteBeniMellal() {
           </p>
         </div>
 
-        <h2>Investir à Béni Mellal : l&apos;étudiante et le touriste</h2>
+        <h2>Pourquoi investir dans l&apos;immobilier à Béni Mellal ?</h2>
         <p>
           Deux marchés complémentaires tirent la demande immobilière à Béni
           Mellal. D&apos;un côté, l&apos;université Sultan Moulay Slimane accueille
@@ -175,7 +177,7 @@ export default function GuideArchitecteBeniMellal() {
           pendant l&apos;été.
         </p>
 
-        <h2>Démarches et réglementation locale</h2>
+        <h2>Quelles sont les démarches pour obtenir un permis de construire à Béni Mellal ?</h2>
         <p>
           Le permis de construire à Béni Mellal est délivré par la commune urbaine
           ou la commune rurale selon la localisation du terrain. En zone urbaine,

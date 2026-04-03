@@ -3,6 +3,8 @@ export default function GuideConstructionRiadNeuf() {
     { q: "Combien coûte la construction d\u2019un riad neuf au Maroc ?", a: "Le coût de construction d\u2019un riad neuf varie entre 5 000 et 8 000 MAD/m² pour un projet de qualité avec finitions traditionnelles (zellige, tadelakt, bois sculpté). Pour un riad haut standing avec piscine, hammam et matériaux premium, comptez 8 000 à 12 000 MAD/m². Un riad de 200 m² habitables coûtera donc entre 1 et 2,4 millions MAD tout compris." },
     { q: "Peut-on construire un riad en dehors de la médina ?", a: "Oui, il est tout à fait possible de construire un riad neuf en dehors de la médina, dans un lotissement ou en zone périurbaine. Le concept du riad (maison à patio central) s\u2019adapte à tout terrain. En dehors de la médina, vous bénéficiez de terrains plus grands, d\u2019un accès véhicule et de procédures administratives plus simples. De nombreux architectes marocains réinterprètent le riad traditionnel dans un cadre contemporain." },
     { q: "Quels artisans sont nécessaires pour un riad ?", a: "La construction d\u2019un riad fait appel à des corps de métier spécialisés : le maalem (maître artisan) pour le zellige et le bejmat, le tadelakteur pour les enduits chaux, le menuisier ébéniste pour le moucharabieh et les portes sculptées, le ferronnier pour les grilles et rampes, et le fontainier pour les vasques et fontaines en marbre. Un architecte expérimenté coordonne ces artisans." },
+    { q: "Combien de temps faut-il pour construire un riad neuf au Maroc ?", a: "La construction d\u2019un riad neuf prend en moyenne 14 à 24 mois. Le gros œuvre dure 4 à 8 mois, les finitions traditionnelles (zellige, tadelakt, bois sculpté) nécessitent 4 à 8 mois supplémentaires. La fabrication artisanale du zellige et du bois doit être lancée 2 à 4 mois avant la pose." },
+    { q: "Est-ce qu\u2019un riad neuf peut servir de maison d\u2019hôtes au Maroc ?", a: "Oui, mais il faut obtenir une autorisation touristique du Ministère du Tourisme. Les exigences portent sur la sécurité incendie (extincteurs, issues de secours), la capacité d\u2019accueil (5 chambres maximum pour une maison d\u2019hôtes) et l\u2019hygiène. Prévoyez ces normes dès la conception avec votre architecte pour éviter des travaux de mise en conformité." },
   ];
 
   const faqSchema = {
@@ -22,7 +24,7 @@ export default function GuideConstructionRiadNeuf() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>Construction d&apos;un riad neuf au Maroc : marier tradition et confort moderne</h2>
+        <h2>Comment construire un riad neuf alliant tradition et confort moderne ?</h2>
         <p>
           La <strong>construction d&apos;un riad neuf au Maroc</strong> permet de créer
           une demeure authentique intégrant le meilleur du savoir-faire
@@ -52,7 +54,7 @@ export default function GuideConstructionRiadNeuf() {
           <li><strong>La terrasse</strong> : espace de vie en hauteur avec vue panoramique</li>
         </ul>
 
-        <h2>Coûts de construction détaillés</h2>
+        <h2>Combien coûte la construction d&apos;un riad neuf ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -102,7 +104,7 @@ export default function GuideConstructionRiadNeuf() {
           2 400 000 MAD.
         </p>
 
-        <h2>Conception architecturale : tradition revisitée</h2>
+        <h2>Comment concevoir un riad entre tradition et modernité ?</h2>
         <p>
           Un architecte spécialisé en riads saura adapter les proportions
           traditionnelles aux usages contemporains. Le patio, autrefois
@@ -115,7 +117,7 @@ export default function GuideConstructionRiadNeuf() {
           25 cm), les menuiseries (double vitrage) et la toiture.
         </p>
 
-        <h2>Les artisans marocains : un savoir-faire irremplaçable</h2>
+        <h2>Pourquoi le savoir-faire des artisans marocains est-il irremplaçable ?</h2>
         <p>
           La qualité d&apos;un riad repose sur le savoir-faire des artisans
           marocains. Les meilleurs se trouvent à Fès (zellige), Marrakech
@@ -128,7 +130,7 @@ export default function GuideConstructionRiadNeuf() {
           25 % du coût total pour un résultat authentique.
         </p>
 
-        <h2>Réglementation et autorisations</h2>
+        <h2>Quelle réglementation encadre la construction d&apos;un riad neuf ?</h2>
         <p>
           La construction d&apos;un riad neuf suit les mêmes règles que toute
           construction au Maroc. La <strong>loi 12-90</strong> encadre le permis de

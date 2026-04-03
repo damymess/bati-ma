@@ -3,6 +3,8 @@ export default function GuideAmenagementCommercial() {
     { q: "Faut-il un architecte pour aménager un local commercial au Maroc ?", a: "Un architecte est obligatoire dès que les travaux modifient la structure, la façade ou la destination du local (loi 016-89). Pour un simple aménagement intérieur sans modification structurelle, un architecte n\u2019est pas légalement requis mais reste fortement recommandé, notamment pour les locaux recevant du public (ERP) qui doivent respecter des normes de sécurité incendie et d\u2019accessibilité." },
     { q: "Quel budget pour aménager un local commercial ?", a: "Le budget d\u2019aménagement d\u2019un local commercial au Maroc varie selon l\u2019activité : 1 500 à 3 000 MAD/m² pour un bureau simple, 3 000 à 6 000 MAD/m² pour un commerce de détail (boutique, pharmacie), 5 000 à 10 000 MAD/m² pour un restaurant ou un café, et 8 000 à 15 000 MAD/m² pour un espace de santé (clinique, laboratoire). Les honoraires d\u2019architecte représentent 5 à 10 % du montant des travaux." },
     { q: "Quelles autorisations pour ouvrir un commerce au Maroc ?", a: "Pour ouvrir un commerce, vous devez obtenir : un permis d\u2019aménagement si les travaux modifient la structure (commune), une autorisation d\u2019exploitation commerciale (commune), un avis de la Protection civile pour les établissements recevant du public (ERP), et éventuellement des autorisations sectorielles (ONSSA pour l\u2019alimentaire, ministère de la Santé pour le médical)." },
+    { q: "Combien de temps prend l\u2019aménagement d\u2019un local commercial au Maroc ?", a: "Les délais varient selon l\u2019ampleur des travaux : 2 à 4 semaines pour un aménagement simple (peinture, mobilier), 1 à 3 mois pour un commerce avec modifications structurelles, et 3 à 6 mois pour un restaurant ou une clinique nécessitant des installations techniques complexes et des autorisations ERP." },
+    { q: "Quelles sont les normes de sécurité incendie pour un commerce au Maroc ?", a: "Tout ERP doit disposer d\u2019extincteurs adaptés, d\u2019issues de secours dégagées, d\u2019un système de détection de fumée et de désenfumage. La Protection civile délivre un avis de conformité après visite. Les restaurants doivent en plus prévoir une extraction cuisine et des matériaux ignifugés." },
   ];
 
   const faqSchema = {
@@ -22,7 +24,7 @@ export default function GuideAmenagementCommercial() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>Aménagement d&apos;un local commercial au Maroc : guide complet</h2>
+        <h2>Comment aménager un local commercial au Maroc ?</h2>
         <p>
           L&apos;<strong>aménagement d&apos;un local commercial au Maroc</strong> est un projet
           qui nécessite une planification minutieuse, tant sur le plan
@@ -52,7 +54,7 @@ export default function GuideAmenagementCommercial() {
           souvent une étude technique.
         </p>
 
-        <h2>Coûts d&apos;aménagement par type de commerce</h2>
+        <h2>Combien coûte l&apos;aménagement d&apos;un local commercial ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -90,7 +92,7 @@ export default function GuideAmenagementCommercial() {
           </tbody>
         </table>
 
-        <h2>Les normes ERP (Établissements Recevant du Public)</h2>
+        <h2>Quelles sont les normes ERP à respecter ?</h2>
         <p>
           Tout local commercial recevant du public doit respecter des
           normes strictes de sécurité. Au Maroc, la Protection civile
@@ -104,7 +106,7 @@ export default function GuideAmenagementCommercial() {
           <li><strong>Capacité d&apos;accueil</strong> : calcul selon la surface et l&apos;activité (1 personne pour 1 à 5 m² selon le type)</li>
         </ul>
 
-        <h2>Démarches administratives pas à pas</h2>
+        <h2>Quelles sont les démarches administratives à suivre ?</h2>
         <ul>
           <li><strong>Étape 1</strong> : vérification de la conformité du local avec le plan d&apos;aménagement (usage commercial autorisé)</li>
           <li><strong>Étape 2</strong> : dépôt du dossier d&apos;aménagement à la commune (plans architecte si modification structurelle)</li>
@@ -115,7 +117,7 @@ export default function GuideAmenagementCommercial() {
           <li><strong>Étape 7</strong> : obtention des autorisations sectorielles si applicable (ONSSA, Santé, etc.)</li>
         </ul>
 
-        <h2>Le rôle de l&apos;architecte dans l&apos;aménagement commercial</h2>
+        <h2>Quel est le rôle de l&apos;architecte dans l&apos;aménagement commercial ?</h2>
         <p>
           Un architecte spécialisé en aménagement commercial apporte une
           valeur ajoutée à plusieurs niveaux : optimisation de la surface

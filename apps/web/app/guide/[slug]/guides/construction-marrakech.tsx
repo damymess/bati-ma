@@ -3,6 +3,8 @@ export default function GuideConstructionMarrakech() {
     { q: "Quel est le prix de construction au m² à Marrakech en 2026 ?", a: "Le coût de construction à Marrakech varie entre 4 500 et 8 000 MAD/m² pour une construction standard, et peut dépasser 12 000 MAD/m² pour du haut de gamme avec finitions de luxe (zellige, tadelakt, bois de cèdre). Ces prix incluent le gros œuvre et les finitions mais excluent le terrain et les honoraires d\u2019architecte." },
     { q: "Combien de temps faut-il pour construire une maison à Marrakech ?", a: "Comptez en moyenne 12 à 18 mois pour une villa de taille moyenne, de l\u2019obtention du permis de construire à la remise des clés. Les délais peuvent s\u2019allonger en cas de finitions traditionnelles marocaines (zellige artisanal, plâtre sculpté) ou de projet architectural complexe. La phase administrative (permis) prend généralement 2 à 4 mois." },
     { q: "Quels intervenants sont nécessaires pour construire à Marrakech ?", a: "Un projet de construction à Marrakech mobilise plusieurs intervenants : un architecte (obligatoire pour le permis), un bureau d\u2019études techniques (BET) pour la structure, un topographe pour le bornage, une entreprise de construction générale ou des corps de métier séparés, et éventuellement des artisans spécialisés (maâlem) pour les finitions traditionnelles." },
+    { q: "Faut-il une autorisation spéciale pour construire dans la Palmeraie de Marrakech ?", a: "Oui, la Palmeraie est une zone protégée avec des contraintes spécifiques : interdiction de couper les palmiers, hauteur limitée à R+1, coefficient d\u2019emprise au sol réduit et obligation de maintenir un pourcentage d\u2019espaces verts. L\u2019architecte doit obtenir l\u2019avis favorable de l\u2019Agence Urbaine de Marrakech." },
+    { q: "Comment trouver des artisans fiables pour le zellige et le tadelakt à Marrakech ?", a: "Les meilleurs maâlems travaillent par recommandation directe des architectes locaux. Un architecte expérimenté à Marrakech dispose d\u2019un réseau d\u2019artisans de confiance. Demandez des références de chantiers achevés et visitez les réalisations. Les délais de fabrication du zellige (2 à 4 mois) doivent être anticipés." },
   ];
 
   const faqSchema = {
@@ -22,7 +24,7 @@ export default function GuideConstructionMarrakech() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>Construire à Marrakech : un marché dynamique</h2>
+        <h2>Pourquoi Marrakech est-elle un marché dynamique pour la construction ?</h2>
         <p>
           Marrakech est l&apos;une des destinations les plus prisées pour la
           construction au Maroc, tant par les Marocains que par les étrangers.
@@ -31,7 +33,7 @@ export default function GuideConstructionMarrakech() {
           de projets qui nécessite de bien s&apos;entourer de professionnels qualifiés.
         </p>
 
-        <h2>Prix de construction au m² à Marrakech</h2>
+        <h2>Combien coûte la construction au m² à Marrakech ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -48,7 +50,7 @@ export default function GuideConstructionMarrakech() {
           </tbody>
         </table>
 
-        <h2>Les zones de construction à Marrakech</h2>
+        <h2>Quelles sont les meilleures zones pour construire à Marrakech ?</h2>
         <p>
           Chaque secteur de Marrakech a ses propres caractéristiques et contraintes :
         </p>
@@ -61,7 +63,7 @@ export default function GuideConstructionMarrakech() {
           <li><strong>Guéliz / Hivernage</strong> : tissu urbain dense, immeubles et commerces</li>
         </ul>
 
-        <h2>Styles architecturaux à Marrakech</h2>
+        <h2>Quels styles architecturaux choisir à Marrakech ?</h2>
         <p>
           Marrakech se distingue par la richesse de ses styles architecturaux.
           Le style marocain traditionnel (arcs, patios, zellige, moucharabiehs)
@@ -71,7 +73,7 @@ export default function GuideConstructionMarrakech() {
           finitions artisanales marocaines.
         </p>
 
-        <h2>Les intervenants d&apos;un projet de construction</h2>
+        <h2>Quels intervenants mobiliser pour un projet de construction ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -100,7 +102,7 @@ export default function GuideConstructionMarrakech() {
           </p>
         </div>
 
-        <h2>Délais de construction à Marrakech</h2>
+        <h2>Combien de temps faut-il pour construire à Marrakech ?</h2>
         <p>
           Les délais moyens pour un projet de construction à Marrakech :
         </p>
@@ -111,7 +113,7 @@ export default function GuideConstructionMarrakech() {
           <li><strong>Finitions traditionnelles (zellige, tadelakt)</strong> : 2 à 4 mois supplémentaires</li>
         </ul>
 
-        <h2>Trouver les bons professionnels sur Bati.ma</h2>
+        <h2>Comment trouver les bons professionnels à Marrakech ?</h2>
         <p>
           Bati.ma vous permet de trouver des architectes, des bureaux d&apos;études
           et des professionnels de la construction vérifiés à Marrakech. Comparez

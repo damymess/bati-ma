@@ -3,6 +3,8 @@ export default function GuideConstructionHotel() {
     { q: "Quel budget pour construire un h\u00f4tel au Maroc ?", a: "Le budget varie selon la classification vis\u00e9e. Un h\u00f4tel 2 \u00e9toiles de 30 chambres co\u00fbte entre 8 et 15 millions MAD. Un 4 \u00e9toiles de 80 chambres se situe entre 40 et 80 millions MAD. Un 5 \u00e9toiles d\u00e9passe les 120 millions MAD. Ces montants incluent le gros \u0153uvre, les finitions, l&apos;\u00e9quipement et l&apos;am\u00e9nagement ext\u00e9rieur." },
     { q: "Quelles sont les normes de classification h\u00f4teli\u00e8re au Maroc ?", a: "La classification est r\u00e9gie par l&apos;arr\u00eat\u00e9 du Minist\u00e8re du Tourisme (d\u00e9cret 2-02-640). Les crit\u00e8res portent sur la surface minimale des chambres (12 m\u00b2 pour 1 \u00e9toile, 24 m\u00b2 pour 5 \u00e9toiles), les \u00e9quipements obligatoires (piscine \u00e0 partir de 4 \u00e9toiles), le ratio personnel/chambre et les services (restaurant, spa, conciergerie)." },
     { q: "La Coupe du Monde 2030 est-elle une opportunit\u00e9 pour l&apos;h\u00f4tellerie ?", a: "Le Maroc vise 200 000 lits suppl\u00e9mentaires pour le Mondial 2030. Le gouvernement propose des incitations fiscales (exon\u00e9rations de TVA, subventions fonci\u00e8res) dans les villes h\u00f4tes. Les r\u00e9gions de Casablanca, Rabat, Marrakech, Tanger, Agadir et F\u00e8s sont prioritaires. C&apos;est une fen\u00eatre d&apos;opportunit\u00e9 historique pour les investisseurs." },
+    { q: "Quel budget pr\u00e9voir pour construire un h\u00f4tel 3 \u00e9toiles au Maroc ?", a: "Le co\u00fbt de construction d\u2019un h\u00f4tel 3 \u00e9toiles au Maroc se situe entre 800 000 et 1 500 000 MAD par chambre, hors terrain. Pour un \u00e9tablissement de 40 chambres, pr\u00e9voyez 32 \u00e0 60 millions MAD. Les co\u00fbts varient selon la ville, le standing et les am\u00e9nagements." },
+    { q: "Faut-il une \u00e9tude d\u2019impact environnemental pour un h\u00f4tel au Maroc ?", a: "Oui, toute construction h\u00f4teli\u00e8re n\u00e9cessite une \u00e9tude d\u2019impact environnemental valid\u00e9e par le comit\u00e9 r\u00e9gional. L\u2019\u00e9tude co\u00fbte 30 000 \u00e0 100 000 MAD selon la taille du projet. Elle est obligatoire avant l\u2019obtention du permis de construire." },
   ];
   const faqSchema = {
     "@context": "https://schema.org",
@@ -18,7 +20,7 @@ export default function GuideConstructionHotel() {
           Le Maroc a accueilli plus de 14 millions de touristes en 2024, et la perspective de la Coupe du Monde 2030 (co-organis\u00e9e avec l&apos;Espagne et le Portugal) cr\u00e9e une demande sans pr\u00e9c\u00e9dent en h\u00e9bergement. Le Minist\u00e8re du Tourisme estime le besoin \u00e0 200 000 lits additionnels, repr\u00e9sentant un investissement global de plus de 40 milliards de dirhams. Construire un h\u00f4tel au Maroc n&apos;a jamais \u00e9t\u00e9 aussi pertinent.
         </p>
 
-        <h2>Classification et normes</h2>
+        <h2>Quelles sont les normes de classification hôtelière au Maroc ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">

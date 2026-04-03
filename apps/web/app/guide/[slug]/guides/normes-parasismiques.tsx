@@ -12,6 +12,8 @@ export default function GuideNormesParasismiques() {
       q: "Quel surcoût représente la construction parasismique ?",
       a: "Le surcoût d&apos;une construction conforme au RPS 2011 est estimé entre 3 % et 8 % du coût total de la structure, selon la zone sismique et la classe du bâtiment. Ce surcoût se traduit par des fondations plus profondes, un ferraillage renforcé (poteaux, poutres, chaînages), des joints de dilatation parasismique et des dispositions constructives spécifiques. C&apos;est un investissement minime comparé aux conséquences d&apos;un effondrement.",
     },
+    { q: "Faut-il un architecte pour un projet de normes parasismiques ?", a: "Conform\u00e9ment \u00e0 la loi 16-89, le recours \u00e0 un architecte inscrit \u00e0 l\u2019Ordre est obligatoire pour toute construction au Maroc. M\u00eame pour les projets techniques, l\u2019architecte coordonne le permis de construire et assure la conformit\u00e9. Consultez les profils v\u00e9rifi\u00e9s sur Bati.ma." },
+    { q: "Comment obtenir un devis pour normes parasismiques ?", a: "Demandez au minimum 3 devis d\u00e9taill\u00e9s aupr\u00e8s de professionnels diff\u00e9rents. Comparez les postes ligne par ligne, v\u00e9rifiez les r\u00e9f\u00e9rences et exigez un calendrier d\u2019ex\u00e9cution. Sur Bati.ma, vous pouvez contacter directement les architectes sp\u00e9cialis\u00e9s et demander vos devis gratuitement." },
   ];
 
   const faqSchema = {

@@ -14,6 +14,8 @@ export default function GuideTerrasseRooftopMaroc() {
       q: "L&apos;\u00e9tanch\u00e9it\u00e9 est-elle obligatoire pour une terrasse au Maroc ?",
       a: "L&apos;\u00e9tanch\u00e9it\u00e9 est indispensable pour toute terrasse accessible, qu&apos;elle soit obligatoire ou non par la r\u00e9glementation locale. Au Maroc, les pluies hivernales et les \u00e9carts thermiques imposent un syst\u00e8me d&apos;\u00e9tanch\u00e9it\u00e9 multicouche. Le co\u00fbt moyen est de 150 \u00e0 300 MAD/m\u00b2.",
     },
+    { q: "Faut-il un architecte pour un projet de terrasse rooftop au Maroc ?", a: "Conform\u00e9ment \u00e0 la loi 16-89, le recours \u00e0 un architecte inscrit \u00e0 l\u2019Ordre est obligatoire pour toute construction au Maroc. M\u00eame pour les projets techniques, l\u2019architecte coordonne le permis de construire et assure la conformit\u00e9. Consultez les profils v\u00e9rifi\u00e9s sur Bati.ma." },
+    { q: "Comment obtenir un devis pour terrasse rooftop au Maroc ?", a: "Demandez au minimum 3 devis d\u00e9taill\u00e9s aupr\u00e8s de professionnels diff\u00e9rents. Comparez les postes ligne par ligne, v\u00e9rifiez les r\u00e9f\u00e9rences et exigez un calendrier d\u2019ex\u00e9cution. Sur Bati.ma, vous pouvez contacter directement les architectes sp\u00e9cialis\u00e9s et demander vos devis gratuitement." },
   ];
 
   const faqSchema = {

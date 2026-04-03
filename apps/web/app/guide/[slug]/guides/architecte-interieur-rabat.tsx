@@ -3,6 +3,8 @@ export default function GuideArchitecteInterieurRabat() {
     { q: "Quelle est la différence entre un architecte et un architecte d\u2019intérieur à Rabat ?", a: "L\u2019architecte conçoit la structure du bâtiment (plans, permis de construire, gros œuvre) tandis que l\u2019architecte d\u2019intérieur intervient sur l\u2019aménagement et la décoration des espaces intérieurs : choix des matériaux, mobilier, éclairage, couleurs, optimisation des volumes. Au Maroc, la profession d\u2019architecte d\u2019intérieur n\u2019est pas réglementée de la même façon, mais il est recommandé de choisir un professionnel diplômé." },
     { q: "Combien coûte un architecte d\u2019intérieur à Rabat ?", a: "Les honoraires varient selon la mission : comptez entre 300 et 800 MAD/m² pour un projet complet (conception + suivi), ou entre 150 et 400 MAD/m² pour une mission de conseil et conception uniquement. Pour un appartement de 100 m², le budget total se situe entre 30 000 et 80 000 MAD selon le niveau de prestation." },
     { q: "Un architecte d\u2019intérieur peut-il intervenir sur un bureau ou un local professionnel ?", a: "Oui, de nombreux architectes d\u2019intérieur à Rabat se spécialisent dans l\u2019aménagement de bureaux, espaces de coworking, cabinets médicaux, boutiques et restaurants. La capitale administrative du Maroc génère une forte demande en aménagement d\u2019espaces institutionnels et professionnels." },
+    { q: "Quels matériaux sont tendance pour l\u2019aménagement intérieur à Rabat en 2026 ?", a: "Les matériaux les plus demandés sont le tadelakt, le béton ciré, la pierre naturelle, le bois massif et le marbre. Les teintes terracotta, vert sauge et tons neutres dominent. L\u2019intégration de la domotique et de l\u2019éclairage LED indirect complète les projets haut de gamme." },
+    { q: "Comment rénover un appartement art déco à Rabat ?", a: "Les appartements art déco du centre-ville de Rabat nécessitent un architecte d\u2019intérieur qui respecte les éléments patrimoniaux (moulures, carrelage, ferronnerie) tout en modernisant le confort. Comptez 400 à 800 MAD/m² pour une rénovation qui préserve le cachet tout en intégrant cuisine équipée et salle de bains contemporaine." },
   ];
 
   const faqSchema = {
@@ -22,7 +24,7 @@ export default function GuideArchitecteInterieurRabat() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>Rabat : un marché unique pour l&apos;architecture d&apos;intérieur</h2>
+        <h2>Pourquoi Rabat offre-t-elle un marché unique pour l&apos;architecture d&apos;intérieur ?</h2>
         <p>
           Capitale administrative du Maroc, Rabat présente un marché spécifique
           pour l&apos;architecture d&apos;intérieur. La ville concentre des ministères,
@@ -32,7 +34,7 @@ export default function GuideArchitecteInterieurRabat() {
           architectes d&apos;intérieur.
         </p>
 
-        <h2>Style institutionnel vs résidentiel</h2>
+        <h2>Quelle différence entre style institutionnel et résidentiel ?</h2>
         <p>
           À Rabat, l&apos;architecture d&apos;intérieur se décline en deux grandes
           catégories :
@@ -46,7 +48,7 @@ export default function GuideArchitecteInterieurRabat() {
           marocaines, mobilier sur mesure.</li>
         </ul>
 
-        <h2>Les quartiers clés pour l&apos;architecture d&apos;intérieur</h2>
+        <h2>Quels quartiers de Rabat sont les plus demandés en architecture d&apos;intérieur ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -64,7 +66,7 @@ export default function GuideArchitecteInterieurRabat() {
           </tbody>
         </table>
 
-        <h2>Tarifs des architectes d&apos;intérieur à Rabat</h2>
+        <h2>Combien coûte un architecte d&apos;intérieur à Rabat ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -80,7 +82,7 @@ export default function GuideArchitecteInterieurRabat() {
           </tbody>
         </table>
 
-        <h2>Tendances déco et aménagement à Rabat en 2026</h2>
+        <h2>Quelles sont les tendances déco à Rabat en 2026 ?</h2>
         <p>
           Les tendances actuelles chez les architectes d&apos;intérieur de Rabat
           reflètent un équilibre entre modernité internationale et identité

@@ -3,6 +3,8 @@ export default function GuideArchitecteKenitra() {
     { q: "Combien coûte un architecte à Kénitra ?", a: "Les honoraires d\u2019un architecte à Kénitra varient entre 3 % et 7 % du montant des travaux pour une mission complète. Pour une mission limitée à la conception et au dépôt du permis de construire, comptez entre 15 000 et 35 000 MAD selon la complexité du projet. Les tarifs restent compétitifs par rapport à Rabat, située à seulement 40 km." },
     { q: "Quels sont les quartiers en expansion à Kénitra pour construire ?", a: "Les zones les plus dynamiques sont Mehdia (balnéaire), le quartier de la Gare LGV (nouveau pôle urbain), les lotissements autour de l\u2019Atlantic Free Zone, et Bir Rami pour les projets résidentiels. La ville connaît une forte expansion grâce à la ligne à grande vitesse et à la zone franche industrielle." },
     { q: "Faut-il un architecte pour un projet de R+2 à Kénitra ?", a: "Oui, au Maroc la loi impose le recours à un architecte inscrit à l\u2019Ordre pour tout projet de construction, y compris les maisons individuelles de type R+2. L\u2019architecte est responsable du dépôt du permis de construire et de la conformité du projet aux règles d\u2019urbanisme de la commune de Kénitra." },
+    { q: "Comment la LGV a-t-elle impacté l\u2019immobilier à Kénitra ?", a: "La ligne à grande vitesse Al Boraq a placé Kénitra à 20 minutes de Rabat et 1h15 de Casablanca. Cette connectivité a entraîné une hausse de la demande immobilière, avec de nombreux projets résidentiels et commerciaux autour de la gare. Les prix fonciers ont augmenté de 20 à 40 % dans les quartiers proches." },
+    { q: "Quelles zones de Kénitra sont à éviter pour construire ?", a: "Évitez les zones inondables le long de l\u2019oued Sebou, identifiées dans le plan d\u2019aménagement. Certaines zones proches de la zone industrielle peuvent aussi présenter des nuisances sonores ou olfactives. Votre architecte local vérifiera le plan d\u2019aménagement et les contraintes hydrauliques avant tout achat de terrain." },
   ];
 
   const faqSchema = {
@@ -22,7 +24,7 @@ export default function GuideArchitecteKenitra() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>Kénitra : une ville en pleine transformation urbaine</h2>
+        <h2>Pourquoi Kénitra est-elle en pleine transformation urbaine ?</h2>
         <p>
           Kénitra est l&apos;une des villes marocaines à la croissance la plus rapide.
           Avec l&apos;arrivée de la ligne à grande vitesse (LGV), l&apos;implantation de
@@ -42,7 +44,7 @@ export default function GuideArchitecteKenitra() {
           qui facilite la coordination du chantier.
         </p>
 
-        <h2>Les zones résidentielles et économiques de Kénitra</h2>
+        <h2>Quelles sont les zones résidentielles et économiques de Kénitra ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -60,7 +62,7 @@ export default function GuideArchitecteKenitra() {
           </tbody>
         </table>
 
-        <h2>Les grands projets urbains qui transforment Kénitra</h2>
+        <h2>Quels grands projets urbains transforment Kénitra ?</h2>
         <p>
           Plusieurs projets structurants redessinent le visage de Kénitra :
         </p>
@@ -71,7 +73,7 @@ export default function GuideArchitecteKenitra() {
           <li><strong>Nouveau stade</strong> : infrastructure sportive et développement périphérique</li>
         </ul>
 
-        <h2>Tarifs des architectes à Kénitra</h2>
+        <h2>Combien coûte un architecte à Kénitra ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -97,7 +99,7 @@ export default function GuideArchitecteKenitra() {
           </p>
         </div>
 
-        <h2>L&apos;impact de la LGV sur l&apos;immobilier à Kénitra</h2>
+        <h2>Comment la LGV impacte-t-elle l&apos;immobilier à Kénitra ?</h2>
         <p>
           Depuis la mise en service de la ligne à grande vitesse Al Boraq,
           Kénitra n&apos;est plus qu&apos;à 20 minutes de Rabat et 1h15 de Casablanca.

@@ -3,6 +3,8 @@ export default function GuideArchitecteAgadir() {
     { q: "Quel est le tarif moyen d\u2019un architecte à Agadir ?", a: "Les honoraires d\u2019un architecte à Agadir sont généralement inférieurs de 15 à 20 % par rapport à Casablanca. Comptez entre 3 % et 7 % du montant total des travaux pour une mission complète, ou entre 15 000 et 40 000 MAD pour une mission de conception et dépôt de permis de construire." },
     { q: "Quels quartiers d\u2019Agadir sont les plus prisés pour construire ?", a: "Les zones les plus demandées sont Founty (front de mer haut de gamme), la Cité Balnéaire (résidentiel familial), Hay Mohammadi (centre-ville accessible), et Dcheira El Jihadia pour les budgets plus modérés. Chaque quartier a ses propres contraintes urbanistiques à vérifier auprès de la commune." },
     { q: "Faut-il un architecte spécialisé en construction parasismique à Agadir ?", a: "Oui, Agadir se situe dans une zone sismique classée. La réglementation RPS 2000 impose des normes parasismiques strictes. Un architecte local expérimenté connaît ces exigences et travaille avec des bureaux d\u2019études techniques (BET) spécialisés pour garantir la conformité structurelle de votre projet." },
+    { q: "Combien de temps faut-il pour obtenir un permis de construire à Agadir ?", a: "Le délai moyen est de 2 à 4 mois après dépôt du dossier complet auprès de la commune. Ce délai inclut l\u2019avis de l\u2019agence urbaine et la vérification de conformité au RPS 2000. Un architecte local expérimenté accélère le processus grâce à sa connaissance des procédures de la commune urbaine d\u2019Agadir." },
+    { q: "Quel style architectural privilégier à Agadir ?", a: "Le style balnéaire contemporain domine à Agadir : lignes épurées, grandes ouvertures vitrées orientées vers l\u2019océan, terrasses spacieuses et matériaux résistants au sel marin. Les architectes locaux combinent souvent ce style avec des touches amazighes traditionnelles comme la pierre locale du Souss et les motifs géométriques." },
   ];
 
   const faqSchema = {
@@ -22,7 +24,7 @@ export default function GuideArchitecteAgadir() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>Agadir : une ville reconstruite, un urbanisme unique</h2>
+        <h2>Pourquoi Agadir a-t-elle un urbanisme unique ?</h2>
         <p>
           Après le séisme dévastateur de 1960, Agadir a été entièrement reconstruite
           selon un plan d&apos;urbanisme moderne. Cette particularité fait d&apos;Agadir
@@ -41,7 +43,7 @@ export default function GuideArchitecteAgadir() {
           l&apos;obtention de votre permis de construire.
         </p>
 
-        <h2>Les zones de construction à Agadir</h2>
+        <h2>Quelles sont les zones de construction à Agadir ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -59,7 +61,7 @@ export default function GuideArchitecteAgadir() {
           </tbody>
         </table>
 
-        <h2>Style architectural balnéaire d&apos;Agadir</h2>
+        <h2>Quel est le style architectural balnéaire d&apos;Agadir ?</h2>
         <p>
           L&apos;architecture à Agadir se caractérise par des lignes épurées, de grandes
           ouvertures vitrées orientées vers l&apos;océan, des terrasses spacieuses et
@@ -68,7 +70,7 @@ export default function GuideArchitecteAgadir() {
           traditionnelles amazighes (motifs géométriques, pierre locale du Souss).
         </p>
 
-        <h2>Tarifs des architectes à Agadir</h2>
+        <h2>Combien coûte un architecte à Agadir ?</h2>
         <p>
           Les honoraires à Agadir sont en moyenne 15 à 20 % moins élevés qu&apos;à
           Casablanca ou Rabat, reflétant un coût de la vie plus accessible dans
@@ -98,7 +100,7 @@ export default function GuideArchitecteAgadir() {
           </p>
         </div>
 
-        <h2>Normes parasismiques : une obligation à Agadir</h2>
+        <h2>Quelles sont les normes parasismiques obligatoires à Agadir ?</h2>
         <p>
           Depuis le tremblement de terre de 1960, Agadir applique des règles
           parasismiques parmi les plus strictes du Maroc. Le règlement de

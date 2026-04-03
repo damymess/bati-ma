@@ -14,6 +14,8 @@ export default function GuideDomotiqueMaroc() {
       q: "Faut-il pr\u00e9voir la domotique d\u00e8s la conception avec l&apos;architecte ?",
       a: "Oui, c\u2019est fortement recommand\u00e9. Int\u00e9grer la domotique d\u00e8s la phase de conception permet de pr\u00e9voir le c\u00e2blage ad\u00e9quat, de r\u00e9duire les co\u00fbts (30 \u00e0 40 % moins cher qu\u2019en r\u00e9novation) et d\u2019optimiser l\u2019ergonomie du syst\u00e8me. Parlez-en \u00e0 votre architecte d\u00e8s le d\u00e9but.",
     },
+    { q: "Faut-il un architecte pour un projet de domotique au Maroc ?", a: "Conform\u00e9ment \u00e0 la loi 16-89, le recours \u00e0 un architecte inscrit \u00e0 l\u2019Ordre est obligatoire pour toute construction au Maroc. M\u00eame pour les projets techniques, l\u2019architecte coordonne le permis de construire et assure la conformit\u00e9. Consultez les profils v\u00e9rifi\u00e9s sur Bati.ma." },
+    { q: "Comment obtenir un devis pour domotique au Maroc ?", a: "Demandez au minimum 3 devis d\u00e9taill\u00e9s aupr\u00e8s de professionnels diff\u00e9rents. Comparez les postes ligne par ligne, v\u00e9rifiez les r\u00e9f\u00e9rences et exigez un calendrier d\u2019ex\u00e9cution. Sur Bati.ma, vous pouvez contacter directement les architectes sp\u00e9cialis\u00e9s et demander vos devis gratuitement." },
   ];
 
   const faqSchema = {
@@ -42,7 +44,7 @@ export default function GuideDomotiqueMaroc() {
           b\u00e9n\u00e9ficie d\u00e9sormais d&apos;un r\u00e9seau d&apos;int\u00e9grateurs certifi\u00e9s.
         </p>
 
-        <h2>Solutions domotiques disponibles au Maroc</h2>
+        <h2>Quelles solutions domotiques sont disponibles au Maroc ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -59,7 +61,7 @@ export default function GuideDomotiqueMaroc() {
           </tbody>
         </table>
 
-        <h2>Les avantages de la domotique au Maroc</h2>
+        <h2>Quels sont les avantages de la domotique au Maroc ?</h2>
         <p>
           Dans un pays ensoleill\u00e9 comme le Maroc, la domotique offre des b\u00e9n\u00e9fices
           concrets : gestion automatis\u00e9e de la climatisation (r\u00e9duction de 20 \u00e0 30 % de

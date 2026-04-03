@@ -3,6 +3,8 @@ export default function GuideConstructionPiscine() {
     { q: "Faut-il un permis pour construire une piscine au Maroc ?", a: "Oui, toute piscine enterr\u00e9e n\u00e9cessite une autorisation de construire d\u00e9livr\u00e9e par la commune. Le dossier comprend les plans sign\u00e9s par un architecte agr\u00e9\u00e9, une \u00e9tude de sol et le plan de situation. Le d\u00e9lai moyen d&apos;obtention est de 2 \u00e0 3 mois." },
     { q: "Combien co\u00fbte une piscine au Maroc en 2025 ?", a: "Le budget varie selon le type : une piscine coque polyester co\u00fbte entre 40 000 et 80 000 MAD, une piscine en b\u00e9ton projet\u00e9 entre 80 000 et 200 000 MAD, et une piscine naturelle (biopiscine) entre 150 000 et 300 000 MAD. Ces prix incluent la structure mais pas forc\u00e9ment l&apos;\u00e9quipement de filtration." },
     { q: "Quelle est la meilleure p\u00e9riode pour construire une piscine au Maroc ?", a: "L&apos;id\u00e9al est de lancer les travaux entre septembre et f\u00e9vrier. Les artisans sont plus disponibles, les prix des mat\u00e9riaux plus stables, et la piscine sera pr\u00eate pour la saison estivale. \u00c9vitez de couler le b\u00e9ton pendant les fortes chaleurs (au-dessus de 35\u00b0C) car le s\u00e9chage trop rapide fragilise la structure." },
+    { q: "Faut-il un permis pour construire une piscine au Maroc ?", a: "Oui, toute piscine enterr\u00e9e n\u00e9cessite une d\u00e9claration aupr\u00e8s de la commune dans le cadre du permis de construire ou d\u2019un permis modificatif. Les piscines hors-sol de moins de 10 m\u00b2 sont g\u00e9n\u00e9ralement dispens\u00e9es. V\u00e9rifiez aupr\u00e8s de l\u2019agence urbaine." },
+    { q: "Quel est le co\u00fbt d\u2019entretien annuel d\u2019une piscine au Maroc ?", a: "L\u2019entretien annuel d\u2019une piscine au Maroc co\u00fbte entre 5 000 et 15 000 MAD : produits chimiques (2 000-5 000 MAD), \u00e9lectricit\u00e9 pompe (3 000-6 000 MAD), nettoyage et maintenance (2 000-4 000 MAD). L\u2019\u00e9lectrolyse au sel r\u00e9duit les co\u00fbts de 30 %." },
   ];
   const faqSchema = {
     "@context": "https://schema.org",
@@ -13,7 +15,7 @@ export default function GuideConstructionPiscine() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <div className="prose-content">
-        <h2>Pourquoi construire une piscine au Maroc ?</h2>
+        <h2>Pourquoi investir dans une piscine au Maroc ?</h2>
         <p>
           Avec un ensoleillement d\u00e9passant 300 jours par an dans la plupart des r\u00e9gions, le Maroc offre un climat id\u00e9al pour profiter d&apos;une piscine priv\u00e9e. Que vous soyez \u00e0 Marrakech, Agadir ou Casablanca, une piscine valorise votre bien immobilier de 15 \u00e0 25 % en moyenne. Pour les propri\u00e9taires de riads, villas ou maisons d&apos;h\u00f4tes, c&apos;est un investissement qui am\u00e9liore \u00e0 la fois le confort de vie et l&apos;attractivit\u00e9 locative.
         </p>
@@ -93,7 +95,7 @@ export default function GuideConstructionPiscine() {
           </p>
         </div>
 
-        <h2>Tendances et innovations</h2>
+        <h2>Quelles sont les tendances piscine au Maroc ?</h2>
         <p>
           Les piscines \u00e0 d\u00e9bordement dominent les projets haut de gamme \u00e0 Marrakech et Tanger. L&apos;\u00e9lectrolyse au sel gagne du terrain comme alternative au chlore classique, avec un investissement initial de 8 000 \u00e0 20 000 MAD mais un co\u00fbt d&apos;entretien r\u00e9duit de 50 %. Les pompes \u00e0 chaleur (15 000 \u00e0 40 000 MAD) permettent de prolonger la saison de baignade d&apos;avril \u00e0 novembre, m\u00eame dans les r\u00e9gions de l&apos;int\u00e9rieur.
         </p>

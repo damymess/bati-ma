@@ -12,6 +12,8 @@ export default function GuideAcheterTerrain() {
       q: "Peut-on acheter un terrain Melkia au Maroc en 2026 ?",
       a: "Oui, les terrains Melkia (non titr\u00e9s) existent encore, surtout en zone rurale. Cependant, c&apos;est risqu\u00e9 : pas de garantie de propri\u00e9t\u00e9 inscrite \u00e0 la Conservation Fonci\u00e8re. Il est fortement recommand\u00e9 de proc\u00e9der \u00e0 l&apos;immatriculation (titrage) avant achat. La proc\u00e9dure co\u00fbte entre 5 000 et 20 000 MAD et prend 6 \u00e0 18 mois.",
     },
+    { q: "Comment v\u00e9rifier qu\u2019un terrain est constructible au Maroc ?", a: "Demandez une note de renseignement \u00e0 l\u2019agence urbaine de votre ville. Ce document gratuit indique le zonage, le COS, le CES et la hauteur maximale autoris\u00e9e. V\u00e9rifiez aussi le titre foncier aupr\u00e8s de la conservation fonci\u00e8re pour confirmer la propri\u00e9t\u00e9 et l\u2019absence d\u2019hypoth\u00e8ques." },
+    { q: "Faut-il un notaire pour acheter un terrain au Maroc ?", a: "Oui, le notaire est indispensable pour s\u00e9curiser l\u2019achat. Il v\u00e9rifie le titre foncier, r\u00e9dige l\u2019acte de vente, s\u2019assure de l\u2019absence de litiges et proc\u00e8de \u00e0 l\u2019inscription \u00e0 la conservation fonci\u00e8re. Ses frais repr\u00e9sentent environ 1 % du prix de vente." },
   ];
 
   const faqSchema = {
@@ -31,7 +33,7 @@ export default function GuideAcheterTerrain() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>Acheter un terrain constructible au Maroc : le guide complet 2026</h2>
+        <h2>Comment acheter un terrain constructible au Maroc en 2026 ?</h2>
         <p>
           L&apos;achat d&apos;un terrain constructible au Maroc est la premi\u00e8re \u00e9tape de tout projet de construction. Que ce soit pour b\u00e2tir une villa \u00e0 Marrakech, un immeuble \u00e0 Casablanca ou une maison de vacances \u00e0 Agadir, cette d\u00e9cision engage un budget important et n\u00e9cessite des v\u00e9rifications rigoureuses. En 2026, les prix des terrains varient consid\u00e9rablement selon les r\u00e9gions, de 500 MAD/m\u00b2 en zone p\u00e9riurbaine \u00e0 plus de 15 000 MAD/m\u00b2 dans les quartiers pris\u00e9s de Casablanca.
         </p>

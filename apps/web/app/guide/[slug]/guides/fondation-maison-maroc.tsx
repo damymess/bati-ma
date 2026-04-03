@@ -14,6 +14,8 @@ export default function GuideFondationMaisonMaroc() {
       q: "Quel type de fondation pour un sol argileux au Maroc ?",
       a: "Sur sol argileux (fr\u00e9quent dans les r\u00e9gions de Casablanca, Rabat et Mekn\u00e8s), le BET recommande g\u00e9n\u00e9ralement un radier g\u00e9n\u00e9ral ou des semelles filantes renforc\u00e9es avec un vide sanitaire. L&apos;argile gonfle avec l&apos;eau et se r\u00e9tracte en s\u00e9cheresse, ce qui peut fissurer les fondations classiques.",
     },
+    { q: "Faut-il un architecte pour un projet de fondation maison au Maroc ?", a: "Conform\u00e9ment \u00e0 la loi 16-89, le recours \u00e0 un architecte inscrit \u00e0 l\u2019Ordre est obligatoire pour toute construction au Maroc. M\u00eame pour les projets techniques, l\u2019architecte coordonne le permis de construire et assure la conformit\u00e9. Consultez les profils v\u00e9rifi\u00e9s sur Bati.ma." },
+    { q: "Comment obtenir un devis pour fondation maison au Maroc ?", a: "Demandez au minimum 3 devis d\u00e9taill\u00e9s aupr\u00e8s de professionnels diff\u00e9rents. Comparez les postes ligne par ligne, v\u00e9rifiez les r\u00e9f\u00e9rences et exigez un calendrier d\u2019ex\u00e9cution. Sur Bati.ma, vous pouvez contacter directement les architectes sp\u00e9cialis\u00e9s et demander vos devis gratuitement." },
   ];
 
   const faqSchema = {

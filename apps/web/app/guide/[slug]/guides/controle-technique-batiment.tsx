@@ -12,6 +12,8 @@ export default function GuideControleTechnique() {
       q: "Quels sont les bureaux de contr\u00f4le technique agr\u00e9\u00e9s au Maroc ?",
       a: "Les principaux bureaux agr\u00e9\u00e9s sont Bureau Veritas Maroc, Socotec Maroc, Apave Maroc et Dekra. Il existe aussi des bureaux marocains comme Qualiconsult Maroc et BET Control. Tous doivent disposer de l&apos;agr\u00e9ment du minist\u00e8re de l&apos;Am\u00e9nagement du territoire pour exercer.",
     },
+    { q: "Quand le contr\u00f4le technique est-il obligatoire au Maroc ?", a: "Le contr\u00f4le technique est obligatoire pour les ERP (\u00e9tablissements recevant du public), les immeubles de grande hauteur (IGH), les b\u00e2timents de plus de R+4, et les ouvrages publics. Pour les villas individuelles, il est facultatif mais recommand\u00e9." },
+    { q: "Combien co\u00fbte un contr\u00f4le technique de construction ?", a: "Les honoraires d\u2019un bureau de contr\u00f4le agr\u00e9\u00e9 (Bureau Veritas, Socotec, Qualiconsult) varient de 0,5 \u00e0 2 % du montant des travaux. Pour un immeuble R+4, comptez 30 000 \u00e0 80 000 MAD. Les missions sont d\u00e9finies par convention entre le ma\u00eetre d\u2019ouvrage et le bureau." },
   ];
 
   const faqSchema = {

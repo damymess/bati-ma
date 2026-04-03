@@ -14,6 +14,8 @@ export default function GuideConcours2026() {
       q: "Participer \u00e0 un concours international aide-t-il la carri\u00e8re d&apos;un architecte marocain ?",
       a: "Absolument. M\u00eame sans gagner, la participation apporte une visibilit\u00e9 internationale, enrichit le portfolio et ouvre des opportunit\u00e9s de collaboration. Les laur\u00e9ats b\u00e9n\u00e9ficient d&apos;une couverture m\u00e9diatique mondiale, de prix financiers cons\u00e9quents et d&apos;un r\u00e9seau professionnel \u00e9largi.",
     },
+    { q: "Comment participer \u00e0 un concours d\u2019architecture depuis le Maroc ?", a: "La plupart des concours internationaux acceptent les candidatures en ligne. Pr\u00e9parez un portfolio PDF, une note d\u2019intention et v\u00e9rifiez les crit\u00e8res d\u2019\u00e9ligibilit\u00e9 (\u00e2ge, dipl\u00f4me). Les frais d\u2019inscription varient de 0 \u00e0 200 USD. Certains offrent des cat\u00e9gories \u00e9tudiantes gratuites." },
+    { q: "Quels avantages \u00e0 gagner un concours d\u2019architecture ?", a: "Un prix en concours apporte visibilit\u00e9 internationale, cr\u00e9dibilit\u00e9 professionnelle et souvent une dotation financi\u00e8re (5 000 \u00e0 50 000 USD). C\u2019est aussi un tremplin pour d\u00e9crocher des commandes publiques et attirer des clients haut de gamme au Maroc." },
   ];
 
   const faqSchema = {

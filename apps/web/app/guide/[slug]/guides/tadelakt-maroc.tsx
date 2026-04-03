@@ -12,6 +12,8 @@ export default function GuideTadelakt() {
       q: "Peut-on appliquer du tadelakt soi-même ?",
       a: "Le tadelakt est une technique exigeante qui nécessite un savoir-faire artisanal. L&apos;application de la chaux, le lissage au galet, le timing précis du polissage et le traitement au savon noir sont des gestes qui s&apos;acquièrent après des années de pratique. Une application amateur risque de fissurer, de ne pas être imperméable ou de présenter des défauts esthétiques. Il est fortement recommandé de faire appel à un maître artisan (maalem) spécialisé.",
     },
+    { q: "Faut-il un architecte pour un projet de tadelakt au Maroc ?", a: "Conform\u00e9ment \u00e0 la loi 16-89, le recours \u00e0 un architecte inscrit \u00e0 l\u2019Ordre est obligatoire pour toute construction au Maroc. M\u00eame pour les projets techniques, l\u2019architecte coordonne le permis de construire et assure la conformit\u00e9. Consultez les profils v\u00e9rifi\u00e9s sur Bati.ma." },
+    { q: "Comment obtenir un devis pour tadelakt au Maroc ?", a: "Demandez au minimum 3 devis d\u00e9taill\u00e9s aupr\u00e8s de professionnels diff\u00e9rents. Comparez les postes ligne par ligne, v\u00e9rifiez les r\u00e9f\u00e9rences et exigez un calendrier d\u2019ex\u00e9cution. Sur Bati.ma, vous pouvez contacter directement les architectes sp\u00e9cialis\u00e9s et demander vos devis gratuitement." },
   ];
 
   const faqSchema = {

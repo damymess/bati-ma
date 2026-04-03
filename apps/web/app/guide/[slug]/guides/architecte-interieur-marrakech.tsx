@@ -14,6 +14,8 @@ export default function GuideArchitecteInterieurMarrakech() {
       q: "O\u00f9 trouver les meilleurs artisans pour un projet d\u2019int\u00e9rieur \u00e0 Marrakech ?",
       a: "Les meilleurs artisans (zelligeurs, tadelakteurs, menuisiers c\u00e8dre, ferronniers) se trouvent dans les souks de la m\u00e9dina et dans la zone artisanale de Sidi Ghanem. Un bon architecte d\u2019int\u00e9rieur \u00e0 Marrakech poss\u00e8de d\u00e9j\u00e0 un carnet d\u2019artisans de confiance.",
     },
+    { q: "Comment int\u00e9grer le style marocain dans un int\u00e9rieur moderne \u00e0 Marrakech ?", a: "Les architectes d\u2019int\u00e9rieur \u00e0 Marrakech fusionnent tadelakt, zellige et bois sculpt\u00e9 avec du mobilier contemporain. Les tendances 2026 privil\u00e9gient le \u00ab boho-marocain \u00bb : couleurs terracotta, mati\u00e8res naturelles et artisanat local r\u00e9interpr\u00e9t\u00e9." },
+    { q: "Faut-il un architecte d\u2019int\u00e9rieur pour r\u00e9nover un riad \u00e0 Marrakech ?", a: "Fortement recommand\u00e9. Un riad pr\u00e9sente des contraintes sp\u00e9cifiques : murs en pis\u00e9, patio central, plomberie v\u00e9tuste. L\u2019architecte d\u2019int\u00e9rieur optimise les espaces tout en respectant l\u2019\u00e2me du lieu. Budget : 800 \u00e0 2 500 MAD/m\u00b2 selon l\u2019\u00e9tat initial." },
   ];
 
   const faqSchema = {
@@ -90,7 +92,7 @@ export default function GuideArchitecteInterieurMarrakech() {
           tout en obtenant une qualit\u00e9 exceptionnelle.
         </p>
 
-        <h2>Tendances 2026 : le boho-chic oriental</h2>
+        <h2>Quelle est la tendance déco phare à Marrakech en 2026 ?</h2>
         <p>
           La tendance phare \u00e0 Marrakech en 2026 est la fusion boho-chic et artisanat
           marocain : textiles tiss\u00e9s \u00e0 la main, poteries de Tamegroute (vert olive),

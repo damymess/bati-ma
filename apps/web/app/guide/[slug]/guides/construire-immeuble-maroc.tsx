@@ -3,6 +3,8 @@ export default function GuideConstruireImmeuble() {
     { q: "Quel budget pour construire un immeuble R+3 au Maroc ?", a: "Le budget total pour un immeuble R+3 varie entre 1,5 et 3 millions MAD selon la ville, la surface au sol et le niveau de finition. Le gros œuvre représente environ 50 % du budget (3 000 à 4 500 MAD/m²), les finitions 30 % et les honoraires (architecte, BET, géomètre) environ 10 à 12 %. Prévoyez également 5 à 8 % pour les frais administratifs et imprévus." },
     { q: "Faut-il un architecte pour un immeuble de plus de R+2 ?", a: "Oui, la loi 016-89 impose le recours obligatoire à un architecte inscrit à l\u2019Ordre national pour tout projet de construction, y compris les maisons individuelles. Pour un immeuble R+3 ou plus, un bureau d\u2019études techniques (BET) agréé est également obligatoire pour le calcul de structure et les études parasismiques conformément au RPS 2000." },
     { q: "Quel est le rendement locatif d\u2019un immeuble au Maroc ?", a: "Le rendement locatif brut d\u2019un immeuble au Maroc se situe entre 5 % et 9 % selon la ville et l\u2019emplacement. Casablanca et Rabat offrent 5 à 7 %, Marrakech 6 à 8 % (location saisonnière), et les villes secondaires comme Meknès, Oujda ou Béni Mellal peuvent atteindre 7 à 9 %. Déduisez environ 1 à 2 % pour les charges de syndic, la taxe d\u2019habitation et l\u2019entretien." },
+    { q: "Combien de temps faut-il pour construire un immeuble R+3 au Maroc ?", a: "La construction d&apos;un immeuble R+3 dure en moyenne 12 à 18 mois de chantier. Ajoutez 3 à 6 mois pour la conception, le permis de construire et le choix de l&apos;entreprise. Au total, prévoyez 18 à 24 mois du premier rendez-vous avec l&apos;architecte à la réception." },
+    { q: "Est-ce que l&apos;étude de sol est obligatoire pour un immeuble au Maroc ?", a: "Oui, l&apos;étude géotechnique est obligatoire pour tout immeuble de plus de R+2. Elle permet de dimensionner les fondations selon la nature du terrain et coûte entre 10 000 et 25 000 MAD. Sans cette étude, aucun BET sérieux ne signera les plans de structure." },
   ];
 
   const faqSchema = {
@@ -33,7 +35,7 @@ export default function GuideConstruireImmeuble() {
           Rabat, Marrakech, Tanger, Agadir, Fès et Meknès.
         </p>
 
-        <h2>Réglementation : ce que dit la loi</h2>
+        <h2>Que dit la loi sur la construction d&apos;immeubles au Maroc ?</h2>
         <p>
           La construction d&apos;un immeuble au Maroc est encadrée par plusieurs
           textes fondamentaux. La <strong>loi 12-90</strong> relative à l&apos;urbanisme
@@ -50,7 +52,7 @@ export default function GuideConstruireImmeuble() {
           <li><strong>R+5 et R+6</strong> : idem + étude d&apos;impact environnemental selon la zone, commission de sécurité</li>
         </ul>
 
-        <h2>Coûts de construction par ville</h2>
+        <h2>Combien coûte la construction d&apos;un immeuble par ville ?</h2>
         <table className="w-full text-sm border-collapse my-4">
           <thead>
             <tr className="bg-stone-100">
@@ -100,7 +102,7 @@ export default function GuideConstruireImmeuble() {
           </tbody>
         </table>
 
-        <h2>Les étapes de construction d&apos;un immeuble</h2>
+        <h2>Quelles sont les étapes de construction d&apos;un immeuble ?</h2>
         <ul>
           <li><strong>Acquisition du terrain</strong> : vérification du titre foncier, de la constructibilité (note de renseignement) et du COS/CUS autorisé</li>
           <li><strong>Choix de l&apos;architecte</strong> : inscrit à l&apos;Ordre, expérimenté en immeubles collectifs</li>
@@ -111,7 +113,7 @@ export default function GuideConstruireImmeuble() {
           <li><strong>Réception et conformité</strong> : certificat de conformité (loi 12-90), raccordements</li>
         </ul>
 
-        <h2>Gestion de la copropriété (syndic)</h2>
+        <h2>Comment gérer la copropriété et le syndic ?</h2>
         <p>
           La loi 18-00 relative au statut de la copropriété des immeubles
           bâtis impose la création d&apos;un syndic de copropriété pour tout
@@ -123,7 +125,7 @@ export default function GuideConstruireImmeuble() {
           lots et définit les charges de chaque copropriétaire.
         </p>
 
-        <h2>Calcul du retour sur investissement</h2>
+        <h2>Comment calculer le retour sur investissement ?</h2>
         <p>
           Pour estimer la rentabilité de votre immeuble, calculez le
           rendement locatif net : (loyers annuels - charges annuelles) /

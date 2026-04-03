@@ -14,6 +14,8 @@ export default function GuideArchitecteTanger() {
       q: "Quelles sont les zones les plus demand\u00e9es pour construire \u00e0 Tanger ?",
       a: "Les zones les plus actives sont Tanger City Center, la route de Malabata (vue mer), Cap Spartel, les nouvelles extensions vers Gzenaya et la zone franche TFZ. La m\u00e9dina attire aussi les projets de restauration pour maisons d\u2019h\u00f4tes et riads.",
     },
+    { q: "Comment le boom de Tanger Med impacte-t-il le march\u00e9 immobilier ?", a: "Tanger Med a attir\u00e9 des milliers de cadres et techniciens, dopant la demande en logements de standing dans les zones Boukhalef, Cap Spartel et Malabata. Les prix ont augment\u00e9 de 30 \u00e0 50 % en 5 ans. Les architectes sont tr\u00e8s sollicit\u00e9s pour les projets r\u00e9sidentiels." },
+    { q: "Faut-il adapter la construction au vent \u00e0 Tanger ?", a: "Oui, Tanger est l\u2019une des villes les plus venteuses du Maroc (chergui et vent du d\u00e9troit). L\u2019architecte doit orienter les ouvertures \u00e0 l\u2019abri du vent dominant, pr\u00e9voir des menuiseries renforc\u00e9es et concevoir des terrasses prot\u00e9g\u00e9es. L\u2019isolation acoustique est \u00e9galement n\u00e9cessaire." },
   ];
 
   const faqSchema = {
@@ -33,7 +35,7 @@ export default function GuideArchitecteTanger() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="prose-content">
-        <h2>Tanger : la ville qui monte en puissance</h2>
+        <h2>Pourquoi Tanger est-elle en pleine transformation urbaine ?</h2>
         <p>
           Tanger vit une transformation spectaculaire depuis le lancement du port Tanger Med
           et l&apos;arriv\u00e9e du TGV Al Boraq. La ville du d\u00e9troit attire des investissements
@@ -87,7 +89,7 @@ export default function GuideArchitecteTanger() {
           sp\u00e9cifiques sont souvent propos\u00e9s par les cabinets sp\u00e9cialis\u00e9s.
         </p>
 
-        <h2>Le boom Tanger Med et son impact architectural</h2>
+        <h2>Quel est l&apos;impact de Tanger Med sur l&apos;architecture locale ?</h2>
         <p>
           Le port Tanger Med, premier port \u00e0 conteneurs d&apos;Afrique, a transform\u00e9 la r\u00e9gion.
           Les zones franches attirent des entreprises internationales qui ont besoin
