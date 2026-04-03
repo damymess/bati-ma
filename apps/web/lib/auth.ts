@@ -177,12 +177,20 @@ export async function loginClient(email: string, password: string): Promise<{ cl
 export async function getMeClient(): Promise<ClientProfile | null> {
   const token = getToken()
   if (!token) return null
-  const res = await fetch(`${API_BASE}/store/clients/me`, {
-    headers: { ...headers(), Authorization: `Bearer ${token}` },
-  })
-  if (!res.ok) return null
-  const json = await res.json()
-  return json.client
+  try {
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 8000)
+    const res = await fetch(`${API_BASE}/store/clients/me`, {
+      headers: { ...headers(), Authorization: `Bearer ${token}` },
+      signal: controller.signal,
+    })
+    clearTimeout(timeout)
+    if (!res.ok) return null
+    const json = await res.json()
+    return json.client
+  } catch {
+    return null
+  }
 }
 
 export async function fetchClientProjets(): Promise<any[]> {
