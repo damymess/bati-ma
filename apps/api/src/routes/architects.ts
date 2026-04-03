@@ -101,25 +101,27 @@ architects.get("/", async (c) => {
   const offset = Number(c.req.query("offset")) || 0
   const regionsParam = c.req.queries("regions[]") || []
 
-  let architects = await db.architectProfile.findMany({
-    where: { is_active: true, deleted_at: null },
-    orderBy: { created_at: "desc" },
-  })
+  const where: any = { is_active: true, deleted_at: null }
 
-  // In-memory filter for regions (JSON field)
+  // Filter by region using Prisma JSON path filter (PostgreSQL jsonb @> operator)
   if (regionsParam.length > 0) {
-    const lower = regionsParam.map((r) => r.toLowerCase())
-    architects = architects.filter((a) => {
-      const regions = (a.regions as string[]) || []
-      return regions.some((r) => lower.includes(r.toLowerCase()))
-    })
+    where.OR = regionsParam.map((r) => ({
+      regions: { path: [], array_contains: [r.toLowerCase()] },
+    }))
   }
 
-  const total = architects.length
-  const sliced = architects.slice(offset, offset + limit)
+  const [list, total] = await Promise.all([
+    db.architectProfile.findMany({
+      where,
+      orderBy: { created_at: "desc" },
+      take: limit,
+      skip: offset,
+    }),
+    db.architectProfile.count({ where }),
+  ])
 
   return c.json({
-    architects: sliced.map(sanitizeArchitect),
+    architects: list.map(sanitizeArchitect),
     count: total,
   })
 })

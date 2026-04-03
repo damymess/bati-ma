@@ -24,6 +24,10 @@ app.use(
 
 // Error handler
 app.onError((err, c) => {
+  // JSON parse errors → 400
+  if (err.message.includes("JSON")) {
+    return c.json({ message: "Corps de requête JSON invalide" }, 400)
+  }
   console.error(`[ERROR] ${c.req.method} ${c.req.path}:`, err.message)
   return c.json({ error: err.message }, 500)
 })
