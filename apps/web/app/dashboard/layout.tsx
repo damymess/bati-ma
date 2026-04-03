@@ -11,6 +11,7 @@ import {
   LogOut,
   Building2,
   Crown,
+  Shield,
 } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 
@@ -40,9 +41,19 @@ export default function DashboardLayout({
   if (!user) return null;
 
   const isArchitect = user.role === "architect";
-  const basePath = isArchitect ? "/dashboard/architecte" : "/dashboard/client";
+  const isAdmin = user.email === "contact@bati.ma";
+  const basePath = pathname.startsWith("/dashboard/admin")
+    ? "/dashboard/admin"
+    : isArchitect
+    ? "/dashboard/architecte"
+    : "/dashboard/client";
 
-  const navItems = isArchitect
+  const navItems = pathname.startsWith("/dashboard/admin") && isAdmin
+    ? [
+        { href: "/dashboard/admin", icon: LayoutDashboard, label: "Vue d'ensemble" },
+        { href: "/dashboard/admin/projets", icon: FolderOpen, label: "Projets soumis" },
+      ]
+    : isArchitect
     ? [
         { href: basePath, icon: LayoutDashboard, label: "Vue d'ensemble" },
         { href: `${basePath}/profil`, icon: User, label: "Mon profil" },
@@ -63,22 +74,46 @@ export default function DashboardLayout({
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-lg font-bold text-stone-900">
-                {isArchitect ? "Espace Architecte" : "Espace Client"}
+                {pathname.startsWith("/dashboard/admin")
+                  ? "Administration"
+                  : isArchitect
+                  ? "Espace Architecte"
+                  : "Espace Client"}
               </h1>
               <p className="text-xs text-stone-500">
                 {user.first_name} {user.last_name} · {user.email}
               </p>
             </div>
-            <button
-              onClick={() => {
-                logout();
-                router.push("/");
-              }}
-              className="flex items-center gap-1.5 text-xs text-stone-500 hover:text-red-600 transition-colors"
-            >
-              <LogOut className="h-4 w-4" />
-              Déconnexion
-            </button>
+            <div className="flex items-center gap-3">
+              {isAdmin && !pathname.startsWith("/dashboard/admin") && (
+                <Link
+                  href="/dashboard/admin"
+                  className="flex items-center gap-1.5 text-xs text-[#b5522a] hover:text-[#9a4523] transition-colors"
+                >
+                  <Shield className="h-4 w-4" />
+                  Admin
+                </Link>
+              )}
+              {isAdmin && pathname.startsWith("/dashboard/admin") && (
+                <Link
+                  href={isArchitect ? "/dashboard/architecte" : "/dashboard/client"}
+                  className="flex items-center gap-1.5 text-xs text-stone-500 hover:text-stone-900 transition-colors"
+                >
+                  <User className="h-4 w-4" />
+                  Mon espace
+                </Link>
+              )}
+              <button
+                onClick={() => {
+                  logout();
+                  router.push("/");
+                }}
+                className="flex items-center gap-1.5 text-xs text-stone-500 hover:text-red-600 transition-colors"
+              >
+                <LogOut className="h-4 w-4" />
+                Déconnexion
+              </button>
+            </div>
           </div>
         </div>
       </div>

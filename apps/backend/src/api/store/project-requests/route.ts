@@ -1,5 +1,6 @@
 import type { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
 import { PROJECT_REQUEST_MODULE } from "../../../modules/project-request"
+import { sendProjectSubmissionToAdmin, sendProjectConfirmationToClient } from "../../../lib/email"
 
 // Simple email regex — not exhaustive, but catches obvious junk
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -37,6 +38,12 @@ export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
       status: "submitted",
       source: "website",
     })
+
+    // Send emails async — don't block the response
+    Promise.all([
+      sendProjectSubmissionToAdmin(projectRequest),
+      sendProjectConfirmationToClient(projectRequest),
+    ]).catch((e) => console.error("[project-requests] email error:", e))
 
     res.status(201).json({ project_request: projectRequest })
   } catch (e: any) {

@@ -147,6 +147,44 @@ export async function fetchDemandeDevis(
   return res.json();
 }
 
+// ─── Admin project requests ────────────────────────────────────────────────
+
+export async function fetchAdminProjectRequests(opts?: {
+  status?: string;
+  limit?: number;
+  offset?: number;
+}): Promise<{ project_requests: any[]; count: number }> {
+  const params = new URLSearchParams();
+  if (opts?.status) params.set("status", opts.status);
+  if (opts?.limit) params.set("limit", String(opts.limit));
+  if (opts?.offset) params.set("offset", String(opts.offset));
+
+  const res = await fetch(`${API_URL}/admin/project-requests?${params}`);
+  if (!res.ok) return { project_requests: [], count: 0 };
+  return res.json();
+}
+
+export async function fetchAdminProjectRequest(
+  id: string
+): Promise<{ project_request: any }> {
+  const res = await fetch(`${API_URL}/admin/project-requests/${id}`);
+  if (!res.ok) throw new Error("Projet non trouvé");
+  return res.json();
+}
+
+export async function updateAdminProjectRequestStatus(
+  id: string,
+  status: string
+): Promise<{ project_request: any }> {
+  const res = await fetch(`${API_URL}/admin/project-requests/${id}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ status }),
+  });
+  if (!res.ok) throw new Error("Erreur mise à jour");
+  return res.json();
+}
+
 export async function unlockContact(
   demandeId: string,
   token: string
