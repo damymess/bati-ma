@@ -49,6 +49,10 @@ admin.post("/project-requests/:id", async (c) => {
   }
   if (body.architect_response !== undefined) updates.architect_response = body.architect_response
   if (body.proposed_fee !== undefined) updates.proposed_fee = Number(body.proposed_fee)
+  if (body.project_type !== undefined) updates.project_type = body.project_type
+  if (body.title !== undefined) updates.title = body.title
+  if (body.description !== undefined) updates.description = body.description
+  if (body.location !== undefined) updates.location = body.location
 
   if (Object.keys(updates).length === 0) {
     return c.json({ message: "Aucune modification fournie" }, 400)
