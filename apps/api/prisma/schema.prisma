@@ -1,0 +1,170 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Tables existantes en BDD (introspectées) ──────────────────────────────
+
+model ArchitectProfile {
+  id                       String    @id @default(cuid())
+  name                     String
+  email                    String    @unique
+  phone                    String?
+  license_number           String?
+  professional_body        String    @default("Ordre des Architectes du Maroc")
+  years_experience         Int       @default(0)
+  specialties              Json      @default("[]")
+  regions                  Json      @default("[]")
+  languages                Json      @default("[\"Français\"]")
+  description              String?
+  portfolio_images         Json      @default("[]")
+  website                  String?
+  hourly_rate              Int?
+  project_rate_min         Int?
+  project_rate_max         Int?
+  verified                 Boolean   @default(false)
+  premium                  Boolean   @default(false)
+  is_active                Boolean   @default(true)
+  rating                   Float     @default(0) @db.Real
+  review_count             Int       @default(0)
+  password_hash            String?
+  subscription_tier        String    @default("free")
+  subscription_expires_at  DateTime? @db.Timestamptz(6)
+  contacts_used_this_month Int       @default(0)
+  contacts_limit           Int       @default(0)
+  created_at               DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at               DateTime  @default(now()) @updatedAt @db.Timestamptz(6)
+  deleted_at               DateTime? @db.Timestamptz(6)
+
+  contact_unlocks ContactUnlock[]
+
+  @@map("architect_profile")
+}
+
+model ProjectRequest {
+  id                   String    @id @default(cuid())
+  client_name          String
+  client_email         String
+  client_phone         String?
+  architect_profile_id String?
+  title                String
+  description          String    @default("")
+  project_type         String
+  location             String
+  address              String?
+  budget_min           Int?
+  budget_max           Int?
+  timeline             String?
+  status               String    @default("submitted")
+  architect_response   String?
+  proposed_fee         Int?
+  is_public            Boolean   @default(false)
+  images               Json      @default("{}")
+  responses_count      Int       @default(0)
+  source               String    @default("website")
+  created_at           DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at           DateTime  @default(now()) @updatedAt @db.Timestamptz(6)
+  deleted_at           DateTime? @db.Timestamptz(6)
+
+  contact_unlocks ContactUnlock[]
+
+  @@map("project_request")
+}
+
+// ─── Tables à créer ─────────────────────────────────────────────────────────
+
+model ClientProfile {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  phone         String?
+  city          String?
+  password_hash String?
+  is_active     Boolean   @default(true)
+  created_at    DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime  @default(now()) @updatedAt @db.Timestamptz(6)
+  deleted_at    DateTime? @db.Timestamptz(6)
+
+  @@map("client_profile")
+}
+
+model ContactUnlock {
+  id                   String   @id @default(cuid())
+  architect_profile_id String
+  project_request_id   String
+  unlocked_at          DateTime @default(now()) @db.Timestamptz(6)
+  created_at           DateTime @default(now()) @db.Timestamptz(6)
+  updated_at           DateTime @default(now()) @updatedAt @db.Timestamptz(6)
+
+  architect ArchitectProfile @relation(fields: [architect_profile_id], references: [id])
+  project   ProjectRequest   @relation(fields: [project_request_id], references: [id])
+
+  @@unique([architect_profile_id, project_request_id])
+  @@map("contact_unlock")
+}
+
+model ForumThread {
+  id            String    @id @default(cuid())
+  author_id     String?
+  author_name   String
+  author_role   String?
+  title         String
+  content       String
+  category      String
+  views         Int       @default(0)
+  replies_count Int       @default(0)
+  pinned        Boolean   @default(false)
+  locked        Boolean   @default(false)
+  is_active     Boolean   @default(true)
+  created_at    DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime  @default(now()) @updatedAt @db.Timestamptz(6)
+  deleted_at    DateTime? @db.Timestamptz(6)
+
+  replies ForumReply[]
+
+  @@map("forum_thread")
+}
+
+model ForumReply {
+  id          String    @id @default(cuid())
+  thread_id   String
+  author_id   String?
+  author_name String
+  author_role String?
+  content     String
+  is_active   Boolean   @default(true)
+  created_at  DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at  DateTime  @default(now()) @updatedAt @db.Timestamptz(6)
+  deleted_at  DateTime? @db.Timestamptz(6)
+
+  thread ForumThread @relation(fields: [thread_id], references: [id])
+
+  @@map("forum_reply")
+}
+
+model AppelOffre {
+  id           String    @id @default(cuid())
+  title        String
+  description  String    @default("")
+  organism     String
+  city         String
+  reference    String?
+  type         String
+  sector       String
+  budget       String?
+  deadline     String
+  publish_date String
+  source       String    @default("marchespublics.gov.ma")
+  source_url   String?
+  status       String    @default("Ouvert")
+  is_active    Boolean   @default(true)
+  created_at   DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at   DateTime  @default(now()) @updatedAt @db.Timestamptz(6)
+  deleted_at   DateTime? @db.Timestamptz(6)
+
+  @@map("appel_offre")
+}
