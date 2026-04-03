@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Breadcrumb from "@/components/Breadcrumb";
 import { CITIES } from "@/lib/cities";
 
 export const metadata: Metadata = {
@@ -11,6 +12,11 @@ export const metadata: Metadata = {
 
 export default function ArchitectesPage() {
   return (
+    <>
+    <Breadcrumb items={[
+      { label: "Accueil", href: "/" },
+      { label: "Architectes au Maroc" },
+    ]} />
     <section className="py-14 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto">
         <h1 className="text-3xl font-bold text-stone-900 mb-2">
@@ -44,5 +50,6 @@ export default function ArchitectesPage() {
         </div>
       </div>
     </section>
+    </>
   );
 }

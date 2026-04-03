@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ChevronRight, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import Breadcrumb from "@/components/Breadcrumb";
 import { Button } from "@/components/ui/button";
 import ForumThreadCard from "@/components/ForumThreadCard";
 import {
@@ -62,22 +63,11 @@ export default async function ForumCategoryPage({ params }: Props) {
 
   return (
     <>
-      {/* Breadcrumb */}
-      <div className="border-b border-stone-200 bg-stone-50">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-3">
-          <nav className="flex items-center gap-1.5 text-xs text-stone-500">
-            <Link href="/" className="hover:text-stone-700">
-              Accueil
-            </Link>
-            <ChevronRight className="h-3 w-3" />
-            <Link href="/forum" className="hover:text-stone-700">
-              Forum
-            </Link>
-            <ChevronRight className="h-3 w-3" />
-            <span className="text-stone-900 font-medium">{cat.name}</span>
-          </nav>
-        </div>
-      </div>
+      <Breadcrumb items={[
+        { label: "Accueil", href: "/" },
+        { label: "Forum", href: "/forum" },
+        { label: cat.name },
+      ]} />
 
       {/* Header */}
       <section className="py-10 sm:py-14">

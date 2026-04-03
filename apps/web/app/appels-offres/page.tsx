@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Search, Filter, Bell, Landmark } from "lucide-react";
+import Breadcrumb from "@/components/Breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -61,6 +62,10 @@ export default function AppelsOffresPage() {
 
   return (
     <>
+      <Breadcrumb items={[
+        { label: "Accueil", href: "/" },
+        { label: "Appels d'offres" },
+      ]} />
       {/* Hero */}
       <section className="bg-stone-950 py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 text-center">

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Breadcrumb from "@/components/Breadcrumb";
 import { CITIES, getCityBySlug, CITY_SLUGS } from "@/lib/cities";
 import { getArchitectsByCity } from "@/lib/architects";
 import ArchitectCard from "@/components/ArchitectCard";
@@ -80,14 +81,11 @@ export default async function InteriorCityPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      {/* Breadcrumb */}
-      <nav className="max-w-6xl mx-auto px-4 sm:px-6 pt-4 pb-0 text-xs text-stone-400">
-        <Link href="/" className="hover:text-[#b5522a]">Accueil</Link>
-        {" › "}
-        <Link href="/architecte-interieur" className="hover:text-[#b5522a]">Architectes d&apos;intérieur</Link>
-        {" › "}
-        <span className="text-stone-600">{data.name}</span>
-      </nav>
+      <Breadcrumb items={[
+        { label: "Accueil", href: "/" },
+        { label: "Architectes d'intérieur", href: "/architecte-interieur" },
+        { label: data.name },
+      ]} />
 
       {/* Hero */}
       <section className="bg-gradient-to-b from-[#f5f0ea] to-white py-10 px-4 sm:px-6">

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Breadcrumb from "@/components/Breadcrumb";
 import { getGuideBySlug, GUIDE_SLUGS, GUIDES } from "@/lib/guides";
 import { CITIES } from "@/lib/cities";
 import GuideConstructionModulaire from "./guides/construction-modulaire-maroc";
@@ -1536,12 +1537,11 @@ export default async function GuidePage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
 
-      {/* Breadcrumb */}
-      <nav className="max-w-4xl mx-auto px-4 sm:px-6 pt-4 pb-0 text-xs text-stone-400">
-        <Link href="/" className="hover:text-[#b5522a]">Accueil</Link>
-        {" › "}
-        <span className="text-stone-600">{guide.category}</span>
-      </nav>
+      <Breadcrumb items={[
+        { label: "Accueil", href: "/" },
+        { label: "Guides", href: "/guide" },
+        { label: guide.category },
+      ]} />
 
       {/* Hero */}
       <section className="bg-gradient-to-b from-[#f5f0ea] to-white py-10 px-4 sm:px-6">

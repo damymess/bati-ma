@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Users, MessageSquare } from "lucide-react";
+import Breadcrumb from "@/components/Breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import ForumThreadCard from "@/components/ForumThreadCard";
@@ -57,6 +58,10 @@ export default async function ForumPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(forumSchema) }}
       />
+      <Breadcrumb items={[
+        { label: "Accueil", href: "/" },
+        { label: "Forum" },
+      ]} />
 
       {/* Hero */}
       <section className="bg-stone-950 py-16 sm:py-20">

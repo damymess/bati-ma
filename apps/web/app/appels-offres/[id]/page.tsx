@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Breadcrumb from "@/components/Breadcrumb";
 import {
-  ChevronRight,
   ArrowLeft,
   Calendar,
   MapPin,
@@ -72,22 +72,11 @@ export default async function AppelOffreDetailPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
 
-      {/* Breadcrumb */}
-      <div className="border-b border-stone-200 bg-stone-50">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-3">
-          <nav className="flex items-center gap-1.5 text-xs text-stone-500">
-            <Link href="/" className="hover:text-stone-700">Accueil</Link>
-            <ChevronRight className="h-3 w-3" />
-            <Link href="/appels-offres" className="hover:text-stone-700">
-              Appels d&apos;offres
-            </Link>
-            <ChevronRight className="h-3 w-3" />
-            <span className="text-stone-900 font-medium truncate max-w-[200px]">
-              {ao.reference ?? ao.id}
-            </span>
-          </nav>
-        </div>
-      </div>
+      <Breadcrumb items={[
+        { label: "Accueil", href: "/" },
+        { label: "Appels d'offres", href: "/appels-offres" },
+        { label: ao.reference ?? ao.id },
+      ]} />
 
       {/* Contenu */}
       <section className="py-10 sm:py-14">

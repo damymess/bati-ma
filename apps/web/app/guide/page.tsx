@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BookOpen, ArrowRight, Clock } from "lucide-react";
+import Breadcrumb from "@/components/Breadcrumb";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { GUIDES } from "@/lib/guides";
@@ -30,6 +31,10 @@ export default function GuidesListingPage() {
 
   return (
     <>
+      <Breadcrumb items={[
+        { label: "Accueil", href: "/" },
+        { label: "Guides & Articles" },
+      ]} />
       {/* Hero */}
       <section className="bg-stone-950 py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 text-center">

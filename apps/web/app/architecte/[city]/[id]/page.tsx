@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Star, Phone, Globe, Briefcase, MapPin, CheckCircle2, ArrowLeft, ArrowRight } from "lucide-react";
+import Breadcrumb from "@/components/Breadcrumb";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -77,32 +78,15 @@ export default async function ArchitectProfilePage({ params }: Props) {
     url: `https://bati.ma/architecte/${city}/${id}`,
   };
 
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Accueil", item: "https://bati.ma" },
-      { "@type": "ListItem", position: 2, name: "Architectes", item: "https://bati.ma/architecte" },
-      { "@type": "ListItem", position: 3, name: `Architecte ${cityName}`, item: `https://bati.ma/architecte/${city}` },
-      { "@type": "ListItem", position: 4, name: architect.name, item: `https://bati.ma/architecte/${city}/${id}` },
-    ],
-  };
-
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-
-      {/* Breadcrumb */}
-      <nav className="max-w-5xl mx-auto px-4 sm:px-6 pt-4 pb-0 text-xs text-stone-400 flex items-center gap-1.5">
-        <Link href="/" className="hover:text-[#b5522a]">Accueil</Link>
-        <span>›</span>
-        <Link href="/architecte" className="hover:text-[#b5522a]">Architectes</Link>
-        <span>›</span>
-        <Link href={`/architecte/${city}`} className="hover:text-[#b5522a]">Architecte {cityName}</Link>
-        <span>›</span>
-        <span className="text-stone-600 truncate max-w-[200px]">{architect.name}</span>
-      </nav>
+      <Breadcrumb items={[
+        { label: "Accueil", href: "/" },
+        { label: "Architectes", href: "/architecte" },
+        { label: `Architecte ${cityName}`, href: `/architecte/${city}` },
+        { label: architect.name },
+      ]} />
 
       {/* Hero */}
       <section className="bg-gradient-to-b from-[#f5f0ea] to-white py-10 px-4 sm:px-6">
