@@ -30,6 +30,57 @@ import ImportedGuideMondial2030 from "./guides/mondial-2030";
 import ImportedGuideMarcheBTP2026 from "./guides/marche-btp-2026";
 import ImportedGuideEcoConstruction from "./guides/eco-construction";
 import ImportedGuideRenovationRiad from "./guides/renovation-riad";
+// ─── 50 NOUVEAUX ARTICLES (Avril 2026) ───
+import GuideArchitecteOujda from "./guides/architecte-oujda";
+import GuideArchitecteTetouan from "./guides/architecte-tetouan";
+import GuideArchitecteMeknes from "./guides/architecte-meknes";
+import GuideArchitecteNador from "./guides/architecte-nador";
+import GuideArchitecteElJadida from "./guides/architecte-el-jadida";
+import GuideArchitecteBeniMellal from "./guides/architecte-beni-mellal";
+import GuideArchitecteSafi from "./guides/architecte-safi";
+import GuideConstruireImmeuble from "./guides/construire-immeuble-maroc";
+import GuideAmenagementCommercial from "./guides/amenagement-local-commercial";
+import GuideConstructionRiadNeuf from "./guides/construction-riad-neuf";
+import GuideConstructionPiscine from "./guides/construction-piscine";
+import GuideAmenagementHammam from "./guides/amenagement-hammam";
+import GuideMaisonCampagne from "./guides/construire-maison-campagne";
+import GuideConstructionHotel from "./guides/construction-hotel";
+import GuideSurelevation from "./guides/surelevation-maison";
+import GuideBetonArme from "./guides/beton-arme-maroc";
+import GuideIsolationThermique from "./guides/isolation-thermique";
+import GuideEtancheiteToiture from "./guides/etancheite-toiture";
+import GuideRevetementSol from "./guides/revetement-sol";
+import GuidePeintureFacade from "./guides/peinture-facade";
+import GuideMenuiserieAluminium from "./guides/menuiserie-aluminium";
+import GuidePlomberieMaison from "./guides/plomberie-maison";
+import GuideElectriciteMaison from "./guides/electricite-maison";
+import GuideClimatisation from "./guides/climatisation-maison";
+import GuideAscenseur from "./guides/ascenseur-immeuble";
+import GuideAssainissement from "./guides/assainissement-maison";
+import GuideTitreFoncier from "./guides/titre-foncier";
+import GuideEtudeSol from "./guides/etude-sol-geotechnique";
+import GuideAssuranceConstruction from "./guides/assurance-construction";
+import GuideReceptionTravaux from "./guides/reception-travaux";
+import GuideNoteRenseignement from "./guides/note-renseignement-urbanisme";
+import GuideDivisionTerrain from "./guides/division-terrain";
+import GuideCuisineModerne from "./guides/cuisine-moderne";
+import GuideSalleBain from "./guides/salle-bain";
+import GuideZellige from "./guides/zellige-marocain";
+import GuideTadelakt from "./guides/tadelakt-maroc";
+import GuideEscalierInterieur from "./guides/escalier-interieur";
+import GuideNormesParasismiques from "./guides/normes-parasismiques";
+import GuideSecuriteIncendie from "./guides/securite-incendie";
+import GuideAccessibiliteHandicap from "./guides/accessibilite-handicap";
+import GuideControleTechnique from "./guides/controle-technique-batiment";
+import GuideAcheterTerrain from "./guides/acheter-terrain-constructible";
+import GuideInvestissementLocatif from "./guides/investissement-locatif";
+import GuideVEFA from "./guides/vefa-maroc";
+import GuideMREConstruire from "./guides/mre-construire";
+import GuideMaisonContainer from "./guides/maison-container";
+import GuideTinyHouse from "./guides/tiny-house";
+import GuideDecorationInterieure from "./guides/decoration-interieure-tendances";
+import GuideMurVegetal from "./guides/jardin-vertical-mur-vegetal";
+import GuideMaisonPassive from "./guides/maison-passive-bioclimatique";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -1510,6 +1561,57 @@ const GUIDE_CONTENT: Record<string, React.FC> = {
   "bureau-etude-technique-maroc": GuideBureauEtudeTechniqueMaroc,
   "amenagement-jardin-maroc": GuideAmenagementJardinMaroc,
   "terrasse-rooftop-maroc": GuideTerrasseRooftopMaroc,
+  // ─── 50 NOUVEAUX ARTICLES ───
+  "architecte-oujda-guide": GuideArchitecteOujda,
+  "architecte-tetouan-guide": GuideArchitecteTetouan,
+  "architecte-meknes-guide": GuideArchitecteMeknes,
+  "architecte-nador-guide": GuideArchitecteNador,
+  "architecte-el-jadida-guide": GuideArchitecteElJadida,
+  "architecte-beni-mellal-guide": GuideArchitecteBeniMellal,
+  "architecte-safi-guide": GuideArchitecteSafi,
+  "construire-immeuble-maroc": GuideConstruireImmeuble,
+  "amenagement-local-commercial-maroc": GuideAmenagementCommercial,
+  "construction-riad-neuf-maroc": GuideConstructionRiadNeuf,
+  "construction-piscine-maroc": GuideConstructionPiscine,
+  "amenagement-hammam-maison-maroc": GuideAmenagementHammam,
+  "construire-maison-campagne-maroc": GuideMaisonCampagne,
+  "construction-hotel-maroc": GuideConstructionHotel,
+  "surelevation-maison-maroc": GuideSurelevation,
+  "beton-arme-construction-maroc": GuideBetonArme,
+  "isolation-thermique-maroc": GuideIsolationThermique,
+  "etancheite-toiture-maroc": GuideEtancheiteToiture,
+  "revetement-sol-maroc": GuideRevetementSol,
+  "peinture-facade-maroc": GuidePeintureFacade,
+  "menuiserie-aluminium-maroc": GuideMenuiserieAluminium,
+  "plomberie-maison-maroc": GuidePlomberieMaison,
+  "electricite-maison-maroc": GuideElectriciteMaison,
+  "climatisation-maison-maroc": GuideClimatisation,
+  "ascenseur-immeuble-maroc": GuideAscenseur,
+  "assainissement-maison-maroc": GuideAssainissement,
+  "titre-foncier-maroc": GuideTitreFoncier,
+  "etude-sol-geotechnique-maroc": GuideEtudeSol,
+  "assurance-construction-maroc": GuideAssuranceConstruction,
+  "reception-travaux-maroc": GuideReceptionTravaux,
+  "note-renseignement-urbanisme-maroc": GuideNoteRenseignement,
+  "division-terrain-maroc": GuideDivisionTerrain,
+  "cuisine-moderne-maroc": GuideCuisineModerne,
+  "salle-bain-maroc": GuideSalleBain,
+  "zellige-marocain-guide": GuideZellige,
+  "tadelakt-maroc-guide": GuideTadelakt,
+  "escalier-interieur-maroc": GuideEscalierInterieur,
+  "normes-parasismiques-maroc": GuideNormesParasismiques,
+  "securite-incendie-batiment-maroc": GuideSecuriteIncendie,
+  "accessibilite-handicap-batiment-maroc": GuideAccessibiliteHandicap,
+  "controle-technique-batiment-maroc": GuideControleTechnique,
+  "acheter-terrain-constructible-maroc": GuideAcheterTerrain,
+  "investissement-locatif-maroc": GuideInvestissementLocatif,
+  "vefa-maroc-guide": GuideVEFA,
+  "mre-construire-maroc": GuideMREConstruire,
+  "maison-container-maroc": GuideMaisonContainer,
+  "tiny-house-maroc": GuideTinyHouse,
+  "decoration-interieure-maroc-tendances": GuideDecorationInterieure,
+  "jardin-vertical-mur-vegetal-maroc": GuideMurVegetal,
+  "maison-passive-bioclimatique-maroc": GuideMaisonPassive,
 };
 
 export default async function GuidePage({ params }: Props) {
@@ -1518,16 +1620,30 @@ export default async function GuidePage({ params }: Props) {
   if (!guide) notFound();
 
   const GuideContent = GUIDE_CONTENT[slug];
-  const otherGuides = GUIDES.filter((g) => g.slug !== slug);
+
+  // Guides liés : même catégorie d'abord, puis autres
+  const sameCategory = GUIDES.filter((g) => g.slug !== slug && g.category === guide.category).slice(0, 3);
+  const otherCategory = GUIDES.filter((g) => g.slug !== slug && g.category !== guide.category).slice(0, 3);
+  const relatedGuides = [...sameCategory, ...otherCategory].slice(0, 6);
 
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: guide.title,
     description: guide.description,
-    author: { "@type": "Organization", name: "Bati.ma" },
-    publisher: { "@type": "Organization", name: "Bati.ma", url: "https://bati.ma" },
+    author: { "@type": "Organization", name: "Bati.ma", url: "https://bati.ma" },
+    publisher: {
+      "@type": "Organization",
+      name: "Bati.ma",
+      url: "https://bati.ma",
+      logo: { "@type": "ImageObject", url: "https://bati.ma/images/hero-villa.jpg" },
+    },
     url: `https://bati.ma/guide/${slug}`,
+    datePublished: "2026-04-03",
+    dateModified: "2026-04-03",
+    image: "https://bati.ma/images/hero-villa.jpg",
+    inLanguage: "fr",
+    mainEntityOfPage: { "@type": "WebPage", "@id": `https://bati.ma/guide/${slug}` },
   };
 
   return (
@@ -1587,14 +1703,14 @@ export default async function GuidePage({ params }: Props) {
         </div>
       </section>
 
-      {/* Other guides */}
+      {/* Guides liés par catégorie */}
       <section className="py-10 px-4 sm:px-6 bg-white">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-lg font-semibold text-stone-900 mb-4">
-            Autres guides
+            Guides similaires
           </h2>
           <div className="space-y-3">
-            {otherGuides.map((g) => (
+            {relatedGuides.map((g) => (
               <Link
                 key={g.slug}
                 href={`/guide/${g.slug}`}
@@ -1610,6 +1726,16 @@ export default async function GuidePage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {/* CTA sticky mobile */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-stone-200 p-3 sm:hidden z-50">
+        <Link
+          href="/demande-devis"
+          className="block w-full bg-[#b5522a] text-white text-center py-3 rounded-lg font-semibold text-sm"
+        >
+          Demander un devis gratuit
+        </Link>
+      </div>
     </>
   );
 }

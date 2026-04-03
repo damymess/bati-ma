@@ -467,6 +467,76 @@ export const GUIDES: Guide[] = [
     category: "Extérieur",
     content: "",
   },
+
+  // ─── 50 NOUVEAUX ARTICLES SEO (Avril 2026) ───
+
+  // Villes nouvelles
+  { slug: "architecte-oujda-guide", title: "Architecte à Oujda : guide complet pour choisir en 2026", description: "Trouver un architecte à Oujda : spécificités de l'Oriental, proximité Algérie, zones résidentielles, tarifs et projets urbains.", readTime: "9 min", category: "Villes", content: "" },
+  { slug: "architecte-tetouan-guide", title: "Architecte à Tétouan : guide complet pour choisir en 2026", description: "Architectes à Tétouan : architecture andalouse, médina UNESCO, Cabo Negro, tarifs et spécialités des cabinets tétouanais.", readTime: "9 min", category: "Villes", content: "" },
+  { slug: "architecte-meknes-guide", title: "Architecte à Meknès : guide complet pour choisir en 2026", description: "Trouver un architecte à Meknès : ville impériale, patrimoine ismaélien, zones modernes, tarifs et cabinets spécialisés.", readTime: "9 min", category: "Villes", content: "" },
+  { slug: "architecte-nador-guide", title: "Architecte à Nador : guide complet pour choisir en 2026", description: "Architectes à Nador : lagune Marchica, boom immobilier du Rif, projets touristiques et résidentiels, tarifs.", readTime: "8 min", category: "Villes", content: "" },
+  { slug: "architecte-el-jadida-guide", title: "Architecte à El Jadida : guide complet pour choisir en 2026", description: "Trouver un architecte à El Jadida : cité portugaise, station balnéaire, Mazagan, tarifs et spécialités.", readTime: "8 min", category: "Villes", content: "" },
+  { slug: "architecte-beni-mellal-guide", title: "Architecte à Béni Mellal : guide complet pour choisir en 2026", description: "Architectes à Béni Mellal : région agricole en expansion urbaine, zones résidentielles, tarifs et cabinets locaux.", readTime: "8 min", category: "Villes", content: "" },
+  { slug: "architecte-safi-guide", title: "Architecte à Safi : guide complet pour choisir en 2026", description: "Trouver un architecte à Safi : ville de la céramique, port industriel, projets résidentiels et touristiques, tarifs.", readTime: "8 min", category: "Villes", content: "" },
+
+  // Types de projets
+  { slug: "construire-immeuble-maroc", title: "Construire un immeuble au Maroc : guide complet 2026", description: "Comment construire un immeuble R+3 à R+6 au Maroc ? Réglementation, permis, coûts au m², rentabilité et intervenants.", readTime: "12 min", category: "Plans & Construction", content: "" },
+  { slug: "amenagement-local-commercial-maroc", title: "Aménagement local commercial au Maroc : guide et prix 2026", description: "Aménager un local commercial au Maroc : normes ERP, architecte spécialisé, coûts d'aménagement et autorisations.", readTime: "8 min", category: "Plans & Construction", content: "" },
+  { slug: "construction-riad-neuf-maroc", title: "Construire un riad neuf au Maroc : guide 2026", description: "Comment construire un riad neuf au Maroc ? Plans avec patio, matériaux traditionnels, budget et architectes spécialisés.", readTime: "10 min", category: "Plans & Construction", content: "" },
+  { slug: "construction-piscine-maroc", title: "Construction piscine au Maroc : guide et prix 2026", description: "Construire une piscine au Maroc : types (béton, coque, naturelle), autorisations, prix de 40 000 à 300 000 MAD et entretien.", readTime: "9 min", category: "Extérieur", content: "" },
+  { slug: "amenagement-hammam-maison-maroc", title: "Hammam à domicile au Maroc : guide et budget 2026", description: "Installer un hammam privé chez soi au Maroc : conception, tadelakt, chauffage, ventilation, budget de 30 000 à 150 000 MAD.", readTime: "8 min", category: "Intérieur", content: "" },
+  { slug: "construire-maison-campagne-maroc", title: "Maison de campagne au Maroc : guide construction 2026", description: "Construire une maison en zone rurale au Maroc : terrain agricole, dérogation, styles régionaux, coûts et architectes.", readTime: "9 min", category: "Plans & Construction", content: "" },
+  { slug: "construction-hotel-maroc", title: "Construire un hôtel au Maroc : guide et réglementation 2026", description: "Comment construire un hôtel au Maroc ? Classement touristique, normes, architecte spécialisé, budget et autorisations.", readTime: "11 min", category: "Plans & Construction", content: "" },
+  { slug: "surelevation-maison-maroc", title: "Surélévation maison au Maroc : guide et autorisations 2026", description: "Ajouter un étage à sa maison au Maroc : droit de surélévation, permis modificatif, coûts et étude structurelle.", readTime: "8 min", category: "Plans & Construction", content: "" },
+
+  // Matériaux et techniques
+  { slug: "beton-arme-construction-maroc", title: "Béton armé au Maroc : normes, prix et mise en œuvre 2026", description: "Tout sur le béton armé au Maroc : dosage, RPS 2011, normes parasismiques, prix du m³ et fournisseurs par ville.", readTime: "9 min", category: "Guide pratique", content: "" },
+  { slug: "isolation-thermique-maroc", title: "Isolation thermique au Maroc : guide RTCM 2026", description: "Isoler sa maison au Maroc : réglementation thermique RTCM, matériaux (polystyrène, laine de roche), prix et économies.", readTime: "9 min", category: "Innovation", content: "" },
+  { slug: "etancheite-toiture-maroc", title: "Étanchéité toiture terrasse au Maroc : guide complet 2026", description: "Résoudre les problèmes d'étanchéité au Maroc : solutions (bitume, résine, membrane), prix et entreprises spécialisées.", readTime: "8 min", category: "Guide pratique", content: "" },
+  { slug: "revetement-sol-maroc", title: "Revêtement de sol au Maroc : guide choix et prix 2026", description: "Choisir son revêtement de sol au Maroc : zellige, marbre, carrelage, granito, parquet. Comparatif prix et durabilité.", readTime: "8 min", category: "Intérieur", content: "" },
+  { slug: "peinture-facade-maroc", title: "Peinture et enduit façade au Maroc : guide 2026", description: "Peindre ou enduire sa façade au Maroc : types d'enduit, couleurs autorisées, réglementation communale et prix.", readTime: "7 min", category: "Guide pratique", content: "" },
+  { slug: "menuiserie-aluminium-maroc", title: "Menuiserie aluminium au Maroc : guide et prix 2026", description: "Menuiserie aluminium au Maroc : fenêtres, portes coulissantes, fabricants locaux, prix au m² et comparatif PVC vs alu.", readTime: "8 min", category: "Guide pratique", content: "" },
+
+  // Installations techniques
+  { slug: "plomberie-maison-maroc", title: "Plomberie maison au Maroc : normes et coûts 2026", description: "Installation plomberie au Maroc : normes, matériaux (PPR, PVC, cuivre), tarifs plombier et budget pour maison neuve.", readTime: "8 min", category: "Guide pratique", content: "" },
+  { slug: "electricite-maison-maroc", title: "Installation électrique au Maroc : normes et prix 2026", description: "Électricité maison au Maroc : norme NFC 15-100, raccordement ONEE, compteur, prix installation et mise en conformité.", readTime: "9 min", category: "Guide pratique", content: "" },
+  { slug: "climatisation-maison-maroc", title: "Climatisation au Maroc : guide choix et installation 2026", description: "Choisir sa climatisation au Maroc : split, gainable, central, VRV. Prix par type, marques disponibles et consommation.", readTime: "8 min", category: "Innovation", content: "" },
+  { slug: "ascenseur-immeuble-maroc", title: "Ascenseur au Maroc : réglementation et prix 2026", description: "Installer un ascenseur au Maroc : obligation à partir du R+4, normes de sécurité, marques, prix et entretien annuel.", readTime: "8 min", category: "Réglementation", content: "" },
+  { slug: "assainissement-maison-maroc", title: "Assainissement au Maroc : fosse septique et tout-à-l'égout 2026", description: "Assainissement maison au Maroc : réseau collectif vs fosse septique, réglementation, vidange, prix et raccordement.", readTime: "7 min", category: "Guide pratique", content: "" },
+
+  // Démarches et administratif
+  { slug: "titre-foncier-maroc", title: "Titre foncier au Maroc : procédure et vérification 2026", description: "Comprendre le titre foncier au Maroc : conservation foncière, immatriculation, melkia vs titre, vérification et frais.", readTime: "9 min", category: "Réglementation", content: "" },
+  { slug: "etude-sol-geotechnique-maroc", title: "Étude de sol au Maroc : quand et pourquoi la faire en 2026", description: "L'étude géotechnique au Maroc : obligatoire ou non, types d'essais, prix, laboratoires agréés et impact sur les fondations.", readTime: "8 min", category: "Guide pratique", content: "" },
+  { slug: "assurance-construction-maroc", title: "Assurance construction au Maroc : TRC et décennale 2026", description: "Assurances construction au Maroc : TRC (tous risques chantier), décennale, responsabilité civile. Obligations et tarifs.", readTime: "8 min", category: "Réglementation", content: "" },
+  { slug: "reception-travaux-maroc", title: "Réception des travaux au Maroc : procédure et PV 2026", description: "Comment réceptionner les travaux au Maroc ? PV de réception, réserves, garanties, délais de levée et recours.", readTime: "8 min", category: "Réglementation", content: "" },
+  { slug: "note-renseignement-urbanisme-maroc", title: "Note de renseignement urbanistique au Maroc : guide 2026", description: "Obtenir une note de renseignement au Maroc : agence urbaine, COS, CES, hauteur maximale, procédure et délais.", readTime: "7 min", category: "Réglementation", content: "" },
+  { slug: "division-terrain-maroc", title: "Division de terrain au Maroc : procédure complète 2026", description: "Diviser un terrain au Maroc : morcellement, autorisation de lotir, rôle du géomètre, frais et conservation foncière.", readTime: "8 min", category: "Réglementation", content: "" },
+
+  // Décoration et aménagement intérieur
+  { slug: "cuisine-moderne-maroc", title: "Cuisine moderne au Maroc : aménagement et prix 2026", description: "Aménager une cuisine moderne au Maroc : cuisinistes, tendances 2026, matériaux, budgets de 20 000 à 120 000 MAD.", readTime: "8 min", category: "Intérieur", content: "" },
+  { slug: "salle-bain-maroc", title: "Salle de bain au Maroc : aménagement et tendances 2026", description: "Créer une salle de bain moderne au Maroc : tadelakt, douche italienne, baignoire, coûts et artisans spécialisés.", readTime: "8 min", category: "Intérieur", content: "" },
+  { slug: "zellige-marocain-guide", title: "Zellige marocain : guide complet artisanat et pose 2026", description: "Tout sur le zellige marocain : histoire, fabrication artisanale à Fès, types, prix au m² et conseils de pose.", readTime: "10 min", category: "Intérieur", content: "" },
+  { slug: "tadelakt-maroc-guide", title: "Tadelakt au Maroc : technique, application et prix 2026", description: "Le tadelakt marocain : technique ancestrale à la chaux de Marrakech, application, artisans qualifiés et prix.", readTime: "9 min", category: "Intérieur", content: "" },
+  { slug: "escalier-interieur-maroc", title: "Escalier intérieur au Maroc : styles, matériaux et prix 2026", description: "Choisir son escalier au Maroc : béton, bois, métal, fer forgé. Styles, dimensions réglementaires et coûts.", readTime: "7 min", category: "Intérieur", content: "" },
+
+  // Sécurité et normes
+  { slug: "normes-parasismiques-maroc", title: "Normes parasismiques au Maroc : RPS 2011 expliqué", description: "Comprendre le RPS 2011 au Maroc : zones sismiques, classes de bâtiments, obligations et impact sur la construction.", readTime: "9 min", category: "Réglementation", content: "" },
+  { slug: "securite-incendie-batiment-maroc", title: "Sécurité incendie bâtiment au Maroc : normes 2026", description: "Normes incendie au Maroc : ERP, sorties de secours, détecteurs, extincteurs, obligations et contrôle technique.", readTime: "8 min", category: "Réglementation", content: "" },
+  { slug: "accessibilite-handicap-batiment-maroc", title: "Accessibilité PMR bâtiment au Maroc : normes et obligations", description: "Accessibilité handicap au Maroc : loi 10-03, rampes, ascenseurs, sanitaires adaptés et obligations des promoteurs.", readTime: "8 min", category: "Réglementation", content: "" },
+  { slug: "controle-technique-batiment-maroc", title: "Contrôle technique de construction au Maroc : guide 2026", description: "Contrôle technique au Maroc : bureaux agréés, missions obligatoires, étapes et coûts pour ERP et immeubles.", readTime: "8 min", category: "Réglementation", content: "" },
+
+  // Immobilier et investissement
+  { slug: "acheter-terrain-constructible-maroc", title: "Acheter un terrain constructible au Maroc : guide 2026", description: "Acheter un terrain au Maroc : vérifications foncières, statut du sol, pièges à éviter, notaire et frais.", readTime: "10 min", category: "Budget & Tarifs", content: "" },
+  { slug: "investissement-locatif-maroc", title: "Investissement locatif au Maroc : rentabilité 2026", description: "Investir dans l'immobilier locatif au Maroc : rendement par ville, fiscalité, gestion locative et villes prometteuses.", readTime: "10 min", category: "Budget & Tarifs", content: "" },
+  { slug: "vefa-maroc-guide", title: "Achat en VEFA au Maroc : droits et précautions 2026", description: "Acheter sur plan (VEFA) au Maroc : loi 44-00, garanties, échéancier de paiement, réception et recours.", readTime: "9 min", category: "Réglementation", content: "" },
+  { slug: "mre-construire-maroc", title: "MRE : construire au Maroc depuis l'étranger en 2026", description: "Guide MRE pour construire au Maroc : procuration, suivi à distance, banques, architecte et pièges à éviter.", readTime: "10 min", category: "Guide pratique", content: "" },
+
+  // Tendances et lifestyle
+  { slug: "maison-container-maroc", title: "Maison container au Maroc : guide et prix 2026", description: "Construire une maison container au Maroc : faisabilité, réglementation, isolation, prix et fournisseurs.", readTime: "8 min", category: "Innovation", content: "" },
+  { slug: "tiny-house-maroc", title: "Tiny house au Maroc : réglementation et possibilités 2026", description: "Tiny house au Maroc : micro-habitat, zones rurales, réglementation, coûts de 80 000 à 250 000 MAD et constructeurs.", readTime: "8 min", category: "Innovation", content: "" },
+  { slug: "decoration-interieure-maroc-tendances", title: "Décoration intérieure au Maroc : tendances 2026", description: "Tendances décoration au Maroc en 2026 : styles, couleurs, artisanat local, budgets et décorateurs recommandés.", readTime: "8 min", category: "Intérieur", content: "" },
+  { slug: "jardin-vertical-mur-vegetal-maroc", title: "Mur végétal au Maroc : guide et installation 2026", description: "Installer un mur végétal au Maroc : intérieur ou extérieur, plantes adaptées, systèmes d'irrigation et coûts.", readTime: "7 min", category: "Extérieur", content: "" },
+  { slug: "maison-passive-bioclimatique-maroc", title: "Maison passive au Maroc : conception bioclimatique 2026", description: "Concevoir une maison passive au Maroc : orientation, ventilation naturelle, isolation, matériaux et surcoûts.", readTime: "9 min", category: "Innovation", content: "" },
 ];
 
 export function getGuideBySlug(slug: string): Guide | undefined {

@@ -88,6 +88,26 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen flex flex-col font-sans antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Bati.ma",
+              url: "https://bati.ma",
+              logo: "https://bati.ma/images/hero-villa.jpg",
+              description: "Annuaire des architectes au Maroc — 800+ profils vérifiés, portfolios et devis gratuits.",
+              foundingDate: "2025",
+              areaServed: { "@type": "Country", name: "Morocco" },
+              contactPoint: {
+                "@type": "ContactPoint",
+                contactType: "customer service",
+                availableLanguage: ["French", "Arabic"],
+              },
+            }),
+          }}
+        />
         <Nav />
         <main className="flex-1 pb-24 lg:pb-0">{children}</main>
         <div className="hidden lg:block">
