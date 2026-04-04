@@ -25,7 +25,7 @@ export default function QuickLeadForm({ variant = "card" }: { variant?: "card" |
     const params = new URLSearchParams();
     if (projectType) params.set("type", projectType);
     if (city) params.set("city", city);
-    router.push(`/soumettre-projet${params.toString() ? `?${params}` : ""}`);
+    router.push(`/demande-devis${params.toString() ? `?${params}` : ""}`);
   };
 
   // ─── Inline variant : horizontal bar for hero ────────────────────────────

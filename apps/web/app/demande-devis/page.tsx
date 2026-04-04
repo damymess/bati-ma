@@ -57,6 +57,32 @@ const STEPS = [
   { label: "Contact", icon: User },
 ];
 
+const COUNTRY_CODES = [
+  { code: "+212", label: "🇲🇦 +212" },
+  { code: "+33", label: "🇫🇷 +33" },
+  { code: "+1", label: "🇺🇸 +1" },
+  { code: "+44", label: "🇬🇧 +44" },
+  { code: "+34", label: "🇪🇸 +34" },
+  { code: "+49", label: "🇩🇪 +49" },
+  { code: "+32", label: "🇧🇪 +32" },
+  { code: "+41", label: "🇨🇭 +41" },
+  { code: "+31", label: "🇳🇱 +31" },
+  { code: "+39", label: "🇮🇹 +39" },
+  { code: "+966", label: "🇸🇦 +966" },
+  { code: "+971", label: "🇦🇪 +971" },
+  { code: "+213", label: "🇩🇿 +213" },
+  { code: "+216", label: "🇹🇳 +216" },
+];
+
+const TIMELINES = [
+  "Dès que possible",
+  "Dans 1 à 3 mois",
+  "Dans 3 à 6 mois",
+  "Dans 6 à 12 mois",
+  "Plus de 12 mois",
+  "Juste une estimation pour le moment",
+];
+
 type FormData = {
   project_type: string;
   location: string;
@@ -67,13 +93,15 @@ type FormData = {
   budget_min: number;
   budget_max: number;
   timeline: string;
-  client_name: string;
+  client_first_name: string;
+  client_last_name: string;
   client_email: string;
+  client_country_code: string;
   client_phone: string;
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const PHONE_RE = /^\+?[\d\s\-()]{7,15}$/;
+const PHONE_RE = /^[\d\s\-()]{6,15}$/;
 
 function getStepErrors(step: number, form: FormData): Record<string, string> {
   const errors: Record<string, string> = {};
@@ -85,11 +113,15 @@ function getStepErrors(step: number, form: FormData): Record<string, string> {
     if (!form.description.trim()) errors.description = "Veuillez décrire votre projet";
   }
   if (step === 3) {
-    if (!form.client_name.trim() || form.client_name.trim().length < 2)
-      errors.client_name = "Veuillez entrer votre nom (min. 2 caractères)";
+    if (!form.client_last_name.trim() || form.client_last_name.trim().length < 2)
+      errors.client_last_name = "Veuillez entrer votre nom";
+    if (!form.client_first_name.trim() || form.client_first_name.trim().length < 2)
+      errors.client_first_name = "Veuillez entrer votre prénom";
     if (!form.client_email.trim() || !EMAIL_RE.test(form.client_email.trim()))
       errors.client_email = "Format email invalide";
-    if (form.client_phone.trim() && !PHONE_RE.test(form.client_phone.trim()))
+    if (!form.client_phone.trim())
+      errors.client_phone = "Le numéro de téléphone est obligatoire";
+    else if (!PHONE_RE.test(form.client_phone.trim()))
       errors.client_phone = "Format téléphone invalide";
   }
   return errors;
@@ -112,8 +144,10 @@ export default function DemandeDevisPage() {
     budget_min: 0,
     budget_max: 0,
     timeline: "",
-    client_name: "",
+    client_first_name: "",
+    client_last_name: "",
     client_email: "",
+    client_country_code: "+212",
     client_phone: "",
   });
 
@@ -127,7 +161,7 @@ export default function DemandeDevisPage() {
     const fields: Record<number, string[]> = {
       0: ["project_type"],
       1: ["location", "description"],
-      3: ["client_name", "client_email"],
+      3: ["client_last_name", "client_first_name", "client_email", "client_phone"],
     };
     const stepFields = fields[s] || [];
     setTouched((prev) => {
@@ -161,9 +195,9 @@ export default function DemandeDevisPage() {
       trackDevisSubmit({ city: form.location, projectType: form.project_type, budget: form.budget_label });
       await submitProjectRequest({
         title: `${form.project_type} — ${form.location}`,
-        client_name: form.client_name.trim(),
+        client_name: `${form.client_first_name.trim()} ${form.client_last_name.trim()}`,
         client_email: form.client_email.trim(),
-        client_phone: form.client_phone.trim() || undefined,
+        client_phone: `${form.client_country_code} ${form.client_phone.trim()}`,
         description: form.description.trim() + (form.surface.trim() ? `\nSurface: ${form.surface.trim()}` : "") + (form.style.trim() ? `\nStyle: ${form.style.trim()}` : ""),
         project_type: form.project_type,
         location: form.location,
@@ -438,15 +472,25 @@ export default function DemandeDevisPage() {
                     </div>
                   </div>
                   <div>
-                    <label htmlFor="timeline" className="mb-1 block text-sm font-medium text-stone-700">
-                      Délai souhaité <span className="text-stone-400 font-normal">(optionnel)</span>
+                    <label className="mb-2 block text-sm font-medium text-stone-700">
+                      Début du projet souhaité
                     </label>
-                    <Input
-                      id="timeline"
-                      value={form.timeline}
-                      onChange={(e) => update({ timeline: e.target.value })}
-                      placeholder="Ex: Début des travaux dans 3 mois"
-                    />
+                    <div className="space-y-2">
+                      {TIMELINES.map((t) => (
+                        <button
+                          key={t}
+                          type="button"
+                          onClick={() => update({ timeline: t })}
+                          className={`w-full rounded-lg border-2 px-4 py-2.5 text-left text-sm transition-all ${
+                            form.timeline === t
+                              ? "border-[#b5522a] bg-orange-50 text-stone-900 font-medium"
+                              : "border-stone-200 text-stone-600 hover:border-stone-300"
+                          }`}
+                        >
+                          {t}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               )}
@@ -458,29 +502,53 @@ export default function DemandeDevisPage() {
                     Vos coordonnées
                   </h2>
                   <p className="text-sm text-stone-500">
-                    Vos coordonnées seront visibles uniquement par les architectes abonnés
+                    Tous les champs sont obligatoires
                   </p>
-                  <div>
-                    <label htmlFor="client_name" className="mb-1 block text-sm font-medium text-stone-700">
-                      Nom complet *
-                    </label>
-                    <Input
-                      id="client_name"
-                      value={form.client_name}
-                      onChange={(e) => update({ client_name: e.target.value })}
-                      onBlur={() => blur("client_name")}
-                      className={
-                        touched.client_name && errors.client_name
-                          ? "border-red-400 focus-visible:ring-red-400"
-                          : touched.client_name && !errors.client_name
-                          ? "border-green-400 focus-visible:ring-green-400"
-                          : ""
-                      }
-                      placeholder="Votre nom"
-                    />
-                    {touched.client_name && errors.client_name && (
-                      <p className="mt-1 text-xs text-red-500">{errors.client_name}</p>
-                    )}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label htmlFor="client_last_name" className="mb-1 block text-sm font-medium text-stone-700">
+                        Nom *
+                      </label>
+                      <Input
+                        id="client_last_name"
+                        value={form.client_last_name}
+                        onChange={(e) => update({ client_last_name: e.target.value })}
+                        onBlur={() => blur("client_last_name")}
+                        className={
+                          touched.client_last_name && errors.client_last_name
+                            ? "border-red-400 focus-visible:ring-red-400"
+                            : touched.client_last_name && !errors.client_last_name
+                            ? "border-green-400 focus-visible:ring-green-400"
+                            : ""
+                        }
+                        placeholder="Votre nom"
+                      />
+                      {touched.client_last_name && errors.client_last_name && (
+                        <p className="mt-1 text-xs text-red-500">{errors.client_last_name}</p>
+                      )}
+                    </div>
+                    <div>
+                      <label htmlFor="client_first_name" className="mb-1 block text-sm font-medium text-stone-700">
+                        Prénom *
+                      </label>
+                      <Input
+                        id="client_first_name"
+                        value={form.client_first_name}
+                        onChange={(e) => update({ client_first_name: e.target.value })}
+                        onBlur={() => blur("client_first_name")}
+                        className={
+                          touched.client_first_name && errors.client_first_name
+                            ? "border-red-400 focus-visible:ring-red-400"
+                            : touched.client_first_name && !errors.client_first_name
+                            ? "border-green-400 focus-visible:ring-green-400"
+                            : ""
+                        }
+                        placeholder="Votre prénom"
+                      />
+                      {touched.client_first_name && errors.client_first_name && (
+                        <p className="mt-1 text-xs text-red-500">{errors.client_first_name}</p>
+                      )}
+                    </div>
                   </div>
                   <div>
                     <label htmlFor="client_email" className="mb-1 block text-sm font-medium text-stone-700">
@@ -507,22 +575,33 @@ export default function DemandeDevisPage() {
                   </div>
                   <div>
                     <label htmlFor="client_phone" className="mb-1 block text-sm font-medium text-stone-700">
-                      Téléphone <span className="text-stone-400 font-normal">(optionnel)</span>
+                      Téléphone *
                     </label>
-                    <Input
-                      id="client_phone"
-                      value={form.client_phone}
-                      onChange={(e) => update({ client_phone: e.target.value })}
-                      onBlur={() => blur("client_phone")}
-                      className={
-                        touched.client_phone && errors.client_phone
-                          ? "border-red-400 focus-visible:ring-red-400"
-                          : touched.client_phone && form.client_phone.trim() && !errors.client_phone
-                          ? "border-green-400 focus-visible:ring-green-400"
-                          : ""
-                      }
-                      placeholder="+212 6XX XXX XXX"
-                    />
+                    <div className="flex gap-2">
+                      <select
+                        value={form.client_country_code}
+                        onChange={(e) => update({ client_country_code: e.target.value })}
+                        className="w-[120px] shrink-0 rounded-md border border-stone-200 px-2 py-2 text-sm text-stone-700 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#b5522a]"
+                      >
+                        {COUNTRY_CODES.map((c) => (
+                          <option key={c.code} value={c.code}>{c.label}</option>
+                        ))}
+                      </select>
+                      <Input
+                        id="client_phone"
+                        value={form.client_phone}
+                        onChange={(e) => update({ client_phone: e.target.value })}
+                        onBlur={() => blur("client_phone")}
+                        className={`flex-1 ${
+                          touched.client_phone && errors.client_phone
+                            ? "border-red-400 focus-visible:ring-red-400"
+                            : touched.client_phone && form.client_phone.trim() && !errors.client_phone
+                            ? "border-green-400 focus-visible:ring-green-400"
+                            : ""
+                        }`}
+                        placeholder="6XX XXX XXX"
+                      />
+                    </div>
                     {touched.client_phone && errors.client_phone && (
                       <p className="mt-1 text-xs text-red-500">{errors.client_phone}</p>
                     )}
