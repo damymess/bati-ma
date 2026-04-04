@@ -142,7 +142,7 @@ export default async function ArchitectProfilePage({ params }: Props) {
 
             <div className="flex flex-col gap-2 shrink-0 w-full sm:w-auto">
               <Button className="bg-[#b5522a] hover:bg-[#9e4725] text-white rounded-full" asChild>
-                <Link href={`/soumettre-projet?architect=${id}&city=${city}`}>
+                <Link href={`/demande-devis?architect=${id}&city=${city}`}>
                   Demander un devis
                   <ArrowRight className="ml-1.5 h-4 w-4" />
                 </Link>
@@ -192,7 +192,7 @@ export default async function ArchitectProfilePage({ params }: Props) {
               <h3 className="font-semibold text-stone-900 mb-1">Intéressé par ce cabinet ?</h3>
               <p className="text-sm text-stone-500 mb-4">Soumettez votre projet et recevez une réponse sous 48h.</p>
               <Button className="bg-[#b5522a] hover:bg-[#9e4725] text-white rounded-full" asChild>
-                <Link href={`/soumettre-projet?architect=${id}&city=${city}`}>
+                <Link href={`/demande-devis?architect=${id}&city=${city}`}>
                   Demander un devis gratuit
                   <ArrowRight className="ml-1.5 h-4 w-4" />
                 </Link>

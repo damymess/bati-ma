@@ -7,6 +7,8 @@
     "dev:web": "cd apps/web && pnpm dev",
     "dev:backend": "cd apps/backend && npx medusa develop",
     "build:web": "cd apps/web && pnpm build",
-    "install:all": "cd apps/web && pnpm install && cd ../backend && yarn install"
+    "install:all": "cd apps/web && pnpm install && cd ../backend && yarn install",
+    "seo:index-check": "node scripts/check-indexability.mjs",
+    "seo:index-check:google": "node scripts/check-indexability.mjs --check-google"
   }
 }
