@@ -97,7 +97,7 @@ export default function RootLayout({
               "@type": "Organization",
               name: "Bati.ma",
               url: "https://bati.ma",
-              logo: "https://bati.ma/images/hero-villa.jpg",
+              logo: "https://bati.ma/images/logo-512.png",
               description: "Annuaire des architectes au Maroc — 800+ profils vérifiés, portfolios et devis gratuits.",
               foundingDate: "2025",
               areaServed: { "@type": "Country", name: "Morocco" },
