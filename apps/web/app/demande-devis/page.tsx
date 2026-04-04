@@ -57,11 +57,35 @@ type FormData = {
   client_phone: string;
 };
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_RE = /^\+?[\d\s\-()]{7,15}$/;
+
+function getStepErrors(step: number, form: FormData): Record<string, string> {
+  const errors: Record<string, string> = {};
+  if (step === 0) {
+    if (!form.project_type) errors.project_type = "Veuillez sélectionner un type de projet";
+  }
+  if (step === 1) {
+    if (!form.location) errors.location = "Veuillez sélectionner une ville";
+    if (!form.description.trim()) errors.description = "Veuillez décrire votre projet";
+  }
+  if (step === 3) {
+    if (!form.client_name.trim() || form.client_name.trim().length < 2)
+      errors.client_name = "Veuillez entrer votre nom (min. 2 caractères)";
+    if (!form.client_email.trim() || !EMAIL_RE.test(form.client_email.trim()))
+      errors.client_email = "Format email invalide";
+    if (form.client_phone.trim() && !PHONE_RE.test(form.client_phone.trim()))
+      errors.client_phone = "Format téléphone invalide";
+  }
+  return errors;
+}
+
 export default function DemandeDevisPage() {
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [form, setForm] = useState<FormData>({
     project_type: "",
     location: "",
@@ -80,31 +104,54 @@ export default function DemandeDevisPage() {
   const update = (partial: Partial<FormData>) =>
     setForm((prev) => ({ ...prev, ...partial }));
 
-  const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const blur = (field: string) =>
+    setTouched((prev) => ({ ...prev, [field]: true }));
 
-  const canNext = () => {
-    if (step === 0) return !!form.project_type;
-    if (step === 1) return !!form.location && !!form.description;
-    if (step === 2) return true;
-    if (step === 3) return !!form.client_name && !!form.client_email && isValidEmail(form.client_email);
-    return false;
+  const touchAllForStep = (s: number) => {
+    const fields: Record<number, string[]> = {
+      0: ["project_type"],
+      1: ["location", "description"],
+      3: ["client_name", "client_email"],
+    };
+    const stepFields = fields[s] || [];
+    setTouched((prev) => {
+      const next = { ...prev };
+      stepFields.forEach((f) => { next[f] = true; });
+      return next;
+    });
+  };
+
+  const errors = getStepErrors(step, form);
+  const hasErrors = Object.keys(errors).length > 0;
+
+  const canNext = () => !hasErrors;
+
+  const handleNext = () => {
+    if (hasErrors) {
+      touchAllForStep(step);
+      return;
+    }
+    setStep(step + 1);
   };
 
   const handleSubmit = async () => {
+    touchAllForStep(3);
+    if (hasErrors) return;
+
     setLoading(true);
     setError(null);
     try {
       await submitProjectRequest({
         title: `${form.project_type} — ${form.location}`,
-        client_name: form.client_name,
-        client_email: form.client_email,
-        client_phone: form.client_phone || undefined,
-        description: form.description + (form.surface ? `\nSurface: ${form.surface}` : "") + (form.style ? `\nStyle: ${form.style}` : ""),
+        client_name: form.client_name.trim(),
+        client_email: form.client_email.trim(),
+        client_phone: form.client_phone.trim() || undefined,
+        description: form.description.trim() + (form.surface.trim() ? `\nSurface: ${form.surface.trim()}` : "") + (form.style.trim() ? `\nStyle: ${form.style.trim()}` : ""),
         project_type: form.project_type,
         location: form.location,
         budget_min: form.budget_min || undefined,
         budget_max: form.budget_max || undefined,
-        timeline: form.timeline || undefined,
+        timeline: form.timeline.trim() || undefined,
       });
       setSubmitted(true);
     } catch {
@@ -219,6 +266,9 @@ export default function DemandeDevisPage() {
                       </button>
                     ))}
                   </div>
+                  {touched.project_type && errors.project_type && (
+                    <p className="mt-2 text-xs text-red-500">{errors.project_type}</p>
+                  )}
                 </div>
               )}
 
@@ -236,7 +286,7 @@ export default function DemandeDevisPage() {
                       {CITIES.map((c) => (
                         <button
                           key={c}
-                          onClick={() => update({ location: c })}
+                          onClick={() => { update({ location: c }); blur("location"); }}
                           className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
                             form.location === c
                               ? "border-[#b5522a] bg-[#b5522a] text-white"
@@ -247,6 +297,9 @@ export default function DemandeDevisPage() {
                         </button>
                       ))}
                     </div>
+                    {touched.location && errors.location && (
+                      <p className="mt-1 text-xs text-red-500">{errors.location}</p>
+                    )}
                   </div>
                   <div>
                     <label htmlFor="description" className="mb-1 block text-sm font-medium text-stone-700">
@@ -257,13 +310,25 @@ export default function DemandeDevisPage() {
                       rows={4}
                       value={form.description}
                       onChange={(e) => update({ description: e.target.value })}
+                      onBlur={() => blur("description")}
                       placeholder="Surface souhaitée, nombre de pièces, style architectural, contraintes particulières..."
-                      className="w-full rounded-md border border-stone-200 px-3 py-2 text-sm placeholder:text-stone-400 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#b5522a]"
+                      className={`w-full rounded-md border px-3 py-2 text-sm placeholder:text-stone-400 focus-visible:outline-none focus-visible:ring-1 transition-colors ${
+                        touched.description && errors.description
+                          ? "border-red-400 focus-visible:ring-red-400"
+                          : touched.description && !errors.description
+                          ? "border-green-400 focus-visible:ring-green-400"
+                          : "border-stone-200 focus-visible:ring-[#b5522a]"
+                      }`}
                     />
+                    {touched.description && errors.description && (
+                      <p className="mt-1 text-xs text-red-500">{errors.description}</p>
+                    )}
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label htmlFor="surface" className="mb-1 block text-sm font-medium text-stone-700">Surface (m²)</label>
+                      <label htmlFor="surface" className="mb-1 block text-sm font-medium text-stone-700">
+                        Surface (m²) <span className="text-stone-400 font-normal">(optionnel)</span>
+                      </label>
                       <Input
                         id="surface"
                         value={form.surface}
@@ -272,7 +337,9 @@ export default function DemandeDevisPage() {
                       />
                     </div>
                     <div>
-                      <label htmlFor="style" className="mb-1 block text-sm font-medium text-stone-700">Style</label>
+                      <label htmlFor="style" className="mb-1 block text-sm font-medium text-stone-700">
+                        Style <span className="text-stone-400 font-normal">(optionnel)</span>
+                      </label>
                       <Input
                         id="style"
                         value={form.style}
@@ -292,7 +359,7 @@ export default function DemandeDevisPage() {
                   </h2>
                   <div>
                     <label className="mb-2 block text-sm font-medium text-stone-700">
-                      Budget estimé
+                      Budget estimé <span className="text-stone-400 font-normal">(optionnel)</span>
                     </label>
                     <div className="space-y-2">
                       {BUDGETS.map((b) => (
@@ -312,7 +379,7 @@ export default function DemandeDevisPage() {
                   </div>
                   <div>
                     <label htmlFor="timeline" className="mb-1 block text-sm font-medium text-stone-700">
-                      Délai souhaité
+                      Délai souhaité <span className="text-stone-400 font-normal">(optionnel)</span>
                     </label>
                     <Input
                       id="timeline"
@@ -341,8 +408,19 @@ export default function DemandeDevisPage() {
                       id="client_name"
                       value={form.client_name}
                       onChange={(e) => update({ client_name: e.target.value })}
+                      onBlur={() => blur("client_name")}
+                      className={
+                        touched.client_name && errors.client_name
+                          ? "border-red-400 focus-visible:ring-red-400"
+                          : touched.client_name && !errors.client_name
+                          ? "border-green-400 focus-visible:ring-green-400"
+                          : ""
+                      }
                       placeholder="Votre nom"
                     />
+                    {touched.client_name && errors.client_name && (
+                      <p className="mt-1 text-xs text-red-500">{errors.client_name}</p>
+                    )}
                   </div>
                   <div>
                     <label htmlFor="client_email" className="mb-1 block text-sm font-medium text-stone-700">
@@ -353,22 +431,41 @@ export default function DemandeDevisPage() {
                       type="email"
                       value={form.client_email}
                       onChange={(e) => update({ client_email: e.target.value })}
+                      onBlur={() => blur("client_email")}
+                      className={
+                        touched.client_email && errors.client_email
+                          ? "border-red-400 focus-visible:ring-red-400"
+                          : touched.client_email && !errors.client_email
+                          ? "border-green-400 focus-visible:ring-green-400"
+                          : ""
+                      }
                       placeholder="votre@email.com"
                     />
-                    {form.client_email && !isValidEmail(form.client_email) && (
-                      <p className="mt-1 text-xs text-red-500">Format email invalide</p>
+                    {touched.client_email && errors.client_email && (
+                      <p className="mt-1 text-xs text-red-500">{errors.client_email}</p>
                     )}
                   </div>
                   <div>
                     <label htmlFor="client_phone" className="mb-1 block text-sm font-medium text-stone-700">
-                      Téléphone
+                      Téléphone <span className="text-stone-400 font-normal">(optionnel)</span>
                     </label>
                     <Input
                       id="client_phone"
                       value={form.client_phone}
                       onChange={(e) => update({ client_phone: e.target.value })}
+                      onBlur={() => blur("client_phone")}
+                      className={
+                        touched.client_phone && errors.client_phone
+                          ? "border-red-400 focus-visible:ring-red-400"
+                          : touched.client_phone && form.client_phone.trim() && !errors.client_phone
+                          ? "border-green-400 focus-visible:ring-green-400"
+                          : ""
+                      }
                       placeholder="+212 6XX XXX XXX"
                     />
+                    {touched.client_phone && errors.client_phone && (
+                      <p className="mt-1 text-xs text-red-500">{errors.client_phone}</p>
+                    )}
                   </div>
                 </div>
               )}
@@ -390,16 +487,13 @@ export default function DemandeDevisPage() {
                   <div />
                 )}
                 {step < 3 ? (
-                  <Button
-                    onClick={() => setStep(step + 1)}
-                    disabled={!canNext()}
-                  >
+                  <Button onClick={handleNext}>
                     Suivant <ArrowRight className="ml-1 h-4 w-4" />
                   </Button>
                 ) : (
                   <Button
                     onClick={handleSubmit}
-                    disabled={!canNext() || loading}
+                    disabled={loading}
                   >
                     {loading ? "Envoi..." : "Envoyer ma demande"}{" "}
                     <ArrowRight className="ml-1 h-4 w-4" />

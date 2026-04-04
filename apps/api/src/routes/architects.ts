@@ -16,26 +16,29 @@ export const architects = new Hono()
 // Register
 architects.post("/register", async (c) => {
   const body = await c.req.json()
-  const { name, email, password, phone, specialties, regions, description, years_experience, license_number } = body
+  const name = (body.name || "").trim()
+  const email = (body.email || "").trim().toLowerCase()
+  const password = body.password || ""
+  const { phone, specialties, regions, description, years_experience, license_number } = body
 
   if (!name || !email || !password) {
-    return c.json({ message: "Champs requis : name, email, password" }, 400)
+    return c.json({ message: "Champs requis : nom, email, mot de passe" }, 400)
   }
-  if (password.length < 6) {
-    return c.json({ message: "Mot de passe : 6 caractères minimum" }, 400)
+  if (password.length < 8) {
+    return c.json({ message: "Le mot de passe doit contenir au moins 8 caractères" }, 400)
   }
   if (!EMAIL_RE.test(email)) {
     return c.json({ message: "Format email invalide" }, 400)
   }
 
-  const existing = await db.architectProfile.findUnique({ where: { email: email.toLowerCase() } })
+  const existing = await db.architectProfile.findUnique({ where: { email } })
   if (existing) return c.json({ message: "Cet email est déjà utilisé" }, 409)
 
   const password_hash = await bcrypt.hash(password, 10)
   const architect = await db.architectProfile.create({
     data: {
       name,
-      email: email.toLowerCase(),
+      email,
       password_hash,
       phone: phone || null,
       specialties: specialties || [],

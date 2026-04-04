@@ -28,9 +28,9 @@ export default function ConnexionPage() {
     setLoading(true);
     try {
       if (role === "architect") {
-        await login(email, password);
+        await login(email.trim(), password);
       } else {
-        await loginClient(email, password);
+        await loginClient(email.trim(), password);
       }
       await refresh();
       router.push(role === "architect" ? "/dashboard/architecte" : "/dashboard/client");
@@ -126,6 +126,14 @@ export default function ConnexionPage() {
                     >
                       {showPwd ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
+                  </div>
+                  <div className="flex justify-end">
+                    <Link
+                      href="/mot-de-passe-oublie"
+                      className="text-xs text-[#b5522a] hover:underline"
+                    >
+                      Mot de passe oublié ?
+                    </Link>
                   </div>
                 </div>
 

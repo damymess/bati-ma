@@ -146,6 +146,18 @@ model ForumReply {
   @@map("forum_reply")
 }
 
+model PasswordReset {
+  id         String   @id @default(cuid())
+  token      String   @unique
+  email      String
+  role       String   // "architect" | "client"
+  expires_at DateTime @db.Timestamptz(6)
+  used       Boolean  @default(false)
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+
+  @@map("password_reset")
+}
+
 model AppelOffre {
   id           String    @id @default(cuid())
   title        String

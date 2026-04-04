@@ -9,29 +9,45 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 export const projects = new Hono()
 
 // ─── Submit project request ─────────────────────────────────────────────────
+const PHONE_RE = /^\+?[\d\s\-()]{7,15}$/
+
 projects.post("/project-requests", async (c) => {
   const body = await c.req.json()
 
-  if (!body.title || !body.client_name || !body.client_email || !body.project_type || !body.location) {
+  // Trim all text fields
+  const title = (body.title || "").trim()
+  const client_name = (body.client_name || "").trim()
+  const client_email = (body.client_email || "").trim()
+  const client_phone = (body.client_phone || "").trim()
+  const description = (body.description || "").trim()
+  const project_type = (body.project_type || "").trim()
+  const location = (body.location || "").trim()
+  const address = (body.address || "").trim()
+  const timeline = (body.timeline || "").trim()
+
+  if (!title || !client_name || !client_email || !project_type || !location) {
     return c.json({ message: "Champs requis : title, client_name, client_email, project_type, location" }, 400)
   }
-  if (!EMAIL_RE.test(body.client_email)) {
+  if (!EMAIL_RE.test(client_email)) {
     return c.json({ message: "Format email invalide" }, 400)
+  }
+  if (client_phone && !PHONE_RE.test(client_phone)) {
+    return c.json({ message: "Format téléphone invalide" }, 400)
   }
 
   const project = await db.projectRequest.create({
     data: {
-      title: body.title,
-      client_name: body.client_name,
-      client_email: body.client_email,
-      client_phone: body.client_phone || null,
-      description: body.description || "",
-      project_type: body.project_type,
-      location: body.location,
-      address: body.address || null,
+      title,
+      client_name,
+      client_email,
+      client_phone: client_phone || null,
+      description,
+      project_type,
+      location,
+      address: address || null,
       budget_min: body.budget_min ? Number(body.budget_min) : null,
       budget_max: body.budget_max ? Number(body.budget_max) : null,
-      timeline: body.timeline || null,
+      timeline: timeline || null,
       is_public: true,
       status: "submitted",
       source: "website",

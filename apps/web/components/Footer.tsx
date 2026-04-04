@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 
 const CITIES = [
@@ -17,18 +18,19 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           {/* Brand */}
           <div className="md:col-span-1">
-            <div className="flex items-center gap-2">
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-white">
-                <span className="text-xs font-bold text-stone-900">B</span>
-              </div>
-              <span className="text-[15px] font-semibold text-white">
-                Bati<span className="text-stone-500">.ma</span>
-              </span>
-            </div>
+            <Link href="/" className="inline-block">
+              <Image src="/images/logo-bati.jpg" alt="Bati.ma" width={100} height={28} className="h-7 w-auto rounded" />
+            </Link>
             <p className="mt-3 text-sm leading-relaxed text-stone-500">
               L&apos;annuaire de référence des architectes au Maroc.
               Portfolios, avis et devis gratuit.
             </p>
+            <a
+              href="mailto:contact@bati.ma"
+              className="mt-2 inline-block text-sm text-stone-500 hover:text-white transition-colors"
+            >
+              contact@bati.ma
+            </a>
           </div>
 
           {/* Villes */}

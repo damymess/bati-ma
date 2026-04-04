@@ -18,12 +18,29 @@ const CITY_SLUGS: Record<string, string> = {
   "Kénitra": "kenitra", "Tétouan": "tetouan", Nador: "nador", "El Jadida": "el-jadida",
 };
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function getPasswordStrength(pwd: string): { score: number; label: string; color: string } {
+  let score = 0;
+  if (pwd.length >= 8) score++;
+  if (pwd.length >= 12) score++;
+  if (/[A-Z]/.test(pwd)) score++;
+  if (/[0-9]/.test(pwd)) score++;
+  if (/[^A-Za-z0-9]/.test(pwd)) score++;
+  if (score <= 1) return { score, label: "Faible", color: "bg-red-500" };
+  if (score <= 2) return { score, label: "Moyen", color: "bg-orange-500" };
+  if (score <= 3) return { score, label: "Bon", color: "bg-yellow-500" };
+  return { score, label: "Fort", color: "bg-green-500" };
+}
+
 export default function InscriptionArchitectePage() {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showPwd, setShowPwd] = useState(false);
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const blur = (f: string) => setTouched((p) => ({ ...p, [f]: true }));
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -94,52 +111,99 @@ export default function InscriptionArchitectePage() {
             <CardContent className="space-y-4">
               {error && <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-600">{error}</p>}
 
-              {step === 1 && (
-                <>
-                  <div>
-                    <label className="mb-1 block text-sm font-medium text-stone-700">Nom du cabinet / architecte *</label>
-                    <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Studio Arc Casablanca" />
-                  </div>
-                  <div>
-                    <label className="mb-1 block text-sm font-medium text-stone-700">Email professionnel *</label>
-                    <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="contact@studio-arc.ma" />
-                  </div>
-                  <div>
-                    <label className="mb-1 block text-sm font-medium text-stone-700">Mot de passe *</label>
-                    <div className="relative">
-                      <Input type={showPwd ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Minimum 6 caractères" className="pr-10" />
-                      <button type="button" onClick={() => setShowPwd((v) => !v)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600">
-                        {showPwd ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                      </button>
-                    </div>
-                  </div>
-                  <div>
-                    <label className="mb-1 block text-sm font-medium text-stone-700">Téléphone</label>
-                    <Input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+212 6XX XXX XXX" />
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
+              {step === 1 && (() => {
+                const strength = getPasswordStrength(password);
+                const pwdRules = [
+                  { met: password.length >= 8, text: "Au moins 8 caractères" },
+                  { met: /[A-Z]/.test(password), text: "Une lettre majuscule" },
+                  { met: /[0-9]/.test(password), text: "Un chiffre" },
+                ];
+                const step1Errors: Record<string, string> = {};
+                if (!name.trim()) step1Errors.name = "Nom requis";
+                if (!email.trim() || !EMAIL_RE.test(email.trim())) step1Errors.email = "Format email invalide";
+                if (!pwdRules.every((r) => r.met)) step1Errors.password = "Mot de passe invalide";
+
+                const handleNext = () => {
+                  setTouched((p) => ({ ...p, name: true, email: true, password: true }));
+                  if (Object.keys(step1Errors).length > 0) return;
+                  setError(""); setStep(2);
+                };
+
+                return (
+                  <>
                     <div>
-                      <label className="mb-1 block text-sm font-medium text-stone-700">N° Ordre Architectes</label>
-                      <Input value={license} onChange={(e) => setLicense(e.target.value)} placeholder="Facultatif" />
+                      <label className="mb-1 block text-sm font-medium text-stone-700">Nom du cabinet / architecte *</label>
+                      <Input value={name} onChange={(e) => setName(e.target.value)} onBlur={() => blur("name")}
+                        className={touched.name && step1Errors.name ? "border-red-400" : touched.name ? "border-green-400" : ""}
+                        placeholder="Studio Arc Casablanca" />
+                      {touched.name && step1Errors.name && <p className="mt-1 text-xs text-red-500">{step1Errors.name}</p>}
                     </div>
                     <div>
-                      <label className="mb-1 block text-sm font-medium text-stone-700">Années d&apos;expérience</label>
-                      <Input type="number" value={yearsExp} onChange={(e) => setYearsExp(e.target.value)} placeholder="10" />
+                      <label className="mb-1 block text-sm font-medium text-stone-700">Email professionnel *</label>
+                      <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={() => blur("email")}
+                        className={touched.email && step1Errors.email ? "border-red-400" : touched.email && !step1Errors.email ? "border-green-400" : ""}
+                        placeholder="contact@studio-arc.ma" />
+                      {touched.email && step1Errors.email && <p className="mt-1 text-xs text-red-500">{step1Errors.email}</p>}
                     </div>
-                  </div>
-                  <Button className="w-full bg-[#b5522a] hover:bg-[#9e4725]"
-                    disabled={!name || !email || !password}
-                    onClick={() => { setError(""); setStep(2); }}>
-                    Suivant <ArrowRight className="ml-1 h-4 w-4" />
-                  </Button>
-                  <p className="text-center text-sm text-stone-500">
-                    Déjà inscrit ?{" "}
-                    <Link href="/connexion" className="text-[#b5522a] font-medium hover:underline">Se connecter</Link>
-                  </p>
-                </>
-              )}
+                    <div>
+                      <label className="mb-1 block text-sm font-medium text-stone-700">Mot de passe *</label>
+                      <div className="relative">
+                        <Input type={showPwd ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)}
+                          onBlur={() => blur("password")}
+                          className={`pr-10 ${touched.password && step1Errors.password ? "border-red-400" : touched.password && !step1Errors.password ? "border-green-400" : ""}`}
+                          placeholder="••••••••" autoComplete="new-password" />
+                        <button type="button" onClick={() => setShowPwd((v) => !v)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600">
+                          {showPwd ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                        </button>
+                      </div>
+                      {password.length > 0 && (
+                        <div className="mt-2 flex items-center gap-2">
+                          <div className="flex-1 h-1.5 rounded-full bg-stone-200 overflow-hidden">
+                            <div className={`h-full rounded-full transition-all ${strength.color}`} style={{ width: `${(strength.score / 5) * 100}%` }} />
+                          </div>
+                          <span className="text-xs font-medium text-stone-500">{strength.label}</span>
+                        </div>
+                      )}
+                      <ul className="mt-2 space-y-1">
+                        {pwdRules.map((rule) => (
+                          <li key={rule.text} className="flex items-center gap-2 text-xs">
+                            <span className={`inline-block h-1.5 w-1.5 rounded-full ${rule.met ? "bg-green-500" : "bg-stone-300"}`} />
+                            <span className={rule.met ? "text-green-700" : "text-stone-500"}>{rule.text}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <label className="mb-1 block text-sm font-medium text-stone-700">
+                        Téléphone <span className="text-stone-400 font-normal">(optionnel)</span>
+                      </label>
+                      <Input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+212 6XX XXX XXX" />
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="mb-1 block text-sm font-medium text-stone-700">
+                          N° Ordre <span className="text-stone-400 font-normal">(optionnel)</span>
+                        </label>
+                        <Input value={license} onChange={(e) => setLicense(e.target.value)} placeholder="Facultatif" />
+                      </div>
+                      <div>
+                        <label className="mb-1 block text-sm font-medium text-stone-700">
+                          Exp. <span className="text-stone-400 font-normal">(optionnel)</span>
+                        </label>
+                        <Input type="number" value={yearsExp} onChange={(e) => setYearsExp(e.target.value)} placeholder="10" />
+                      </div>
+                    </div>
+                    <Button className="w-full bg-[#b5522a] hover:bg-[#9e4725]" onClick={handleNext}>
+                      Suivant <ArrowRight className="ml-1 h-4 w-4" />
+                    </Button>
+                    <p className="text-center text-sm text-stone-500">
+                      Déjà inscrit ?{" "}
+                      <Link href="/connexion" className="text-[#b5522a] font-medium hover:underline">Se connecter</Link>
+                    </p>
+                  </>
+                );
+              })()}
 
               {step === 2 && (
                 <>

@@ -88,6 +88,26 @@ export async function submitProjectRequest(
   return res.json();
 }
 
+// ─── Contact ────────────────────────────────────────────────────────────────
+
+export async function submitContactForm(data: {
+  name: string;
+  email: string;
+  message: string;
+}): Promise<{ success: boolean }> {
+  const res = await fetch(`${API_URL}/store/contact`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ message: "Erreur d'envoi" }));
+    throw new Error(err.message || "Erreur d'envoi");
+  }
+  return res.json();
+}
+
 // ─── Demandes de devis ──────────────────────────────────────────────────────
 
 export type DemandeDevis = {

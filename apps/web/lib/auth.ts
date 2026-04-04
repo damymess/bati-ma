@@ -101,7 +101,7 @@ export async function register(data: {
     body: JSON.stringify(data),
   })
   const json = await res.json()
-  if (!res.ok) throw new Error(json.error || "Erreur inscription")
+  if (!res.ok) throw new Error(json.message || json.error || "Erreur inscription")
   setToken(json.token)
   return json
 }
@@ -113,7 +113,7 @@ export async function login(email: string, password: string): Promise<{ architec
     body: JSON.stringify({ email, password }),
   })
   const json = await res.json()
-  if (!res.ok) throw new Error(json.error || "Identifiants incorrects")
+  if (!res.ok) throw new Error(json.message || json.error || "Identifiants incorrects")
   setToken(json.token)
   return json
 }
@@ -138,7 +138,7 @@ export async function updateMe(data: Partial<ArchitectProfile>): Promise<Archite
     body: JSON.stringify(data),
   })
   const json = await res.json()
-  if (!res.ok) throw new Error(json.error || "Erreur mise à jour")
+  if (!res.ok) throw new Error(json.message || json.error || "Erreur mise à jour")
   return json.architect
 }
 
@@ -157,7 +157,7 @@ export async function registerClient(data: {
     body: JSON.stringify(data),
   })
   const json = await res.json()
-  if (!res.ok) throw new Error(json.error || "Erreur inscription")
+  if (!res.ok) throw new Error(json.message || json.error || "Erreur inscription")
   setToken(json.token)
   return json
 }
@@ -169,7 +169,7 @@ export async function loginClient(email: string, password: string): Promise<{ cl
     body: JSON.stringify({ email, password }),
   })
   const json = await res.json()
-  if (!res.ok) throw new Error(json.error || "Identifiants incorrects")
+  if (!res.ok) throw new Error(json.message || json.error || "Identifiants incorrects")
   setToken(json.token)
   return json
 }
@@ -202,6 +202,31 @@ export async function fetchClientProjets(): Promise<any[]> {
   if (!res.ok) return []
   const json = await res.json()
   return json.projets || []
+}
+
+// ─── Password reset ────────────────────────────────────────────────────────
+
+export async function forgotPassword(email: string, role: "architect" | "client"): Promise<{ message: string }> {
+  const res = await fetch(`${API_BASE}/store/auth/forgot-password`, {
+    method: "POST",
+    headers: headers(),
+    body: JSON.stringify({ email, role }),
+  })
+  const json = await res.json()
+  if (!res.ok) throw new Error(json.message || "Erreur")
+  return json
+}
+
+export async function resetPassword(token: string, password: string): Promise<{ message: string; token: string; role: string }> {
+  const res = await fetch(`${API_BASE}/store/auth/reset-password`, {
+    method: "POST",
+    headers: headers(),
+    body: JSON.stringify({ token, password }),
+  })
+  const json = await res.json()
+  if (!res.ok) throw new Error(json.message || "Erreur")
+  if (json.token) setToken(json.token)
+  return json
 }
 
 // ─── Shared ─────────────────────────────────────────────────────────────────

@@ -9,6 +9,9 @@ import { projects } from "./routes/projects.js"
 import { forum } from "./routes/forum.js"
 import { appels } from "./routes/appels.js"
 import { admin } from "./routes/admin.js"
+import { contact } from "./routes/contact.js"
+import { auth } from "./routes/auth.js"
+import { authRateLimit } from "./middleware/rateLimit.js"
 
 const app = new Hono()
 
@@ -36,12 +39,20 @@ app.onError((err, c) => {
 app.get("/store/custom", (c) => c.json({ status: "ok" }))
 app.get("/admin/custom", (c) => c.json({ status: "ok" }))
 
+// Rate limiting on auth endpoints (must be before route mounting)
+app.use("/store/architects/login", authRateLimit)
+app.use("/store/architects/register", authRateLimit)
+app.use("/store/clients/login", authRateLimit)
+app.use("/store/clients/register", authRateLimit)
+
 // Store routes
 app.route("/store/architects", architects)
 app.route("/store/clients", clients)
 app.route("/store", projects)
 app.route("/store/forum", forum)
 app.route("/store/appels-offres", appels)
+app.route("/store/contact", contact)
+app.route("/store/auth", auth)
 
 // Admin routes
 app.route("/admin", admin)
