@@ -77,16 +77,16 @@ export default function HomePage() {
         />
         <div className="pointer-events-none absolute inset-0 bg-stone-950/70" />
 
-        <div className="relative mx-auto max-w-4xl px-4 py-16 sm:px-8 sm:py-20 lg:py-24 text-center">
+        <div className="relative mx-auto flex max-w-3xl flex-col items-center px-4 py-16 sm:px-8 sm:py-20 lg:py-28">
           {/* Social proof mini */}
-          <div className="flex items-center justify-center gap-2 mb-6">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm px-4 py-1.5 mb-6">
             <span className="text-amber-400 text-sm font-medium">★ 4.7/5</span>
-            <span className="text-stone-600">—</span>
+            <span className="h-3 w-px bg-stone-700" />
             <span className="text-sm text-stone-400">800+ architectes vérifiés</span>
           </div>
 
           {/* Headline */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.1]">
+          <h1 className="text-center text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.1]">
             Trouvez votre architecte
             <br />
             <span className="bg-gradient-to-r from-[#b5522a] to-[#e07a55] bg-clip-text text-transparent">
@@ -94,18 +94,18 @@ export default function HomePage() {
             </span>
           </h1>
 
-          <p className="mt-4 text-base sm:text-lg leading-relaxed text-stone-400 max-w-xl mx-auto">
+          <p className="mt-5 text-center text-base sm:text-lg leading-relaxed text-stone-400 max-w-lg">
             Décrivez votre projet, comparez les portfolios et recevez
             un devis gratuit sous 48h.
           </p>
 
-          {/* Inline form — horizontal on desktop, stacked on mobile */}
-          <div className="mt-8">
+          {/* Inline form */}
+          <div className="mt-10 w-full">
             <QuickLeadForm variant="inline" />
           </div>
 
           {/* Trust badges */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-stone-500">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-stone-500">
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="h-3.5 w-3.5 text-[#b5522a]" />
               Inscrits à l&apos;Ordre
@@ -121,7 +121,7 @@ export default function HomePage() {
           </div>
 
           {/* City pills */}
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
             {CITIES.slice(0, 6).map((c) => (
               <Link
                 key={c.slug}

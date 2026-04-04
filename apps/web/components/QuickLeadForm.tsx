@@ -31,7 +31,7 @@ export default function QuickLeadForm({ variant = "card" }: { variant?: "card" |
   // ─── Inline variant : horizontal bar for hero ────────────────────────────
   if (variant === "inline") {
     return (
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 w-full max-w-2xl">
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row sm:items-stretch gap-2 w-full max-w-2xl mx-auto">
         <select
           value={projectType}
           onChange={(e) => setProjectType(e.target.value)}
