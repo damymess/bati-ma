@@ -5,6 +5,7 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import MobileTabBar from "@/components/MobileTabBar";
+import { Providers } from "@/components/Providers";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -108,12 +109,14 @@ export default function RootLayout({
             }),
           }}
         />
-        <Nav />
-        <main className="flex-1 pb-24 lg:pb-0">{children}</main>
-        <div className="hidden lg:block">
-          <Footer />
-        </div>
-        <MobileTabBar />
+        <Providers>
+          <Nav />
+          <main className="flex-1 pb-24 lg:pb-0">{children}</main>
+          <div className="hidden lg:block">
+            <Footer />
+          </div>
+          <MobileTabBar />
+        </Providers>
       </body>
     </html>
   );

@@ -3,15 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, Search, BookOpen, User, FileText } from "lucide-react";
+import { useAuth } from "@/components/AuthProvider";
 
 const TABS_LEFT = [
   { href: "/", label: "Accueil", icon: Home },
   { href: "/demandes-devis", label: "Devis", icon: FileText },
-];
-
-const TABS_RIGHT = [
-  { href: "/architecte", label: "Architectes", icon: Search },
-  { href: "/connexion", label: "Compte", icon: User },
 ];
 
 /**
@@ -20,7 +16,20 @@ const TABS_RIGHT = [
  */
 export default function MobileTabBar() {
   const pathname = usePathname();
+  const { user } = useAuth();
   const isPublishActive = pathname === "/demande-devis";
+
+  const accountHref = user
+    ? user.role === "architect"
+      ? "/dashboard/architecte"
+      : "/dashboard/client"
+    : "/connexion";
+  const accountLabel = user ? user.first_name || "Compte" : "Connexion";
+
+  const TABS_RIGHT = [
+    { href: "/architecte", label: "Architectes", icon: Search },
+    { href: accountHref, label: accountLabel, icon: User },
+  ];
 
   const renderTab = (tab: { href: string; label: string; icon: typeof Home }) => {
     const Icon = tab.icon;
