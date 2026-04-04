@@ -35,12 +35,12 @@ export const metadata: Metadata = {
 const FEATURED = ARCHITECTS.filter((a) => a.premium).slice(0, 4);
 
 const SPECIALTIES = [
-  { icon: Home, label: "Résidentiel", desc: "Villas, appartements, maisons" },
-  { icon: Landmark, label: "Riad & Patrimoine", desc: "Rénovation riads et médinas" },
-  { icon: Armchair, label: "Architecture d'intérieur", desc: "Décoration et aménagement" },
-  { icon: Building2, label: "Commercial", desc: "Bureaux, commerces, hôtels" },
-  { icon: Leaf, label: "Éco-construction", desc: "Bâtiments durables et bioclimatiques" },
-  { icon: Compass, label: "Urbanisme", desc: "Plans d'aménagement et ZAC" },
+  { icon: Home, label: "Résidentiel", desc: "Villas, appartements, maisons", href: "/architecte/casablanca/specialite/residentiel" },
+  { icon: Landmark, label: "Riad & Patrimoine", desc: "Rénovation riads et médinas", href: "/architecte/marrakech/specialite/riad-patrimoine" },
+  { icon: Armchair, label: "Architecture d'intérieur", desc: "Décoration et aménagement", href: "/architecte-interieur" },
+  { icon: Building2, label: "Commercial", desc: "Bureaux, commerces, hôtels", href: "/architecte/casablanca/specialite/commercial" },
+  { icon: Leaf, label: "Éco-construction", desc: "Bâtiments durables et bioclimatiques", href: "/architecte/casablanca/specialite/eco-construction" },
+  { icon: Compass, label: "Urbanisme", desc: "Plans d'aménagement et ZAC", href: "/architecte/casablanca/specialite/urbanisme" },
 ];
 
 
@@ -154,18 +154,19 @@ export default function HomePage() {
             {SPECIALTIES.map((s) => {
               const Icon = s.icon;
               return (
-                <Card
-                  key={s.label}
-                  className="group cursor-pointer border-stone-100 transition-all hover:border-[#b5522a]/30 hover:shadow-sm"
-                >
-                  <CardContent className="p-4">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-stone-100 text-stone-600 transition-colors group-hover:bg-[#b5522a]/10 group-hover:text-[#b5522a]">
-                      <Icon className="h-4 w-4" />
-                    </div>
-                    <h3 className="mt-2.5 text-sm font-semibold text-stone-900">{s.label}</h3>
-                    <p className="mt-0.5 text-xs text-stone-500">{s.desc}</p>
-                  </CardContent>
-                </Card>
+                <Link key={s.label} href={s.href}>
+                  <Card
+                    className="group cursor-pointer border-stone-100 transition-all hover:border-[#b5522a]/30 hover:shadow-sm h-full"
+                  >
+                    <CardContent className="p-4">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-stone-100 text-stone-600 transition-colors group-hover:bg-[#b5522a]/10 group-hover:text-[#b5522a]">
+                        <Icon className="h-4 w-4" />
+                      </div>
+                      <h3 className="mt-2.5 text-sm font-semibold text-stone-900">{s.label}</h3>
+                      <p className="mt-0.5 text-xs text-stone-500">{s.desc}</p>
+                    </CardContent>
+                  </Card>
+                </Link>
               );
             })}
           </div>
