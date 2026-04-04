@@ -87,6 +87,12 @@ export default function RootLayout({
           data-website-id="324ea11e-394a-4420-be95-b52b1a7fcc15"
           strategy="afterInteractive"
         />
+        <Script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="bzzpMyJVA118YnoBiToQ+A"
+          async
+          strategy="afterInteractive"
+        />
       </head>
       <body className="min-h-screen flex flex-col font-sans antialiased">
         <script
