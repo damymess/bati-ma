@@ -50,7 +50,7 @@ export default function DevisCard({ demande }: { demande: DemandeDevis }) {
           <div className="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between">
             {demande.contact_locked ? (
               <span className="text-xs text-stone-400 flex items-center gap-1">
-                <Lock className="h-3 w-3" /> Coordonnées réservées aux abonnés
+                <Lock className="h-3 w-3" /> Connectez-vous pour voir les coordonnées
               </span>
             ) : (
               <span className="text-xs text-green-600 font-medium">

@@ -120,20 +120,22 @@ export default function DemandesDevisPage() {
       {/* Results */}
       <section className="px-4 py-8 sm:px-6">
         <div className="mx-auto max-w-4xl">
-          {tier && (
-            <div className="mb-4 flex items-center gap-2">
-              <Badge className={
-                tier === "premium" ? "bg-purple-100 text-purple-700" :
-                tier === "standard" ? "bg-blue-100 text-blue-700" :
-                "bg-stone-100 text-stone-600"
-              }>
-                Plan {tier.charAt(0).toUpperCase() + tier.slice(1)}
-              </Badge>
-              {tier === "free" && (
-                <span className="text-xs text-stone-400">
-                  Abonnez-vous pour voir les coordonnées
-                </span>
-              )}
+          {/* CTA inscription pour non-connectés */}
+          {!tier && !loading && (
+            <div className="mb-6 rounded-xl border border-[#b5522a]/20 bg-[#b5522a]/5 p-4 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              <div className="flex-1">
+                <p className="text-sm font-semibold text-stone-900">
+                  Vous êtes architecte ?
+                </p>
+                <p className="text-xs text-stone-500 mt-0.5">
+                  Inscrivez-vous gratuitement pour voir les coordonnées des clients et répondre aux projets.
+                </p>
+              </div>
+              <Button size="sm" className="rounded-full shrink-0" asChild>
+                <Link href="/inscription-architecte">
+                  S&apos;inscrire gratuitement
+                </Link>
+              </Button>
             </div>
           )}
 
