@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
 import {
-  Search,
   Home,
   Landmark,
   Armchair,
@@ -19,10 +18,9 @@ import ArchitectCard from "@/components/ArchitectCard";
 import QuickLeadForm from "@/components/QuickLeadForm";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+
 
 export const metadata: Metadata = {
   title: "Bati.ma — Annuaire des Architectes au Maroc",
@@ -45,12 +43,6 @@ const SPECIALTIES = [
   { icon: Compass, label: "Urbanisme", desc: "Plans d'aménagement et ZAC" },
 ];
 
-const STATS = [
-  { value: "800+", label: "Architectes" },
-  { value: "7", label: "Villes" },
-  { value: "4.7/5", label: "Note moyenne" },
-  { value: "0 MAD", label: "Devis gratuit" },
-];
 
 const SCHEMA = {
   "@context": "https://schema.org",
@@ -73,44 +65,9 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }}
       />
 
-      {/* ──── MOBILE HERO — Compact app style (Airbnb pattern) ──── */}
-      <section className="bg-stone-950 px-4 pt-4 pb-6 lg:hidden" id="devis">
-        <h1 className="text-xl font-bold text-white">
-          Trouvez votre architecte{" "}
-          <span className="text-[#b5522a]">au Maroc</span>
-        </h1>
-
-        {/* Search bar — large, prominent */}
-        <div className="relative mt-4">
-          <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-stone-500" />
-          <Input
-            placeholder="Ville, quartier ou spécialité..."
-            className="h-12 rounded-2xl border-stone-700 bg-stone-900 pl-12 text-base text-white placeholder:text-stone-500 focus-visible:ring-[#b5522a]"
-          />
-        </div>
-
-        {/* City shortcuts — horizontal scroll */}
-        <div className="mt-3 flex gap-2 overflow-x-auto pb-1 scrollbar-none">
-          {CITIES.slice(0, 5).map((c) => (
-            <Link
-              key={c.slug}
-              href={`/architecte/${c.slug}`}
-              className="shrink-0 rounded-full border border-stone-800 px-3 py-1.5 text-xs text-stone-400 transition-colors active:border-[#b5522a]/60 active:text-[#b5522a]"
-            >
-              {c.name}
-            </Link>
-          ))}
-        </div>
-
-        {/* Quick Lead Form — mobile */}
-        <div className="mt-5">
-          <QuickLeadForm />
-        </div>
-      </section>
-
-      {/* ──── DESKTOP HERO — Full image with text overlay ──── */}
-      <section className="relative hidden overflow-hidden lg:block min-h-[520px]">
-        {/* Background image — 100% visible */}
+      {/* ──── HERO — Centered, Social Proof Sandwich ──── */}
+      <section className="relative overflow-hidden bg-stone-950" id="devis">
+        {/* Background image */}
         <Image
           src="/images/hero-villa.jpg"
           alt="Villa architecte Maroc"
@@ -118,164 +75,67 @@ export default function HomePage() {
           className="object-cover"
           priority
         />
-        {/* Left gradient for text readability */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-stone-950/85 via-stone-950/50 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-stone-950/70" />
 
-        <div className="relative mx-auto flex max-w-7xl flex-row items-center min-h-[520px]">
-          {/* ── Left: Text + Search ── */}
-          <div className="flex max-w-xl flex-col justify-center px-8 py-20">
-            <Badge variant="outline" className="mb-5 w-fit border-white/20 text-white/70 text-sm">
-              Annuaire Architectes Maroc — 2026
-            </Badge>
+        <div className="relative mx-auto max-w-4xl px-4 py-16 sm:px-8 sm:py-20 lg:py-24 text-center">
+          {/* Social proof mini */}
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <span className="text-amber-400 text-sm font-medium">★ 4.7/5</span>
+            <span className="text-stone-600">—</span>
+            <span className="text-sm text-stone-400">800+ architectes vérifiés</span>
+          </div>
 
-            <h1 className="text-6xl font-bold tracking-tight text-white drop-shadow-lg">
-              Trouvez votre architecte
-              <br />
-              <span className="bg-gradient-to-r from-[#b5522a] to-[#e07a55] bg-clip-text text-transparent">
-                au Maroc
-              </span>
-            </h1>
+          {/* Headline */}
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.1]">
+            Trouvez votre architecte
+            <br />
+            <span className="bg-gradient-to-r from-[#b5522a] to-[#e07a55] bg-clip-text text-transparent">
+              au Maroc
+            </span>
+          </h1>
 
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/80 drop-shadow">
-              800+ architectes et designers d&apos;intérieur vérifiés. Portfolios réels,
-              avis clients vérifiés et demande de devis gratuite.
-            </p>
+          <p className="mt-4 text-base sm:text-lg leading-relaxed text-stone-400 max-w-xl mx-auto">
+            Décrivez votre projet, comparez les portfolios et recevez
+            un devis gratuit sous 48h.
+          </p>
 
-            {/* Search */}
-            <div className="mt-8 flex max-w-lg flex-row gap-2" id="devis">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400" />
-                <Input
-                  placeholder="Votre ville (ex: Casablanca)"
-                  className="h-11 rounded-full border-white/20 bg-white/10 backdrop-blur-md pl-10 text-white placeholder:text-white/50 focus-visible:ring-[#b5522a]"
-                />
-              </div>
-              <Button size="lg" className="h-11 rounded-full px-6">
-                Trouver <ArrowRight className="ml-1 h-4 w-4" />
-              </Button>
-            </div>
+          {/* Inline form — horizontal on desktop, stacked on mobile */}
+          <div className="mt-8">
+            <QuickLeadForm variant="inline" />
+          </div>
 
-            {/* City pills */}
-            <div className="mt-6 flex flex-wrap items-center gap-2">
-              <span className="text-xs text-white/40">Villes populaires :</span>
-              {CITIES.slice(0, 5).map((c) => (
-                <Link
-                  key={c.slug}
-                  href={`/architecte/${c.slug}`}
-                  className="rounded-full border border-white/20 px-3 py-1 text-xs text-white/70 transition-colors hover:border-[#b5522a]/60 hover:text-[#b5522a]"
-                >
-                  {c.name}
-                </Link>
-              ))}
-            </div>
+          {/* Trust badges */}
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-stone-500">
+            <span className="flex items-center gap-1.5">
+              <CheckCircle2 className="h-3.5 w-3.5 text-[#b5522a]" />
+              Inscrits à l&apos;Ordre
+            </span>
+            <span className="flex items-center gap-1.5">
+              <CheckCircle2 className="h-3.5 w-3.5 text-[#b5522a]" />
+              Devis 100% gratuit
+            </span>
+            <span className="flex items-center gap-1.5">
+              <CheckCircle2 className="h-3.5 w-3.5 text-[#b5522a]" />
+              Réponse sous 48h
+            </span>
+          </div>
+
+          {/* City pills */}
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+            {CITIES.slice(0, 6).map((c) => (
+              <Link
+                key={c.slug}
+                href={`/architecte/${c.slug}`}
+                className="rounded-full border border-white/15 px-3 py-1 text-xs text-white/40 transition-colors hover:border-[#b5522a]/60 hover:text-[#b5522a]"
+              >
+                {c.name}
+              </Link>
+            ))}
           </div>
         </div>
 
-        {/* Quick Lead Form — desktop */}
-        <div className="relative mx-auto max-w-7xl px-8">
-          <div className="absolute right-8 top-1/2 -translate-y-1/2 w-[360px] hidden xl:block">
-            <QuickLeadForm />
-          </div>
-        </div>
-
-        {/* Separator */}
+        {/* Bottom separator */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#b5522a]/30 to-transparent" />
-      </section>
-
-      {/* ──── STATS ──── */}
-      <section className="border-b border-stone-100 bg-white px-4 py-6">
-        <div className="mx-auto grid max-w-4xl grid-cols-4 gap-4">
-          {STATS.map((s) => (
-            <div key={s.label} className="text-center">
-              <p className="text-xl font-bold text-stone-900 sm:text-2xl">{s.value}</p>
-              <p className="text-xs text-stone-500">{s.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ──── 2 PARCOURS ──── */}
-      <section className="bg-[#f5f0ea] px-4 py-14 sm:px-6">
-        <div className="mx-auto max-w-4xl">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold tracking-tight text-stone-900">
-              Comment utiliser Bati.ma ?
-            </h2>
-            <p className="mt-1 text-sm text-stone-500">
-              Deux espaces dédiés, un seul objectif : connecter les bons projets aux bons architectes
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Client */}
-            <Link href="/demande-devis" className="group block">
-              <Card className="h-full border-2 border-stone-200 transition-all group-hover:border-[#b5522a] group-hover:shadow-lg">
-                <CardContent className="p-6 text-center">
-                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 mb-4">
-                    <Home className="h-7 w-7" />
-                  </div>
-                  <h3 className="text-lg font-bold text-stone-900 mb-2">
-                    Je cherche un architecte
-                  </h3>
-                  <p className="text-sm text-stone-500 mb-4">
-                    Décrivez votre projet et recevez des propositions d&apos;architectes qualifiés dans votre ville
-                  </p>
-                  <ul className="text-left space-y-2 mb-5">
-                    <li className="flex items-center gap-2 text-sm text-stone-600">
-                      <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />
-                      Demande de devis gratuite
-                    </li>
-                    <li className="flex items-center gap-2 text-sm text-stone-600">
-                      <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />
-                      Comparez les architectes
-                    </li>
-                    <li className="flex items-center gap-2 text-sm text-stone-600">
-                      <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />
-                      Suivez vos projets en ligne
-                    </li>
-                  </ul>
-                  <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#b5522a] group-hover:gap-2 transition-all">
-                    Demander un devis <ArrowRight className="h-4 w-4" />
-                  </span>
-                </CardContent>
-              </Card>
-            </Link>
-
-            {/* Architecte */}
-            <Link href="/inscription-architecte" className="group block">
-              <Card className="h-full border-2 border-stone-200 transition-all group-hover:border-[#b5522a] group-hover:shadow-lg">
-                <CardContent className="p-6 text-center">
-                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-50 text-[#b5522a] mb-4">
-                    <Compass className="h-7 w-7" />
-                  </div>
-                  <h3 className="text-lg font-bold text-stone-900 mb-2">
-                    Je suis architecte
-                  </h3>
-                  <p className="text-sm text-stone-500 mb-4">
-                    Créez votre profil, recevez des demandes de devis et développez votre activité
-                  </p>
-                  <ul className="text-left space-y-2 mb-5">
-                    <li className="flex items-center gap-2 text-sm text-stone-600">
-                      <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />
-                      Profil et portfolio en ligne
-                    </li>
-                    <li className="flex items-center gap-2 text-sm text-stone-600">
-                      <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />
-                      Recevez des demandes de devis
-                    </li>
-                    <li className="flex items-center gap-2 text-sm text-stone-600">
-                      <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />
-                      Inscription gratuite
-                    </li>
-                  </ul>
-                  <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#b5522a] group-hover:gap-2 transition-all">
-                    Inscrire mon cabinet <ArrowRight className="h-4 w-4" />
-                  </span>
-                </CardContent>
-              </Card>
-            </Link>
-          </div>
-        </div>
       </section>
 
       {/* ──── SPÉCIALITÉS ──── */}
@@ -308,46 +168,6 @@ export default function HomePage() {
                 </Card>
               );
             })}
-          </div>
-        </div>
-      </section>
-
-      {/* ──── GALERIE PROJETS ──── */}
-      <section className="bg-stone-950 px-4 py-16 sm:px-6">
-        <div className="mx-auto max-w-5xl">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold tracking-tight text-white">
-              L&apos;excellence architecturale marocaine
-            </h2>
-            <p className="mt-1 text-sm text-stone-500">
-              Découvrez les projets réalisés par nos architectes partenaires
-            </p>
-          </div>
-          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <div className="group relative aspect-[4/3] overflow-hidden rounded-xl">
-              <Image src="/images/hero-villa.jpg" alt="Villa moderne Maroc" fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-3 left-3">
-                <p className="text-sm font-semibold text-white">Villas & Résidentiel</p>
-                <p className="text-xs text-stone-300">Casablanca, Marrakech</p>
-              </div>
-            </div>
-            <div className="group relative aspect-[4/3] overflow-hidden rounded-xl">
-              <Image src="/images/interieur-luxe.jpg" alt="Architecture intérieur Maroc" fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-3 left-3">
-                <p className="text-sm font-semibold text-white">Architecture d&apos;intérieur</p>
-                <p className="text-xs text-stone-300">Design contemporain marocain</p>
-              </div>
-            </div>
-            <div className="group relative aspect-[4/3] overflow-hidden rounded-xl">
-              <Image src="/images/marrakech-skyline.jpg" alt="Marrakech architecture" fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-3 left-3">
-                <p className="text-sm font-semibold text-white">Patrimoine & Rénovation</p>
-                <p className="text-xs text-stone-300">Riads, médinas, patrimoine</p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -393,7 +213,7 @@ export default function HomePage() {
           </div>
 
           <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {CITIES.map((c) => (
+            {CITIES.slice(0, 6).map((c) => (
               <Link
                 key={c.slug}
                 href={`/architecte/${c.slug}`}
@@ -418,6 +238,15 @@ export default function HomePage() {
                 </div>
               </Link>
             ))}
+          </div>
+
+          <div className="mt-4 text-center">
+            <Link
+              href="/architecte"
+              className="inline-flex items-center gap-1 text-sm font-medium text-[#b5522a] hover:underline"
+            >
+              Voir les 14 villes <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
           </div>
         </div>
       </section>
@@ -454,32 +283,6 @@ export default function HomePage() {
 
       {/* ──── TÉMOIGNAGES ──── */}
       <TestimonialCarousel />
-
-      {/* ──── TRUST ──── */}
-      <section className="bg-white px-4 py-14 sm:px-6">
-        <div className="mx-auto max-w-3xl">
-          <div className="rounded-xl border border-stone-100 bg-stone-50 p-6 sm:p-8">
-            <h2 className="text-lg font-bold text-stone-900">
-              Pourquoi Bati.ma ?
-            </h2>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              {[
-                "Architectes inscrits à l'Ordre du Maroc",
-                "Portfolios et avis vérifiés",
-                "Demande de devis 100% gratuite",
-                "Couverture nationale (7 villes)",
-              ].map((item) => (
-                <div key={item} className="flex items-start gap-2">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#b5522a]" />
-                  <span className="text-sm text-stone-600">{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <Separator />
 
       {/* ──── SEO TEXT ──── */}
       <section className="bg-white px-4 py-12 sm:px-6">

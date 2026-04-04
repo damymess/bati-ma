@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle2, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { submitProjectRequest } from "@/lib/api";
+import { trackSoumettreProjetSubmit } from "@/lib/tracking";
 
 const PROJECT_TYPES = [
   "Villa / Maison",
@@ -40,8 +43,71 @@ const BUDGETS = [
   "Je ne sais pas encore",
 ];
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_RE = /^\+?[\d\s\-()]{7,15}$/;
+
 export default function SoumettreProjetPage() {
+  return (
+    <Suspense>
+      <SoumettreProjetForm />
+    </Suspense>
+  );
+}
+
+function SoumettreProjetForm() {
+  const searchParams = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const [projectType, setProjectType] = useState("");
+  const [city, setCity] = useState("");
+  const [description, setDescription] = useState("");
+  const [budget, setBudget] = useState("");
+  const [timeline, setTimeline] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+
+  // Pre-fill from query params (from QuickLeadForm)
+  useEffect(() => {
+    const type = searchParams.get("type");
+    const cityParam = searchParams.get("city");
+    if (type) setProjectType(type);
+    if (cityParam) setCity(cityParam);
+  }, [searchParams]);
+
+  const handleSubmit = async () => {
+    // Validation
+    if (!projectType) { setError("Sélectionnez un type de projet"); return; }
+    if (!city) { setError("Sélectionnez une ville"); return; }
+    if (!description.trim()) { setError("Décrivez votre projet"); return; }
+    if (!name.trim() || name.trim().length < 2) { setError("Entrez votre nom (min. 2 caractères)"); return; }
+    if (!email.trim() && !phone.trim()) { setError("Email ou téléphone requis"); return; }
+    if (email.trim() && !EMAIL_RE.test(email.trim())) { setError("Format email invalide"); return; }
+    if (phone.trim() && !PHONE_RE.test(phone.trim())) { setError("Format téléphone invalide"); return; }
+
+    setLoading(true);
+    setError("");
+    try {
+      await submitProjectRequest({
+        title: `${projectType} — ${city}`,
+        client_name: name.trim(),
+        client_email: email.trim() || "lead@bati.ma",
+        client_phone: phone.trim() || undefined,
+        description: description.trim(),
+        project_type: projectType,
+        location: city,
+        timeline: timeline.trim() || undefined,
+      });
+      trackSoumettreProjetSubmit();
+      setSubmitted(true);
+    } catch {
+      setError("Une erreur est survenue. Veuillez réessayer.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (submitted) {
     return (
@@ -71,7 +137,7 @@ export default function SoumettreProjetPage() {
       <section className="bg-stone-950 px-4 py-12 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
           <Badge variant="outline" className="border-stone-700 text-stone-400 text-xs mb-4">
-            Espace Client
+            Gratuit et sans engagement
           </Badge>
           <h1 className="text-3xl font-bold text-white sm:text-4xl">
             Décrivez votre projet
@@ -97,13 +163,18 @@ export default function SoumettreProjetPage() {
                 </label>
                 <div className="flex flex-wrap gap-2">
                   {PROJECT_TYPES.map((t) => (
-                    <label
+                    <button
                       key={t}
-                      className="flex cursor-pointer items-center gap-1.5 rounded-full border border-stone-200 px-3 py-1.5 text-sm text-stone-600 transition-colors has-[:checked]:border-[#b5522a] has-[:checked]:bg-[#b5522a] has-[:checked]:text-white hover:border-stone-400"
+                      type="button"
+                      onClick={() => setProjectType(t)}
+                      className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
+                        projectType === t
+                          ? "border-[#b5522a] bg-[#b5522a] text-white"
+                          : "border-stone-200 text-stone-600 hover:border-stone-400"
+                      }`}
                     >
-                      <input type="radio" name="project_type" value={t} className="sr-only" />
                       {t}
-                    </label>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -115,13 +186,18 @@ export default function SoumettreProjetPage() {
                 </label>
                 <div className="flex flex-wrap gap-2">
                   {CITIES.map((c) => (
-                    <label
+                    <button
                       key={c}
-                      className="flex cursor-pointer items-center gap-1.5 rounded-full border border-stone-200 px-3 py-1.5 text-sm text-stone-600 transition-colors has-[:checked]:border-[#b5522a] has-[:checked]:bg-[#b5522a] has-[:checked]:text-white hover:border-stone-400"
+                      type="button"
+                      onClick={() => setCity(c)}
+                      className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
+                        city === c
+                          ? "border-[#b5522a] bg-[#b5522a] text-white"
+                          : "border-stone-200 text-stone-600 hover:border-stone-400"
+                      }`}
                     >
-                      <input type="radio" name="city" value={c} className="sr-only" />
                       {c}
-                    </label>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -133,6 +209,8 @@ export default function SoumettreProjetPage() {
                 </label>
                 <textarea
                   rows={4}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                   placeholder="Surface souhaitée, nombre de pièces, style architectural, contraintes particulières..."
                   className="w-full rounded-md border border-stone-200 px-3 py-2 text-sm placeholder:text-stone-400 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#b5522a]"
                 />
@@ -143,12 +221,14 @@ export default function SoumettreProjetPage() {
                 <label className="mb-2 block text-sm font-medium text-stone-700">
                   Budget estimé
                 </label>
-                <select className="w-full rounded-md border border-stone-200 px-3 py-2 text-sm text-stone-600 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#b5522a]">
+                <select
+                  value={budget}
+                  onChange={(e) => setBudget(e.target.value)}
+                  className="w-full rounded-md border border-stone-200 px-3 py-2 text-sm text-stone-600 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#b5522a]"
+                >
                   <option value="">Sélectionner un budget</option>
                   {BUDGETS.map((b) => (
-                    <option key={b} value={b}>
-                      {b}
-                    </option>
+                    <option key={b} value={b}>{b}</option>
                   ))}
                 </select>
               </div>
@@ -158,7 +238,11 @@ export default function SoumettreProjetPage() {
                 <label className="mb-1 block text-sm font-medium text-stone-700">
                   Délai souhaité
                 </label>
-                <Input placeholder="Ex: Début des travaux dans 3 mois" />
+                <Input
+                  value={timeline}
+                  onChange={(e) => setTimeline(e.target.value)}
+                  placeholder="Ex: Début des travaux dans 3 mois"
+                />
               </div>
 
               {/* Coordonnées */}
@@ -171,29 +255,51 @@ export default function SoumettreProjetPage() {
                     <label className="mb-1 block text-sm font-medium text-stone-700">
                       Nom complet *
                     </label>
-                    <Input placeholder="Votre nom" />
+                    <Input
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Votre nom"
+                    />
                   </div>
                   <div>
                     <label className="mb-1 block text-sm font-medium text-stone-700">
-                      Email *
+                      Email
                     </label>
-                    <Input type="email" placeholder="votre@email.com" />
+                    <Input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="votre@email.com"
+                    />
                   </div>
                   <div>
                     <label className="mb-1 block text-sm font-medium text-stone-700">
                       Téléphone
                     </label>
-                    <Input placeholder="+212 6XX XXX XXX" />
+                    <Input
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="+212 6XX XXX XXX"
+                    />
                   </div>
+                  <p className="text-xs text-stone-400">
+                    Email ou téléphone requis. Vos données sont confidentielles.
+                  </p>
                 </div>
               </div>
 
-              <Button className="w-full" onClick={() => setSubmitted(true)}>
-                Envoyer ma demande <ArrowRight className="ml-1 h-4 w-4" />
+              {error && (
+                <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                  {error}
+                </div>
+              )}
+
+              <Button className="w-full" onClick={handleSubmit} disabled={loading}>
+                {loading ? "Envoi..." : "Envoyer ma demande"} <ArrowRight className="ml-1 h-4 w-4" />
               </Button>
 
               <p className="text-center text-xs text-stone-400">
-                Gratuit et sans engagement. Vos données sont confidentielles.
+                Gratuit et sans engagement.
               </p>
             </CardContent>
           </Card>

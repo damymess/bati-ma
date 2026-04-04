@@ -98,6 +98,43 @@ architects.put("/me", authMiddleware, async (c) => {
   return c.json({ architect: sanitizeArchitect(architect) })
 })
 
+// Bulk import (scraping — no password required, needs API key)
+architects.post("/", async (c) => {
+  const apiKey = c.req.header("x-publishable-api-key")
+  if (!apiKey) return c.json({ message: "API key required" }, 401)
+
+  const body = await c.req.json()
+  const name = (body.name || "").trim()
+  const email = (body.email || "").trim().toLowerCase()
+
+  if (!name || !email) return c.json({ message: "name and email required" }, 400)
+
+  const existing = await db.architectProfile.findUnique({ where: { email } })
+  if (existing) return c.json({ message: "Cet email est déjà utilisé" }, 409)
+
+  const architect = await db.architectProfile.create({
+    data: {
+      name,
+      email,
+      phone: (body.phone || "") || null,
+      specialties: body.specialties || ["Résidentiel"],
+      regions: body.regions || [],
+      languages: ["Français"],
+      description: body.description || null,
+      website: body.website || null,
+      years_experience: body.years_experience || 0,
+      license_number: body.license_number || null,
+      rating: body.rating || 0,
+      review_count: body.review_count || 0,
+      verified: body.verified ?? false,
+      premium: body.premium ?? false,
+      is_active: body.is_active ?? true,
+    },
+  })
+
+  return c.json({ architect: sanitizeArchitect(architect) }, 201)
+})
+
 // List architects
 architects.get("/", async (c) => {
   const limit = Math.min(Number(c.req.query("limit")) || 100, 200)

@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { href: "/architecte", label: "Architectes" },
   { href: "/architecte-interieur", label: "Intérieur & Déco" },
   { href: "/soumettre-projet", label: "Soumettre un projet" },
+  { href: "/appels-offres", label: "Appels d'offres" },
   { href: "/guide/comment-choisir-architecte-maroc", label: "Guides" },
 ];
 
