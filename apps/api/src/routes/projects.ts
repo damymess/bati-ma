@@ -125,8 +125,11 @@ projects.get("/demandes-devis", async (c) => {
     }
   }
 
+  // If architect is logged in, show all contacts (free access model)
+  const isArchitect = !!tier
+
   const result = demandes.map((d) => {
-    const unlocked = unlockedIds.has(d.id)
+    const unlocked = isArchitect || unlockedIds.has(d.id)
     return {
       ...d,
       contact_locked: !unlocked,
@@ -171,12 +174,16 @@ projects.get("/demandes-devis/:id", async (c) => {
     }
   }
 
+  // Architect logged in = free access to contacts
+  const isArchitect = !!tier
+  const contactVisible = isArchitect || alreadyUnlocked
+
   const result = {
     ...demande,
-    contact_locked: !alreadyUnlocked,
-    client_name: alreadyUnlocked ? demande.client_name : undefined,
-    client_email: alreadyUnlocked ? demande.client_email : undefined,
-    client_phone: alreadyUnlocked ? demande.client_phone : undefined,
+    contact_locked: !contactVisible,
+    client_name: contactVisible ? demande.client_name : undefined,
+    client_email: contactVisible ? demande.client_email : undefined,
+    client_phone: contactVisible ? demande.client_phone : undefined,
   }
 
   return c.json({ demande: result, already_unlocked: alreadyUnlocked, subscription_tier: tier, can_unlock: canUnlock })
