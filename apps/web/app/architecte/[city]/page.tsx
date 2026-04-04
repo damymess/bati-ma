@@ -5,6 +5,10 @@ import Breadcrumb from "@/components/Breadcrumb";
 import { CITIES, getCityBySlug, CITY_SLUGS } from "@/lib/cities";
 import { getArchitectsByCity } from "@/lib/architects";
 import ArchitectFilters from "@/components/ArchitectFilters";
+import QuickLeadForm from "@/components/QuickLeadForm";
+import TestimonialCarousel from "@/components/TestimonialCarousel";
+import { getQuartiersByCity } from "@/lib/quartiers";
+import { SPECIALTIES_SEO } from "@/lib/specialties";
 
 export const revalidate = 86400;
 
@@ -40,6 +44,7 @@ export default async function CityPage({ params }: Props) {
 
   const architects = await getArchitectsByCity(city);
   const otherCities = CITIES.filter((c) => c.slug !== city).slice(0, 5);
+  const quartiers = getQuartiersByCity(city);
 
   const faq = [
     {
@@ -144,6 +149,13 @@ export default async function CityPage({ params }: Props) {
         </div>
       </section>
 
+      {/* Quick Lead Form */}
+      <section className="py-8 px-4 sm:px-6 bg-white">
+        <div className="max-w-md mx-auto">
+          <QuickLeadForm />
+        </div>
+      </section>
+
       {/* Listings */}
       <section className="py-10 px-4 sm:px-6 bg-white">
         <div className="max-w-6xl mx-auto">
@@ -222,6 +234,49 @@ export default async function CityPage({ params }: Props) {
                 </div>
               </details>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Témoignages */}
+      <TestimonialCarousel />
+
+      {/* Quartiers & Spécialités — maillage interne */}
+      <section className="py-10 px-4 sm:px-6 bg-white">
+        <div className="max-w-5xl mx-auto space-y-6">
+          {quartiers.length > 0 && (
+            <div>
+              <h2 className="text-lg font-semibold text-stone-900 mb-3">
+                Architectes par quartier à {data.name}
+              </h2>
+              <div className="flex flex-wrap gap-2">
+                {quartiers.map((q) => (
+                  <Link
+                    key={q.slug}
+                    href={`/architecte/${city}/q/${q.slug}`}
+                    className="bg-stone-50 border border-stone-200 text-stone-700 text-sm px-4 py-2 rounded-full hover:border-[#b5522a] hover:text-[#b5522a] transition-colors"
+                  >
+                    {q.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+          <div>
+            <h2 className="text-lg font-semibold text-stone-900 mb-3">
+              Spécialités à {data.name}
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {SPECIALTIES_SEO.map((s) => (
+                <Link
+                  key={s.slug}
+                  href={`/architecte/${city}/specialite/${s.slug}`}
+                  className="bg-stone-50 border border-stone-200 text-stone-700 text-sm px-4 py-2 rounded-full hover:border-[#b5522a] hover:text-[#b5522a] transition-colors"
+                >
+                  {s.label}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>

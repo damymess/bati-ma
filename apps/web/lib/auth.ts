@@ -26,6 +26,7 @@ export type ArchitectProfile = {
   is_active: boolean
   rating: number
   review_count: number
+  portfolio_images: string[]
   created_at: string
 }
 

@@ -8,6 +8,21 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { submitProjectRequest } from "@/lib/api";
+import { trackDevisStep, trackDevisSubmit } from "@/lib/tracking";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:9000";
+
+type MatchedArchitect = {
+  id: string;
+  name: string;
+  specialties: string[];
+  regions: string[];
+  rating: number;
+  review_count: number;
+  premium: boolean;
+  years_experience: number;
+  description: string | null;
+};
 
 const PROJECT_TYPES = [
   { label: "Villa / Maison", icon: "🏠" },
@@ -85,6 +100,7 @@ export default function DemandeDevisPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [matchedArchitects, setMatchedArchitects] = useState<MatchedArchitect[]>([]);
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [form, setForm] = useState<FormData>({
     project_type: "",
@@ -131,6 +147,7 @@ export default function DemandeDevisPage() {
       touchAllForStep(step);
       return;
     }
+    trackDevisStep(step + 1);
     setStep(step + 1);
   };
 
@@ -141,6 +158,7 @@ export default function DemandeDevisPage() {
     setLoading(true);
     setError(null);
     try {
+      trackDevisSubmit({ city: form.location, projectType: form.project_type, budget: form.budget_label });
       await submitProjectRequest({
         title: `${form.project_type} — ${form.location}`,
         client_name: form.client_name.trim(),
@@ -154,6 +172,14 @@ export default function DemandeDevisPage() {
         timeline: form.timeline.trim() || undefined,
       });
       setSubmitted(true);
+      // Fetch matching architects
+      try {
+        const matchRes = await fetch(`${API_URL}/store/matching?city=${encodeURIComponent(form.location)}&project_type=${encodeURIComponent(form.project_type)}`);
+        if (matchRes.ok) {
+          const matchData = await matchRes.json();
+          setMatchedArchitects(matchData.architects || []);
+        }
+      } catch {}
     } catch {
       setError("Une erreur est survenue. Veuillez réessayer.");
     } finally {
@@ -175,6 +201,40 @@ export default function DemandeDevisPage() {
             Votre demande est maintenant visible par les architectes de votre ville.
             Ceux qui sont intéressés vous contacteront directement.
           </p>
+
+          {/* Matched architects */}
+          {matchedArchitects.length > 0 && (
+            <div className="mt-8 text-left">
+              <h2 className="text-lg font-bold text-stone-900 mb-4 text-center">
+                Architectes recommandés pour votre projet
+              </h2>
+              <div className="space-y-3">
+                {matchedArchitects.map((a) => (
+                  <Link
+                    key={a.id}
+                    href={`/architecte/${(a.regions as string[])?.[0]?.toLowerCase() || "casablanca"}/${a.id}`}
+                    className="block rounded-xl border border-stone-200 p-4 hover:border-[#b5522a]/30 hover:shadow-sm transition-all"
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="font-semibold text-stone-900">{a.name}</span>
+                      {a.premium && (
+                        <Badge className="bg-amber-100 text-amber-800 text-[10px]">Premium</Badge>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-3 text-xs text-stone-500">
+                      <span>{a.years_experience} ans d&apos;exp.</span>
+                      <span>★ {a.rating.toFixed(1)}</span>
+                      <span>{(a.specialties as string[])?.slice(0, 2).join(", ")}</span>
+                    </div>
+                    {a.description && (
+                      <p className="mt-1.5 text-xs text-stone-400 line-clamp-2">{a.description}</p>
+                    )}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="mt-6 flex justify-center gap-3">
             <Button variant="outline" className="rounded-full" asChild>
               <Link href="/">Retour à l&apos;accueil</Link>

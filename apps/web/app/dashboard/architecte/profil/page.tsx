@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Save, Upload } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Save, Upload, X, Loader2 } from "lucide-react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -28,6 +29,9 @@ export default function ProfilArchitectePage() {
   const [hourlyRate, setHourlyRate] = useState("");
   const [selectedSpecs, setSelectedSpecs] = useState<string[]>([]);
   const [selectedCities, setSelectedCities] = useState<string[]>([]);
+  const [portfolioImages, setPortfolioImages] = useState<string[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
 
@@ -44,9 +48,63 @@ export default function ProfilArchitectePage() {
         setHourlyRate(profile.hourly_rate ? String(profile.hourly_rate) : "");
         setSelectedSpecs(profile.specialties || []);
         setSelectedCities(profile.regions || []);
+        setPortfolioImages(profile.portfolio_images || []);
       }
     });
   }, []);
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:9000";
+
+  async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files;
+    if (!files?.length) return;
+    setUploading(true);
+    setError("");
+
+    for (const file of Array.from(files)) {
+      if (file.size > 2 * 1024 * 1024) {
+        setError("Image trop lourde (max 2 Mo)");
+        continue;
+      }
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+        const token = localStorage.getItem("bati_token");
+        const res = await fetch(`${API_URL}/store/architects/portfolio/upload`, {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+          body: formData,
+        });
+        if (!res.ok) {
+          const err = await res.json();
+          setError(err.message || "Erreur upload");
+          break;
+        }
+        const data = await res.json();
+        setPortfolioImages((prev) => [...prev, data.url]);
+      } catch {
+        setError("Erreur réseau");
+        break;
+      }
+    }
+    setUploading(false);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  }
+
+  async function handleDeleteImage(index: number) {
+    const token = localStorage.getItem("bati_token");
+    try {
+      const res = await fetch(`${API_URL}/store/architects/portfolio/delete/${index}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setPortfolioImages(data.images);
+      }
+    } catch {}
+  }
 
   function toggleSpec(s: string) {
     setSelectedSpecs((prev) =>
@@ -177,16 +235,57 @@ export default function ProfilArchitectePage() {
 
         {/* Portfolio */}
         <div className="rounded-xl border border-stone-200 p-5">
-          <h3 className="text-sm font-semibold text-stone-900 mb-3">Portfolio</h3>
-          <div className="border-2 border-dashed border-stone-300 rounded-xl p-8 text-center">
-            <Upload className="h-8 w-8 text-stone-400 mx-auto mb-2" />
-            <p className="text-sm text-stone-500">
-              Glissez vos photos de projets ici ou cliquez pour sélectionner
-            </p>
-            <p className="text-xs text-stone-400 mt-1">
-              JPG, PNG — max 5 Mo par image
-            </p>
-          </div>
+          <h3 className="text-sm font-semibold text-stone-900 mb-3">
+            Portfolio ({portfolioImages.length}/5)
+          </h3>
+
+          {/* Image grid */}
+          {portfolioImages.length > 0 && (
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
+              {portfolioImages.map((url, i) => (
+                <div key={i} className="group relative aspect-[4/3] rounded-lg overflow-hidden bg-stone-100">
+                  <Image
+                    src={url.startsWith("/") ? `${API_URL}${url}` : url}
+                    alt={`Portfolio ${i + 1}`}
+                    fill
+                    className="object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteImage(i)}
+                    className="absolute top-1.5 right-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Upload zone */}
+          {portfolioImages.length < 5 && (
+            <label className="block cursor-pointer border-2 border-dashed border-stone-300 rounded-xl p-8 text-center hover:border-[#b5522a]/50 transition-colors">
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                multiple
+                onChange={handleFileUpload}
+                className="hidden"
+              />
+              {uploading ? (
+                <Loader2 className="h-8 w-8 text-[#b5522a] mx-auto mb-2 animate-spin" />
+              ) : (
+                <Upload className="h-8 w-8 text-stone-400 mx-auto mb-2" />
+              )}
+              <p className="text-sm text-stone-500">
+                {uploading ? "Upload en cours..." : "Cliquez pour ajouter des photos"}
+              </p>
+              <p className="text-xs text-stone-400 mt-1">
+                JPG, PNG, WebP — max 2 Mo par image
+              </p>
+            </label>
+          )}
         </div>
 
         <div className="flex items-center gap-3">

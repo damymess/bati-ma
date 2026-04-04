@@ -1,4 +1,5 @@
 import { serve } from "@hono/node-server"
+import { serveStatic } from "@hono/node-server/serve-static"
 import { Hono } from "hono"
 import { cors } from "hono/cors"
 import { logger } from "hono/logger"
@@ -11,6 +12,8 @@ import { appels } from "./routes/appels.js"
 import { admin } from "./routes/admin.js"
 import { contact } from "./routes/contact.js"
 import { auth } from "./routes/auth.js"
+import { upload } from "./routes/upload.js"
+import { matching } from "./routes/matching.js"
 import { authRateLimit } from "./middleware/rateLimit.js"
 
 const app = new Hono()
@@ -35,6 +38,9 @@ app.onError((err, c) => {
   return c.json({ error: err.message }, 500)
 })
 
+// Serve uploaded files
+app.use("/uploads/*", serveStatic({ root: process.env.UPLOAD_DIR || "./uploads", rewriteRequestPath: (path) => path.replace("/uploads", "") }))
+
 // Health check
 app.get("/store/custom", (c) => c.json({ status: "ok" }))
 app.get("/admin/custom", (c) => c.json({ status: "ok" }))
@@ -53,6 +59,8 @@ app.route("/store/forum", forum)
 app.route("/store/appels-offres", appels)
 app.route("/store/contact", contact)
 app.route("/store/auth", auth)
+app.route("/store/architects/portfolio", upload)
+app.route("/store/matching", matching)
 
 // Admin routes
 app.route("/admin", admin)

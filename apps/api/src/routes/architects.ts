@@ -116,7 +116,7 @@ architects.get("/", async (c) => {
   const [list, total] = await Promise.all([
     db.architectProfile.findMany({
       where,
-      orderBy: { created_at: "desc" },
+      orderBy: [{ premium: "desc" }, { rating: "desc" }, { created_at: "desc" }],
       take: limit,
       skip: offset,
     }),

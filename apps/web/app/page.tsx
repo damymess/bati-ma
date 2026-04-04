@@ -16,6 +16,8 @@ import {
 import { CITIES } from "@/lib/cities";
 import { ARCHITECTS } from "@/lib/architects";
 import ArchitectCard from "@/components/ArchitectCard";
+import QuickLeadForm from "@/components/QuickLeadForm";
+import TestimonialCarousel from "@/components/TestimonialCarousel";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -99,6 +101,11 @@ export default function HomePage() {
             </Link>
           ))}
         </div>
+
+        {/* Quick Lead Form — mobile */}
+        <div className="mt-5">
+          <QuickLeadForm />
+        </div>
       </section>
 
       {/* ──── DESKTOP HERO — Full image with text overlay ──── */}
@@ -161,6 +168,13 @@ export default function HomePage() {
                 </Link>
               ))}
             </div>
+          </div>
+        </div>
+
+        {/* Quick Lead Form — desktop */}
+        <div className="relative mx-auto max-w-7xl px-8">
+          <div className="absolute right-8 top-1/2 -translate-y-1/2 w-[360px] hidden xl:block">
+            <QuickLeadForm />
           </div>
         </div>
 
@@ -437,6 +451,9 @@ export default function HomePage() {
           </Button>
         </div>
       </section>
+
+      {/* ──── TÉMOIGNAGES ──── */}
+      <TestimonialCarousel />
 
       {/* ──── TRUST ──── */}
       <section className="bg-white px-4 py-14 sm:px-6">

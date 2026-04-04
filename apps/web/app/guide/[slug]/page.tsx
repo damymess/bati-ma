@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 import { getGuideBySlug, GUIDE_SLUGS, GUIDES } from "@/lib/guides";
-import { CITIES } from "@/lib/cities";
+import QuickLeadForm from "@/components/QuickLeadForm";
 import GuideConstructionModulaire from "./guides/construction-modulaire-maroc";
 import GuideMaisonBois from "./guides/maison-bois-maroc";
 import GuideCertificatConformite from "./guides/certificat-conformite-maroc";
@@ -1680,26 +1680,10 @@ export default async function GuidePage({ params }: Props) {
         </div>
       </article>
 
-      {/* CTA */}
+      {/* CTA — Quick Lead Form */}
       <section className="py-10 px-4 sm:px-6 bg-[#f5f0ea]">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-xl font-bold text-stone-900 mb-2">
-            Trouvez votre architecte maintenant
-          </h2>
-          <p className="text-stone-500 text-sm mb-5">
-            Comparez les profils, portfolios et tarifs dans votre ville
-          </p>
-          <div className="flex flex-wrap justify-center gap-2">
-            {CITIES.slice(0, 4).map((c) => (
-              <Link
-                key={c.slug}
-                href={`/architecte/${c.slug}`}
-                className="bg-white border border-stone-200 text-stone-700 text-sm px-4 py-2 rounded-full hover:border-[#b5522a] hover:text-[#b5522a] transition-colors"
-              >
-                {c.name}
-              </Link>
-            ))}
-          </div>
+        <div className="max-w-md mx-auto">
+          <QuickLeadForm />
         </div>
       </section>
 

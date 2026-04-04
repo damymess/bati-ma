@@ -148,12 +148,24 @@ export default async function ArchitectProfilePage({ params }: Props) {
                 </Link>
               </Button>
               {architect.phone && (
-                <Button variant="outline" className="rounded-full" asChild>
-                  <a href={`tel:${architect.phone}`}>
-                    <Phone className="mr-1.5 h-4 w-4" />
-                    {architect.phone}
-                  </a>
-                </Button>
+                <>
+                  <Button variant="outline" className="rounded-full" asChild>
+                    <a href={`tel:${architect.phone}`}>
+                      <Phone className="mr-1.5 h-4 w-4" />
+                      {architect.phone}
+                    </a>
+                  </Button>
+                  <Button className="rounded-full bg-[#25D366] hover:bg-[#1ebe5d] text-white" asChild>
+                    <a
+                      href={`https://wa.me/${architect.phone.replace(/[\s\-()]/g, "")}?text=${encodeURIComponent(`Bonjour, je vous contacte via Bati.ma. J'ai un projet à ${cityName} et j'aimerais en discuter avec vous.`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      WhatsApp
+                      <ArrowRight className="ml-1.5 h-4 w-4" />
+                    </a>
+                  </Button>
+                </>
               )}
             </div>
           </div>

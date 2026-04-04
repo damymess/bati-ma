@@ -25,10 +25,13 @@ projects.post("/project-requests", async (c) => {
   const address = (body.address || "").trim()
   const timeline = (body.timeline || "").trim()
 
-  if (!title || !client_name || !client_email || !project_type || !location) {
-    return c.json({ message: "Champs requis : title, client_name, client_email, project_type, location" }, 400)
+  if (!title || !client_name || !project_type || !location) {
+    return c.json({ message: "Champs requis : title, client_name, project_type, location" }, 400)
   }
-  if (!EMAIL_RE.test(client_email)) {
+  if (!client_email && !client_phone) {
+    return c.json({ message: "Email ou téléphone requis" }, 400)
+  }
+  if (client_email && !EMAIL_RE.test(client_email)) {
     return c.json({ message: "Format email invalide" }, 400)
   }
   if (client_phone && !PHONE_RE.test(client_phone)) {
@@ -218,6 +221,17 @@ projects.post("/demandes-devis/:id/contact", async (c) => {
       client_phone: demande.client_phone,
       already_unlocked: true,
     })
+  }
+
+  // Lazy monthly reset
+  const resetAt = architect.contacts_reset_at ? new Date(architect.contacts_reset_at) : null
+  const now = new Date()
+  if (!resetAt || resetAt.getMonth() !== now.getMonth() || resetAt.getFullYear() !== now.getFullYear()) {
+    await db.architectProfile.update({
+      where: { id: payload.id },
+      data: { contacts_used_this_month: 0, contacts_reset_at: now },
+    })
+    architect.contacts_used_this_month = 0
   }
 
   if (!canUnlockContact(architect)) {

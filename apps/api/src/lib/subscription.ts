@@ -26,6 +26,15 @@ export function canUnlockContact(architect: ArchitectProfile): boolean {
   const tier = getEffectiveTier(architect)
   if (tier === "free") return false
   const limit = TIER_LIMITS[tier] ?? 0
+
+  // Lazy monthly reset: if contacts_reset_at is in a previous month, reset counter
+  const resetAt = architect.contacts_reset_at ? new Date(architect.contacts_reset_at as unknown as string) : null
+  const now = new Date()
+  if (!resetAt || resetAt.getMonth() !== now.getMonth() || resetAt.getFullYear() !== now.getFullYear()) {
+    // Counter will be reset when the next unlock happens (handled in route)
+    return true
+  }
+
   return architect.contacts_used_this_month < limit
 }
 
