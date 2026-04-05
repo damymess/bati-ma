@@ -4,6 +4,8 @@ node_modules
 dist
 .env
 .env.local
+scripts/linkedin.env
+scripts/.linkedin-state.json
 *.log
 .DS_Store
 .turbo

@@ -81,6 +81,17 @@ import GuideTinyHouse from "./guides/tiny-house";
 import GuideDecorationInterieure from "./guides/decoration-interieure-tendances";
 import GuideMurVegetal from "./guides/jardin-vertical-mur-vegetal";
 import GuideMaisonPassive from "./guides/maison-passive-bioclimatique";
+// ─── 10 ARTICLES MAISONS PRÉFABRIQUÉES ───
+import GuidePrixMaisonPrefabriquee from "./guides/prix-maison-prefabriquee-maroc";
+import GuidePrefabVsTraditionnelle from "./guides/maison-prefabriquee-vs-traditionnelle";
+import GuideFournisseursPrefab from "./guides/fournisseurs-maison-prefabriquee-maroc";
+import GuidePrefabMRE from "./guides/maison-prefabriquee-mre";
+import GuidePermisPrefab from "./guides/permis-construire-maison-prefabriquee";
+import GuidePrefabBois from "./guides/maison-prefabriquee-bois-maroc";
+import GuidePrefabBeton from "./guides/maison-prefabriquee-beton-maroc";
+import GuidePrefabTouristique from "./guides/maison-prefabriquee-touristique-maroc";
+import GuidePrefabEcologique from "./guides/maison-prefabriquee-ecologique-maroc";
+import GuideFinancementPrefab from "./guides/financement-maison-prefabriquee-maroc";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -1612,6 +1623,17 @@ const GUIDE_CONTENT: Record<string, React.FC> = {
   "decoration-interieure-maroc-tendances": GuideDecorationInterieure,
   "jardin-vertical-mur-vegetal-maroc": GuideMurVegetal,
   "maison-passive-bioclimatique-maroc": GuideMaisonPassive,
+  // ─── MAISONS PRÉFABRIQUÉES ───
+  "prix-maison-prefabriquee-maroc": GuidePrixMaisonPrefabriquee,
+  "maison-prefabriquee-vs-traditionnelle": GuidePrefabVsTraditionnelle,
+  "fournisseurs-maison-prefabriquee-maroc": GuideFournisseursPrefab,
+  "maison-prefabriquee-mre": GuidePrefabMRE,
+  "permis-construire-maison-prefabriquee": GuidePermisPrefab,
+  "maison-prefabriquee-bois-maroc": GuidePrefabBois,
+  "maison-prefabriquee-beton-maroc": GuidePrefabBeton,
+  "maison-prefabriquee-touristique-maroc": GuidePrefabTouristique,
+  "maison-prefabriquee-ecologique-maroc": GuidePrefabEcologique,
+  "financement-maison-prefabriquee-maroc": GuideFinancementPrefab,
 };
 
 export default async function GuidePage({ params }: Props) {
