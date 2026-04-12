@@ -354,9 +354,10 @@ export default function CalculateurPage() {
               </div>
 
               {/* Methodologie */}
-              <div className="text-xs text-stone-400 space-y-1">
-                <p className="font-medium text-stone-500">Méthodologie</p>
-                <p>Les prix sont basés sur les moyennes du marché BTP marocain en 2026 (sources : FNBTP, Ordre des Architectes, études sectorielles). Les coefficients par ville reflètent les écarts de coût de main-d&apos;œuvre et de matériaux. Les prix terrain sont des fourchettes par ville, hors quartiers premium.</p>
+              <div className="text-xs text-stone-400 space-y-2">
+                <p className="font-medium text-stone-500">Méthodologie et sources</p>
+                <p>Les prix de base sont calibrés sur le <strong>Barème des coûts de la construction du CNOA</strong> (Conseil National de l&apos;Ordre des Architectes, 2021) inflaté de +25% pour 2026 (hausse cumulée matériaux et main-d&apos;œuvre). Les coefficients par ville sont dérivés des données marché (BniDark.com, Rifaa.ma) et cross-validés avec les études de Geniecivil.ma et Francobat.ma.</p>
+                <p>Honoraires architecte : minimums réglementaires CNOA (5% mission complète, 3% habitat social). Répartition budget : gros œuvre 45%, second œuvre 25%, finitions 30% (source : Habitat Services Plus, Loutfi Aménagement). Prix terrain : fourchettes par ville hors quartiers premium.</p>
               </div>
             </div>
           )}
