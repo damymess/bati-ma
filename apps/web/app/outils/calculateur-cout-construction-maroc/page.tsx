@@ -4,7 +4,9 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { CITIES } from "@/lib/cities";
+import { submitProjectRequest } from "@/lib/api";
 import {
   PROJECT_TYPES,
   QUALITY_LEVELS,
@@ -55,6 +57,39 @@ export default function CalculateurPage() {
   const [landSurface, setLandSurface] = useState<number | null>(null);
   const [selectedOptions, setSelectedOptions] = useState<OptionKey[]>([]);
   const [showResults, setShowResults] = useState(false);
+  const [leadName, setLeadName] = useState("");
+  const [leadPhone, setLeadPhone] = useState("");
+  const [leadEmail, setLeadEmail] = useState("");
+  const [leadSubmitted, setLeadSubmitted] = useState(false);
+  const [leadLoading, setLeadLoading] = useState(false);
+
+  const handleLeadSubmit = async () => {
+    if (!leadName || !leadPhone) return;
+    setLeadLoading(true);
+    try {
+      const cityName = CITIES.find((c) => c.slug === city)?.name || city;
+      const typeLabel = PROJECT_TYPES.find((t) => t.value === projectType)?.label || projectType;
+      await submitProjectRequest({
+        title: `Estimation calculateur : ${typeLabel} ${surface}m² à ${cityName}`,
+        client_name: leadName,
+        client_email: leadEmail,
+        client_phone: leadPhone,
+        description: `Via calculateur bati.ma — ${typeLabel} ${surface}m² en ${QUALITY_LEVELS.find((q) => q.value === quality)?.label || quality} à ${cityName}. Budget estimé : ${formatPrice(result.total.min)} – ${formatPrice(result.total.max)} hors terrain.`,
+        project_type: typeLabel,
+        location: cityName,
+        budget_min: result.total.min,
+        budget_max: result.total.max,
+      });
+      setLeadSubmitted(true);
+      if (typeof window !== "undefined" && (window as unknown as Record<string, unknown>).umami) {
+        ((window as unknown as Record<string, unknown>).umami as { track: (e: string, d?: Record<string, unknown>) => void }).track("calculateur_lead", { city, projectType, quality, surface: String(surface) });
+      }
+    } catch {
+      setLeadSubmitted(true);
+    } finally {
+      setLeadLoading(false);
+    }
+  };
 
   const result = useMemo(
     () => calculateEstimation(city, projectType, quality, surface, landSurface, selectedOptions),
@@ -342,16 +377,50 @@ export default function CalculateurPage() {
                 </div>
               </div>
 
-              {/* CTA devis */}
-              <div className="bg-[#f4ece7] border border-[#b5522a]/20 rounded-xl p-6 text-center">
-                <p className="font-semibold text-stone-900 mb-2">Obtenez un devis précis</p>
-                <p className="text-sm text-stone-600 mb-4">
-                  Cette estimation est indicative. Pour un budget précis, comparez gratuitement les devis de 3 architectes vérifiés dans votre ville.
-                </p>
-                <Button size="lg" className="rounded-full px-8" asChild>
-                  <Link href="/demande-devis">Demander un devis gratuit</Link>
-                </Button>
-              </div>
+              {/* Lead capture */}
+              {!leadSubmitted ? (
+                <div className="bg-[#f4ece7] border border-[#b5522a]/20 rounded-xl p-6">
+                  <p className="font-semibold text-stone-900 mb-1 text-center">Recevez 3 devis d&apos;architectes gratuits</p>
+                  <p className="text-sm text-stone-600 mb-4 text-center">
+                    Votre estimation est pr&ecirc;te. Laissez vos coordonn&eacute;es pour recevoir des devis pr&eacute;cis d&apos;architectes v&eacute;rifi&eacute;s dans votre ville.
+                  </p>
+                  <div className="space-y-3 max-w-sm mx-auto">
+                    <Input
+                      placeholder="Votre nom complet"
+                      value={leadName}
+                      onChange={(e) => setLeadName(e.target.value)}
+                    />
+                    <Input
+                      type="tel"
+                      placeholder="T&eacute;l&eacute;phone (ex: 0661234567)"
+                      value={leadPhone}
+                      onChange={(e) => setLeadPhone(e.target.value)}
+                    />
+                    <Input
+                      type="email"
+                      placeholder="Email (optionnel)"
+                      value={leadEmail}
+                      onChange={(e) => setLeadEmail(e.target.value)}
+                    />
+                    <Button
+                      size="lg"
+                      className="w-full h-12 rounded-xl text-base"
+                      onClick={handleLeadSubmit}
+                      disabled={!leadName || !leadPhone || leadLoading}
+                    >
+                      {leadLoading ? "Envoi..." : "Recevoir mes devis gratuits"}
+                    </Button>
+                    <p className="text-xs text-stone-400 text-center">Gratuit et sans engagement. Vos donn&eacute;es restent confidentielles.</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-green-50 border border-green-200 rounded-xl p-6 text-center">
+                  <p className="font-semibold text-green-900 mb-1">Demande envoy&eacute;e !</p>
+                  <p className="text-sm text-green-700">
+                    Des architectes v&eacute;rifi&eacute;s &agrave; {CITIES.find((c) => c.slug === city)?.name || city} vont vous contacter sous 24-48h avec des devis personnalis&eacute;s.
+                  </p>
+                </div>
+              )}
 
               {/* Methodologie */}
               <div className="text-xs text-stone-400 space-y-2">
