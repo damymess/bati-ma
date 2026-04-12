@@ -9,6 +9,12 @@ const CITIES = [
   { slug: "tanger", name: "Tanger" },
   { slug: "agadir", name: "Agadir" },
   { slug: "fes", name: "Fès" },
+  { slug: "meknes", name: "Meknès" },
+  { slug: "el-jadida", name: "El Jadida" },
+  { slug: "oujda", name: "Oujda" },
+  { slug: "tetouan", name: "Tétouan" },
+  { slug: "nador", name: "Nador" },
+  { slug: "beni-mellal", name: "Béni Mellal" },
 ];
 
 export default function Footer() {
@@ -110,6 +116,11 @@ export default function Footer() {
               <li>
                 <Link href="/contact" className="text-stone-500 hover:text-white transition-colors">
                   Contact
+                </Link>
+              </li>
+              <li>
+                <Link href="/outils/calculateur-cout-construction-maroc" className="text-stone-500 hover:text-white transition-colors">
+                  Calculateur coût construction
                 </Link>
               </li>
             </ul>

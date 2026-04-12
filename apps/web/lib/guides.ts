@@ -549,6 +549,12 @@ export const GUIDES: Guide[] = [
   { slug: "maison-prefabriquee-touristique-maroc", title: "Maison préfabriquée pour hôtels et glamping au Maroc", description: "Solutions préfabriquées pour le tourisme au Maroc : glamping, chalets, lodges modulaires. Prix, rentabilité et réglementation.", readTime: "9 min", category: "Innovation", content: "" },
   { slug: "maison-prefabriquee-ecologique-maroc", title: "Maison préfabriquée écologique au Maroc : solutions durables", description: "Éco-construction préfabriquée au Maroc : matériaux durables, énergie solaire, récupération eau, impression 3D et RTCM.", readTime: "8 min", category: "Innovation", content: "" },
   { slug: "financement-maison-prefabriquee-maroc", title: "Financer sa maison préfabriquée au Maroc : crédit et options", description: "Options de financement pour maison préfabriquée au Maroc : crédit construction, Mourabaha, aides MRE et simulation budget.", readTime: "7 min", category: "Budget & Tarifs", content: "" },
+
+  // ─── GUIDES DA BOOST (Avril 2026) ───
+  { slug: "difference-architecte-ingenieur-maroc", title: "Architecte vs Ingénieur au Maroc : qui choisir pour votre projet ?", description: "Différence entre architecte et ingénieur au Maroc : rôles, formations, honoraires, cadre légal. Guide pour choisir le bon professionnel selon votre projet de construction.", readTime: "10 min", category: "Guide pratique", content: "" },
+  { slug: "cout-construction-villa-r1-maroc", title: "Coût construction villa R+1 au Maroc : budget détaillé 2026", description: "Budget détaillé pour construire une villa R+1 au Maroc en 2026. Prix par ville, par gamme de finitions, ventilation par poste et exemples concrets de 150 à 300 m².", readTime: "12 min", category: "Budget & Tarifs", content: "" },
+  { slug: "fiscalite-immobiliere-maroc", title: "Fiscalité immobilière au Maroc : taxes, exonérations et optimisation 2026", description: "Guide complet de la fiscalité immobilière au Maroc : droits d'enregistrement, TPI, TVA construction, taxe d'habitation, exonérations et optimisation fiscale légale.", readTime: "12 min", category: "Réglementation", content: "" },
+  { slug: "architecte-prix-par-ville-maroc", title: "Tarifs architecte au Maroc par ville : comparatif 2026", description: "Comparatif détaillé des honoraires d'architecte au Maroc par ville : Casablanca, Rabat, Marrakech, Tanger et 8 autres villes. Pourcentage, forfait et taux horaire.", readTime: "10 min", category: "Tarifs", content: "" },
 ];
 
 export function getGuideBySlug(slug: string): Guide | undefined {

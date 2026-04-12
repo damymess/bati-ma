@@ -92,6 +92,11 @@ import GuidePrefabBeton from "./guides/maison-prefabriquee-beton-maroc";
 import GuidePrefabTouristique from "./guides/maison-prefabriquee-touristique-maroc";
 import GuidePrefabEcologique from "./guides/maison-prefabriquee-ecologique-maroc";
 import GuideFinancementPrefab from "./guides/financement-maison-prefabriquee-maroc";
+// ─── GUIDES DA BOOST ───
+import GuideDifferenceArchitecteIngenieur from "./guides/difference-architecte-ingenieur-maroc";
+import GuideCoutVillaR1 from "./guides/cout-construction-villa-r1-maroc";
+import GuideFiscaliteImmobiliere from "./guides/fiscalite-immobiliere-maroc";
+import GuideArchitectePrixParVille from "./guides/architecte-prix-par-ville-maroc";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -1634,6 +1639,11 @@ const GUIDE_CONTENT: Record<string, React.FC> = {
   "maison-prefabriquee-touristique-maroc": GuidePrefabTouristique,
   "maison-prefabriquee-ecologique-maroc": GuidePrefabEcologique,
   "financement-maison-prefabriquee-maroc": GuideFinancementPrefab,
+  // ─── GUIDES DA BOOST ───
+  "difference-architecte-ingenieur-maroc": GuideDifferenceArchitecteIngenieur,
+  "cout-construction-villa-r1-maroc": GuideCoutVillaR1,
+  "fiscalite-immobiliere-maroc": GuideFiscaliteImmobiliere,
+  "architecte-prix-par-ville-maroc": GuideArchitectePrixParVille,
 };
 
 export default async function GuidePage({ params }: Props) {

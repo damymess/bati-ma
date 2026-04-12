@@ -10,7 +10,8 @@ const NAV_LINKS = [
   { href: "/architecte", label: "Trouver un architecte" },
   { href: "/architecte-interieur", label: "Intérieur & Déco" },
   { href: "/appels-offres", label: "Appels d'offres" },
-  { href: "/guide/comment-choisir-architecte-maroc", label: "Guides" },
+  { href: "/guide", label: "Guides" },
+  { href: "/outils/calculateur-cout-construction-maroc", label: "Calculateur" },
 ];
 
 export default function Nav() {
