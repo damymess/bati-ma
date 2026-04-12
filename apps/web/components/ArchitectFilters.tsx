@@ -1,11 +1,13 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Search, SlidersHorizontal, ChevronDown, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import ArchitectCard from "@/components/ArchitectCard";
+import Pagination from "@/components/Pagination";
 import type { Architect, Specialty } from "@/lib/architects";
 
 const SPECIALTIES: Specialty[] = [
@@ -43,25 +45,73 @@ const RATING_OPTIONS = [
   { value: 4.5, label: "4.5+ étoiles" },
 ];
 
+const PER_PAGE = 15;
+
 type Props = {
   architects: Architect[];
   cityName: string;
 };
 
 export default function ArchitectFilters({ architects, cityName }: Props) {
-  const [query, setQuery] = useState("");
-  const [sort, setSort] = useState<SortValue>("recommended");
-  const [selectedSpecs, setSelectedSpecs] = useState<Specialty[]>([]);
-  const [minExp, setMinExp] = useState(0);
-  const [minRating, setMinRating] = useState(0);
-  const [showFilters, setShowFilters] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // Initialize state from URL
+  const [query, setQuery] = useState(searchParams.get("q") ?? "");
+  const [sort, setSort] = useState<SortValue>(
+    (searchParams.get("tri") as SortValue) || "recommended"
+  );
+  const [selectedSpecs, setSelectedSpecs] = useState<Specialty[]>(() => {
+    const specs = searchParams.getAll("specialite");
+    return specs.filter((s) => SPECIALTIES.includes(s as Specialty)) as Specialty[];
+  });
+  const [minExp, setMinExp] = useState(() => Number(searchParams.get("exp")) || 0);
+  const [minRating, setMinRating] = useState(() => Number(searchParams.get("note")) || 0);
+  const [page, setPage] = useState(() => Math.max(1, Number(searchParams.get("page")) || 1));
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   const hasActiveFilters = query || selectedSpecs.length > 0 || minExp > 0 || minRating > 0;
+
+  // Sync state → URL
+  const updateURL = useCallback(
+    (overrides: Record<string, string | string[] | null> = {}) => {
+      const params = new URLSearchParams();
+      const vals: Record<string, string | string[] | null> = {
+        q: query || null,
+        tri: sort !== "recommended" ? sort : null,
+        specialite: selectedSpecs.length > 0 ? selectedSpecs : null,
+        exp: minExp > 0 ? String(minExp) : null,
+        note: minRating > 0 ? String(minRating) : null,
+        page: page > 1 ? String(page) : null,
+        ...overrides,
+      };
+
+      for (const [key, val] of Object.entries(vals)) {
+        if (val === null) continue;
+        if (Array.isArray(val)) {
+          val.forEach((v) => params.append(key, v));
+        } else {
+          params.set(key, val);
+        }
+      }
+
+      const qs = params.toString();
+      router.replace(`${pathname}${qs ? `?${qs}` : ""}`, { scroll: false });
+    },
+    [router, pathname, query, sort, selectedSpecs, minExp, minRating, page]
+  );
+
+  // Push URL on any filter/page change
+  useEffect(() => {
+    updateURL();
+  }, [updateURL]);
 
   const toggleSpec = (s: Specialty) => {
     setSelectedSpecs((prev) =>
       prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s]
     );
+    setPage(1);
   };
 
   const clearFilters = () => {
@@ -69,12 +119,33 @@ export default function ArchitectFilters({ architects, cityName }: Props) {
     setSelectedSpecs([]);
     setMinExp(0);
     setMinRating(0);
+    setPage(1);
   };
 
+  const handleSearch = (value: string) => {
+    setQuery(value);
+    setPage(1);
+  };
+
+  const handleSort = (value: SortValue) => {
+    setSort(value);
+    setPage(1);
+  };
+
+  const handleExp = (value: number) => {
+    setMinExp(value);
+    setPage(1);
+  };
+
+  const handleRating = (value: number) => {
+    setMinRating(value);
+    setPage(1);
+  };
+
+  // Filter + sort
   const results = useMemo(() => {
     let filtered = [...architects];
 
-    // Full-text search
     if (query) {
       const q = query.toLowerCase();
       filtered = filtered.filter(
@@ -85,24 +156,20 @@ export default function ArchitectFilters({ architects, cityName }: Props) {
       );
     }
 
-    // Specialty filter
     if (selectedSpecs.length > 0) {
       filtered = filtered.filter((a) =>
         selectedSpecs.some((s) => a.specialties.includes(s))
       );
     }
 
-    // Experience filter
     if (minExp > 0) {
       filtered = filtered.filter((a) => a.experience >= minExp);
     }
 
-    // Rating filter
     if (minRating > 0) {
       filtered = filtered.filter((a) => a.rating >= minRating);
     }
 
-    // Sort
     switch (sort) {
       case "recommended":
         filtered.sort((a, b) => {
@@ -124,22 +191,41 @@ export default function ArchitectFilters({ architects, cityName }: Props) {
     return filtered;
   }, [architects, query, selectedSpecs, minExp, minRating, sort]);
 
+  // Pagination
+  const totalPages = Math.ceil(results.length / PER_PAGE);
+  const safePage = Math.min(page, Math.max(1, totalPages));
+  const paginatedResults = results.slice(
+    (safePage - 1) * PER_PAGE,
+    safePage * PER_PAGE
+  );
+
+  // Build query params for pagination links (exclude page itself)
+  const paginationParams = useMemo(() => {
+    const p: Record<string, string> = {};
+    if (query) p.q = query;
+    if (sort !== "recommended") p.tri = sort;
+    if (minExp > 0) p.exp = String(minExp);
+    if (minRating > 0) p.note = String(minRating);
+    // Multi-value specialite is handled separately by Pagination
+    return p;
+  }, [query, sort, minExp, minRating]);
+
   return (
     <div>
-      {/* Search + Sort bar */}
+      {/* Search bar */}
       <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400" />
           <Input
             id="architect-search"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => handleSearch(e.target.value)}
             placeholder={`Rechercher un architecte à ${cityName}...`}
             className="pl-10 rounded-lg"
           />
           {query && (
             <button
-              onClick={() => setQuery("")}
+              onClick={() => handleSearch("")}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600"
               aria-label="Effacer la recherche"
             >
@@ -152,14 +238,14 @@ export default function ArchitectFilters({ architects, cityName }: Props) {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setShowFilters(!showFilters)}
-            className={`rounded-lg ${showFilters ? "bg-stone-100" : ""}`}
+            onClick={() => setShowAdvanced(!showAdvanced)}
+            className={`rounded-lg ${showAdvanced ? "bg-stone-100" : ""}`}
           >
             <SlidersHorizontal className="mr-1 h-4 w-4" />
-            Filtres
-            {hasActiveFilters && (
+            Plus de filtres
+            {(minExp > 0 || minRating > 0) && (
               <span className="ml-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#b5522a] text-[10px] text-white">
-                {(selectedSpecs.length > 0 ? 1 : 0) + (minExp > 0 ? 1 : 0) + (minRating > 0 ? 1 : 0)}
+                {(minExp > 0 ? 1 : 0) + (minRating > 0 ? 1 : 0)}
               </span>
             )}
           </Button>
@@ -167,7 +253,7 @@ export default function ArchitectFilters({ architects, cityName }: Props) {
           <div className="relative">
             <select
               value={sort}
-              onChange={(e) => setSort(e.target.value as SortValue)}
+              onChange={(e) => handleSort(e.target.value as SortValue)}
               className="h-9 appearance-none rounded-lg border border-stone-200 bg-white pl-3 pr-8 text-sm text-stone-700 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#b5522a]"
               aria-label="Trier par"
             >
@@ -182,34 +268,30 @@ export default function ArchitectFilters({ architects, cityName }: Props) {
         </div>
       </div>
 
-      {/* Filters panel */}
-      {showFilters && (
-        <div className="mb-6 rounded-xl border border-stone-200 bg-stone-50 p-4 space-y-4">
-          {/* Specialties */}
-          <div>
-            <span className="text-xs font-medium text-stone-500 uppercase tracking-wider mb-2 block">
-              Spécialités
-            </span>
-            <div className="flex flex-wrap gap-2" role="group" aria-label="Filtrer par spécialité">
-              {SPECIALTIES.map((s) => (
-                <button
-                  key={s}
-                  onClick={() => toggleSpec(s)}
-                  aria-pressed={selectedSpecs.includes(s)}
-                  className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
-                    selectedSpecs.includes(s)
-                      ? "bg-[#b5522a] text-white"
-                      : "bg-white border border-stone-200 text-stone-600 hover:border-stone-300"
-                  }`}
-                >
-                  {s}
-                </button>
-              ))}
-            </div>
-          </div>
+      {/* Specialty chips — always visible, scrollable */}
+      <div className="mb-4 -mx-1 px-1 overflow-x-auto scrollbar-hide">
+        <div className="flex gap-2 pb-1" role="group" aria-label="Filtrer par spécialité">
+          {SPECIALTIES.map((s) => (
+            <button
+              key={s}
+              onClick={() => toggleSpec(s)}
+              aria-pressed={selectedSpecs.includes(s)}
+              className={`shrink-0 rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors ${
+                selectedSpecs.includes(s)
+                  ? "bg-[#b5522a] text-white shadow-sm"
+                  : "bg-white border border-stone-200 text-stone-600 hover:border-[#b5522a]/40 hover:text-[#b5522a]"
+              }`}
+            >
+              {s}
+            </button>
+          ))}
+        </div>
+      </div>
 
+      {/* Advanced filters panel */}
+      {showAdvanced && (
+        <div className="mb-6 rounded-xl border border-stone-200 bg-stone-50 p-4 space-y-4">
           <div className="flex flex-wrap gap-4">
-            {/* Experience */}
             <div>
               <label htmlFor="min-exp" className="text-xs font-medium text-stone-500 uppercase tracking-wider mb-1 block">
                 Expérience
@@ -217,7 +299,7 @@ export default function ArchitectFilters({ architects, cityName }: Props) {
               <select
                 id="min-exp"
                 value={minExp}
-                onChange={(e) => setMinExp(Number(e.target.value))}
+                onChange={(e) => handleExp(Number(e.target.value))}
                 className="h-8 rounded-lg border border-stone-200 bg-white px-2 text-sm text-stone-700"
               >
                 {EXP_OPTIONS.map((o) => (
@@ -226,7 +308,6 @@ export default function ArchitectFilters({ architects, cityName }: Props) {
               </select>
             </div>
 
-            {/* Rating */}
             <div>
               <label htmlFor="min-rating" className="text-xs font-medium text-stone-500 uppercase tracking-wider mb-1 block">
                 Note minimum
@@ -234,7 +315,7 @@ export default function ArchitectFilters({ architects, cityName }: Props) {
               <select
                 id="min-rating"
                 value={minRating}
-                onChange={(e) => setMinRating(Number(e.target.value))}
+                onChange={(e) => handleRating(Number(e.target.value))}
                 className="h-8 rounded-lg border border-stone-200 bg-white px-2 text-sm text-stone-700"
               >
                 {RATING_OPTIONS.map((o) => (
@@ -243,27 +324,42 @@ export default function ArchitectFilters({ architects, cityName }: Props) {
               </select>
             </div>
           </div>
+        </div>
+      )}
 
-          {hasActiveFilters && (
-            <div className="flex items-center justify-between pt-2 border-t border-stone-200">
-              <div className="flex flex-wrap gap-1">
-                {selectedSpecs.map((s) => (
-                  <Badge key={s} variant="secondary" className="text-xs gap-1">
-                    {s}
-                    <button onClick={() => toggleSpec(s)} aria-label={`Retirer ${s}`}>
-                      <X className="h-3 w-3" />
-                    </button>
-                  </Badge>
-                ))}
-              </div>
-              <button
-                onClick={clearFilters}
-                className="text-xs text-[#b5522a] hover:underline"
-              >
-                Effacer tout
+      {/* Active filters summary */}
+      {hasActiveFilters && (
+        <div className="flex items-center gap-2 mb-4 flex-wrap">
+          {selectedSpecs.map((s) => (
+            <Badge key={s} variant="secondary" className="text-xs gap-1 pl-2">
+              {s}
+              <button onClick={() => toggleSpec(s)} aria-label={`Retirer ${s}`}>
+                <X className="h-3 w-3" />
               </button>
-            </div>
+            </Badge>
+          ))}
+          {minExp > 0 && (
+            <Badge variant="secondary" className="text-xs gap-1 pl-2">
+              {minExp}+ ans
+              <button onClick={() => handleExp(0)} aria-label="Retirer filtre expérience">
+                <X className="h-3 w-3" />
+              </button>
+            </Badge>
           )}
+          {minRating > 0 && (
+            <Badge variant="secondary" className="text-xs gap-1 pl-2">
+              {minRating}+ étoiles
+              <button onClick={() => handleRating(0)} aria-label="Retirer filtre note">
+                <X className="h-3 w-3" />
+              </button>
+            </Badge>
+          )}
+          <button
+            onClick={clearFilters}
+            className="text-xs text-[#b5522a] hover:underline ml-1"
+          >
+            Tout effacer
+          </button>
         </div>
       )}
 
@@ -272,20 +368,31 @@ export default function ArchitectFilters({ architects, cityName }: Props) {
         <h2 className="text-xl font-semibold text-stone-900">
           {results.length > 0
             ? `${results.length} architecte${results.length > 1 ? "s" : ""} ${query ? "trouvé" + (results.length > 1 ? "s" : "") : `à ${cityName}`}`
-            : `Aucun architecte trouvé`}
+            : "Aucun architecte trouvé"}
         </h2>
         <span className="text-sm text-stone-500 hidden sm:block">
           Trié par : <span className="text-stone-800 font-medium">{SORT_OPTIONS.find(o => o.value === sort)?.label}</span>
         </span>
       </div>
 
-      {/* Results */}
-      {results.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-          {results.map((a) => (
-            <ArchitectCard key={a.id} architect={a} />
-          ))}
-        </div>
+      {/* Results grid */}
+      {paginatedResults.length > 0 ? (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            {paginatedResults.map((a) => (
+              <ArchitectCard key={a.id} architect={a} />
+            ))}
+          </div>
+
+          <Pagination
+            currentPage={safePage}
+            totalPages={totalPages}
+            totalItems={results.length}
+            basePath={pathname}
+            queryParams={paginationParams}
+            itemLabel={`architecte${results.length > 1 ? "s" : ""}`}
+          />
+        </>
       ) : (
         <div className="bg-stone-50 border border-stone-100 rounded-xl p-8 text-center mb-8">
           <Search className="h-10 w-10 text-stone-300 mx-auto mb-3" />

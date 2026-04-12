@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 import { CITIES, getCityBySlug, CITY_SLUGS } from "@/lib/cities";
 import { getArchitectsByCity } from "@/lib/architects";
 import ArchitectFilters from "@/components/ArchitectFilters";
-import QuickLeadForm from "@/components/QuickLeadForm";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
 import { getQuartiersByCity } from "@/lib/quartiers";
 import { SPECIALTIES_SEO } from "@/lib/specialties";
@@ -149,22 +149,23 @@ export default async function CityPage({ params }: Props) {
         </div>
       </section>
 
-      {/* Quick Lead Form */}
-      <section className="py-8 px-4 sm:px-6 bg-white">
-        <div className="max-w-md mx-auto">
-          <QuickLeadForm />
-        </div>
-      </section>
-
-      {/* Listings */}
+      {/* Listings with filters & pagination */}
       <section className="py-10 px-4 sm:px-6 bg-white">
         <div className="max-w-6xl mx-auto">
-          <ArchitectFilters architects={architects} cityName={data.name} />
+          <Suspense fallback={
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="h-48 rounded-xl bg-stone-100 animate-pulse" />
+              ))}
+            </div>
+          }>
+            <ArchitectFilters architects={architects} cityName={data.name} />
+          </Suspense>
 
           {/* CTA inscription */}
           <div
             id="inscription"
-            className="bg-[#f4ece7] border border-[#b5522a]/20 rounded-xl p-6 text-center"
+            className="mt-10 bg-[#f4ece7] border border-[#b5522a]/20 rounded-xl p-6 text-center"
           >
             <h3 className="font-semibold text-stone-900 mb-1">
               Vous êtes architecte à {data.name} ?
