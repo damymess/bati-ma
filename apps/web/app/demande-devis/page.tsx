@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle2, ArrowRight, ArrowLeft, ClipboardList, MapPin, Wallet, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -128,6 +129,18 @@ function getStepErrors(step: number, form: FormData): Record<string, string> {
 }
 
 export default function DemandeDevisPage() {
+  return (
+    <Suspense fallback={<div className="flex min-h-[60vh] items-center justify-center"><div className="text-stone-400">Chargement…</div></div>}>
+      <DemandeDevisForm />
+    </Suspense>
+  );
+}
+
+function DemandeDevisForm() {
+  const searchParams = useSearchParams();
+  const architectId = searchParams.get("architect") || null;
+  const prefilledCity = searchParams.get("city") || null;
+
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -136,7 +149,7 @@ export default function DemandeDevisPage() {
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [form, setForm] = useState<FormData>({
     project_type: "",
-    location: "",
+    location: prefilledCity ? CITIES.find((c) => c.toLowerCase() === prefilledCity.toLowerCase()) || "" : "",
     description: "",
     surface: "",
     style: "",
@@ -198,6 +211,7 @@ export default function DemandeDevisPage() {
         client_name: `${form.client_first_name.trim()} ${form.client_last_name.trim()}`,
         client_email: form.client_email.trim(),
         client_phone: `${form.client_country_code} ${form.client_phone.trim()}`,
+        architect_id: architectId || undefined,
         description: form.description.trim() + (form.surface.trim() ? `\nSurface: ${form.surface.trim()}` : "") + (form.style.trim() ? `\nStyle: ${form.style.trim()}` : ""),
         project_type: form.project_type,
         location: form.location,

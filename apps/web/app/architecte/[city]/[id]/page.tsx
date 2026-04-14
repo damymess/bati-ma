@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Star, Phone, Globe, Briefcase, MapPin, CheckCircle2, ArrowLeft, ArrowRight } from "lucide-react";
+import { Star, Globe, Briefcase, MapPin, CheckCircle2, ArrowLeft, ArrowRight } from "lucide-react";
 import Breadcrumb from "@/components/Breadcrumb";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -147,26 +147,6 @@ export default async function ArchitectProfilePage({ params }: Props) {
                   <ArrowRight className="ml-1.5 h-4 w-4" />
                 </Link>
               </Button>
-              {architect.phone && (
-                <>
-                  <Button variant="outline" className="rounded-full" asChild>
-                    <a href={`tel:${architect.phone}`}>
-                      <Phone className="mr-1.5 h-4 w-4" />
-                      {architect.phone}
-                    </a>
-                  </Button>
-                  <Button className="rounded-full bg-[#25D366] hover:bg-[#1ebe5d] text-white" asChild>
-                    <a
-                      href={`https://wa.me/${architect.phone.replace(/[\s\-()]/g, "")}?text=${encodeURIComponent(`Bonjour, je vous contacte via Bati.ma. J'ai un projet à ${cityName} et j'aimerais en discuter avec vous.`)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      WhatsApp
-                      <ArrowRight className="ml-1.5 h-4 w-4" />
-                    </a>
-                  </Button>
-                </>
-              )}
             </div>
           </div>
         </div>
@@ -214,12 +194,6 @@ export default async function ArchitectProfilePage({ params }: Props) {
                     <div className="flex items-center gap-2">
                       <Briefcase className="h-4 w-4 shrink-0 text-stone-400" />
                       {architect.experience} ans d&apos;expérience
-                    </div>
-                  )}
-                  {architect.phone && (
-                    <div className="flex items-center gap-2">
-                      <Phone className="h-4 w-4 shrink-0 text-stone-400" />
-                      <a href={`tel:${architect.phone}`} className="hover:text-[#b5522a]">{architect.phone}</a>
                     </div>
                   )}
                   <div className="flex items-start gap-2">

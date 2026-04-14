@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Search, User, FileText, Gavel } from "lucide-react";
+import { Home, Search, User, BookOpen, Gavel } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 
 const TABS_LEFT = [
@@ -27,7 +27,7 @@ export default function MobileTabBar() {
   const accountLabel = user ? user.first_name || "Compte" : "Connexion";
 
   const TABS_RIGHT = [
-    { href: "/appels-offres", label: "Appels", icon: Gavel },
+    { href: "/guide", label: "Blog", icon: BookOpen },
     { href: accountHref, label: accountLabel, icon: User },
   ];
 

@@ -24,6 +24,7 @@ projects.post("/project-requests", async (c) => {
   const location = (body.location || "").trim()
   const address = (body.address || "").trim()
   const timeline = (body.timeline || "").trim()
+  const architect_id = (body.architect_id || "").trim()
 
   if (!title || !client_name || !project_type || !location) {
     return c.json({ message: "Champs requis : title, client_name, project_type, location" }, 400)
@@ -38,12 +39,20 @@ projects.post("/project-requests", async (c) => {
     return c.json({ message: "Format téléphone invalide" }, 400)
   }
 
+  // Resolve architect name if targeting a specific architect
+  let architect_name: string | null = null
+  if (architect_id) {
+    const arch = await db.architectProfile.findUnique({ where: { id: architect_id }, select: { name: true } })
+    architect_name = arch?.name || null
+  }
+
   const project = await db.projectRequest.create({
     data: {
       title,
       client_name,
       client_email,
       client_phone: client_phone || null,
+      architect_profile_id: architect_id || null,
       description,
       project_type,
       location,
@@ -59,7 +68,7 @@ projects.post("/project-requests", async (c) => {
 
   // Async emails — don't block response
   Promise.all([
-    sendProjectSubmissionToAdmin(project),
+    sendProjectSubmissionToAdmin({ ...project, architect_name }),
     sendProjectConfirmationToClient(project),
   ]).catch((e) => console.error("[email]", e))
 

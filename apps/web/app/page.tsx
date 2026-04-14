@@ -11,6 +11,7 @@ import {
   ArrowRight,
   CheckCircle2,
   MapPin,
+  Calculator,
 } from "lucide-react";
 import { CITIES } from "@/lib/cities";
 import { ARCHITECTS } from "@/lib/architects";
@@ -277,6 +278,27 @@ export default function HomePage() {
           <Button size="lg" className="mt-10 rounded-full" asChild>
             <Link href="/architecte/casablanca">
               Trouver un architecte <ArrowRight className="ml-1 h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+      </section>
+
+      {/* ──── CALCULATEUR CTA ──── */}
+      <section className="bg-[#f5f0ea] px-4 py-14 sm:px-6">
+        <div className="mx-auto max-w-2xl text-center">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#b5522a]/10 mb-5">
+            <Calculator className="h-7 w-7 text-[#b5522a]" />
+          </div>
+          <h2 className="text-2xl font-bold text-stone-900">
+            Estimez le coût de votre projet
+          </h2>
+          <p className="mt-2 text-sm text-stone-500 max-w-md mx-auto">
+            Répondez à 5 questions et obtenez une estimation détaillée en 2&nbsp;minutes — gratuit et sans engagement.
+          </p>
+          <Button className="mt-6 bg-[#b5522a] hover:bg-[#9e4725] text-white rounded-full px-8" asChild>
+            <Link href="/outils/calculateur-cout-construction-maroc">
+              Calculer mon budget
+              <ArrowRight className="ml-1.5 h-4 w-4" />
             </Link>
           </Button>
         </div>

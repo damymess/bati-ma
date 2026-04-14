@@ -20,6 +20,7 @@ type ProjectData = {
   budget_min?: number | null
   budget_max?: number | null
   timeline?: string | null
+  architect_name?: string | null
 }
 
 function formatBudget(min?: number | null, max?: number | null): string {
@@ -48,6 +49,7 @@ export async function sendProjectSubmissionToAdmin(project: ProjectData) {
               ${project.client_phone ? `<tr><td style="padding:8px 0;color:#666">Téléphone</td><td style="padding:8px 0">${esc(project.client_phone)}</td></tr>` : ""}
               <tr><td style="padding:8px 0;color:#666">Type</td><td style="padding:8px 0">${esc(project.project_type)}</td></tr>
               <tr><td style="padding:8px 0;color:#666">Ville</td><td style="padding:8px 0">${esc(project.location)}</td></tr>
+              ${project.architect_name ? `<tr><td style="padding:8px 0;color:#666">Architecte demand\u00e9</td><td style="padding:8px 0;font-weight:600;color:#b5522a">${esc(project.architect_name)}</td></tr>` : ""}
               <tr><td style="padding:8px 0;color:#666">Budget</td><td style="padding:8px 0">${formatBudget(project.budget_min, project.budget_max)}</td></tr>
             </table>
             ${project.description ? `<div style="margin-top:16px;padding:12px;background:#f9f9f9;border-radius:6px"><strong>Description :</strong><br/>${esc(project.description)}</div>` : ""}
