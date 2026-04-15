@@ -7,13 +7,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { GUIDES } from "@/lib/guides";
 
 export const metadata: Metadata = {
-  title: "Guides Architecture Maroc — Conseils, Réglementation & Tendances | Bati.ma",
+  title: "Guides construction et architecture Maroc (15+ guides 2026)",
   description:
-    "Guides pratiques pour les architectes et maîtres d'ouvrage au Maroc : choisir son architecte, permis de construire, honoraires, éco-construction, rénovation de riad et actualités du secteur.",
+    "Tous nos guides pratiques : coûts, permis, honoraires, contrat d'architecte au Maroc. Chiffres 2026, réglementation et simulateurs gratuits.",
   openGraph: {
-    title: "Guides Architecture Maroc | Bati.ma",
+    title: "Guides construction et architecture Maroc | Bati.ma",
     description:
-      "Tous les guides pratiques pour vos projets d'architecture au Maroc.",
+      "Tous nos guides pratiques : coûts, permis, honoraires, contrat d'architecte au Maroc. Chiffres 2026 et simulateurs gratuits.",
   },
   alternates: { canonical: "https://bati.ma/guide" },
 };

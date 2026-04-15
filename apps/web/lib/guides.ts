@@ -20,9 +20,9 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "honoraires-architecte-maroc",
-    title: "Honoraires architecte au Maroc : combien ça coûte vraiment ? (8-15% du projet)",
+    title: "Honoraires architecte Maroc : 8 à 15 % (barème CNOA 2026)",
     description:
-      "Tarifs réels d'un architecte au Maroc : 8 à 15% du montant des travaux. Comparatif pourcentage vs forfait, négociation et ce qui est inclus. Grille 2026.",
+      "Tarifs d'un architecte au Maroc : pourcentage ou forfait ? Barème CNOA, ce qui est inclus et comment négocier. Exemples concrets chiffrés.",
     readTime: "6 min",
     category: "Tarifs",
     content: "",
@@ -38,7 +38,7 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "plan-amenagement-maroc",
-    title: "Plan d'aménagement et zonage au Maroc : COS, CES et règles à connaître",
+    title: "Plan d'aménagement Maroc : zonage, COS, CES (guide 2026)",
     description:
       "Votre terrain est-il constructible ? Décryptage du plan de zonage au Maroc : COS, CES, hauteurs autorisées, démarches agence urbaine. Vérifiez avant d'acheter.",
     readTime: "8 min",
@@ -47,7 +47,7 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "plan-villa-maroc",
-    title: "Plan villa au Maroc : 10 modèles modernes avec prix (150 à 400m²)",
+    title: "Plan villa Maroc : 10 modèles modernes + prix (150-400 m²)",
     description:
       "Plans de villas au Maroc : 10 modèles (moderne, traditionnel, R+1) de 150 à 400m². Prix par ville, étapes conception et architectes spécialisés.",
     readTime: "8 min",
@@ -74,9 +74,9 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "cout-construction-maison-maroc",
-    title: "Combien coûte la construction d'une maison au Maroc ? Budget réel 2026",
+    title: "Coût construction maison Maroc 2026 : budget réel par m²",
     description:
-      "Budget détaillé pour construire au Maroc : gros œuvre, finitions, architecte, terrain. Prix par ville et simulateur. De 300 000 à 2 000 000 MAD selon le projet.",
+      "Budget détaillé construction au Maroc : 300 000 à 2M DH selon surface et ville. Gros œuvre, finitions, architecte. Simulateur gratuit + devis architecte.",
     readTime: "9 min",
     category: "Budget & Tarifs",
     content: "",
@@ -323,7 +323,7 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "maison-prefabriquee-maroc",
-    title: "Maison préfabriquée au Maroc : prix de 2 500 à 8 000 MAD/m² (guide 2026)",
+    title: "Maison préfabriquée Maroc : prix 2 500 à 8 000 DH/m² (2026)",
     description:
       "Maison préfabriquée au Maroc : 5 types comparés (béton, métal, bois, container, SIP), prix réels au m², 10+ fournisseurs et démarches permis de construire.",
     readTime: "8 min",
@@ -332,7 +332,7 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: "prix-construction-m2-maroc",
-    title: "Prix construction au m² au Maroc 2026 : de 3 000 à 10 000 MAD selon la ville",
+    title: "Prix m² construction Maroc : 3 000 à 10 000 DH (tableau 2026)",
     description:
       "Combien coûte le m² de construction au Maroc ? Tableau comparatif par ville (Casablanca, Marrakech, Rabat), type de finition et budget réel. Chiffres 2026.",
     readTime: "9 min",
@@ -406,7 +406,7 @@ export const GUIDES: Guide[] = [
   // Tier 3 — Niche SEO
   {
     slug: "contrat-architecte-maroc",
-    title: "Contrat architecte au Maroc : 7 clauses à vérifier avant de signer",
+    title: "Contrat architecte Maroc : 7 clauses à vérifier (+ modèle)",
     description:
       "Ne signez pas sans lire ceci. Les 7 clauses essentielles du contrat d'architecte au Maroc : honoraires, pénalités, résiliation, assurance. Modèle CNOA inclus.",
     readTime: "8 min",

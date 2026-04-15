@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const data = getCityBySlug(city);
   if (!data) return {};
 
-  const title = `Architecte ${data.name} — Cabinets et Professionnels`;
+  const title = `Architecte ${data.name} : ${data.architectCount}+ cabinets vérifiés (avis & devis)`;
   const description = `Trouvez un architecte à ${data.name} parmi ${data.architectCount}+ professionnels vérifiés. Portfolios, avis et devis gratuit. Résidentiel, commercial, intérieur, patrimoine.`;
 
   return {
