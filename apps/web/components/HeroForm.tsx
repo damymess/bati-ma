@@ -24,29 +24,16 @@ const ARCHI_PROJECT_TYPES = [
   "Autre",
 ];
 
-type Tab = "calculator" | "architect";
-
 export default function HeroForm() {
   const router = useRouter();
-  const [tab, setTab] = useState<Tab>("calculator");
-
-  // Calculator state
-  const [calcType, setCalcType] = useState("");
-  const [calcCity, setCalcCity] = useState("");
 
   // Architect state
   const [archiType, setArchiType] = useState("");
   const [archiCity, setArchiCity] = useState("");
 
-  const handleCalcSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const params = new URLSearchParams();
-    if (calcType) params.set("type", calcType);
-    if (calcCity) params.set("city", calcCity);
-    // Skip to step 3 (surface) if both fields are filled, else go to first step
-    params.set("step", calcType && calcCity ? "3" : calcType || calcCity ? "2" : "1");
-    router.push(`/outils/calculateur-cout-construction-maroc?${params}`);
-  };
+  // Calculator state
+  const [calcType, setCalcType] = useState("");
+  const [calcCity, setCalcCity] = useState("");
 
   const handleArchiSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,86 +43,37 @@ export default function HeroForm() {
     router.push(`/demande-devis${params.toString() ? `?${params}` : ""}`);
   };
 
+  const handleCalcSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const params = new URLSearchParams();
+    if (calcType) params.set("type", calcType);
+    if (calcCity) params.set("city", calcCity);
+    params.set("step", calcType && calcCity ? "3" : calcType || calcCity ? "2" : "1");
+    router.push(`/outils/calculateur-cout-construction-maroc?${params}`);
+  };
+
+  const selectClass =
+    "w-full rounded-lg border border-white/20 bg-white/10 backdrop-blur px-3 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#b5522a] [&>option]:text-stone-900";
+
   return (
-    <div className="w-full max-w-2xl mx-auto">
-      {/* Tab buttons */}
-      <div className="flex gap-1 p-1 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 mb-4">
-        <button
-          onClick={() => setTab("calculator")}
-          className={`flex-1 flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all ${
-            tab === "calculator"
-              ? "bg-white text-stone-900 shadow-md"
-              : "text-white/80 hover:text-white"
-          }`}
-        >
-          <Calculator className="h-4 w-4" />
-          Estimer mon budget
-        </button>
-        <button
-          onClick={() => setTab("architect")}
-          className={`flex-1 flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all ${
-            tab === "architect"
-              ? "bg-white text-stone-900 shadow-md"
-              : "text-white/80 hover:text-white"
-          }`}
-        >
-          <Search className="h-4 w-4" />
-          Trouver un architecte
-        </button>
-      </div>
-
-      {/* Calculator form */}
-      {tab === "calculator" && (
-        <form
-          onSubmit={handleCalcSubmit}
-          className="flex flex-col sm:flex-row sm:items-stretch gap-2 w-full"
-        >
-          <select
-            value={calcType}
-            onChange={(e) => setCalcType(e.target.value)}
-            className="flex-1 rounded-xl border border-white/20 bg-white/10 backdrop-blur-md px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#b5522a] [&>option]:text-stone-900"
-          >
-            <option value="">Type de projet</option>
-            {CALC_PROJECT_TYPES.map((t) => (
-              <option key={t.value} value={t.value}>
-                {t.label}
-              </option>
-            ))}
-          </select>
-
-          <select
-            value={calcCity}
-            onChange={(e) => setCalcCity(e.target.value)}
-            className="flex-1 rounded-xl border border-white/20 bg-white/10 backdrop-blur-md px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#b5522a] [&>option]:text-stone-900"
-          >
-            <option value="">Ville</option>
-            {CITIES.map((c) => (
-              <option key={c.slug} value={c.slug}>
-                {c.name}
-              </option>
-            ))}
-          </select>
-
-          <button
-            type="submit"
-            className="flex items-center justify-center gap-2 rounded-xl bg-[#b5522a] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#9a4522] whitespace-nowrap shadow-lg shadow-[#b5522a]/30"
-          >
-            Calculer mon budget
-            <ArrowRight className="h-4 w-4" />
-          </button>
-        </form>
-      )}
-
-      {/* Architect form */}
-      {tab === "architect" && (
-        <form
-          onSubmit={handleArchiSubmit}
-          className="flex flex-col sm:flex-row sm:items-stretch gap-2 w-full"
-        >
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-4xl mx-auto">
+      {/* ─── Card 1 : Architecte ─── */}
+      <div className="rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 p-5 sm:p-6 flex flex-col">
+        <div className="flex items-center gap-2 mb-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#b5522a]/20">
+            <Search className="h-4 w-4 text-[#e07a55]" />
+          </div>
+          <h3 className="font-bold text-white">Trouver un architecte</h3>
+        </div>
+        <p className="text-xs text-white/60 mb-4 min-h-[2.5rem]">
+          Comparez les portfolios et recevez 3 devis gratuits sous 48h.
+        </p>
+        <form onSubmit={handleArchiSubmit} className="space-y-2 mt-auto">
           <select
             value={archiType}
             onChange={(e) => setArchiType(e.target.value)}
-            className="flex-1 rounded-xl border border-white/20 bg-white/10 backdrop-blur-md px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#b5522a] [&>option]:text-stone-900"
+            className={selectClass}
+            aria-label="Type de projet"
           >
             <option value="">Type de projet</option>
             {ARCHI_PROJECT_TYPES.map((t) => (
@@ -148,7 +86,8 @@ export default function HeroForm() {
           <select
             value={archiCity}
             onChange={(e) => setArchiCity(e.target.value)}
-            className="flex-1 rounded-xl border border-white/20 bg-white/10 backdrop-blur-md px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#b5522a] [&>option]:text-stone-900"
+            className={selectClass}
+            aria-label="Ville"
           >
             <option value="">Ville</option>
             {CITIES.map((c) => (
@@ -160,20 +99,63 @@ export default function HeroForm() {
 
           <button
             type="submit"
-            className="flex items-center justify-center gap-2 rounded-xl bg-[#b5522a] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#9a4522] whitespace-nowrap shadow-lg shadow-[#b5522a]/30"
+            className="w-full flex items-center justify-center gap-2 rounded-lg bg-[#b5522a] px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-[#9a4522] shadow-lg shadow-[#b5522a]/20 mt-3"
           >
             Trouver un architecte
             <ArrowRight className="h-4 w-4" />
           </button>
         </form>
-      )}
+      </div>
 
-      {/* Helper text */}
-      <p className="mt-3 text-center text-xs text-white/60">
-        {tab === "calculator"
-          ? "Estimation gratuite en 2 minutes — sans engagement"
-          : "Recevez 3 devis gratuits sous 48h"}
-      </p>
+      {/* ─── Card 2 : Calculateur ─── */}
+      <div className="rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 p-5 sm:p-6 flex flex-col">
+        <div className="flex items-center gap-2 mb-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#b5522a]/20">
+            <Calculator className="h-4 w-4 text-[#e07a55]" />
+          </div>
+          <h3 className="font-bold text-white">Estimer mon budget</h3>
+        </div>
+        <p className="text-xs text-white/60 mb-4 min-h-[2.5rem]">
+          Estimation chiffrée en 2 minutes, gratuit et sans engagement.
+        </p>
+        <form onSubmit={handleCalcSubmit} className="space-y-2 mt-auto">
+          <select
+            value={calcType}
+            onChange={(e) => setCalcType(e.target.value)}
+            className={selectClass}
+            aria-label="Type de projet"
+          >
+            <option value="">Type de projet</option>
+            {CALC_PROJECT_TYPES.map((t) => (
+              <option key={t.value} value={t.value}>
+                {t.label}
+              </option>
+            ))}
+          </select>
+
+          <select
+            value={calcCity}
+            onChange={(e) => setCalcCity(e.target.value)}
+            className={selectClass}
+            aria-label="Ville"
+          >
+            <option value="">Ville</option>
+            {CITIES.map((c) => (
+              <option key={c.slug} value={c.slug}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+
+          <button
+            type="submit"
+            className="w-full flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-3 text-sm font-bold text-[#b5522a] transition-colors hover:bg-white/90 shadow-lg shadow-black/20 mt-3"
+          >
+            Calculer mon budget
+            <ArrowRight className="h-4 w-4" />
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

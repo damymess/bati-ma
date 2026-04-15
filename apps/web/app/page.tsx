@@ -11,7 +11,6 @@ import {
   ArrowRight,
   CheckCircle2,
   MapPin,
-  Calculator,
 } from "lucide-react";
 import { CITIES } from "@/lib/cities";
 import { ARCHITECTS } from "@/lib/architects";
@@ -78,7 +77,7 @@ export default function HomePage() {
         />
         <div className="pointer-events-none absolute inset-0 bg-stone-950/70" />
 
-        <div className="relative mx-auto flex max-w-3xl flex-col items-center px-4 py-16 sm:px-8 sm:py-20 lg:py-28">
+        <div className="relative mx-auto flex max-w-5xl flex-col items-center px-4 py-16 sm:px-8 sm:py-20 lg:py-28">
           {/* Social proof mini */}
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm px-4 py-1.5 mb-6">
             <span className="text-amber-400 text-sm font-medium">★ 4.7/5</span>
@@ -88,18 +87,18 @@ export default function HomePage() {
 
           {/* Headline */}
           <h1 className="text-center text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.1]">
-            Construisez votre projet
+            Votre projet de construction
             <br />
             <span className="bg-gradient-to-r from-[#b5522a] to-[#e07a55] bg-clip-text text-transparent">
               au Maroc
             </span>
           </h1>
 
-          <p className="mt-5 text-center text-base sm:text-lg leading-relaxed text-stone-400 max-w-lg">
-            Estimez votre budget en 2 minutes ou trouvez un architecte qualifié dans votre ville.
+          <p className="mt-5 text-center text-base sm:text-lg leading-relaxed text-stone-400 max-w-xl">
+            Trouvez un architecte qualifié ou estimez votre budget — gratuit, en 2 minutes.
           </p>
 
-          {/* Tabbed form: Calculator (default) + Architect search */}
+          {/* Hero dual-path: architect search + calculator cards */}
           <div className="mt-10 w-full">
             <HeroForm />
           </div>
@@ -277,27 +276,6 @@ export default function HomePage() {
           <Button size="lg" className="mt-10 rounded-full" asChild>
             <Link href="/architecte/casablanca">
               Trouver un architecte <ArrowRight className="ml-1 h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
-      </section>
-
-      {/* ──── CALCULATEUR CTA ──── */}
-      <section className="bg-[#f5f0ea] px-4 py-14 sm:px-6">
-        <div className="mx-auto max-w-2xl text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#b5522a]/10 mb-5">
-            <Calculator className="h-7 w-7 text-[#b5522a]" />
-          </div>
-          <h2 className="text-2xl font-bold text-stone-900">
-            Estimez le coût de votre projet
-          </h2>
-          <p className="mt-2 text-sm text-stone-500 max-w-md mx-auto">
-            Répondez à 5 questions et obtenez une estimation détaillée en 2&nbsp;minutes — gratuit et sans engagement.
-          </p>
-          <Button className="mt-6 bg-[#b5522a] hover:bg-[#9e4725] text-white rounded-full px-8" asChild>
-            <Link href="/outils/calculateur-cout-construction-maroc">
-              Calculer mon budget
-              <ArrowRight className="ml-1.5 h-4 w-4" />
             </Link>
           </Button>
         </div>
