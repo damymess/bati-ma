@@ -16,7 +16,7 @@ import {
 import { CITIES } from "@/lib/cities";
 import { ARCHITECTS } from "@/lib/architects";
 import ArchitectCard from "@/components/ArchitectCard";
-import QuickLeadForm from "@/components/QuickLeadForm";
+import HeroForm from "@/components/HeroForm";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -88,7 +88,7 @@ export default function HomePage() {
 
           {/* Headline */}
           <h1 className="text-center text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.1]">
-            Trouvez votre architecte
+            Construisez votre projet
             <br />
             <span className="bg-gradient-to-r from-[#b5522a] to-[#e07a55] bg-clip-text text-transparent">
               au Maroc
@@ -96,13 +96,12 @@ export default function HomePage() {
           </h1>
 
           <p className="mt-5 text-center text-base sm:text-lg leading-relaxed text-stone-400 max-w-lg">
-            Décrivez votre projet, comparez les portfolios et recevez
-            un devis gratuit sous 48h.
+            Estimez votre budget en 2 minutes ou trouvez un architecte qualifié dans votre ville.
           </p>
 
-          {/* Inline form */}
+          {/* Tabbed form: Calculator (default) + Architect search */}
           <div className="mt-10 w-full">
-            <QuickLeadForm variant="inline" />
+            <HeroForm />
           </div>
 
           {/* Trust badges */}

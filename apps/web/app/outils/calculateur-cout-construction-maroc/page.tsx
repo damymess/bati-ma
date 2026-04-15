@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, Suspense } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { ArrowLeft, Copy, Check, ChevronRight } from "lucide-react";
 import Breadcrumb from "@/components/Breadcrumb";
 import { Button } from "@/components/ui/button";
@@ -66,9 +67,26 @@ function ProgressBar({ step }: { step: number }) {
 /* ─── Main Component ─────────────────────────────────────────────── */
 
 export default function CalculateurPage() {
-  const [step, setStep] = useState(0);
-  const [city, setCity] = useState("");
-  const [projectType, setProjectType] = useState<ProjectType | "">("");
+  return (
+    <Suspense fallback={<div className="flex min-h-[60vh] items-center justify-center"><div className="text-stone-400">Chargement…</div></div>}>
+      <CalculateurInner />
+    </Suspense>
+  );
+}
+
+function CalculateurInner() {
+  const searchParams = useSearchParams();
+  const validTypes: ProjectType[] = ["villa", "appartement", "immeuble-r2", "immeuble-r3", "riad", "commercial"];
+  const initialType = searchParams.get("type") as ProjectType | null;
+  const initialCity = searchParams.get("city");
+  const initialStepParam = parseInt(searchParams.get("step") || "0", 10);
+  const validCity = initialCity && CITIES.some((c) => c.slug === initialCity) ? initialCity : "";
+  const validType = initialType && validTypes.includes(initialType) ? initialType : "";
+  const validStep = isNaN(initialStepParam) ? 0 : Math.max(0, Math.min(initialStepParam, 5));
+
+  const [step, setStep] = useState(validStep);
+  const [city, setCity] = useState(validCity);
+  const [projectType, setProjectType] = useState<ProjectType | "">(validType);
   const [quality, setQuality] = useState<QualityLevel>("moyen");
   const [surface, setSurface] = useState(150);
   const [landSurface, setLandSurface] = useState<number | null>(null);
