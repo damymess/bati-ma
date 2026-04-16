@@ -95,7 +95,6 @@ function CalculateurInner() {
   // Lead capture
   const [leadName, setLeadName] = useState("");
   const [leadPhone, setLeadPhone] = useState("");
-  const [showEmailField, setShowEmailField] = useState(false);
   const [leadEmail, setLeadEmail] = useState("");
   const [leadSubmitted, setLeadSubmitted] = useState(false);
   const [leadLoading, setLeadLoading] = useState(false);
@@ -395,22 +394,18 @@ function CalculateurInner() {
               {/* ─── Lead capture gate ─── */}
               {!leadSubmitted ? (
                 <div className="bg-[#f4ece7] border border-[#b5522a]/20 rounded-2xl p-6 sm:p-8">
-                  <h3 className="text-lg font-bold text-stone-900 mb-2 text-center">Recevez le d&eacute;tail complet + 3 devis d&apos;architectes</h3>
+                  <h3 className="text-lg font-bold text-stone-900 mb-2 text-center">Recevez votre estimation d&eacute;taill&eacute;e par email</h3>
                   <ul className="text-sm text-stone-600 space-y-1.5 mb-6 max-w-xs mx-auto">
-                    <li className="flex items-start gap-2"><Check className="h-4 w-4 text-[#b5522a] mt-0.5 flex-shrink-0" /> Ventilation poste par poste</li>
+                    <li className="flex items-start gap-2"><Check className="h-4 w-4 text-[#b5522a] mt-0.5 flex-shrink-0" /> Estimation compl&egrave;te poste par poste</li>
                     <li className="flex items-start gap-2"><Check className="h-4 w-4 text-[#b5522a] mt-0.5 flex-shrink-0" /> Estimation terrain &agrave; {cityName}</li>
-                    <li className="flex items-start gap-2"><Check className="h-4 w-4 text-[#b5522a] mt-0.5 flex-shrink-0" /> 3 devis personnalis&eacute;s d&apos;architectes v&eacute;rifi&eacute;s</li>
+                    <li className="flex items-start gap-2"><Check className="h-4 w-4 text-[#b5522a] mt-0.5 flex-shrink-0" /> Mise en relation avec des architectes qualifi&eacute;s</li>
                   </ul>
                   <div className="space-y-3 max-w-sm mx-auto">
                     <Input placeholder="Votre nom" value={leadName} onChange={(e) => setLeadName(e.target.value)} className="h-12 text-base" />
-                    <Input type="tel" placeholder="Telephone (ex: 0661234567)" value={leadPhone} onChange={(e) => setLeadPhone(e.target.value)} className="h-12 text-base" />
-                    {showEmailField ? (
-                      <Input type="email" placeholder="Email (optionnel)" value={leadEmail} onChange={(e) => setLeadEmail(e.target.value)} className="h-12 text-base" />
-                    ) : (
-                      <button onClick={() => setShowEmailField(true)} className="text-xs text-stone-500 hover:text-[#b5522a] underline">+ Ajouter mon email</button>
-                    )}
-                    <Button size="lg" className="w-full h-12 rounded-xl text-base" onClick={handleLeadSubmit} disabled={!leadName.trim() || !leadPhone.trim() || leadLoading}>
-                      {leadLoading ? "Envoi..." : "Recevoir mon devis"}
+                    <Input type="email" placeholder="Votre email" value={leadEmail} onChange={(e) => setLeadEmail(e.target.value)} className="h-12 text-base" />
+                    <Input type="tel" placeholder="Téléphone (ex: 0661234567)" value={leadPhone} onChange={(e) => setLeadPhone(e.target.value)} className="h-12 text-base" />
+                    <Button size="lg" className="w-full h-12 rounded-xl text-base" onClick={handleLeadSubmit} disabled={!leadName.trim() || !leadEmail.trim() || !leadPhone.trim() || leadLoading}>
+                      {leadLoading ? "Envoi..." : "Recevoir mon estimation par email"}
                     </Button>
                     <p className="text-xs text-stone-400 text-center">Gratuit, confidentiel, sans engagement</p>
                   </div>

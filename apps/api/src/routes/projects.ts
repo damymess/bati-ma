@@ -2,7 +2,7 @@ import { Hono } from "hono"
 import { db } from "../lib/db.js"
 import { extractToken, verifyToken } from "../lib/jwt.js"
 import { getEffectiveTier, canUnlockContact } from "../lib/subscription.js"
-import { sendProjectSubmissionToAdmin, sendProjectConfirmationToClient } from "../lib/email.js"
+import { sendProjectSubmissionToAdmin, sendProjectConfirmationToClient, sendEstimationToClient } from "../lib/email.js"
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -67,9 +67,12 @@ projects.post("/project-requests", async (c) => {
   })
 
   // Async emails — don't block response
+  const isCalculator = title.startsWith("Estimation calculateur")
   Promise.all([
     sendProjectSubmissionToAdmin({ ...project, architect_name }),
-    sendProjectConfirmationToClient(project),
+    isCalculator && project.client_email
+      ? sendEstimationToClient(project)
+      : sendProjectConfirmationToClient(project),
   ]).catch((e) => console.error("[email]", e))
 
   return c.json({ project_request: project }, 201)

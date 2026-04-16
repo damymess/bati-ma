@@ -159,3 +159,55 @@ export async function sendProjectConfirmationToClient(project: ProjectData) {
     console.error("[email] client confirm failed:", e)
   }
 }
+
+export async function sendEstimationToClient(project: ProjectData) {
+  if (!process.env.RESEND_API_KEY || !project.client_email) return
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: project.client_email,
+      subject: `Votre estimation : ${formatBudget(project.budget_min, project.budget_max)} — Bati.ma`,
+      html: `
+        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333">
+          <div style="background:#b5522a;color:white;padding:20px 24px;border-radius:8px 8px 0 0">
+            <h1 style="margin:0;font-size:20px">Votre estimation de budget</h1>
+            <p style="margin:4px 0 0;font-size:13px;opacity:0.85">Bati.ma — Calculateur construction Maroc</p>
+          </div>
+          <div style="border:1px solid #e5e5e5;border-top:0;padding:24px;border-radius:0 0 8px 8px">
+            <p>Bonjour <strong>${esc(project.client_name)}</strong>,</p>
+            <p>Voici l'estimation de votre projet de construction :</p>
+
+            <div style="background:linear-gradient(135deg,#f5f0ea,#fff);border:2px solid #b5522a33;border-radius:12px;padding:24px;margin:20px 0;text-align:center">
+              <p style="margin:0 0 8px;color:#666;font-size:13px">Budget estim\u00e9</p>
+              <p style="margin:0;font-size:28px;font-weight:bold;color:#b5522a">${formatBudget(project.budget_min, project.budget_max)}</p>
+              <p style="margin:8px 0 0;color:#999;font-size:12px">Hors terrain \u00b7 Prix indicatifs 2026</p>
+            </div>
+
+            <table style="width:100%;border-collapse:collapse;margin:16px 0">
+              <tr><td style="padding:8px 0;color:#666;width:120px">Type de projet</td><td style="padding:8px 0;font-weight:600">${esc(project.project_type)}</td></tr>
+              <tr><td style="padding:8px 0;color:#666">Ville</td><td style="padding:8px 0;font-weight:600">${esc(project.location)}</td></tr>
+            </table>
+
+            ${project.description ? `<div style="margin:16px 0;padding:12px;background:#f9f9f9;border-radius:6px;font-size:13px;color:#555">${esc(project.description).replace(/\n/g, "<br/>")}</div>` : ""}
+
+            <div style="text-align:center;margin:24px 0">
+              <a href="https://bati.ma/architecte/${encodeURIComponent(project.location.toLowerCase())}" style="display:inline-block;background:#b5522a;color:white;text-decoration:none;padding:14px 32px;border-radius:8px;font-weight:600;font-size:14px">
+                Trouver un architecte \u00e0 ${esc(project.location)}
+              </a>
+            </div>
+
+            <p style="color:#666;font-size:13px">Cette estimation est indicative. Pour un devis pr\u00e9cis, un architecte doit \u00e9tudier votre terrain et vos besoins sp\u00e9cifiques.</p>
+
+            <hr style="border:0;border-top:1px solid #eee;margin:24px 0"/>
+            <p style="color:#999;font-size:12px;text-align:center">
+              <a href="https://bati.ma/outils/calculateur-cout-construction-maroc" style="color:#b5522a;text-decoration:none">Refaire une estimation</a>
+              &nbsp;\u00b7&nbsp;
+              <a href="https://bati.ma" style="color:#b5522a;text-decoration:none">bati.ma</a>
+            </p>
+          </div>
+        </div>`,
+    })
+  } catch (e) {
+    console.error("[email] estimation to client failed:", e)
+  }
+}
