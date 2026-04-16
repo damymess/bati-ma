@@ -181,3 +181,82 @@ model AppelOffre {
 
   @@map("appel_offre")
 }
+
+// ─── Reviews (Avis clients vérifiés) ────────────────────────────────────────
+
+model Review {
+  id                   String    @id @default(cuid())
+  architect_profile_id String
+  project_request_id   String?   // Lien optionnel vers projet (preuve achat)
+  client_name          String
+  client_email         String
+  rating               Int       // 1-5
+  title                String?
+  comment              String
+  photos               Json      @default("[]") // URLs photos avant/après
+  status               String    @default("pending") // pending | approved | rejected
+  admin_note           String?
+  is_verified          Boolean   @default(false) // True si lié à un projet accepté
+  created_at           DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at           DateTime  @default(now()) @updatedAt @db.Timestamptz(6)
+  deleted_at           DateTime? @db.Timestamptz(6)
+
+  @@index([architect_profile_id, status])
+  @@map("review")
+}
+
+// ─── Verification Documents (Badge Vérifié bati.ma) ─────────────────────────
+
+model VerificationDocument {
+  id                   String    @id @default(cuid())
+  architect_profile_id String
+  document_type        String    // patente | oam | cnss | assurance | cin | rc
+  document_url         String    // URL upload
+  status               String    @default("pending") // pending | approved | rejected
+  admin_note           String?
+  reviewed_at          DateTime? @db.Timestamptz(6)
+  reviewed_by          String?
+  expires_at           DateTime? @db.Timestamptz(6) // certaines pièces expirent (CNSS)
+  created_at           DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at           DateTime  @default(now()) @updatedAt @db.Timestamptz(6)
+
+  @@index([architect_profile_id, status])
+  @@map("verification_document")
+}
+
+// ─── Subscription (Stripe / CMI tracking) ───────────────────────────────────
+
+model Subscription {
+  id                      String    @id @default(cuid())
+  architect_profile_id    String    @unique
+  tier                    String    // essentiel | pro | elite
+  billing_cycle           String    @default("monthly") // monthly | annual
+  provider                String    @default("stripe") // stripe | cmi | manual
+  provider_subscription_id String?   @unique // Stripe sub ID or CMI ref
+  provider_customer_id    String?
+  status                  String    @default("incomplete") // active | past_due | canceled | incomplete | trialing
+  current_period_start    DateTime? @db.Timestamptz(6)
+  current_period_end      DateTime? @db.Timestamptz(6)
+  cancel_at_period_end    Boolean   @default(false)
+  amount_mad              Int       // montant en MAD (centimes pour Stripe)
+  metadata                Json      @default("{}")
+  created_at              DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at              DateTime  @default(now()) @updatedAt @db.Timestamptz(6)
+
+  @@map("subscription")
+}
+
+// ─── Shortlist Credits (modèle MyBuilder — achat de leads à l'unité) ────────
+
+model ShortlistCredit {
+  id                   String    @id @default(cuid())
+  architect_profile_id String
+  project_request_id   String
+  credits_spent        Int       @default(1)
+  price_paid_mad       Int       // Prix payé pour ce lead
+  created_at           DateTime  @default(now()) @db.Timestamptz(6)
+
+  @@unique([architect_profile_id, project_request_id])
+  @@index([architect_profile_id])
+  @@map("shortlist_credit")
+}

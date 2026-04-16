@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Star, Globe, Briefcase, MapPin, CheckCircle2, ArrowLeft, ArrowRight } from "lucide-react";
+import { Star, Globe, Briefcase, MapPin, CheckCircle2, ArrowLeft, ArrowRight, ShieldCheck } from "lucide-react";
 import Breadcrumb from "@/components/Breadcrumb";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { getCityBySlug } from "@/lib/cities";
 import { getArchitectById, getArchitectsByCity } from "@/lib/architects";
+import ReviewsList from "@/components/ReviewsList";
+import ReviewForm from "@/components/ReviewForm";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -108,6 +110,12 @@ export default async function ArchitectProfilePage({ params }: Props) {
                 <h1 className="text-2xl sm:text-3xl font-bold text-stone-900">{architect.name}</h1>
                 {architect.premium && (
                   <Badge className="bg-[#b5522a] text-white text-xs">Premium</Badge>
+                )}
+                {architect.verified && (
+                  <Badge className="bg-green-600 text-white text-xs gap-1">
+                    <ShieldCheck className="h-3 w-3" />
+                    Vérifié bati.ma
+                  </Badge>
                 )}
               </div>
 
@@ -212,6 +220,23 @@ export default async function ArchitectProfilePage({ params }: Props) {
                 </div>
               </CardContent>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Avis clients */}
+      <section className="py-10 px-4 sm:px-6 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-xl font-bold text-stone-900 mb-6">
+            Avis clients sur {architect.name}
+          </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
+              <ReviewsList architectId={id} />
+            </div>
+            <div>
+              <ReviewForm architectId={id} architectName={architect.name} />
+            </div>
           </div>
         </div>
       </section>

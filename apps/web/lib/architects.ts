@@ -19,6 +19,7 @@ export type Architect = {
   description: string;
   phone?: string;
   premium: boolean;
+  verified: boolean;
 };
 
 const API_BASE =
@@ -49,6 +50,7 @@ function mapToFrontend(a: Record<string, any>, index: number): Architect {
     description: cleanText(a.description),
     phone: a.phone ? cleanText(a.phone) || undefined : undefined,
     premium: Boolean(a.premium),
+    verified: Boolean(a.verified),
   };
 }
 
@@ -105,6 +107,7 @@ export const FALLBACK_ARCHITECTS: Architect[] = [
     description:
       "Cabinet spécialisé dans les projets résidentiels haut de gamme et les immeubles commerciaux à Casablanca. Expertise reconnue en conception durable.",
     premium: true,
+    verified: false,
   },
   {
     id: "casa-002",
@@ -117,6 +120,7 @@ export const FALLBACK_ARCHITECTS: Architect[] = [
     description:
       "Cabinet d'architecture et d'intérieur alliant tradition marocaine et modernité. Projets résidentiels et aménagements haut de gamme.",
     premium: false,
+    verified: false,
   },
   {
     id: "casa-003",
@@ -129,6 +133,7 @@ export const FALLBACK_ARCHITECTS: Architect[] = [
     description:
       "Studio créatif spécialisé dans le design commercial, hôtelier et l'architecture d'intérieur contemporaine.",
     premium: true,
+    verified: false,
   },
   {
     id: "marr-001",
@@ -141,6 +146,7 @@ export const FALLBACK_ARCHITECTS: Architect[] = [
     description:
       "Expert en rénovation et transformation de riads à Marrakech. Maîtrise parfaite des techniques traditionnelles (zellige, tadelakt, moucharabieh).",
     premium: true,
+    verified: false,
   },
   {
     id: "marr-002",
@@ -153,6 +159,7 @@ export const FALLBACK_ARCHITECTS: Architect[] = [
     description:
       "Jeune cabinet dynamique proposant des designs contemporains inspirés de l'art de vivre marocain. Villas et appartements haut de gamme.",
     premium: true,
+    verified: false,
   },
   {
     id: "rabat-001",
@@ -165,6 +172,7 @@ export const FALLBACK_ARCHITECTS: Architect[] = [
     description:
       "Cabinet intégré alliant urbanisme et architecture. Spécialiste des projets institutionnels et des opérations de réhabilitation patrimoniale à Rabat.",
     premium: true,
+    verified: false,
   },
   {
     id: "tanger-001",
@@ -177,6 +185,7 @@ export const FALLBACK_ARCHITECTS: Architect[] = [
     description:
       "Cabinet dynamique accompagnant le boom immobilier de Tanger. Villas balnéaires, immeubles résidentiels et projets commerciaux.",
     premium: true,
+    verified: false,
   },
   {
     id: "agadir-001",
@@ -189,6 +198,7 @@ export const FALLBACK_ARCHITECTS: Architect[] = [
     description:
       "Cabinet agadiri spécialisé dans l'architecture durable et les projets touristiques. Expertises en construction bioclimatique adaptée au climat du Souss.",
     premium: true,
+    verified: false,
   },
   {
     id: "fes-001",
@@ -201,6 +211,7 @@ export const FALLBACK_ARCHITECTS: Architect[] = [
     description:
       "Cabinet de référence pour la restauration et la réhabilitation de la médina de Fès. Maîtrise unique des techniques artisanales et des contraintes patrimoniales.",
     premium: true,
+    verified: false,
   },
   {
     id: "meknes-001",
@@ -213,6 +224,7 @@ export const FALLBACK_ARCHITECTS: Architect[] = [
     description:
       "Cabinet spécialisé dans la construction résidentielle et la restauration du patrimoine historique de Meknès. Projets alliant modernité et héritage impérial.",
     premium: true,
+    verified: false,
   },
   {
     id: "oujda-001",
@@ -225,6 +237,7 @@ export const FALLBACK_ARCHITECTS: Architect[] = [
     description:
       "Cabinet d'architecture basé à Oujda, spécialisé dans les projets résidentiels et commerciaux de la région de l'Oriental.",
     premium: true,
+    verified: false,
   },
   {
     id: "kenitra-001",
@@ -237,6 +250,7 @@ export const FALLBACK_ARCHITECTS: Architect[] = [
     description:
       "Cabinet kénitrain dynamique accompagnant le développement urbain de la ville. Projets résidentiels, lotissements et aménagements urbains.",
     premium: true,
+    verified: false,
   },
   {
     id: "tetouan-001",
@@ -249,6 +263,7 @@ export const FALLBACK_ARCHITECTS: Architect[] = [
     description:
       "Cabinet spécialisé dans la rénovation de la médina de Tétouan (UNESCO) et les villas contemporaines de la côte méditerranéenne.",
     premium: true,
+    verified: false,
   },
   {
     id: "nador-001",
@@ -261,6 +276,7 @@ export const FALLBACK_ARCHITECTS: Architect[] = [
     description:
       "Cabinet d'architecture à Nador spécialisé dans les projets résidentiels et commerciaux. Expertise en construction adaptée au climat méditerranéen du Rif.",
     premium: true,
+    verified: false,
   },
   {
     id: "nador-002",
@@ -273,6 +289,7 @@ export const FALLBACK_ARCHITECTS: Architect[] = [
     description:
       "Studio créatif accompagnant le développement touristique de la lagune de Marchica. Projets hôteliers et résidences balnéaires écologiques.",
     premium: false,
+    verified: false,
   },
   {
     id: "el-jadida-001",
@@ -285,6 +302,7 @@ export const FALLBACK_ARCHITECTS: Architect[] = [
     description:
       "Cabinet d'El Jadida spécialisé dans les projets résidentiels et l'aménagement urbain. Expertise en construction côtière et réhabilitation de la cité portugaise.",
     premium: true,
+    verified: false,
   },
 ];
 

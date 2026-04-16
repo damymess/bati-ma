@@ -12,6 +12,8 @@ import {
   Building2,
   Crown,
   Shield,
+  ShieldCheck,
+  Star,
 } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 
@@ -52,6 +54,8 @@ export default function DashboardLayout({
     ? [
         { href: "/dashboard/admin", icon: LayoutDashboard, label: "Vue d'ensemble" },
         { href: "/dashboard/admin/projets", icon: FolderOpen, label: "Projets soumis" },
+        { href: "/dashboard/admin/avis", icon: Star, label: "Avis à modérer" },
+        { href: "/dashboard/admin/verifications", icon: ShieldCheck, label: "Vérifications" },
       ]
     : isArchitect
     ? [
@@ -59,6 +63,7 @@ export default function DashboardLayout({
         { href: `${basePath}/profil`, icon: User, label: "Mon profil" },
         { href: `${basePath}/projets`, icon: FolderOpen, label: "Demandes de devis" },
         { href: `${basePath}/abonnement`, icon: Crown, label: "Abonnement" },
+        { href: `${basePath}/verification`, icon: ShieldCheck, label: "Vérification" },
         { href: `${basePath}/forum`, icon: MessageSquare, label: "Forum" },
       ]
     : [

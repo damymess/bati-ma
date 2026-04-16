@@ -14,6 +14,9 @@ import { contact } from "./routes/contact.js"
 import { auth } from "./routes/auth.js"
 import { upload } from "./routes/upload.js"
 import { matching } from "./routes/matching.js"
+import { subscriptions } from "./routes/subscriptions.js"
+import { reviews } from "./routes/reviews.js"
+import { verifications } from "./routes/verifications.js"
 import { authRateLimit } from "./middleware/rateLimit.js"
 
 const app = new Hono()
@@ -61,9 +64,14 @@ app.route("/store/contact", contact)
 app.route("/store/auth", auth)
 app.route("/store/architects/portfolio", upload)
 app.route("/store/matching", matching)
+app.route("/store/subscriptions", subscriptions)
+app.route("/store/reviews", reviews)
+app.route("/store/verifications", verifications)
 
 // Admin routes
 app.route("/admin", admin)
+app.route("/admin/reviews", reviews)
+app.route("/admin/verifications", verifications)
 
 // Start server
 const port = Number(process.env.PORT) || 9000
