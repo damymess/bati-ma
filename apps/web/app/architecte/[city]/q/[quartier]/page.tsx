@@ -56,6 +56,14 @@ export default async function QuartierPage({ params }: Props) {
       q: `Comment trouver le meilleur architecte à ${q.name} ?`,
       a: `Comparez les profils, portfolios et avis des architectes sur Bati.ma. Demandez plusieurs devis pour trouver le professionnel adapté à votre projet à ${q.name}.`,
     },
+    {
+      q: `Faut-il un permis de construire à ${q.name}, ${q.cityName} ?`,
+      a: `Oui, un permis de construire est obligatoire pour toute construction neuve ou extension à ${q.name}. L'architecte prépare le dossier technique et le dépose auprès de la commune de ${q.cityName}. Le délai moyen d'obtention est de 2 à 3 mois.`,
+    },
+    {
+      q: `Quels types de projets peut-on réaliser à ${q.name} ?`,
+      a: `${q.description} Les architectes de ${q.name} réalisent des constructions neuves (villas, immeubles), des rénovations, de l'aménagement intérieur et des projets commerciaux, dans le respect du plan d'aménagement local.`,
+    },
   ];
 
   const faqSchema = {
@@ -129,19 +137,47 @@ export default async function QuartierPage({ params }: Props) {
       <section className="py-10 px-4 sm:px-6 bg-white">
         <div className="max-w-3xl mx-auto space-y-4 text-sm text-stone-600 leading-relaxed">
           <h2 className="text-xl font-bold text-stone-900">
-            Trouver un architecte à {q.name}
+            Trouver un architecte à {q.name}, {q.cityName}
           </h2>
           <p>
             {q.name} est un quartier de {q.cityName} qui offre de nombreuses opportunités
-            architecturales. Que vous souhaitiez construire, rénover ou aménager un espace,
-            les architectes référencés sur Bati.ma connaissent parfaitement les spécificités
-            de {q.name} : réglementation d&apos;urbanisme locale, style architectural du quartier
-            et contraintes techniques.
+            architecturales. {q.description} Que vous souhaitiez construire, rénover ou aménager
+            un espace, les architectes référencés sur Bati.ma connaissent parfaitement les
+            spécificités de {q.name} : réglementation d&apos;urbanisme locale, style
+            architectural du quartier et contraintes techniques.
+          </p>
+
+          <h3 className="text-lg font-semibold text-stone-800 pt-2">
+            Pourquoi choisir un architecte local à {q.name} ?
+          </h3>
+          <p>
+            Un architecte qui connaît {q.name} maîtrise le plan d&apos;aménagement de la
+            commune, les règles de hauteur, de prospect et de COS (coefficient d&apos;occupation
+            du sol) propres au quartier. Cette expertise locale permet d&apos;éviter les
+            refus de permis de construire et d&apos;optimiser la surface constructible de
+            votre terrain.
           </p>
           <p>
-            Pour votre projet à {q.name}, nous vous recommandons de comparer au moins 3
-            devis d&apos;architectes. Bati.ma simplifie cette démarche en regroupant les profils,
-            portfolios et avis des professionnels de {q.cityName}.
+            À {q.cityName}, les honoraires d&apos;un architecte se situent entre{" "}
+            {cityData.avgPrice}. Le tarif dépend de la surface du projet, de la complexité
+            architecturale et du niveau de finition souhaité. L&apos;architecte intervient
+            de la conception à la réception des travaux.
+          </p>
+
+          <h3 className="text-lg font-semibold text-stone-800 pt-2">
+            Les démarches pour construire à {q.name}
+          </h3>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Vérifier la note de renseignement urbanistique auprès de la commune</li>
+            <li>Choisir un architecte agréé par l&apos;Ordre des Architectes du Maroc</li>
+            <li>Réaliser l&apos;étude de sol géotechnique (obligatoire depuis le séisme de 2023)</li>
+            <li>Déposer le dossier de permis de construire</li>
+            <li>Lancer les travaux avec un suivi de chantier régulier</li>
+          </ul>
+          <p>
+            Pour comparer les architectes disponibles à {q.name}, nous vous recommandons de
+            demander au moins 3 devis via Bati.ma. Chaque profil inclut le portfolio, les
+            certifications et les avis clients.
           </p>
         </div>
       </section>

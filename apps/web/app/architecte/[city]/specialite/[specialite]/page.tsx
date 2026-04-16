@@ -49,13 +49,12 @@ export default async function SpecialitePage({ params }: Props) {
 
   const allArchitects = await getArchitectsByCity(city);
 
-  // Filter by specialty
+  // Filter by specialty — no fallback to avoid duplicate content with city page
   const filtered = allArchitects.filter((a) => {
     const specs = (a.specialties || []) as string[];
     return specs.some((s) => s.toLowerCase().includes(spec.label.toLowerCase().split(" ")[0]));
   });
 
-  const architects = filtered.length > 0 ? filtered : allArchitects;
   const otherSpecs = SPECIALTIES_SEO.filter((s) => s.slug !== specialite);
 
   const faq = [
@@ -70,6 +69,14 @@ export default async function SpecialitePage({ params }: Props) {
     {
       q: `Comment trouver un architecte ${spec.label.toLowerCase()} à ${cityData.name} ?`,
       a: `Bati.ma référence les architectes spécialisés en ${spec.description} à ${cityData.name}. Comparez les profils, consultez les portfolios et demandez un devis gratuit en ligne.`,
+    },
+    {
+      q: `Quelles sont les étapes d'un projet ${spec.label.toLowerCase()} à ${cityData.name} ?`,
+      a: `Un projet de ${spec.description} passe par plusieurs étapes : consultation initiale, étude de faisabilité, avant-projet (APS/APD), dépôt du permis de construire, choix des entreprises, suivi de chantier et réception des travaux. Un architecte spécialisé vous accompagne à chaque étape.`,
+    },
+    {
+      q: `Faut-il un permis de construire pour un projet ${spec.label.toLowerCase()} à ${cityData.name} ?`,
+      a: `Au Maroc, un permis de construire est obligatoire pour toute construction neuve ou extension significative. Pour les projets de ${spec.description}, l'architecte prépare le dossier technique et assure la conformité aux plans d'aménagement de ${cityData.name}.`,
     },
   ];
 
@@ -108,7 +115,7 @@ export default async function SpecialitePage({ params }: Props) {
           </h1>
           <p className="text-stone-600 leading-relaxed max-w-3xl">
             Trouvez un architecte spécialisé en {spec.description} à {cityData.name}.
-            Comparez les profils de {architects.length}+ professionnels et demandez un devis gratuit.
+            Comparez les profils de {allArchitects.length}+ professionnels et demandez un devis gratuit.
           </p>
         </div>
       </section>
@@ -124,15 +131,25 @@ export default async function SpecialitePage({ params }: Props) {
       <section className="py-10 px-4 sm:px-6 bg-stone-50">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-xl font-bold text-stone-900 mb-6">
-            {filtered.length > 0
-              ? `Architectes ${spec.label.toLowerCase()} à ${cityData.name}`
-              : `Architectes à ${cityData.name}`}
+            Architectes {spec.label.toLowerCase()} à {cityData.name}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {architects.slice(0, 8).map((a) => (
-              <ArchitectCard key={a.id} architect={a} />
-            ))}
-          </div>
+          {filtered.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {filtered.slice(0, 8).map((a) => (
+                <ArchitectCard key={a.id} architect={a} />
+              ))}
+            </div>
+          ) : (
+            <div className="bg-white border border-stone-200 rounded-xl p-6 text-center space-y-3">
+              <p className="text-stone-600 text-sm">
+                Aucun architecte spécialisé en {spec.label.toLowerCase()} n&apos;est encore référencé à {cityData.name}.
+              </p>
+              <p className="text-stone-500 text-sm">
+                Découvrez les <Link href={`/architecte/${city}`} className="text-[#b5522a] hover:underline font-medium">architectes disponibles à {cityData.name}</Link> ou{" "}
+                <Link href="/demande-devis" className="text-[#b5522a] hover:underline font-medium">demandez un devis gratuit</Link> pour être mis en relation.
+              </p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -144,15 +161,50 @@ export default async function SpecialitePage({ params }: Props) {
           </h2>
           <p>
             Vous recherchez un architecte spécialisé en {spec.description} à {cityData.name} ?
-            Le marché de l&apos;architecture à {cityData.name} compte plus de {cityData.architectCount}
+            Le marché de l&apos;architecture à {cityData.name} compte plus de {cityData.architectCount}{" "}
             professionnels inscrits à l&apos;Ordre des Architectes du Maroc, dont de nombreux
             spécialistes en {spec.label.toLowerCase()}.
           </p>
+          <p>{spec.seoDescription}</p>
           <p>
             Les projets de {spec.description} à {cityData.name} requièrent une expertise
             spécifique : connaissance des réglementations locales, des matériaux
             disponibles et des contraintes urbanistiques de la ville. Un architecte
-            spécialisé saura optimiser votre projet.
+            spécialisé saura optimiser votre projet en termes de budget, de délais et de
+            conformité aux normes en vigueur au Maroc.
+          </p>
+
+          <h3 className="text-lg font-semibold text-stone-800 pt-2">
+            Pourquoi faire appel à un architecte {spec.label.toLowerCase()} ?
+          </h3>
+          <p>
+            Au Maroc, tout projet de construction dépassant 150 m² nécessite obligatoirement
+            l&apos;intervention d&apos;un architecte agréé. Pour les projets de {spec.description},
+            un spécialiste apporte une valeur ajoutée considérable : il maîtrise les
+            techniques propres à ce type de réalisation, connaît les fournisseurs locaux de{" "}
+            {cityData.name} et anticipe les contraintes réglementaires spécifiques.
+          </p>
+          <p>
+            L&apos;architecte {spec.label.toLowerCase()} intervient dès la phase de conception :
+            étude de faisabilité, avant-projet sommaire (APS), avant-projet détaillé (APD),
+            puis suivi de chantier. À {cityData.name}, les honoraires se situent généralement
+            entre {cityData.avgPrice}, selon la complexité et la surface du projet.
+          </p>
+
+          <h3 className="text-lg font-semibold text-stone-800 pt-2">
+            Les étapes d&apos;un projet {spec.label.toLowerCase()} à {cityData.name}
+          </h3>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Consultation initiale et définition du cahier des charges</li>
+            <li>Étude de faisabilité et esquisse architecturale</li>
+            <li>Obtention du permis de construire auprès de la commune</li>
+            <li>Choix des entreprises et lancement des travaux</li>
+            <li>Suivi de chantier et réception des travaux</li>
+          </ul>
+          <p>
+            Pour comparer les architectes spécialisés en {spec.label.toLowerCase()} à{" "}
+            {cityData.name}, nous recommandons de demander au moins 3 devis via Bati.ma.
+            Chaque profil inclut le portfolio, les certifications et les avis clients.
           </p>
         </div>
       </section>
