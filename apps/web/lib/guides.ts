@@ -1,3 +1,8 @@
+export type GuideKeyFact = {
+  label: string;
+  value: string;
+};
+
 export type Guide = {
   slug: string;
   title: string;
@@ -5,7 +10,132 @@ export type Guide = {
   readTime: string;
   category: string;
   content: string;
+  /** Réponse synthétique 40-60 mots optimisée pour extraction par LLM */
+  tldr?: string;
+  /** Chiffres-clés en format structuré */
+  keyFacts?: GuideKeyFact[];
 };
+
+/**
+ * Enrichissements GEO pour les top 10 guides (priorités SEO).
+ * Structure : réponse rapide + chiffres-clés actualisés 2026.
+ * À fusionner avec les guides au runtime via mergeGuideEnrichments().
+ */
+const GUIDE_ENRICHMENTS: Record<string, { tldr?: string; keyFacts?: GuideKeyFact[] }> = {
+  "honoraires-architecte-maroc": {
+    tldr:
+      "Au Maroc en 2026, un architecte facture entre 8% et 15% du montant total des travaux selon le barème officiel du CNOA. Pour une villa de 150 m² à 1.5M MAD, comptez 120 000 à 225 000 MAD d'honoraires.",
+    keyFacts: [
+      { label: "Fourchette honoraires", value: "8 à 15% du montant des travaux" },
+      { label: "Minimum CNOA 2026", value: "8 500 MAD HT par projet" },
+      { label: "Villa 150 m² (budget 1.5M)", value: "120 000 à 225 000 MAD" },
+      { label: "Obligatoire si surface", value: "> 150 m² ou ERP" },
+    ],
+  },
+  "prix-construction-m2-maroc": {
+    tldr:
+      "Le prix de construction au m² au Maroc en 2026 varie de 3 000 à 10 000 MAD selon la ville et la qualité de finition. Casablanca et Marrakech sont 15 à 20% plus chers que la moyenne nationale.",
+    keyFacts: [
+      { label: "Finition économique", value: "3 000 à 4 500 MAD/m²" },
+      { label: "Finition moyenne", value: "4 500 à 6 500 MAD/m²" },
+      { label: "Finition haut de gamme", value: "6 500 à 10 000 MAD/m²" },
+      { label: "Surcoût Casablanca/Marrakech", value: "+15 à 20%" },
+    ],
+  },
+  "cout-construction-maison-maroc": {
+    tldr:
+      "Construire une maison de 150 m² au Maroc coûte entre 600 000 et 1 500 000 MAD en 2026, hors terrain. Le gros œuvre représente 45% du budget, le second œuvre 25%, les finitions 20% et les honoraires d'architecte 10%.",
+    keyFacts: [
+      { label: "Maison 100 m² (moyenne)", value: "400 000 à 1 000 000 MAD" },
+      { label: "Villa 150 m² (moyenne)", value: "600 000 à 1 500 000 MAD" },
+      { label: "Gros œuvre", value: "45% du budget" },
+      { label: "Honoraires architecte", value: "8-15% (barème CNOA)" },
+      { label: "Délai moyen", value: "8 à 18 mois selon complexité" },
+    ],
+  },
+  "permis-de-construire-maroc": {
+    tldr:
+      "Le permis de construire au Maroc s'obtient en 2 à 6 mois. Il nécessite 9 documents obligatoires dont les plans signés par un architecte agréé, et est déposé à la commune. Coût : 500 à 5 000 MAD selon la surface.",
+    keyFacts: [
+      { label: "Délai d'obtention", value: "2 à 6 mois selon commune" },
+      { label: "Architecte obligatoire", value: "Oui, pour surface > 150 m²" },
+      { label: "Coût administratif", value: "500 à 5 000 MAD" },
+      { label: "Documents requis", value: "9 pièces (plans, note, titre foncier...)" },
+      { label: "Validité", value: "Permis valable 3 ans" },
+    ],
+  },
+  "plan-amenagement-maroc": {
+    tldr:
+      "Le plan d'aménagement (PA) définit la constructibilité d'un terrain au Maroc : zonage, COS (coefficient d'occupation du sol), CES (coefficient d'emprise au sol), hauteur autorisée. Il est consultable auprès de l'Agence Urbaine de la commune concernée.",
+    keyFacts: [
+      { label: "Autorité compétente", value: "Agences Urbaines marocaines" },
+      { label: "Durée de validité PA", value: "10 ans renouvelables" },
+      { label: "COS résidentiel moyen", value: "0.4 à 1.2" },
+      { label: "CES résidentiel moyen", value: "0.3 à 0.6" },
+    ],
+  },
+  "contrat-architecte-maroc": {
+    tldr:
+      "Le contrat d'architecte au Maroc suit les modèles CNOA et doit préciser : missions, phases (APS, APD, PC, suivi), honoraires, délais, assurance décennale. Durée moyenne d'engagement : 12 à 24 mois du début à la réception des travaux.",
+    keyFacts: [
+      { label: "Phases types", value: "APS, APD, PC, DCE, suivi chantier" },
+      { label: "Paiement échelonné", value: "Par phase (20/30/30/20%)" },
+      { label: "Assurance obligatoire", value: "Décennale + RC pro" },
+      { label: "Durée mission complète", value: "12 à 24 mois" },
+    ],
+  },
+  "maison-prefabriquee-maroc": {
+    tldr:
+      "Les maisons préfabriquées au Maroc coûtent 3 000 à 6 500 MAD/m² clé en main en 2026. Délai de construction : 3 à 6 mois contre 12-18 mois en traditionnel. Matériaux courants : béton, bois, conteneurs.",
+    keyFacts: [
+      { label: "Prix clé en main", value: "3 000 à 6 500 MAD/m²" },
+      { label: "Délai construction", value: "3 à 6 mois" },
+      { label: "Économie vs traditionnel", value: "15 à 30% sur budget" },
+      { label: "Permis de construire", value: "Obligatoire comme en traditionnel" },
+    ],
+  },
+  "villa-moderne-maroc": {
+    tldr:
+      "Une villa moderne au Maroc se caractérise par des lignes épurées, grandes baies vitrées, toit-terrasse habitable, intégration de matériaux locaux (zellige, tadelakt) et principes bioclimatiques. Budget 2026 : 1.5M à 5M MAD selon finitions.",
+    keyFacts: [
+      { label: "Budget villa moderne 200 m²", value: "1.5M à 3M MAD" },
+      { label: "Budget haut de gamme", value: "3M à 5M+ MAD" },
+      { label: "Surface habitable moyenne", value: "180 à 350 m²" },
+      { label: "Villes phares", value: "Marrakech, Casablanca, Rabat, Tanger" },
+    ],
+  },
+  "comment-choisir-architecte-maroc": {
+    tldr:
+      "Pour bien choisir un architecte au Maroc : vérifier l'inscription à l'Ordre National (CNOA), demander 3 devis comparables, consulter le portfolio et les références, vérifier l'assurance décennale, préférer un professionnel local de votre ville.",
+    keyFacts: [
+      { label: "Nombre de devis à comparer", value: "Minimum 3" },
+      { label: "Vérification CNOA", value: "Numéro Ordre obligatoire" },
+      { label: "Assurance requise", value: "Décennale + RC professionnelle" },
+      { label: "Délai de décision conseillé", value: "2 à 4 semaines" },
+    ],
+  },
+  "devis-construction-maroc": {
+    tldr:
+      "Un devis de construction détaillé au Maroc doit inclure : métrés précis (m², ml, u), prix unitaires HT, taxes (TVA 20%), phases de paiement, délais, garanties. Demander 3 devis comparables d'entreprises inscrites au registre de commerce.",
+    keyFacts: [
+      { label: "TVA applicable", value: "20% (travaux de construction)" },
+      { label: "Paiement habituel", value: "Acompte 30%, échelonné selon avancement" },
+      { label: "Durée validité devis", value: "30 à 90 jours" },
+      { label: "Garanties à exiger", value: "Décennale, parfait achèvement, biennale" },
+    ],
+  },
+};
+
+/**
+ * Retourne un guide enrichi (avec tldr + keyFacts si disponibles)
+ */
+export function getEnrichedGuide(slug: string): Guide | undefined {
+  const guide = GUIDES.find((g) => g.slug === slug);
+  if (!guide) return undefined;
+  const enrichment = GUIDE_ENRICHMENTS[slug];
+  if (!enrichment) return guide;
+  return { ...guide, ...enrichment };
+}
 
 export const GUIDES: Guide[] = [
   // ─── EXISTING 15 GUIDES ───
