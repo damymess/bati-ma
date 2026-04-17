@@ -16,6 +16,13 @@ const STATUS_LABELS: Record<string, { label: string; color: string }> = {
   completed: { label: "Terminé", color: "bg-stone-100 text-stone-600" },
 };
 
+const LEAD_TYPE_LABELS: Record<string, { label: string; color: string }> = {
+  cold: { label: "❄️ Cold", color: "bg-sky-100 text-sky-700 border-sky-300" },
+  warm: { label: "🟡 Warm", color: "bg-yellow-100 text-yellow-700 border-yellow-300" },
+  hot: { label: "🔥 Hot", color: "bg-orange-100 text-orange-700 border-orange-300" },
+  exclusive: { label: "⭐ Exclusive", color: "bg-purple-100 text-purple-700 border-purple-300" },
+};
+
 const STATUS_FILTERS = [
   { value: "all", label: "Tous" },
   { value: "submitted", label: "Soumis" },
@@ -25,10 +32,19 @@ const STATUS_FILTERS = [
   { value: "completed", label: "Terminés" },
 ];
 
+const LEAD_FILTERS = [
+  { value: "all", label: "Tous les leads" },
+  { value: "hot", label: "🔥 Hot" },
+  { value: "warm", label: "🟡 Warm" },
+  { value: "cold", label: "❄️ Cold" },
+  { value: "exclusive", label: "⭐ Exclusive" },
+];
+
 export default function AdminProjetsPage() {
   const [projets, setProjets] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState("all");
+  const [leadFilter, setLeadFilter] = useState("all");
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -45,14 +61,19 @@ export default function AdminProjetsPage() {
     })();
   }, [statusFilter]);
 
-  const filtered = search
-    ? projets.filter(
-        (p) =>
-          p.title?.toLowerCase().includes(search.toLowerCase()) ||
-          p.client_name?.toLowerCase().includes(search.toLowerCase()) ||
-          p.location?.toLowerCase().includes(search.toLowerCase())
-      )
-    : projets;
+  const filtered = projets.filter((p) => {
+    if (leadFilter !== "all" && (p.lead_type || "cold") !== leadFilter) return false;
+    if (search) {
+      const s = search.toLowerCase();
+      return (
+        p.title?.toLowerCase().includes(s) ||
+        p.client_name?.toLowerCase().includes(s) ||
+        p.client_email?.toLowerCase().includes(s) ||
+        p.location?.toLowerCase().includes(s)
+      );
+    }
+    return true;
+  });
 
   return (
     <div>
@@ -92,6 +113,23 @@ export default function AdminProjetsPage() {
         </div>
       </div>
 
+      {/* Filtre par qualité de lead */}
+      <div className="flex gap-1 flex-wrap mb-4">
+        {LEAD_FILTERS.map((f) => (
+          <button
+            key={f.value}
+            onClick={() => setLeadFilter(f.value)}
+            className={`px-3 py-1.5 text-xs rounded-full transition-colors border ${
+              leadFilter === f.value
+                ? "bg-[#b5522a] text-white border-[#b5522a]"
+                : "bg-white text-stone-600 border-stone-200 hover:border-[#b5522a]/40"
+            }`}
+          >
+            {f.label}
+          </button>
+        ))}
+      </div>
+
       {loading ? (
         <div className="space-y-3">
           {[1, 2, 3, 4].map((i) => (
@@ -119,7 +157,11 @@ export default function AdminProjetsPage() {
                   <CardContent className="pt-5">
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-2 mb-1">
+                        <div className="flex items-center gap-2 mb-1 flex-wrap">
+                          {(() => {
+                            const lt = LEAD_TYPE_LABELS[p.lead_type || "cold"];
+                            return <Badge className={`text-xs ${lt.color} border`}>{lt.label}</Badge>;
+                          })()}
                           <Badge className={`text-xs ${status.color}`}>{status.label}</Badge>
                           <Badge variant="secondary" className="text-xs">{p.project_type}</Badge>
                           {budget && (
@@ -127,20 +169,36 @@ export default function AdminProjetsPage() {
                           )}
                         </div>
                         <h3 className="font-semibold text-stone-900 truncate">{p.title}</h3>
-                        <div className="flex flex-wrap gap-3 mt-2 text-xs text-stone-400">
+                        <div className="flex flex-wrap gap-3 mt-2 text-xs text-stone-500">
                           <span className="flex items-center gap-1">
                             <User className="h-3 w-3" /> {p.client_name}
                           </span>
+                          {p.client_email && (
+                            <span className="flex items-center gap-1 text-stone-600">
+                              ✉️ {p.client_email}
+                            </span>
+                          )}
+                          {p.client_phone && (
+                            <span className="flex items-center gap-1 text-stone-600 font-medium">
+                              📱 {p.client_phone}
+                            </span>
+                          )}
                           <span className="flex items-center gap-1">
                             <MapPin className="h-3 w-3" /> {p.location}
                           </span>
+                          {p.timeline && (
+                            <span className="flex items-center gap-1 text-amber-700 font-medium">
+                              ⏱️ {p.timeline}
+                            </span>
+                          )}
                           {p.created_at && (
                             <span className="flex items-center gap-1">
                               <Calendar className="h-3 w-3" />
                               {new Date(p.created_at).toLocaleDateString("fr-FR", {
                                 day: "numeric",
                                 month: "short",
-                                year: "numeric",
+                                hour: "2-digit",
+                                minute: "2-digit",
                               })}
                             </span>
                           )}

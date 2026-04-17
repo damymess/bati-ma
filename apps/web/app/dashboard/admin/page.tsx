@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { FolderOpen, Clock, CheckCircle2, Eye, AlertCircle } from "lucide-react";
+import { FolderOpen, Clock, CheckCircle2, Eye, AlertCircle, Flame, Snowflake, Zap } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { fetchAdminProjectRequests } from "@/lib/api";
 
@@ -13,8 +13,16 @@ const STATS_CONFIG = [
   { key: "accepted", label: "Acceptés", icon: CheckCircle2, color: "text-emerald-600 bg-emerald-50" },
 ];
 
+const LEAD_STATS_CONFIG = [
+  { key: "hot", label: "Hot leads", icon: Flame, color: "text-orange-600 bg-orange-50" },
+  { key: "warm", label: "Warm leads", icon: Zap, color: "text-yellow-600 bg-yellow-50" },
+  { key: "cold", label: "Cold leads", icon: Snowflake, color: "text-sky-600 bg-sky-50" },
+  { key: "exclusive", label: "Exclusive", icon: CheckCircle2, color: "text-purple-600 bg-purple-50" },
+];
+
 export default function AdminDashboardPage() {
   const [stats, setStats] = useState<Record<string, number>>({});
+  const [leadStats, setLeadStats] = useState<Record<string, number>>({});
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
 
@@ -23,10 +31,14 @@ export default function AdminDashboardPage() {
       try {
         const data = await fetchAdminProjectRequests({ limit: 200 });
         const counts: Record<string, number> = {};
+        const leads: Record<string, number> = {};
         for (const r of data.project_requests) {
           counts[r.status] = (counts[r.status] || 0) + 1;
+          const lt = r.lead_type || "cold";
+          leads[lt] = (leads[lt] || 0) + 1;
         }
         setStats(counts);
+        setLeadStats(leads);
         setTotal(data.project_requests.length);
       } catch {}
       setLoading(false);
@@ -50,7 +62,7 @@ export default function AdminDashboardPage() {
         <p className="text-sm text-stone-500">{total} projet{total > 1 ? "s" : ""} au total</p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         {STATS_CONFIG.map((s) => {
           const Icon = s.icon;
           return (
@@ -60,6 +72,25 @@ export default function AdminDashboardPage() {
                   <Icon className="h-5 w-5" />
                 </div>
                 <p className="text-2xl font-bold text-stone-900">{stats[s.key] || 0}</p>
+                <p className="text-xs text-stone-500">{s.label}</p>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+
+      {/* Qualité des leads (Habitatpresto-style) */}
+      <h3 className="text-sm font-semibold text-stone-700 mb-2 mt-4">Qualité des leads</h3>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        {LEAD_STATS_CONFIG.map((s) => {
+          const Icon = s.icon;
+          return (
+            <Card key={s.key}>
+              <CardContent className="pt-5">
+                <div className={`inline-flex p-2 rounded-lg ${s.color} mb-2`}>
+                  <Icon className="h-5 w-5" />
+                </div>
+                <p className="text-2xl font-bold text-stone-900">{leadStats[s.key] || 0}</p>
                 <p className="text-xs text-stone-500">{s.label}</p>
               </CardContent>
             </Card>
