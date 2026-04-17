@@ -496,6 +496,117 @@ export async function sendArchitectReactivationEmail(architect: {
   }
 }
 
+/**
+ * Magic link email : 1-clic login sans mot de passe.
+ * Pattern Slack / Substack / Vercel.
+ */
+export async function sendMagicLinkToClient(name: string, email: string, token: string) {
+  if (!process.env.RESEND_API_KEY || !email) return
+  try {
+    const link = `${WEB_URL}/magic-link/${token}`
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: email,
+      subject: `Continuer votre demande de devis — Bati.ma`,
+      html: `
+        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333">
+          <div style="background:#b5522a;color:white;padding:20px 24px;border-radius:8px 8px 0 0">
+            <h1 style="margin:0;font-size:20px">Bon retour ${esc(name)} 👋</h1>
+          </div>
+          <div style="border:1px solid #e5e5e5;border-top:0;padding:24px;border-radius:0 0 8px 8px">
+            <p>Nous avons reconnu votre email. Cliquez ci-dessous pour continuer votre demande de devis sans avoir à saisir de mot de passe :</p>
+            <div style="text-align:center;margin:28px 0">
+              <a href="${link}" style="display:inline-block;background:#b5522a;color:white;text-decoration:none;padding:14px 32px;border-radius:8px;font-weight:600;font-size:14px">
+                Continuer ma demande →
+              </a>
+            </div>
+            <p style="color:#666;font-size:13px">Ce lien est valable <strong>1 heure</strong> et ne peut être utilisé qu'une seule fois.</p>
+            <p style="color:#999;font-size:12px">Si vous n'avez pas demandé ce lien, ignorez cet email.</p>
+            <hr style="border:0;border-top:1px solid #eee;margin:24px 0"/>
+            <p style="color:#999;font-size:12px;text-align:center"><a href="${WEB_URL}" style="color:#b5522a">bati.ma</a></p>
+          </div>
+        </div>`,
+    })
+  } catch (e) {
+    console.error("[email] magic link failed:", e)
+  }
+}
+
+/**
+ * Welcome email client avec shortlist des 3 architectes sélectionnés.
+ * Envoyé après la soumission d'un projet.
+ */
+export async function sendClientWelcomeEmail(
+  client: { name: string; email: string },
+  project: ProjectData,
+  shortlistArchitects: Array<{ id: string; name: string; rating: number; review_count: number; verified: boolean; regions?: unknown }>,
+) {
+  if (!process.env.RESEND_API_KEY || !client.email) return
+  try {
+    const cityLower = project.location.toLowerCase()
+    const cardsHtml = shortlistArchitects
+      .map(
+        (a) => `
+      <a href="${WEB_URL}/architecte/${encodeURIComponent(cityLower)}/${a.id}" style="display:block;text-decoration:none;border:1px solid #e5e5e5;border-radius:10px;padding:14px 16px;margin-bottom:10px;color:#333">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <p style="margin:0 0 4px;font-weight:600;color:#111;font-size:14px">${esc(a.name)}${a.verified ? ' <span style="background:#22c55e;color:white;font-size:10px;padding:2px 6px;border-radius:4px;margin-left:4px">Vérifié</span>' : ""}</p>
+            <p style="margin:0;color:#666;font-size:12px">${a.rating > 0 ? `★ ${a.rating.toFixed(1)} (${a.review_count} avis)` : "Nouveau sur bati.ma"}</p>
+          </div>
+          <span style="color:#b5522a;font-size:12px;font-weight:600">Voir le profil →</span>
+        </div>
+      </a>`,
+      )
+      .join("")
+
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: client.email,
+      subject: `Votre projet est en route, ${client.name} ! 3 architectes vont vous contacter.`,
+      html: `
+        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333">
+          <div style="background:#b5522a;color:white;padding:20px 24px;border-radius:8px 8px 0 0">
+            <h1 style="margin:0;font-size:20px">Votre demande est bien partie 🎉</h1>
+            <p style="margin:4px 0 0;font-size:13px;opacity:0.85">Bati.ma — Annuaire architectes Maroc</p>
+          </div>
+          <div style="border:1px solid #e5e5e5;border-top:0;padding:24px;border-radius:0 0 8px 8px">
+            <p>Bonjour <strong>${esc(client.name)}</strong>,</p>
+            <p>Votre projet <strong>${esc(project.title)}</strong> à ${esc(project.location)} a été transmis à 3 architectes qualifiés de votre région.</p>
+
+            ${shortlistArchitects.length > 0 ? `
+            <h3 style="font-size:16px;color:#333;margin:24px 0 10px">👷 Les 3 architectes qui vont vous contacter</h3>
+            ${cardsHtml}
+            ` : `
+            <p style="color:#666;font-size:13px;background:#f5f5f5;padding:12px;border-radius:6px">Nous recherchons les architectes les plus pertinents pour votre projet. Vous serez contacté(e) sous 24-48h.</p>
+            `}
+
+            <div style="background:#fff8f2;border:1px solid #b5522a33;border-radius:8px;padding:14px;margin:20px 0;font-size:13px">
+              <p style="margin:0;font-weight:600;color:#b5522a">⏱️ Prochaines étapes</p>
+              <ol style="margin:8px 0 0;padding-left:20px;font-size:13px;line-height:1.7;color:#555">
+                <li>Les architectes vont étudier votre projet</li>
+                <li>Ils vont vous contacter sous <strong>24-48h</strong> par téléphone ou email</li>
+                <li>Comparez les devis et choisissez celui qui vous convient</li>
+              </ol>
+            </div>
+
+            <div style="text-align:center;margin:24px 0">
+              <a href="${WEB_URL}/dashboard/client" style="display:inline-block;background:#b5522a;color:white;text-decoration:none;padding:12px 28px;border-radius:8px;font-weight:600;font-size:14px">
+                Suivre mon projet
+              </a>
+            </div>
+
+            <p style="color:#666;font-size:13px"><strong>💡 Astuce :</strong> si vous n'avez pas de nouvelles sous 48h, répondez à cet email et nous relancerons les architectes.</p>
+
+            <hr style="border:0;border-top:1px solid #eee;margin:24px 0"/>
+            <p style="color:#999;font-size:12px;text-align:center"><a href="${WEB_URL}" style="color:#b5522a">bati.ma</a> · Annuaire architectes vérifiés du Maroc</p>
+          </div>
+        </div>`,
+    })
+  } catch (e) {
+    console.error("[email] client welcome failed:", e)
+  }
+}
+
 export async function sendVerificationEmailToClient(
   project: ProjectData & { verification_token?: string | null },
   token: string,

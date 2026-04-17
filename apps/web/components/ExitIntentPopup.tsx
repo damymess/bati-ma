@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { X, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,11 +15,21 @@ type Props = {
    * Sur mobile, tombe back vers un scroll-based trigger (après 70% de la page).
    */
   enabled?: boolean;
-  context?: "calculator" | "architect" | "guide" | "generic";
+  context?: "calculator" | "architect" | "guide" | "generic" | "quote-abandon";
   city?: string;
 };
 
-export default function ExitIntentPopup({ enabled = true, context = "generic", city }: Props) {
+export default function ExitIntentPopup({ enabled = true, context: propContext, city }: Props) {
+  const pathname = usePathname();
+  // Auto-détection du contexte selon la route (override par prop si explicite)
+  const context = propContext || (
+    pathname?.startsWith("/demande-devis") ? "quote-abandon" :
+    pathname?.startsWith("/outils/calculateur") ? "calculator" :
+    pathname?.startsWith("/architecte/") ? "architect" :
+    pathname?.startsWith("/guide/") ? "guide" :
+    "generic"
+  );
+
   const [visible, setVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -124,6 +135,10 @@ export default function ExitIntentPopup({ enabled = true, context = "generic", c
     generic: {
       title: "Un projet de construction ou rénovation ?",
       body: "Recevez 3 devis gratuits d'architectes vérifiés au Maroc. Gain de temps garanti.",
+    },
+    "quote-abandon": {
+      title: "Attendez ! Votre demande sera bientôt prête",
+      body: "Laissez votre email, nous gardons vos infos au chaud. Vous reprendrez en 1 clic, zéro saisie.",
     },
   };
   const msg = messages[context];

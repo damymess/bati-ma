@@ -81,13 +81,53 @@ projects.post("/project-requests", async (c) => {
     },
   })
 
+  // Calcul shortlist pour le lead (3 archis Pro/Elite de la ville)
+  let shortlistIds: string[] = []
+  try {
+    const { shortlistForProject } = await import("../lib/matching.js")
+    const shortlist = await shortlistForProject(project.id, 3)
+    shortlistIds = shortlist.map((a: any) => a.id)
+
+    // Stocker les IDs dans calculator_payload pour que le client les voit sur son dashboard
+    if (shortlistIds.length > 0) {
+      const existingPayload = (project.calculator_payload as any) || {}
+      await db.projectRequest.update({
+        where: { id: project.id },
+        data: {
+          calculator_payload: { ...existingPayload, shortlist_ids: shortlistIds },
+        },
+      })
+    }
+  } catch (e) {
+    console.error("[shortlist]", e)
+  }
+
   // Async emails — don't block response
   const isCalculator = title.startsWith("Estimation calculateur")
   Promise.all([
     sendProjectSubmissionToAdmin({ ...project, architect_name }),
-    isCalculator && project.client_email
-      ? sendEstimationToClient(project)
-      : sendProjectConfirmationToClient(project),
+    (async () => {
+      if (!project.client_email) return
+      // Calculateur = email estimation (déjà enrichi)
+      if (isCalculator) return sendEstimationToClient(project)
+
+      // Welcome client enrichi avec les 3 archis shortlistés
+      const { sendClientWelcomeEmail } = await import("../lib/email.js")
+      const archs = shortlistIds.length > 0
+        ? await db.architectProfile.findMany({
+            where: { id: { in: shortlistIds } },
+            select: {
+              id: true, name: true, rating: true, review_count: true,
+              verified: true, regions: true,
+            },
+          })
+        : []
+      return sendClientWelcomeEmail(
+        { name: project.client_name, email: project.client_email },
+        project,
+        archs,
+      )
+    })(),
   ]).catch((e) => console.error("[email]", e))
 
   return c.json({ project_request: project }, 201)

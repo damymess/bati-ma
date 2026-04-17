@@ -147,6 +147,9 @@ function DemandeDevisForm() {
   const [error, setError] = useState<string | null>(null);
   const [matchedArchitects, setMatchedArchitects] = useState<MatchedArchitect[]>([]);
   const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [existingClient, setExistingClient] = useState<{ name: string } | null>(null);
+  const [magicLinkSent, setMagicLinkSent] = useState(false);
+  const [sendingMagicLink, setSendingMagicLink] = useState(false);
   const [form, setForm] = useState<FormData>({
     project_type: "",
     location: prefilledCity ? CITIES.find((c) => c.toLowerCase() === prefilledCity.toLowerCase()) || "" : "",
@@ -572,8 +575,22 @@ function DemandeDevisForm() {
                       id="client_email"
                       type="email"
                       value={form.client_email}
-                      onChange={(e) => update({ client_email: e.target.value })}
-                      onBlur={() => blur("client_email")}
+                      onChange={(e) => { update({ client_email: e.target.value }); setExistingClient(null); setMagicLinkSent(false); }}
+                      onBlur={async () => {
+                        blur("client_email");
+                        const email = form.client_email.trim().toLowerCase();
+                        if (!email || !EMAIL_RE.test(email)) return;
+                        try {
+                          const res = await fetch(`${API_URL}/store/clients/check-email`, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ email }),
+                          });
+                          const data = await res.json();
+                          if (data.exists && data.name) setExistingClient({ name: data.name });
+                          else setExistingClient(null);
+                        } catch {}
+                      }}
                       className={
                         touched.client_email && errors.client_email
                           ? "border-red-400 focus-visible:ring-red-400"
@@ -585,6 +602,45 @@ function DemandeDevisForm() {
                     />
                     {touched.client_email && errors.client_email && (
                       <p className="mt-1 text-xs text-red-500">{errors.client_email}</p>
+                    )}
+
+                    {/* Bon retour — email existant */}
+                    {existingClient && !errors.client_email && (
+                      <div className="mt-3 rounded-lg border border-blue-200 bg-blue-50 p-3 text-sm">
+                        {magicLinkSent ? (
+                          <p className="text-blue-800 flex items-start gap-2">
+                            <CheckCircle2 className="h-4 w-4 shrink-0 mt-0.5" />
+                            <span>
+                              Lien envoyé à <strong>{form.client_email}</strong>. Cliquez-y pour récupérer vos projets, ou continuez sans.
+                            </span>
+                          </p>
+                        ) : (
+                          <>
+                            <p className="text-blue-900 mb-2">
+                              Bon retour <strong>{existingClient.name}</strong> 👋 Nous reconnaissons votre email.
+                            </p>
+                            <button
+                              type="button"
+                              disabled={sendingMagicLink}
+                              onClick={async () => {
+                                setSendingMagicLink(true);
+                                try {
+                                  await fetch(`${API_URL}/store/clients/magic-link/request`, {
+                                    method: "POST",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify({ email: form.client_email.trim() }),
+                                  });
+                                  setMagicLinkSent(true);
+                                } catch {}
+                                setSendingMagicLink(false);
+                              }}
+                              className="text-xs font-medium text-blue-700 hover:text-blue-900 underline disabled:opacity-50"
+                            >
+                              {sendingMagicLink ? "Envoi du lien..." : "Recevoir un lien magique pour retrouver mes projets"}
+                            </button>
+                          </>
+                        )}
+                      </div>
                     )}
                   </div>
                   <div>

@@ -94,7 +94,7 @@ clients.put("/me", authMiddleware, async (c) => {
   return c.json({ client: sanitizeClient(client) })
 })
 
-// Get client projects
+// Get client projects (enrichi avec shortlist + stats)
 clients.get("/projets", authMiddleware, async (c) => {
   const user = c.get("user")
   const client = await db.clientProfile.findUnique({ where: { id: user.id } })
@@ -105,5 +105,95 @@ clients.get("/projets", authMiddleware, async (c) => {
     orderBy: { created_at: "desc" },
   })
 
-  return c.json({ projets, count: projets.length })
+  // Enrichir chaque projet avec la shortlist + les devis reçus
+  const enriched = await Promise.all(
+    projets.map(async (p) => {
+      const payload = p.calculator_payload as any
+      const shortlistIds: string[] = Array.isArray(payload?.shortlist_ids)
+        ? payload.shortlist_ids
+        : []
+      const shortlist = shortlistIds.length > 0
+        ? await db.architectProfile.findMany({
+            where: { id: { in: shortlistIds } },
+            select: {
+              id: true, name: true, rating: true, review_count: true,
+              verified: true, regions: true, specialties: true, portfolio_images: true,
+            },
+          })
+        : []
+
+      // Pipeline : qui a débloqué le contact ?
+      const unlocks = await db.contactUnlock.findMany({
+        where: { project_request_id: p.id },
+        select: { architect_profile_id: true, unlocked_at: true },
+      })
+
+      return { ...p, shortlist, unlocks }
+    }),
+  )
+
+  return c.json({ projets: enriched, count: enriched.length })
+})
+
+// ─── Magic Link (auto-login sans password) ──────────────────────────────────
+
+// Check si un email existe (pour switch UI vers magic link)
+clients.post("/check-email", async (c) => {
+  const body = await c.req.json()
+  const email = (body.email || "").trim().toLowerCase()
+  if (!email || !EMAIL_RE.test(email)) return c.json({ exists: false })
+
+  const client = await db.clientProfile.findUnique({ where: { email } })
+  return c.json({ exists: !!client, name: client?.name || null })
+})
+
+// Demander un magic link
+clients.post("/magic-link/request", async (c) => {
+  const body = await c.req.json()
+  const email = (body.email || "").trim().toLowerCase()
+  if (!email || !EMAIL_RE.test(email)) return c.json({ message: "Email invalide" }, 400)
+
+  const client = await db.clientProfile.findUnique({ where: { email } })
+  if (!client) {
+    // Toujours renvoyer OK pour éviter enumeration (pattern sécurité)
+    return c.json({ sent: true })
+  }
+
+  // Générer token + stocker dans PasswordReset (pattern existant réutilisé)
+  const { randomBytes } = await import("crypto")
+  const token = randomBytes(24).toString("hex")
+  const expires = new Date(Date.now() + 60 * 60 * 1000) // 1h
+
+  await db.passwordReset.create({
+    data: { token, email, role: "client", expires_at: expires },
+  })
+
+  // Envoi email async
+  const { sendMagicLinkToClient } = await import("../lib/email.js")
+  sendMagicLinkToClient(client.name, email, token).catch((e) =>
+    console.error("[email] magic link failed:", e),
+  )
+
+  return c.json({ sent: true })
+})
+
+// Consommer le magic link (1-clic login)
+clients.post("/magic-link/verify", async (c) => {
+  const body = await c.req.json()
+  const token = (body.token || "").trim()
+  if (!token) return c.json({ message: "Token manquant" }, 400)
+
+  const reset = await db.passwordReset.findUnique({ where: { token } })
+  if (!reset || reset.used) return c.json({ message: "Lien invalide ou déjà utilisé" }, 410)
+  if (new Date(reset.expires_at) < new Date()) return c.json({ message: "Lien expiré" }, 410)
+  if (reset.role !== "client") return c.json({ message: "Type de lien invalide" }, 400)
+
+  const client = await db.clientProfile.findUnique({ where: { email: reset.email } })
+  if (!client) return c.json({ message: "Compte introuvable" }, 404)
+
+  // Invalider le token
+  await db.passwordReset.update({ where: { token }, data: { used: true } })
+
+  const jwtToken = signToken({ id: client.id, email: client.email, role: "client" })
+  return c.json({ client: sanitizeClient(client), token: jwtToken })
 })

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Star, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Star, ArrowRight, ShieldCheck } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -7,6 +7,12 @@ import type { Architect } from "@/lib/architects";
 import { cn } from "@/lib/utils";
 
 function StarRating({ rating, count }: { rating: number; count: number }) {
+  // Ne pas afficher de rating vide (0.0 étoiles, 0 avis = moche)
+  if (!rating && !count) {
+    return (
+      <p className="text-[11px] text-stone-400 italic">Nouveau sur bati.ma</p>
+    );
+  }
   return (
     <div className="flex items-center gap-1">
       {[1, 2, 3, 4, 5].map((star) => (
@@ -20,9 +26,10 @@ function StarRating({ rating, count }: { rating: number; count: number }) {
           )}
         />
       ))}
-      <span className="ml-1 text-xs text-stone-500">
-        {rating.toFixed(1)} ({count} avis)
+      <span className="ml-1 text-xs text-stone-600 font-medium">
+        {rating.toFixed(1)}
       </span>
+      <span className="text-xs text-stone-400">({count})</span>
     </div>
   );
 }
@@ -66,13 +73,21 @@ export default function ArchitectCard({ architect }: { architect: Architect }) {
           </Avatar>
 
           <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 flex-wrap">
               <Link href={href} className="group">
                 <h3 className="font-semibold text-stone-900 text-[15px] leading-tight group-hover:text-[#b5522a] transition-colors">
                   {architect.name}
                 </h3>
               </Link>
-              <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" aria-label="Profil vérifié" />
+              {architect.verified && (
+                <span
+                  className="inline-flex items-center gap-0.5 bg-green-50 text-green-700 text-[10px] font-medium px-1.5 py-0.5 rounded-full border border-green-200"
+                  title="Documents vérifiés par bati.ma"
+                >
+                  <ShieldCheck className="h-2.5 w-2.5" />
+                  Vérifié
+                </span>
+              )}
             </div>
 
             <StarRating rating={architect.rating} count={architect.reviewCount} />

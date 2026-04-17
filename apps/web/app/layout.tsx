@@ -124,7 +124,7 @@ export default function RootLayout({
             <Footer />
           </div>
           <MobileTabBar />
-          <ExitIntentPopup context="generic" />
+          <ExitIntentPopup />
           <SocialProofFeed />
         </Providers>
       </body>
