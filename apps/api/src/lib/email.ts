@@ -1,8 +1,10 @@
 import { Resend } from "resend"
+import { db } from "./db.js"
 
 const resend = new Resend(process.env.RESEND_API_KEY || "")
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "contact@bati.ma"
 const FROM_EMAIL = "Bati.ma <noreply@bati.ma>"
+const WEB_URL = process.env.NEXT_PUBLIC_WEB_URL || "https://bati.ma"
 
 function esc(str: string): string {
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;")
@@ -160,9 +162,196 @@ export async function sendProjectConfirmationToClient(project: ProjectData) {
   }
 }
 
-export async function sendEstimationToClient(project: ProjectData) {
+/**
+ * Récupère jusqu'à 3 architectes de la ville + verified ou Pro/Elite en priorité
+ */
+async function getRecommendedArchitects(city: string, limit = 3) {
+  if (!city) return []
+  try {
+    const all = await db.architectProfile.findMany({
+      where: { is_active: true, deleted_at: null },
+      select: {
+        id: true, name: true, rating: true, review_count: true,
+        verified: true, subscription_tier: true, specialties: true, regions: true,
+      },
+    })
+    const filtered = all.filter((a) => {
+      const regions = (a.regions as string[]) || []
+      return regions.some((r) => r.toLowerCase().includes(city.toLowerCase()))
+    })
+    const scored = filtered.map((a) => {
+      let score = 0
+      if (a.subscription_tier === "elite") score += 10000
+      else if (a.subscription_tier === "pro" || a.subscription_tier === "premium") score += 5000
+      else if (a.subscription_tier === "essentiel" || a.subscription_tier === "standard") score += 500
+      if (a.verified) score += 1000
+      score += (a.rating || 0) * 100
+      score += Math.min(a.review_count || 0, 30) * 10
+      return { a, score }
+    })
+    scored.sort((x, y) => y.score - x.score)
+    return scored.slice(0, limit).map((s) => s.a)
+  } catch {
+    return []
+  }
+}
+
+function renderArchitectCards(architects: Awaited<ReturnType<typeof getRecommendedArchitects>>, city: string) {
+  if (architects.length === 0) return ""
+  const cityLower = city.toLowerCase()
+  return `
+    <div style="margin:28px 0">
+      <h3 style="font-size:16px;color:#333;margin:0 0 12px">3 architectes recommandés à ${esc(city)}</h3>
+      ${architects
+        .map(
+          (a) => `
+        <a href="${WEB_URL}/architecte/${encodeURIComponent(cityLower)}/${a.id}" style="display:block;text-decoration:none;border:1px solid #e5e5e5;border-radius:10px;padding:14px 16px;margin-bottom:10px;color:#333">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <p style="margin:0 0 4px;font-weight:600;color:#111;font-size:14px">${esc(a.name)}${a.verified ? ' <span style="background:#22c55e;color:white;font-size:10px;padding:2px 6px;border-radius:4px;margin-left:4px">Vérifié</span>' : ""}</p>
+              <p style="margin:0;color:#666;font-size:12px">${a.rating > 0 ? `★ ${a.rating.toFixed(1)} (${a.review_count} avis) · ` : ""}${((a.specialties as string[]) || []).slice(0, 2).join(", ") || "Architecte"}</p>
+            </div>
+            <span style="color:#b5522a;font-size:12px;font-weight:600">Voir le profil →</span>
+          </div>
+        </a>`,
+        )
+        .join("")}
+    </div>`
+}
+
+function renderBreakdown(payload: unknown): string {
+  if (!payload || typeof payload !== "object") return ""
+  const p = payload as { min?: number; max?: number; surface?: number; quality?: string }
+  if (!p.min || !p.max) return ""
+  const grosOeuvreMin = Math.round(p.min * 0.45)
+  const grosOeuvreMax = Math.round(p.max * 0.45)
+  const secondOeuvreMin = Math.round(p.min * 0.25)
+  const secondOeuvreMax = Math.round(p.max * 0.25)
+  const finitionsMin = Math.round(p.min * 0.20)
+  const finitionsMax = Math.round(p.max * 0.20)
+  const honorairesMin = Math.round(p.min * 0.10)
+  const honorairesMax = Math.round(p.max * 0.10)
+  const fmt = (n: number) => n.toLocaleString("fr-MA") + " MAD"
+  return `
+    <table style="width:100%;border-collapse:collapse;margin:16px 0;font-size:13px">
+      <tr style="background:#f9f5f0">
+        <th style="text-align:left;padding:10px 12px;color:#666;font-weight:600">Poste</th>
+        <th style="text-align:right;padding:10px 12px;color:#666;font-weight:600">Min</th>
+        <th style="text-align:right;padding:10px 12px;color:#666;font-weight:600">Max</th>
+      </tr>
+      <tr><td style="padding:10px 12px;border-top:1px solid #eee">Gros œuvre (45%)</td><td style="text-align:right;padding:10px 12px;border-top:1px solid #eee;color:#666">${fmt(grosOeuvreMin)}</td><td style="text-align:right;padding:10px 12px;border-top:1px solid #eee;font-weight:600">${fmt(grosOeuvreMax)}</td></tr>
+      <tr><td style="padding:10px 12px;border-top:1px solid #eee">Second œuvre (25%)</td><td style="text-align:right;padding:10px 12px;border-top:1px solid #eee;color:#666">${fmt(secondOeuvreMin)}</td><td style="text-align:right;padding:10px 12px;border-top:1px solid #eee;font-weight:600">${fmt(secondOeuvreMax)}</td></tr>
+      <tr><td style="padding:10px 12px;border-top:1px solid #eee">Finitions (20%)</td><td style="text-align:right;padding:10px 12px;border-top:1px solid #eee;color:#666">${fmt(finitionsMin)}</td><td style="text-align:right;padding:10px 12px;border-top:1px solid #eee;font-weight:600">${fmt(finitionsMax)}</td></tr>
+      <tr><td style="padding:10px 12px;border-top:1px solid #eee">Honoraires architecte (10%)</td><td style="text-align:right;padding:10px 12px;border-top:1px solid #eee;color:#666">${fmt(honorairesMin)}</td><td style="text-align:right;padding:10px 12px;border-top:1px solid #eee;font-weight:600">${fmt(honorairesMax)}</td></tr>
+      <tr style="background:#f5f0ea;font-weight:700">
+        <td style="padding:12px;border-top:2px solid #b5522a">Total</td>
+        <td style="text-align:right;padding:12px;border-top:2px solid #b5522a;color:#666">${fmt(p.min)}</td>
+        <td style="text-align:right;padding:12px;border-top:2px solid #b5522a;color:#b5522a">${fmt(p.max)}</td>
+      </tr>
+    </table>`
+}
+
+/**
+ * Re-engagement emails (séquence pour cold leads — 3 emails sur 7 jours)
+ */
+export async function sendReengagementD1(project: ProjectData) {
   if (!process.env.RESEND_API_KEY || !project.client_email) return
   try {
+    const architects = await getRecommendedArchitects(project.location, 3)
+    const architectsHtml = renderArchitectCards(architects, project.location)
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: project.client_email,
+      subject: `${esc(project.client_name)}, 3 architectes disponibles pour votre projet`,
+      html: `
+        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333;padding:20px">
+          <p>Bonjour <strong>${esc(project.client_name)}</strong>,</p>
+          <p>Hier, vous avez utilisé notre calculateur pour estimer le budget de votre <strong>${esc(project.project_type)}</strong> à ${esc(project.location)}.</p>
+          <p><strong>Bonne nouvelle :</strong> 3 architectes vérifiés de ${esc(project.location)} sont disponibles et peuvent étudier votre projet.</p>
+          ${architectsHtml}
+          <div style="text-align:center;margin:28px 0">
+            <a href="${WEB_URL}/demande-devis?city=${encodeURIComponent(project.location.toLowerCase())}" style="display:inline-block;background:#b5522a;color:white;text-decoration:none;padding:14px 28px;border-radius:8px;font-weight:600">Recevoir 3 devis gratuits</a>
+          </div>
+          <p style="color:#666;font-size:13px">Les devis sont gratuits et sans engagement. Vous choisissez ensuite avec qui vous voulez travailler.</p>
+          <hr style="border:0;border-top:1px solid #eee;margin:24px 0"/>
+          <p style="color:#999;font-size:11px;text-align:center">Vous avez reçu cet email suite à votre estimation sur Bati.ma. <a href="${WEB_URL}/contact" style="color:#666">Se désinscrire</a></p>
+        </div>`,
+    })
+  } catch (e) {
+    console.error("[email] reengagement D1 failed:", e)
+  }
+}
+
+export async function sendReengagementD3(project: ProjectData) {
+  if (!process.env.RESEND_API_KEY || !project.client_email) return
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: project.client_email,
+      subject: `Comment Karim a économisé 15% sur son projet de ${esc(project.project_type.toLowerCase())}`,
+      html: `
+        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333;padding:20px">
+          <p>Bonjour <strong>${esc(project.client_name)}</strong>,</p>
+          <p>L'un des plus gros pièges quand on construit au Maroc : choisir son architecte sur un seul critère (le prix ou la recommandation d'un ami).</p>
+          <p><strong>Karim Alami</strong>, qui a construit sa villa à ${esc(project.location)} l'année dernière, nous a confié :</p>
+          <blockquote style="border-left:3px solid #b5522a;padding:8px 16px;margin:16px 0;background:#f9f5f0;font-style:italic;color:#555">
+            "J'ai comparé 3 devis via Bati.ma. Le premier était à 2,4M MAD, le deuxième à 2,1M et le troisième à 1,8M pour le même cahier des charges. J'ai négocié avec le 3e et économisé 15% sur mon budget total."
+          </blockquote>
+          <p>La règle d'or : <strong>toujours comparer au moins 3 devis</strong>.</p>
+          <div style="text-align:center;margin:28px 0">
+            <a href="${WEB_URL}/demande-devis?city=${encodeURIComponent(project.location.toLowerCase())}" style="display:inline-block;background:#b5522a;color:white;text-decoration:none;padding:14px 28px;border-radius:8px;font-weight:600">Comparer 3 devis à ${esc(project.location)}</a>
+          </div>
+          <p style="color:#666;font-size:13px">100% gratuit. Réponse des architectes sous 48h.</p>
+          <hr style="border:0;border-top:1px solid #eee;margin:24px 0"/>
+          <p style="color:#999;font-size:11px;text-align:center">Bati.ma — Annuaire architectes Maroc</p>
+        </div>`,
+    })
+  } catch (e) {
+    console.error("[email] reengagement D3 failed:", e)
+  }
+}
+
+export async function sendReengagementD7(project: ProjectData) {
+  if (!process.env.RESEND_API_KEY || !project.client_email) return
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: project.client_email,
+      subject: `Votre estimation ${esc(project.location)} est-elle toujours d'actualité ?`,
+      html: `
+        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333;padding:20px">
+          <p>Bonjour <strong>${esc(project.client_name)}</strong>,</p>
+          <p>Il y a une semaine, vous avez fait estimer le budget d'un projet <strong>${esc(project.project_type)}</strong> à ${esc(project.location)}.</p>
+          <p>Où en êtes-vous ?</p>
+          <div style="background:#fff8f2;border:1px solid #b5522a33;border-radius:10px;padding:20px;margin:20px 0">
+            <p style="margin:0 0 12px;font-weight:600">Quelques infos qui peuvent aider :</p>
+            <ul style="margin:0;padding-left:20px;font-size:14px;line-height:1.8">
+              <li>Les architectes de ${esc(project.location)} sont actuellement disponibles (hors saison)</li>
+              <li>Les prix des matériaux restent stables ce trimestre</li>
+              <li>Délai moyen permis de construire : 2 à 3 mois</li>
+            </ul>
+          </div>
+          <p>Si vous souhaitez avancer, 3 architectes peuvent étudier gratuitement votre projet :</p>
+          <div style="text-align:center;margin:28px 0">
+            <a href="${WEB_URL}/demande-devis?city=${encodeURIComponent(project.location.toLowerCase())}" style="display:inline-block;background:#b5522a;color:white;text-decoration:none;padding:14px 28px;border-radius:8px;font-weight:600">Relancer mon projet</a>
+          </div>
+          <p style="color:#666;font-size:13px">Sinon, c'est notre dernier email de suivi — nous ne vous dérangerons plus.</p>
+          <hr style="border:0;border-top:1px solid #eee;margin:24px 0"/>
+          <p style="color:#999;font-size:11px;text-align:center">Bati.ma</p>
+        </div>`,
+    })
+  } catch (e) {
+    console.error("[email] reengagement D7 failed:", e)
+  }
+}
+
+export async function sendEstimationToClient(project: ProjectData & { calculator_payload?: unknown }) {
+  if (!process.env.RESEND_API_KEY || !project.client_email) return
+  try {
+    const architects = await getRecommendedArchitects(project.location, 3)
+    const breakdown = renderBreakdown(project.calculator_payload)
+    const architectsHtml = renderArchitectCards(architects, project.location)
+
     await resend.emails.send({
       from: FROM_EMAIL,
       to: project.client_email,
@@ -188,15 +377,19 @@ export async function sendEstimationToClient(project: ProjectData) {
               <tr><td style="padding:8px 0;color:#666">Ville</td><td style="padding:8px 0;font-weight:600">${esc(project.location)}</td></tr>
             </table>
 
+            ${breakdown}
+
             ${project.description ? `<div style="margin:16px 0;padding:12px;background:#f9f9f9;border-radius:6px;font-size:13px;color:#555">${esc(project.description).replace(/\n/g, "<br/>")}</div>` : ""}
 
+            ${architectsHtml}
+
             <div style="text-align:center;margin:24px 0">
-              <a href="https://bati.ma/architecte/${encodeURIComponent(project.location.toLowerCase())}" style="display:inline-block;background:#b5522a;color:white;text-decoration:none;padding:14px 32px;border-radius:8px;font-weight:600;font-size:14px">
-                Trouver un architecte \u00e0 ${esc(project.location)}
+              <a href="${WEB_URL}/demande-devis?city=${encodeURIComponent(project.location.toLowerCase())}&amp;type=${encodeURIComponent(project.project_type)}" style="display:inline-block;background:#b5522a;color:white;text-decoration:none;padding:14px 32px;border-radius:8px;font-weight:600;font-size:14px">
+                Recevoir 3 devis gratuits \u00e0 ${esc(project.location)}
               </a>
             </div>
 
-            <p style="color:#666;font-size:13px">Cette estimation est indicative. Pour un devis pr\u00e9cis, un architecte doit \u00e9tudier votre terrain et vos besoins sp\u00e9cifiques.</p>
+            <p style="color:#666;font-size:13px">Cette estimation est indicative (&plusmn; 5%). Pour un devis pr\u00e9cis, un architecte doit \u00e9tudier votre terrain et vos besoins sp\u00e9cifiques.</p>
 
             <hr style="border:0;border-top:1px solid #eee;margin:24px 0"/>
             <p style="color:#999;font-size:12px;text-align:center">

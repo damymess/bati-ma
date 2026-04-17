@@ -67,13 +67,43 @@ model ProjectRequest {
   images               Json      @default("{}")
   responses_count      Int       @default(0)
   source               String    @default("website")
+
+  // Lead quality tiering (modèle Habitatpresto / MyBuilder)
+  lead_type            String    @default("cold") // cold | warm | hot | exclusive
+  financing            String?   // cash | credit | mre | undecided
+  calculator_payload   Json?     // snapshot des params calculateur pour audit
+  last_engagement_at   DateTime? @db.Timestamptz(6) // dernier email re-engagement envoyé
+  engagement_count     Int       @default(0)
+
   created_at           DateTime  @default(now()) @db.Timestamptz(6)
   updated_at           DateTime  @default(now()) @updatedAt @db.Timestamptz(6)
   deleted_at           DateTime? @db.Timestamptz(6)
 
   contact_unlocks ContactUnlock[]
+  lead_purchases  LeadPurchase[]
 
+  @@index([lead_type, status])
   @@map("project_request")
+}
+
+// ─── Lead Purchase (modèle Habitatpresto — achat de leads par architectes) ───
+
+model LeadPurchase {
+  id                   String   @id @default(cuid())
+  architect_profile_id String
+  project_request_id   String
+  lead_type            String   // cold | warm | hot | exclusive
+  credits_spent        Int      // 1 pour cold, 2 warm, 3 hot, 5 exclusive
+  price_paid_mad       Int      // Prix payé pour ce lead
+  unlock_level         String   @default("full") // partial | full (partial = preview only)
+  created_at           DateTime @default(now()) @db.Timestamptz(6)
+
+  project ProjectRequest @relation(fields: [project_request_id], references: [id])
+
+  @@unique([architect_profile_id, project_request_id])
+  @@index([project_request_id])
+  @@index([architect_profile_id])
+  @@map("lead_purchase")
 }
 
 // ─── Tables à créer ─────────────────────────────────────────────────────────

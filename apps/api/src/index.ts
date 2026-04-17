@@ -17,6 +17,7 @@ import { matching } from "./routes/matching.js"
 import { subscriptions } from "./routes/subscriptions.js"
 import { reviews } from "./routes/reviews.js"
 import { verifications } from "./routes/verifications.js"
+import { cron } from "./routes/cron.js"
 import { authRateLimit } from "./middleware/rateLimit.js"
 
 const app = new Hono()
@@ -72,6 +73,7 @@ app.route("/store/verifications", verifications)
 app.route("/admin", admin)
 app.route("/admin/reviews", reviews)
 app.route("/admin/verifications", verifications)
+app.route("/cron", cron)
 
 // Start server
 const port = Number(process.env.PORT) || 9000

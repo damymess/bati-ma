@@ -3,6 +3,7 @@ import { db } from "../lib/db.js"
 import { extractToken, verifyToken } from "../lib/jwt.js"
 import { getEffectiveTier, canUnlockContact } from "../lib/subscription.js"
 import { sendProjectSubmissionToAdmin, sendProjectConfirmationToClient, sendEstimationToClient } from "../lib/email.js"
+import { qualifyLead, getLeadPricing } from "../lib/leads.js"
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -24,7 +25,9 @@ projects.post("/project-requests", async (c) => {
   const location = (body.location || "").trim()
   const address = (body.address || "").trim()
   const timeline = (body.timeline || "").trim()
+  const financing = (body.financing || "").trim() || null
   const architect_id = (body.architect_id || "").trim()
+  const calculator_payload = body.calculator_payload || null
 
   if (!title || !client_name || !project_type || !location) {
     return c.json({ message: "Champs requis : title, client_name, project_type, location" }, 400)
@@ -46,6 +49,15 @@ projects.post("/project-requests", async (c) => {
     architect_name = arch?.name || null
   }
 
+  // Qualify the lead based on data completeness
+  const leadType = qualifyLead({
+    client_email,
+    client_phone,
+    timeline,
+    financing,
+    architect_profile_id: architect_id || null,
+  })
+
   const project = await db.projectRequest.create({
     data: {
       title,
@@ -53,6 +65,9 @@ projects.post("/project-requests", async (c) => {
       client_email,
       client_phone: client_phone || null,
       architect_profile_id: architect_id || null,
+      lead_type: leadType,
+      financing,
+      calculator_payload,
       description,
       project_type,
       location,
@@ -257,7 +272,37 @@ projects.post("/demandes-devis/:id/contact", async (c) => {
     return c.json({ message: "Limite mensuelle de contacts atteinte" }, 403)
   }
 
-  // Create unlock record
+  // HOT leads (shortlist) : exclusivité 24h pour Pro/Elite
+  const pricing = getLeadPricing(demande.lead_type)
+  if (pricing.exclusivityHours > 0 && !["pro", "elite", "premium"].includes(tier)) {
+    const hoursOld = (Date.now() - new Date(demande.created_at).getTime()) / 3600000
+    if (hoursOld < pricing.exclusivityHours) {
+      return c.json(
+        {
+          message: `Ce lead qualifié est en exclusivité Pro/Elite pendant ${Math.ceil(
+            pricing.exclusivityHours - hoursOld
+          )}h. Passez Pro pour y accéder immédiatement.`,
+          unlock_available_at: new Date(
+            new Date(demande.created_at).getTime() + pricing.exclusivityHours * 3600000
+          ),
+        },
+        403
+      )
+    }
+  }
+
+  // Limite d'achat du lead (max_architects_can_buy)
+  const purchaseCount = await db.leadPurchase.count({
+    where: { project_request_id: demande.id },
+  })
+  if (purchaseCount >= pricing.maxArchitectsCanBuy) {
+    return c.json(
+      { message: "Ce lead a déjà été attribué au nombre maximum d'architectes" },
+      403
+    )
+  }
+
+  // Create unlock record + LeadPurchase
   await db.contactUnlock.create({
     data: {
       architect_profile_id: payload.id,
@@ -265,11 +310,21 @@ projects.post("/demandes-devis/:id/contact", async (c) => {
     },
   })
 
+  await db.leadPurchase.create({
+    data: {
+      architect_profile_id: payload.id,
+      project_request_id: demande.id,
+      lead_type: demande.lead_type,
+      credits_spent: pricing.creditsRequired,
+      price_paid_mad: pricing.priceMad,
+    },
+  })
+
   // Re-read & increment (race condition mitigation)
   const fresh = await db.architectProfile.findUnique({ where: { id: payload.id } })
   await db.architectProfile.update({
     where: { id: payload.id },
-    data: { contacts_used_this_month: (fresh?.contacts_used_this_month ?? 0) + 1 },
+    data: { contacts_used_this_month: (fresh?.contacts_used_this_month ?? 0) + pricing.creditsRequired },
   })
 
   return c.json({
@@ -277,5 +332,65 @@ projects.post("/demandes-devis/:id/contact", async (c) => {
     client_email: demande.client_email,
     client_phone: demande.client_phone,
     already_unlocked: false,
+    lead_type: demande.lead_type,
+    credits_spent: pricing.creditsRequired,
   })
+})
+
+// ─── Upgrade lead (ajout phone/timing/financing sur un lead cold) ───────────
+// Appelé par le calculateur à l'étape "phone gate" pour upgrader cold → hot
+projects.post("/project-requests/:id/upgrade", async (c) => {
+  const id = c.req.param("id")
+  const body = await c.req.json()
+
+  const client_phone = (body.client_phone || "").trim()
+  const timeline = (body.timeline || "").trim()
+  const financing = (body.financing || "").trim() || null
+
+  const project = await db.projectRequest.findUnique({ where: { id } })
+  if (!project) return c.json({ message: "Projet introuvable" }, 404)
+  if (project.deleted_at) return c.json({ message: "Projet supprimé" }, 410)
+
+  // Sécurité : on autorise l'upgrade uniquement dans les 30min après création
+  const ageMinutes = (Date.now() - new Date(project.created_at).getTime()) / 60000
+  if (ageMinutes > 30) {
+    return c.json({ message: "Délai d'upgrade expiré. Soumettez une nouvelle demande." }, 403)
+  }
+
+  if (client_phone && !PHONE_RE.test(client_phone)) {
+    return c.json({ message: "Format téléphone invalide" }, 400)
+  }
+
+  const newLeadType = qualifyLead({
+    client_email: project.client_email,
+    client_phone: client_phone || project.client_phone,
+    timeline: timeline || project.timeline,
+    financing: financing || project.financing,
+    architect_profile_id: project.architect_profile_id,
+  })
+
+  const updated = await db.projectRequest.update({
+    where: { id },
+    data: {
+      client_phone: client_phone || project.client_phone,
+      timeline: timeline || project.timeline,
+      financing: financing || project.financing,
+      lead_type: newLeadType,
+      status: newLeadType === "hot" ? "submitted" : project.status, // hot = ready to send
+    },
+  })
+
+  // Si le lead est monté à "hot", notifier les 3 meilleurs architectes de la ville
+  if (newLeadType === "hot" && project.lead_type !== "hot") {
+    sendProjectSubmissionToAdmin({ ...updated, architect_name: null }).catch((e) =>
+      console.error("[email]", e)
+    )
+  }
+
+  return c.json({ project: updated, lead_type: newLeadType })
+})
+
+// ─── Lead pricing info (pour affichage côté architecte) ─────────────────────
+projects.get("/lead-pricing", async (c) => {
+  return c.json({ pricing: getLeadPricing("cold"), all: { cold: getLeadPricing("cold"), warm: getLeadPricing("warm"), hot: getLeadPricing("hot"), exclusive: getLeadPricing("exclusive") } })
 })

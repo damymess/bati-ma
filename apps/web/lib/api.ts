@@ -36,6 +36,8 @@ export type ProjectRequestInput = {
   budget_min?: number;
   budget_max?: number;
   timeline?: string;
+  financing?: string | null;
+  calculator_payload?: unknown;
 };
 
 export async function fetchArchitects(filters?: {
