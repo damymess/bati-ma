@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import TarifsClient from "./tarifs-client";
+import { fetchPublicStats } from "@/lib/api";
 
 export const metadata: Metadata = {
   title: "Tarifs architectes — Recevez plus de projets qualifiés | Bati.ma",
@@ -49,7 +50,9 @@ const FAQ = [
   },
 ];
 
-export default function TarifsPage() {
+export default async function TarifsPage() {
+  const stats = await fetchPublicStats();
+
   return (
     <>
       <Breadcrumb
@@ -74,6 +77,23 @@ export default function TarifsPage() {
             <br className="hidden sm:block" />
             3 formules adaptées à votre stade de croissance.
           </p>
+
+          {/* Preuve sociale */}
+          <div className="inline-flex items-center gap-6 bg-white/80 backdrop-blur px-6 py-3 rounded-full border border-stone-200 mb-6 text-sm">
+            <span className="flex items-center gap-2">
+              <Users className="h-4 w-4 text-[#b5522a]" />
+              <strong className="text-stone-900">{stats.architects_total.toLocaleString("fr-MA")}</strong>
+              <span className="text-stone-600">architectes inscrits</span>
+            </span>
+            {stats.leads_this_week > 0 && (
+              <span className="hidden sm:flex items-center gap-2 pl-6 border-l border-stone-200">
+                <TrendingUp className="h-4 w-4 text-[#b5522a]" />
+                <strong className="text-stone-900">{stats.leads_this_week}</strong>
+                <span className="text-stone-600">demandes cette semaine</span>
+              </span>
+            )}
+          </div>
+
           <div className="flex items-center justify-center gap-6 text-sm text-stone-500 flex-wrap">
             <span className="flex items-center gap-2">
               <Check className="h-4 w-4 text-green-500" /> Sans engagement

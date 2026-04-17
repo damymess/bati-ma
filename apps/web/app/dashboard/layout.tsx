@@ -76,6 +76,12 @@ export default function DashboardLayout({
           badge: adminStats ? (adminStats.leads.hot + adminStats.leads.to_verify) : 0,
         },
         {
+          href: "/dashboard/admin/architectes",
+          icon: User,
+          label: "Architectes inscrits",
+          badge: 0,
+        },
+        {
           href: "/dashboard/admin/avis",
           icon: Star,
           label: "Avis à modérer",

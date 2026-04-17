@@ -207,6 +207,50 @@ export async function updateAdminProjectRequestStatus(
   return res.json();
 }
 
+export async function fetchRegisteredArchitects(): Promise<{ architects: any[]; count: number }> {
+  const res = await fetch(`${API_URL}/admin/architects/registered`);
+  if (!res.ok) return { architects: [], count: 0 };
+  return res.json();
+}
+
+export async function sendArchitectReactivation(id: string): Promise<{ sent: boolean; email: string }> {
+  const res = await fetch(`${API_URL}/admin/architects/${id}/send-reactivation`, {
+    method: "POST",
+  });
+  if (!res.ok) throw new Error("Erreur envoi relance");
+  return res.json();
+}
+
+export async function fetchPublicStats(): Promise<{
+  architects_total: number;
+  architects_verified: number;
+  leads_this_week: number;
+  leads_total: number;
+}> {
+  try {
+    const res = await fetch(`${API_URL}/store/architects/public-stats`, {
+      next: { revalidate: 600 }, // cache 10 min
+    } as any);
+    if (!res.ok) throw new Error();
+    return res.json();
+  } catch {
+    return {
+      architects_total: 0,
+      architects_verified: 0,
+      leads_this_week: 0,
+      leads_total: 0,
+    };
+  }
+}
+
+export async function fetchArchitectStats(token: string): Promise<any> {
+  const res = await fetch(`${API_URL}/store/architects/me/stats`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) return null;
+  return res.json();
+}
+
 export async function fetchProjectAuditLog(id: string): Promise<{ logs: any[] }> {
   const res = await fetch(`${API_URL}/admin/project-requests/${id}/audit-log`);
   if (!res.ok) return { logs: [] };

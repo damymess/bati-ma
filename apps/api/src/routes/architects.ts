@@ -50,6 +50,16 @@ architects.post("/register", async (c) => {
     },
   })
 
+  // Envoi welcome email async (ne bloque pas la réponse)
+  import("../lib/email.js").then(({ sendArchitectWelcomeEmail }) =>
+    sendArchitectWelcomeEmail({
+      name: architect.name,
+      email: architect.email,
+      regions: (architect.regions as string[]) || [],
+      specialties: (architect.specialties as string[]) || [],
+    }).catch((e) => console.error("[email] welcome failed:", e)),
+  )
+
   const token = signToken({ id: architect.id, email: architect.email, role: "architect" })
   return c.json({ architect: sanitizeArchitect(architect), token }, 201)
 })
@@ -78,7 +88,47 @@ architects.get("/me", authMiddleware, async (c) => {
   const user = c.get("user")
   const architect = await db.architectProfile.findUnique({ where: { id: user.id } })
   if (!architect) return c.json({ message: "Profil non trouvé" }, 404)
-  return c.json({ architect: sanitizeArchitect(architect) })
+
+  const { computeProfileCompletion } = await import("../lib/architect-completion.js")
+  const completion = computeProfileCompletion(architect as any)
+
+  return c.json({ architect: sanitizeArchitect(architect), completion })
+})
+
+// Stats dashboard architecte
+architects.get("/me/stats", authMiddleware, async (c) => {
+  const user = c.get("user")
+
+  const [architect, demandesTotal, contactsUnlocked, reviewsCount, avgRating] =
+    await Promise.all([
+      db.architectProfile.findUnique({ where: { id: user.id } }),
+      db.projectRequest.count({ where: { is_public: true, deleted_at: null } }),
+      db.contactUnlock.count({ where: { architect_profile_id: user.id } }),
+      db.review.count({ where: { architect_profile_id: user.id, status: "approved" } }),
+      db.review.aggregate({
+        where: { architect_profile_id: user.id, status: "approved" },
+        _avg: { rating: true },
+      }),
+    ])
+
+  if (!architect) return c.json({ message: "Profil non trouvé" }, 404)
+
+  const { computeProfileCompletion } = await import("../lib/architect-completion.js")
+  const completion = computeProfileCompletion(architect as any)
+
+  return c.json({
+    completion,
+    stats: {
+      demandes_available: demandesTotal,
+      contacts_unlocked: contactsUnlocked,
+      reviews_count: reviewsCount,
+      avg_rating: avgRating._avg.rating || 0,
+      subscription_tier: architect.subscription_tier,
+      contacts_used_this_month: architect.contacts_used_this_month,
+      contacts_limit: architect.contacts_limit,
+    },
+    architect: sanitizeArchitect(architect),
+  })
 })
 
 // Update me
@@ -135,34 +185,61 @@ architects.post("/", async (c) => {
   return c.json({ architect: sanitizeArchitect(architect) }, 201)
 })
 
-// List architects
+// Stats publiques (pour preuve sociale sur /architectes/tarifs)
+architects.get("/public-stats", async (c) => {
+  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 3600 * 1000)
+  const [architectsTotal, verifiedTotal, leadsThisWeek, leadsTotal] = await Promise.all([
+    db.architectProfile.count({ where: { is_active: true, deleted_at: null } }),
+    db.architectProfile.count({ where: { is_active: true, deleted_at: null, verified: true } }),
+    db.projectRequest.count({
+      where: { deleted_at: null, created_at: { gte: sevenDaysAgo } },
+    }),
+    db.projectRequest.count({ where: { deleted_at: null } }),
+  ])
+
+  return c.json({
+    architects_total: architectsTotal,
+    architects_verified: verifiedTotal,
+    leads_this_week: leadsThisWeek,
+    leads_total: leadsTotal,
+  })
+})
+
+// List architects (public — filtre les profils incomplets)
 architects.get("/", async (c) => {
   const limit = Math.min(Number(c.req.query("limit")) || 100, 200)
   const offset = Number(c.req.query("offset")) || 0
   const regionsParam = c.req.queries("regions[]") || []
+  const includeIncomplete = c.req.query("include_incomplete") === "1" // admin only
 
   const where: any = { is_active: true, deleted_at: null }
 
-  // Filter by region using Prisma JSON path filter (PostgreSQL jsonb @> operator)
   if (regionsParam.length > 0) {
     where.OR = regionsParam.map((r) => ({
       regions: { path: [], array_contains: [r.toLowerCase()] },
     }))
   }
 
-  const [list, total] = await Promise.all([
-    db.architectProfile.findMany({
-      where,
-      orderBy: [{ premium: "desc" }, { rating: "desc" }, { created_at: "desc" }],
-      take: limit,
-      skip: offset,
-    }),
-    db.architectProfile.count({ where }),
-  ])
+  // Fetch tous puis filtrer par complétion (difficile à faire 100% SQL
+  // avec JSON fields — on le fait en mémoire, volume raisonnable).
+  const list = await db.architectProfile.findMany({
+    where,
+    orderBy: [{ premium: "desc" }, { rating: "desc" }, { created_at: "desc" }],
+    take: limit * 2, // over-fetch car on va filtrer
+    skip: offset,
+  })
+
+  let filtered = list
+  if (!includeIncomplete) {
+    const { isArchitectPublic } = await import("../lib/architect-completion.js")
+    filtered = list.filter((a) => isArchitectPublic(a as any))
+  }
+
+  filtered = filtered.slice(0, limit)
 
   return c.json({
-    architects: list.map(sanitizeArchitect),
-    count: total,
+    architects: filtered.map(sanitizeArchitect),
+    count: filtered.length,
   })
 })
 

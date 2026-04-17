@@ -176,6 +176,55 @@ admin.get("/project-requests/:id/audit-log", async (c) => {
   return c.json({ logs })
 })
 
+// ─── Architects registered only (password_hash != null) ────────────────────
+admin.get("/architects/registered", async (c) => {
+  const list = await db.architectProfile.findMany({
+    where: { deleted_at: null, password_hash: { not: null } },
+    orderBy: { created_at: "desc" },
+  })
+
+  const { computeProfileCompletion } = await import("../lib/architect-completion.js")
+  const enriched = list.map((a) => {
+    const completion = computeProfileCompletion(a as any)
+    return {
+      ...sanitizeArchitect(a),
+      completion_percent: completion.percent,
+      is_public: completion.isPublic,
+      is_complete: completion.isComplete,
+      missing_count: completion.missing.length,
+    }
+  })
+
+  return c.json({ architects: enriched, count: enriched.length })
+})
+
+// Admin : relance manuelle d'un architecte inactif
+admin.post("/architects/:id/send-reactivation", async (c) => {
+  const id = c.req.param("id")
+  const a = await db.architectProfile.findUnique({ where: { id } })
+  if (!a) return c.json({ message: "Architecte introuvable" }, 404)
+
+  const { computeProfileCompletion } = await import("../lib/architect-completion.js")
+  const { sendArchitectReactivationEmail } = await import("../lib/email.js")
+
+  const completion = computeProfileCompletion(a as any)
+  await sendArchitectReactivationEmail({
+    name: a.name,
+    email: a.email,
+    completion_percent: completion.percent,
+    missing_fields: completion.missing,
+  })
+
+  await logAdminAction({
+    entity_type: "architect",
+    entity_id: id,
+    action: "manual_reactivation",
+    actor_email: c.req.header("x-admin-email") || "contact@bati.ma",
+  })
+
+  return c.json({ sent: true, email: a.email })
+})
+
 // ─── Architects ─────────────────────────────────────────────────────────────
 
 admin.get("/architects", async (c) => {

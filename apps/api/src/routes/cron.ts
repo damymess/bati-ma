@@ -1,8 +1,61 @@
 import { Hono } from "hono"
 import { db } from "../lib/db.js"
-import { sendReengagementD1, sendReengagementD3, sendReengagementD7 } from "../lib/email.js"
+import {
+  sendReengagementD1,
+  sendReengagementD3,
+  sendReengagementD7,
+  sendArchitectReactivationEmail,
+} from "../lib/email.js"
+import { computeProfileCompletion } from "../lib/architect-completion.js"
 
 export const cron = new Hono()
+
+// ─── Relance architectes inscrits avec profil incomplet ────────────────────
+cron.post("/architect-reactivation", async (c) => {
+  const secret = c.req.header("x-cron-secret")
+  if (!process.env.CRON_SECRET || secret !== process.env.CRON_SECRET) {
+    return c.json({ message: "Forbidden" }, 403)
+  }
+
+  const now = Date.now()
+  const threeDaysAgo = new Date(now - 72 * 3600 * 1000)
+  const fiveDaysAgo = new Date(now - 120 * 3600 * 1000)
+
+  // Architectes vraiment inscrits (password_hash != null), créés il y a 3-5 jours,
+  // pas encore relancés, et potentiellement avec profil incomplet
+  const candidates = await db.architectProfile.findMany({
+    where: {
+      deleted_at: null,
+      is_active: true,
+      password_hash: { not: null },
+      created_at: { gte: fiveDaysAgo, lt: threeDaysAgo },
+      contacts_reset_at: null, // on réutilise ce champ comme flag "relance envoyée"
+    },
+    take: 50,
+  })
+
+  let sent = 0
+  for (const a of candidates) {
+    const completion = computeProfileCompletion(a as any)
+    if (completion.isPublic) continue // déjà OK, on ne relance pas
+
+    await sendArchitectReactivationEmail({
+      name: a.name,
+      email: a.email,
+      completion_percent: completion.percent,
+      missing_fields: completion.missing,
+    })
+
+    await db.architectProfile.update({
+      where: { id: a.id },
+      data: { contacts_reset_at: new Date() }, // marqueur de relance envoyée
+    })
+
+    sent++
+  }
+
+  return c.json({ success: true, sent })
+})
 
 /**
  * Cron endpoint à appeler périodiquement (toutes les heures ou tous les jours)

@@ -350,6 +350,152 @@ export async function sendReengagementD7(project: ProjectData) {
  * quand un lead semble douteux. Le client reçoit un lien unique vers
  * un formulaire pré-rempli où il peut corriger/confirmer ses infos.
  */
+/**
+ * Welcome email envoyé aux architectes post-inscription.
+ * Objectif : pousser à compléter le profil pour apparaître publiquement.
+ */
+export async function sendArchitectWelcomeEmail(architect: {
+  name: string
+  email: string
+  regions?: string[]
+  specialties?: string[]
+}) {
+  if (!process.env.RESEND_API_KEY || !architect.email) return
+  try {
+    const firstRegion = (architect.regions || [])[0] || "votre ville"
+    const firstRegionLabel = firstRegion.charAt(0).toUpperCase() + firstRegion.slice(1)
+
+    // Compteurs de preuve sociale (approximatifs — à remplacer plus tard par des vraies stats)
+    const stats = await db.$transaction([
+      db.projectRequest.count({
+        where: { deleted_at: null, created_at: { gte: new Date(Date.now() - 7 * 24 * 3600 * 1000) } },
+      }),
+      db.architectProfile.count({ where: { deleted_at: null, verified: true } }),
+    ])
+    const leadsThisWeek = stats[0] || 0
+    const verifiedArchitects = stats[1] || 0
+
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: architect.email,
+      subject: `Bienvenue ${architect.name} ! Votre profil est en attente...`,
+      html: `
+        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333">
+          <div style="background:#b5522a;color:white;padding:20px 24px;border-radius:8px 8px 0 0">
+            <h1 style="margin:0;font-size:20px">Bienvenue sur Bati.ma 🎉</h1>
+            <p style="margin:4px 0 0;font-size:13px;opacity:0.85">Votre compte architecte est créé</p>
+          </div>
+          <div style="border:1px solid #e5e5e5;border-top:0;padding:24px;border-radius:0 0 8px 8px">
+            <p>Bonjour <strong>${esc(architect.name)}</strong>,</p>
+            <p>Félicitations, votre compte architecte est créé ! <strong>Mais votre profil n'est pas encore visible publiquement.</strong></p>
+
+            <div style="background:#fff8f2;border:2px solid #b5522a33;border-radius:12px;padding:18px;margin:20px 0">
+              <p style="margin:0 0 10px;font-weight:600;color:#b5522a">Complétion profil : 20%</p>
+              <div style="background:#e5e5e5;border-radius:4px;height:8px;overflow:hidden">
+                <div style="background:#b5522a;height:100%;width:20%"></div>
+              </div>
+              <p style="margin:14px 0 8px;font-weight:600;color:#333;font-size:14px">3 étapes pour devenir visible :</p>
+              <ul style="margin:0;padding-left:20px;font-size:14px;line-height:1.7">
+                <li>📝 Rédiger votre description (80 caractères min)</li>
+                <li>📷 Ajouter 3 photos de vos meilleurs projets</li>
+                <li>📞 Renseigner votre téléphone</li>
+              </ul>
+            </div>
+
+            <div style="text-align:center;margin:24px 0">
+              <a href="${WEB_URL}/dashboard/architecte/profil" style="display:inline-block;background:#b5522a;color:white;text-decoration:none;padding:14px 32px;border-radius:8px;font-weight:600;font-size:14px">
+                Compléter mon profil →
+              </a>
+            </div>
+
+            ${
+              leadsThisWeek > 0
+                ? `<div style="background:#f5f5f5;border-radius:8px;padding:14px;margin:20px 0;font-size:13px;color:#555">
+                <strong style="color:#b5522a">📊 Cette semaine sur Bati.ma :</strong><br/>
+                ${leadsThisWeek} demande${leadsThisWeek > 1 ? "s" : ""} de devis reçue${leadsThisWeek > 1 ? "s" : ""}<br/>
+                ${verifiedArchitects} architecte${verifiedArchitects > 1 ? "s" : ""} vérifié${verifiedArchitects > 1 ? "s" : ""} actifs
+              </div>`
+                : ""
+            }
+
+            <p style="color:#666;font-size:13px">
+              <strong>Astuce :</strong> les architectes avec 5+ photos et une description détaillée reçoivent <strong>3x plus de demandes de devis</strong>.
+            </p>
+
+            <hr style="border:0;border-top:1px solid #eee;margin:24px 0"/>
+            <p style="color:#999;font-size:12px;text-align:center">
+              Besoin d'aide ? Répondez à cet email ou contactez-nous.<br/>
+              <a href="${WEB_URL}" style="color:#b5522a">bati.ma</a>
+            </p>
+          </div>
+        </div>`,
+    })
+  } catch (e) {
+    console.error("[email] architect welcome failed:", e)
+  }
+}
+
+/**
+ * Email de relance J+3 pour architectes avec profil incomplet.
+ * Déclenché par le cron /cron/architect-reactivation
+ */
+export async function sendArchitectReactivationEmail(architect: {
+  name: string
+  email: string
+  completion_percent: number
+  missing_fields: string[]
+}) {
+  if (!process.env.RESEND_API_KEY || !architect.email) return
+  try {
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: architect.email,
+      subject: `${architect.name}, il reste ${architect.missing_fields.length} champs pour être visible`,
+      html: `
+        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333">
+          <div style="background:#b5522a;color:white;padding:20px 24px;border-radius:8px 8px 0 0">
+            <h1 style="margin:0;font-size:20px">Votre profil attend...</h1>
+          </div>
+          <div style="border:1px solid #e5e5e5;border-top:0;padding:24px;border-radius:0 0 8px 8px">
+            <p>Bonjour <strong>${esc(architect.name)}</strong>,</p>
+            <p>Il y a 3 jours vous avez créé votre compte sur Bati.ma, mais <strong>votre profil n'est toujours pas visible</strong> dans la liste publique des architectes.</p>
+
+            <div style="background:#fff8f2;border:2px solid #b5522a33;border-radius:12px;padding:18px;margin:20px 0">
+              <p style="margin:0 0 10px;font-weight:600;color:#b5522a">Votre profil : ${architect.completion_percent}%</p>
+              <div style="background:#e5e5e5;border-radius:4px;height:10px;overflow:hidden">
+                <div style="background:#b5522a;height:100%;width:${architect.completion_percent}%"></div>
+              </div>
+              <p style="margin:14px 0 8px;font-weight:600;color:#333;font-size:14px">Il vous reste à remplir :</p>
+              <ul style="margin:0;padding-left:20px;font-size:14px;line-height:1.7">
+                ${architect.missing_fields
+                  .slice(0, 5)
+                  .map((f) => `<li>${esc(f)}</li>`)
+                  .join("")}
+              </ul>
+            </div>
+
+            <div style="text-align:center;margin:24px 0">
+              <a href="${WEB_URL}/dashboard/architecte/profil" style="display:inline-block;background:#b5522a;color:white;text-decoration:none;padding:14px 32px;border-radius:8px;font-weight:600;font-size:14px">
+                Finaliser mon profil →
+              </a>
+            </div>
+
+            <p style="color:#666;font-size:13px">
+              Les profils complets reçoivent en moyenne <strong>3x plus de demandes de devis</strong> et apparaissent dans les résultats de recherche locaux.
+            </p>
+
+            <hr style="border:0;border-top:1px solid #eee;margin:24px 0"/>
+            <p style="color:#999;font-size:12px;text-align:center">
+              <a href="${WEB_URL}" style="color:#b5522a">bati.ma</a>
+            </p>
+          </div>
+        </div>`,
+    })
+  } catch (e) {
+    console.error("[email] architect reactivation failed:", e)
+  }
+}
+
 export async function sendVerificationEmailToClient(
   project: ProjectData & { verification_token?: string | null },
   token: string,
