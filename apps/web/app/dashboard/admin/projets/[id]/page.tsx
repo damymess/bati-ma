@@ -11,11 +11,21 @@ import {
   Calendar,
   Banknote,
   Clock,
+  Trash2,
+  AlertTriangle,
+  ShieldCheck,
+  StickyNote,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { fetchAdminProjectRequest, updateAdminProjectRequestStatus } from "@/lib/api";
+import {
+  fetchAdminProjectRequest,
+  updateAdminProjectRequestStatus,
+  deleteAdminProject,
+  requestVerificationEmail,
+  updateAdminProjectNote,
+} from "@/lib/api";
 
 const STATUS_LABELS: Record<string, { label: string; color: string }> = {
   submitted: { label: "Soumis", color: "bg-blue-100 text-blue-700" },
@@ -24,6 +34,9 @@ const STATUS_LABELS: Record<string, { label: string; color: string }> = {
   accepted: { label: "Accepté", color: "bg-emerald-100 text-emerald-700" },
   rejected: { label: "Refusé", color: "bg-red-100 text-red-700" },
   completed: { label: "Terminé", color: "bg-stone-100 text-stone-600" },
+  to_verify: { label: "🔍 À vérifier", color: "bg-yellow-100 text-yellow-800" },
+  verified: { label: "✅ Vérifié", color: "bg-green-100 text-green-700" },
+  invalid: { label: "🚫 Invalide", color: "bg-stone-200 text-stone-500" },
 };
 
 const STATUS_ACTIONS = [
@@ -43,16 +56,74 @@ export default function AdminProjetDetailPage() {
   const [projet, setProjet] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
+  const [noteDraft, setNoteDraft] = useState("");
+  const [savingNote, setSavingNote] = useState(false);
 
   useEffect(() => {
     (async () => {
       try {
         const data = await fetchAdminProjectRequest(id);
         setProjet(data.project_request);
+        setNoteDraft(data.project_request?.admin_note || "");
       } catch {}
       setLoading(false);
     })();
   }, [id]);
+
+  async function handleDelete() {
+    if (!confirm(`Supprimer définitivement ce lead ?\n\n${projet.title}\n${projet.client_name} · ${projet.client_email}\n\nAction IRRÉVERSIBLE.`)) return;
+    setUpdating(true);
+    try {
+      await deleteAdminProject(id);
+      router.push("/dashboard/admin/projets");
+    } catch (e: any) {
+      alert("Erreur : " + (e?.message || "suppression échouée"));
+    }
+    setUpdating(false);
+  }
+
+  async function handleRequestVerification() {
+    if (!projet.client_email) {
+      alert("Ce lead n'a pas d'email client.");
+      return;
+    }
+    if (!confirm(`Envoyer un email de confirmation à ${projet.client_email} ?`)) return;
+    setUpdating(true);
+    try {
+      await requestVerificationEmail(id);
+      const data = await fetchAdminProjectRequest(id);
+      setProjet(data.project_request);
+      alert("Email envoyé !");
+    } catch (e: any) {
+      alert("Erreur : " + (e?.message || "envoi échoué"));
+    }
+    setUpdating(false);
+  }
+
+  async function handleSaveNote() {
+    setSavingNote(true);
+    try {
+      const data = await updateAdminProjectNote(id, { admin_note: noteDraft });
+      setProjet(data.project_request);
+    } catch (e: any) {
+      alert("Erreur : " + (e?.message || "sauvegarde échouée"));
+    }
+    setSavingNote(false);
+  }
+
+  async function handleMarkInvalid() {
+    const note = prompt("Raison pour marquer ce lead comme invalide ?", noteDraft || "");
+    if (note === null) return;
+    setUpdating(true);
+    try {
+      const data = await updateAdminProjectNote(id, { status: "invalid", admin_note: note });
+      setProjet(data.project_request);
+      setNoteDraft(note);
+    } catch (e: any) {
+      alert("Erreur : " + (e?.message || "maj échouée"));
+    }
+    setUpdating(false);
+  }
 
   const handleStatusChange = async (newStatus: string) => {
     if (!projet || newStatus === projet.status) return;
@@ -185,6 +256,104 @@ export default function AdminProjetDetailPage() {
           </CardContent>
         </Card>
       )}
+
+      {/* Actions admin (moderation) */}
+      <Card className="mt-6 border-amber-200 bg-amber-50/30">
+        <CardContent className="pt-5">
+          <h3 className="font-semibold text-stone-900 mb-1 flex items-center gap-2">
+            <ShieldCheck className="h-4 w-4 text-[#b5522a]" /> Modération du lead
+          </h3>
+          <p className="text-xs text-stone-500 mb-4">
+            Actions réservées à l&apos;admin. Ne sont pas visibles par le client ou les architectes.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              size="sm"
+              variant="outline"
+              className="border-blue-300 text-blue-700 hover:bg-blue-50"
+              onClick={handleRequestVerification}
+              disabled={updating || !projet.client_email}
+            >
+              <Mail className="h-4 w-4 mr-1" /> Demander confirmation au client
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className="border-stone-300 text-stone-700"
+              onClick={handleMarkInvalid}
+              disabled={updating}
+            >
+              <AlertTriangle className="h-4 w-4 mr-1" /> Marquer invalide
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className="border-red-300 text-red-700 hover:bg-red-50 ml-auto"
+              onClick={handleDelete}
+              disabled={updating}
+            >
+              <Trash2 className="h-4 w-4 mr-1" /> Supprimer définitivement
+            </Button>
+          </div>
+
+          {/* Vérification client — historique */}
+          {(projet.verification_sent_at || projet.verification_responded_at) && (
+            <div className="mt-5 pt-5 border-t border-amber-200">
+              <p className="text-sm font-medium text-stone-900 mb-2">Historique de vérification</p>
+              <ul className="text-sm text-stone-600 space-y-1">
+                {projet.verification_sent_at && (
+                  <li className="flex items-center gap-2">
+                    <Mail className="h-4 w-4 text-blue-600" />
+                    Email envoyé le{" "}
+                    {new Date(projet.verification_sent_at).toLocaleString("fr-FR")}
+                  </li>
+                )}
+                {projet.verification_responded_at ? (
+                  <li className="flex items-center gap-2 text-green-700 font-medium">
+                    <ShieldCheck className="h-4 w-4" />
+                    Client a confirmé le{" "}
+                    {new Date(projet.verification_responded_at).toLocaleString("fr-FR")}
+                  </li>
+                ) : projet.verification_sent_at ? (
+                  <li className="flex items-center gap-2 text-amber-700">
+                    <Clock className="h-4 w-4" /> En attente de réponse du client
+                  </li>
+                ) : null}
+              </ul>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Admin note */}
+      <Card className="mt-6">
+        <CardContent className="pt-5">
+          <h3 className="font-semibold text-stone-900 mb-1 flex items-center gap-2">
+            <StickyNote className="h-4 w-4 text-amber-600" /> Note interne
+          </h3>
+          <p className="text-xs text-stone-500 mb-3">
+            Visible uniquement par l&apos;admin. Ex: &quot;Email suspect yopmail&quot;, &quot;Client rappelé le 17/04&quot;...
+          </p>
+          <textarea
+            value={noteDraft}
+            onChange={(e) => setNoteDraft(e.target.value)}
+            rows={4}
+            maxLength={2000}
+            placeholder="Écrire une note sur ce lead..."
+            className="w-full border border-stone-200 rounded-lg p-3 text-sm focus:border-[#b5522a] focus:outline-none focus:ring-1 focus:ring-[#b5522a]"
+          />
+          <div className="flex items-center justify-between mt-2">
+            <span className="text-xs text-stone-400">{noteDraft.length}/2000</span>
+            <Button
+              size="sm"
+              onClick={handleSaveNote}
+              disabled={savingNote || noteDraft === (projet.admin_note || "")}
+            >
+              {savingNote ? "Enregistrement..." : "Enregistrer la note"}
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Status change */}
       <Card className="mt-6">

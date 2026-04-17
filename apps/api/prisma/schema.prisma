@@ -75,6 +75,12 @@ model ProjectRequest {
   last_engagement_at   DateTime? @db.Timestamptz(6) // dernier email re-engagement envoyé
   engagement_count     Int       @default(0)
 
+  // Admin moderation & client verification flow
+  admin_note                String?   // note interne admin (raison suspicion, action à suivre, etc.)
+  verification_token        String?   @unique // token pour lien vérif client (expire 14j)
+  verification_sent_at      DateTime? @db.Timestamptz(6)
+  verification_responded_at DateTime? @db.Timestamptz(6)
+
   created_at           DateTime  @default(now()) @db.Timestamptz(6)
   updated_at           DateTime  @default(now()) @updatedAt @db.Timestamptz(6)
   deleted_at           DateTime? @db.Timestamptz(6)

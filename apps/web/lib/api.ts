@@ -207,6 +207,74 @@ export async function updateAdminProjectRequestStatus(
   return res.json();
 }
 
+export async function deleteAdminProject(id: string): Promise<{ deleted: boolean }> {
+  const res = await fetch(`${API_URL}/admin/project-requests/${id}`, {
+    method: "DELETE",
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ message: "Erreur suppression" }));
+    throw new Error(err.message || "Erreur suppression");
+  }
+  return res.json();
+}
+
+export async function requestVerificationEmail(
+  id: string
+): Promise<{ sent: boolean; token: string }> {
+  const res = await fetch(`${API_URL}/admin/project-requests/${id}/request-verification`, {
+    method: "POST",
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ message: "Erreur envoi" }));
+    throw new Error(err.message || "Erreur envoi");
+  }
+  return res.json();
+}
+
+export async function updateAdminProjectNote(
+  id: string,
+  data: { admin_note?: string; status?: string }
+): Promise<{ project_request: any }> {
+  const res = await fetch(`${API_URL}/admin/project-requests/${id}/note`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error("Erreur mise à jour note");
+  return res.json();
+}
+
+export async function fetchProjectByToken(
+  token: string
+): Promise<{ project: any } | { message: string }> {
+  const res = await fetch(`${API_URL}/store/project-requests/verify/${token}`);
+  const data = await res.json();
+  if (!res.ok) return { message: data.message || "Erreur" };
+  return data;
+}
+
+export async function submitProjectVerification(
+  token: string,
+  data: Partial<{
+    client_name: string;
+    client_phone: string;
+    description: string;
+    budget_min: number | null;
+    budget_max: number | null;
+    timeline: string;
+    financing: string;
+  }>
+): Promise<{ success: boolean; project: { id: string } } | { message: string }> {
+  const res = await fetch(`${API_URL}/store/project-requests/verify/${token}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  const result = await res.json();
+  if (!res.ok) return { message: result.message || "Erreur" };
+  return result;
+}
+
 export async function unlockContact(
   demandeId: string,
   token: string

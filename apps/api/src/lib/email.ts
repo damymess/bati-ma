@@ -345,6 +345,64 @@ export async function sendReengagementD7(project: ProjectData) {
   }
 }
 
+/**
+ * Email de confirmation / correction des infos envoyé par l'admin
+ * quand un lead semble douteux. Le client reçoit un lien unique vers
+ * un formulaire pré-rempli où il peut corriger/confirmer ses infos.
+ */
+export async function sendVerificationEmailToClient(
+  project: ProjectData & { verification_token?: string | null },
+  token: string,
+) {
+  if (!process.env.RESEND_API_KEY || !project.client_email) return
+  try {
+    const verifyUrl = `${WEB_URL}/verifier-projet/${token}`
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: project.client_email,
+      subject: `Confirmez votre demande de devis — Bati.ma`,
+      html: `
+        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333">
+          <div style="background:#b5522a;color:white;padding:20px 24px;border-radius:8px 8px 0 0">
+            <h1 style="margin:0;font-size:20px">Confirmez votre demande</h1>
+            <p style="margin:4px 0 0;font-size:13px;opacity:0.85">Bati.ma — Annuaire architectes Maroc</p>
+          </div>
+          <div style="border:1px solid #e5e5e5;border-top:0;padding:24px;border-radius:0 0 8px 8px">
+            <p>Bonjour <strong>${esc(project.client_name || "")}</strong>,</p>
+            <p>Merci d'avoir soumis votre demande de devis sur Bati.ma. Avant de transmettre votre projet aux architectes, nous aimerions <strong>confirmer quelques informations</strong> pour que les professionnels puissent vous contacter efficacement.</p>
+
+            <div style="background:#f9f5f0;border:1px solid #b5522a22;border-radius:8px;padding:16px;margin:20px 0;font-size:13px">
+              <p style="margin:0 0 8px;font-weight:600;color:#666">Récapitulatif actuel :</p>
+              <table style="width:100%;border-collapse:collapse">
+                <tr><td style="padding:4px 0;color:#666;width:100px">Projet</td><td style="padding:4px 0">${esc(project.title)}</td></tr>
+                <tr><td style="padding:4px 0;color:#666">Ville</td><td style="padding:4px 0">${esc(project.location)}</td></tr>
+                <tr><td style="padding:4px 0;color:#666">Budget</td><td style="padding:4px 0">${formatBudget(project.budget_min, project.budget_max)}</td></tr>
+                <tr><td style="padding:4px 0;color:#666">Téléphone</td><td style="padding:4px 0">${esc(project.client_phone || "— non renseigné —")}</td></tr>
+              </table>
+            </div>
+
+            <div style="text-align:center;margin:28px 0">
+              <a href="${verifyUrl}" style="display:inline-block;background:#b5522a;color:white;text-decoration:none;padding:14px 32px;border-radius:8px;font-weight:600;font-size:14px">
+                Confirmer / Corriger mes informations
+              </a>
+            </div>
+
+            <p style="color:#666;font-size:13px"><strong>Si vos infos sont déjà correctes</strong>, confirmez simplement en cliquant le bouton. Sinon, vous pourrez les modifier.</p>
+            <p style="color:#999;font-size:12px">Ce lien est valable <strong>14 jours</strong> et ne peut être utilisé qu'une seule fois.</p>
+
+            <hr style="border:0;border-top:1px solid #eee;margin:24px 0"/>
+            <p style="color:#999;font-size:12px;text-align:center">
+              Vous n'avez pas soumis cette demande ? <a href="${WEB_URL}/contact" style="color:#b5522a">Contactez-nous</a>
+              &nbsp;·&nbsp;<a href="${WEB_URL}" style="color:#b5522a">bati.ma</a>
+            </p>
+          </div>
+        </div>`,
+    })
+  } catch (e) {
+    console.error("[email] verification to client failed:", e)
+  }
+}
+
 export async function sendEstimationToClient(project: ProjectData & { calculator_payload?: unknown }) {
   if (!process.env.RESEND_API_KEY || !project.client_email) return
   try {

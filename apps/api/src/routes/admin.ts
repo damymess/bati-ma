@@ -65,6 +65,71 @@ admin.post("/project-requests/:id", async (c) => {
   return c.json({ project_request: updated })
 })
 
+// ─── Hard DELETE (irréversible) ─────────────────────────────────────────────
+admin.delete("/project-requests/:id", async (c) => {
+  const id = c.req.param("id")
+
+  // Supprimer les relations (pas de ON DELETE CASCADE dans le schema)
+  await db.$transaction(async (tx) => {
+    await tx.contactUnlock.deleteMany({ where: { project_request_id: id } })
+    await tx.leadPurchase.deleteMany({ where: { project_request_id: id } })
+    await tx.projectRequest.delete({ where: { id } })
+  })
+
+  return c.json({ deleted: true, id })
+})
+
+// ─── Admin note + status update ─────────────────────────────────────────────
+admin.post("/project-requests/:id/note", async (c) => {
+  const id = c.req.param("id")
+  const body = await c.req.json()
+
+  const data: Record<string, unknown> = {}
+  if (typeof body.admin_note === "string") data.admin_note = body.admin_note.slice(0, 2000)
+  if (typeof body.status === "string" && ["submitted", "viewed", "quoted", "accepted", "rejected", "completed", "to_verify", "verified", "invalid"].includes(body.status)) {
+    data.status = body.status
+  }
+
+  if (Object.keys(data).length === 0) {
+    return c.json({ message: "Aucune modification fournie" }, 400)
+  }
+
+  const updated = await db.projectRequest.update({
+    where: { id },
+    data,
+  })
+  return c.json({ project_request: updated })
+})
+
+// ─── Request client verification (envoi email avec lien unique) ─────────────
+admin.post("/project-requests/:id/request-verification", async (c) => {
+  const id = c.req.param("id")
+
+  const project = await db.projectRequest.findUnique({ where: { id } })
+  if (!project) return c.json({ message: "Projet introuvable" }, 404)
+  if (!project.client_email) return c.json({ message: "Pas d'email client" }, 400)
+
+  // Generate random token (crypto random)
+  const { randomBytes } = await import("crypto")
+  const token = randomBytes(24).toString("hex")
+
+  const updated = await db.projectRequest.update({
+    where: { id },
+    data: {
+      verification_token: token,
+      verification_sent_at: new Date(),
+      verification_responded_at: null,
+      status: "to_verify",
+    },
+  })
+
+  // Envoi email (imported lazily pour éviter circular)
+  const { sendVerificationEmailToClient } = await import("../lib/email.js")
+  await sendVerificationEmailToClient(updated, token)
+
+  return c.json({ sent: true, token })
+})
+
 // ─── Architects ─────────────────────────────────────────────────────────────
 
 admin.get("/architects", async (c) => {

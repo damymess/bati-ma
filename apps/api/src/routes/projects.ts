@@ -394,3 +394,94 @@ projects.post("/project-requests/:id/upgrade", async (c) => {
 projects.get("/lead-pricing", async (c) => {
   return c.json({ pricing: getLeadPricing("cold"), all: { cold: getLeadPricing("cold"), warm: getLeadPricing("warm"), hot: getLeadPricing("hot"), exclusive: getLeadPricing("exclusive") } })
 })
+
+// ─── Verification (public) ──────────────────────────────────────────────────
+// Le client clique sur le lien reçu par email pour confirmer/corriger ses infos.
+// Token valable 14 jours, single-use.
+
+const TOKEN_VALIDITY_MS = 14 * 24 * 3600 * 1000
+
+projects.get("/project-requests/verify/:token", async (c) => {
+  const token = c.req.param("token")
+  if (!token || token.length < 16) return c.json({ message: "Lien invalide" }, 400)
+
+  const project = await db.projectRequest.findUnique({ where: { verification_token: token } })
+  if (!project || project.deleted_at) return c.json({ message: "Lien introuvable" }, 404)
+  if (project.verification_responded_at) return c.json({ message: "Ce lien a déjà été utilisé." }, 410)
+  if (!project.verification_sent_at) return c.json({ message: "Lien invalide" }, 400)
+
+  const age = Date.now() - new Date(project.verification_sent_at).getTime()
+  if (age > TOKEN_VALIDITY_MS) return c.json({ message: "Ce lien a expiré (plus de 14 jours)." }, 410)
+
+  return c.json({
+    project: {
+      id: project.id,
+      title: project.title,
+      description: project.description,
+      client_name: project.client_name,
+      client_email: project.client_email,
+      client_phone: project.client_phone,
+      location: project.location,
+      project_type: project.project_type,
+      budget_min: project.budget_min,
+      budget_max: project.budget_max,
+      timeline: project.timeline,
+    },
+  })
+})
+
+projects.post("/project-requests/verify/:token", async (c) => {
+  const token = c.req.param("token")
+  if (!token || token.length < 16) return c.json({ message: "Lien invalide" }, 400)
+
+  const body = await c.req.json()
+
+  const project = await db.projectRequest.findUnique({ where: { verification_token: token } })
+  if (!project || project.deleted_at) return c.json({ message: "Lien introuvable" }, 404)
+  if (project.verification_responded_at) return c.json({ message: "Ce lien a déjà été utilisé." }, 410)
+  if (!project.verification_sent_at) return c.json({ message: "Lien invalide" }, 400)
+
+  const age = Date.now() - new Date(project.verification_sent_at).getTime()
+  if (age > TOKEN_VALIDITY_MS) return c.json({ message: "Ce lien a expiré." }, 410)
+
+  // Champs éditables uniquement
+  const client_name = typeof body.client_name === "string" ? body.client_name.trim() : project.client_name
+  const client_phone = typeof body.client_phone === "string" ? body.client_phone.trim() : project.client_phone
+  const description = typeof body.description === "string" ? body.description.trim() : project.description
+  const budget_min = body.budget_min != null ? Number(body.budget_min) || null : project.budget_min
+  const budget_max = body.budget_max != null ? Number(body.budget_max) || null : project.budget_max
+  const timeline = typeof body.timeline === "string" ? body.timeline.trim() : project.timeline
+  const financing = typeof body.financing === "string" ? body.financing.trim() : project.financing
+
+  if (client_phone && !PHONE_RE.test(client_phone)) {
+    return c.json({ message: "Format téléphone invalide" }, 400)
+  }
+
+  // Re-qualifier le lead après correction
+  const newLeadType = qualifyLead({
+    client_email: project.client_email,
+    client_phone: client_phone || null,
+    timeline: timeline || null,
+    financing: financing || null,
+    architect_profile_id: project.architect_profile_id,
+  })
+
+  const updated = await db.projectRequest.update({
+    where: { id: project.id },
+    data: {
+      client_name: client_name || project.client_name,
+      client_phone: client_phone || project.client_phone,
+      description: description || project.description,
+      budget_min,
+      budget_max,
+      timeline: timeline || project.timeline,
+      financing: financing || project.financing,
+      lead_type: newLeadType,
+      status: "verified",
+      verification_responded_at: new Date(),
+      verification_token: null, // invalide le token (single-use)
+    },
+  })
+
+  return c.json({ success: true, project: { id: updated.id } })
+})

@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { MapPin, Calendar, User, Search } from "lucide-react";
+import { MapPin, Calendar, User, Search, Trash2, Mail, AlertTriangle, StickyNote } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { fetchAdminProjectRequests } from "@/lib/api";
+import { fetchAdminProjectRequests, deleteAdminProject, requestVerificationEmail, updateAdminProjectNote } from "@/lib/api";
 
 const STATUS_LABELS: Record<string, { label: string; color: string }> = {
   submitted: { label: "Soumis", color: "bg-blue-100 text-blue-700" },
@@ -14,6 +14,9 @@ const STATUS_LABELS: Record<string, { label: string; color: string }> = {
   accepted: { label: "Accepté", color: "bg-emerald-100 text-emerald-700" },
   rejected: { label: "Refusé", color: "bg-red-100 text-red-700" },
   completed: { label: "Terminé", color: "bg-stone-100 text-stone-600" },
+  to_verify: { label: "🔍 À vérifier", color: "bg-yellow-100 text-yellow-800" },
+  verified: { label: "✅ Vérifié", color: "bg-green-100 text-green-700" },
+  invalid: { label: "🚫 Invalide", color: "bg-stone-200 text-stone-500 line-through" },
 };
 
 const LEAD_TYPE_LABELS: Record<string, { label: string; color: string }> = {
@@ -26,10 +29,13 @@ const LEAD_TYPE_LABELS: Record<string, { label: string; color: string }> = {
 const STATUS_FILTERS = [
   { value: "all", label: "Tous" },
   { value: "submitted", label: "Soumis" },
+  { value: "to_verify", label: "🔍 À vérifier" },
+  { value: "verified", label: "✅ Vérifiés" },
   { value: "viewed", label: "Vus" },
   { value: "quoted", label: "Devis" },
   { value: "accepted", label: "Acceptés" },
   { value: "completed", label: "Terminés" },
+  { value: "invalid", label: "🚫 Invalides" },
 ];
 
 const LEAD_FILTERS = [
@@ -46,6 +52,58 @@ export default function AdminProjetsPage() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [leadFilter, setLeadFilter] = useState("all");
   const [search, setSearch] = useState("");
+  const [acting, setActing] = useState<string | null>(null);
+
+  async function handleDelete(p: any, e: React.MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!confirm(`Supprimer définitivement ce lead ?\n\n${p.title}\n${p.client_name} · ${p.client_email}\n\nAction IRRÉVERSIBLE.`)) return;
+    setActing(p.id);
+    try {
+      await deleteAdminProject(p.id);
+      setProjets((list) => list.filter((x) => x.id !== p.id));
+    } catch (err: any) {
+      alert("Erreur : " + (err?.message || "suppression échouée"));
+    } finally {
+      setActing(null);
+    }
+  }
+
+  async function handleRequestVerification(p: any, e: React.MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!p.client_email) {
+      alert("Ce lead n'a pas d'email client — impossible d'envoyer une vérification.");
+      return;
+    }
+    if (!confirm(`Envoyer un email de confirmation à ${p.client_email} ?\n\nLe client recevra un lien pour vérifier / corriger ses informations.`)) return;
+    setActing(p.id);
+    try {
+      await requestVerificationEmail(p.id);
+      setProjets((list) => list.map((x) => x.id === p.id ? { ...x, status: "to_verify", verification_sent_at: new Date().toISOString() } : x));
+      alert("Email envoyé !");
+    } catch (err: any) {
+      alert("Erreur : " + (err?.message || "envoi échoué"));
+    } finally {
+      setActing(null);
+    }
+  }
+
+  async function handleMarkInvalid(p: any, e: React.MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    const note = prompt(`Raison pour marquer ce lead comme invalide ?\n\n(La note sera sauvegardée dans admin_note)`);
+    if (note === null) return;
+    setActing(p.id);
+    try {
+      await updateAdminProjectNote(p.id, { status: "invalid", admin_note: note });
+      setProjets((list) => list.map((x) => x.id === p.id ? { ...x, status: "invalid", admin_note: note } : x));
+    } catch (err: any) {
+      alert("Erreur : " + (err?.message || "maj échouée"));
+    } finally {
+      setActing(null);
+    }
+  }
 
   useEffect(() => {
     (async () => {
@@ -152,22 +210,26 @@ export default function AdminProjetsPage() {
                 : null;
 
             return (
-              <Link key={p.id} href={`/dashboard/admin/projets/${p.id}`}>
-                <Card className="hover:shadow-md transition-shadow cursor-pointer">
-                  <CardContent className="pt-5">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-2 mb-1 flex-wrap">
-                          {(() => {
-                            const lt = LEAD_TYPE_LABELS[p.lead_type || "cold"];
-                            return <Badge className={`text-xs ${lt.color} border`}>{lt.label}</Badge>;
-                          })()}
-                          <Badge className={`text-xs ${status.color}`}>{status.label}</Badge>
-                          <Badge variant="secondary" className="text-xs">{p.project_type}</Badge>
-                          {budget && (
-                            <span className="text-xs text-stone-400">{budget}</span>
-                          )}
-                        </div>
+              <Card key={p.id} className="hover:shadow-md transition-shadow">
+                <CardContent className="pt-5">
+                  <div className="flex items-start justify-between gap-3">
+                    <Link href={`/dashboard/admin/projets/${p.id}`} className="min-w-0 flex-1 cursor-pointer">
+                      <div className="flex items-center gap-2 mb-1 flex-wrap">
+                        {(() => {
+                          const lt = LEAD_TYPE_LABELS[p.lead_type || "cold"];
+                          return <Badge className={`text-xs ${lt.color} border`}>{lt.label}</Badge>;
+                        })()}
+                        <Badge className={`text-xs ${status.color}`}>{status.label}</Badge>
+                        <Badge variant="secondary" className="text-xs">{p.project_type}</Badge>
+                        {budget && (
+                          <span className="text-xs text-stone-400">{budget}</span>
+                        )}
+                        {p.admin_note && (
+                          <span className="inline-flex items-center gap-1 text-xs text-amber-700" title={p.admin_note}>
+                            <StickyNote className="h-3 w-3" /> Note
+                          </span>
+                        )}
+                      </div>
                         <h3 className="font-semibold text-stone-900 truncate">{p.title}</h3>
                         <div className="flex flex-wrap gap-3 mt-2 text-xs text-stone-500">
                           <span className="flex items-center gap-1">
@@ -203,11 +265,38 @@ export default function AdminProjetsPage() {
                             </span>
                           )}
                         </div>
-                      </div>
+                    </Link>
+
+                    {/* Action buttons (stopPropagation pour éviter navigation) */}
+                    <div className="flex flex-col gap-1.5 shrink-0">
+                      <button
+                        onClick={(e) => handleRequestVerification(p, e)}
+                        disabled={acting === p.id}
+                        className="inline-flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-md border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition"
+                        title="Envoyer email de confirmation"
+                      >
+                        <Mail className="h-3.5 w-3.5" /> Vérifier
+                      </button>
+                      <button
+                        onClick={(e) => handleMarkInvalid(p, e)}
+                        disabled={acting === p.id}
+                        className="inline-flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-md border border-stone-200 bg-stone-50 text-stone-700 hover:bg-stone-100 transition"
+                        title="Marquer comme invalide"
+                      >
+                        <AlertTriangle className="h-3.5 w-3.5" /> Invalide
+                      </button>
+                      <button
+                        onClick={(e) => handleDelete(p, e)}
+                        disabled={acting === p.id}
+                        className="inline-flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-md border border-red-200 bg-red-50 text-red-700 hover:bg-red-100 transition"
+                        title="Supprimer définitivement"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" /> Supprimer
+                      </button>
                     </div>
-                  </CardContent>
-                </Card>
-              </Link>
+                  </div>
+                </CardContent>
+              </Card>
             );
           })}
         </div>
