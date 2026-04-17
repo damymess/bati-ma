@@ -60,7 +60,7 @@ export default function AboutPage() {
           availableLanguage: ["French", "Arabic"],
         },
         sameAs: [
-          // À ajouter quand les réseaux seront actifs
+          "https://www.linkedin.com/company/bati-ma/",
         ],
       },
       ...authors.map((a) => ({

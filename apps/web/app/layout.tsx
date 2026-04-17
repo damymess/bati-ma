@@ -103,14 +103,19 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
+              "@id": "https://bati.ma/#organization",
               name: "Bati.ma",
               url: "https://bati.ma",
               logo: "https://bati.ma/images/logo-512.png",
-              description: "Annuaire des architectes au Maroc — 800+ profils vérifiés, portfolios et devis gratuits.",
+              description: "Annuaire des architectes au Maroc — 3 400+ profils vérifiés, 116 guides pratiques et calculateur budget construction gratuit.",
               foundingDate: "2025",
               areaServed: { "@type": "Country", name: "Morocco" },
+              sameAs: [
+                "https://www.linkedin.com/company/bati-ma/",
+              ],
               contactPoint: {
                 "@type": "ContactPoint",
+                email: "contact@bati.ma",
                 contactType: "customer service",
                 availableLanguage: ["French", "Arabic"],
               },

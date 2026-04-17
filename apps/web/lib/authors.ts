@@ -45,7 +45,7 @@ export const AUTHORS: Record<string, Author> = {
     initials: "IM",
     since: "2025",
     social: {
-      linkedin: "https://www.linkedin.com/in/imadmessaoudi/",
+      linkedin: "https://www.linkedin.com/company/bati-ma/",
       email: "contact@bati.ma",
     },
   },
