@@ -60,7 +60,7 @@ export default function Nav() {
                 <div className="hidden lg:flex items-center gap-1.5">
                   {isAdmin && (
                     <Link
-                      href="/admin"
+                      href="/dashboard/admin"
                       className="flex items-center gap-1 rounded-full px-2.5 py-1.5 text-xs text-[#b5522a] hover:bg-[#b5522a]/5 transition-colors"
                     >
                       <Shield className="h-3.5 w-3.5" />
