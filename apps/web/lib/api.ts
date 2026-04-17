@@ -207,6 +207,54 @@ export async function updateAdminProjectRequestStatus(
   return res.json();
 }
 
+export async function fetchProjectAuditLog(id: string): Promise<{ logs: any[] }> {
+  const res = await fetch(`${API_URL}/admin/project-requests/${id}/audit-log`);
+  if (!res.ok) return { logs: [] };
+  return res.json();
+}
+
+export function getExportCsvUrl(filters: { status?: string; lead_type?: string } = {}): string {
+  const params = new URLSearchParams();
+  if (filters.status && filters.status !== "all") params.set("status", filters.status);
+  if (filters.lead_type && filters.lead_type !== "all") params.set("lead_type", filters.lead_type);
+  return `${API_URL}/admin/project-requests/export/csv?${params}`;
+}
+
+export async function fetchAdminStats(): Promise<{
+  leads: {
+    total: number;
+    hot: number;
+    warm: number;
+    submitted: number;
+    to_verify: number;
+    last_7_days: number;
+  };
+  reviews_pending: number;
+  verifications_pending: number;
+  architects_total: number;
+}> {
+  const res = await fetch(`${API_URL}/admin/stats`);
+  if (!res.ok) {
+    return {
+      leads: { total: 0, hot: 0, warm: 0, submitted: 0, to_verify: 0, last_7_days: 0 },
+      reviews_pending: 0,
+      verifications_pending: 0,
+      architects_total: 0,
+    };
+  }
+  return res.json();
+}
+
+export async function adminGlobalSearch(q: string): Promise<{
+  leads: any[];
+  architects: any[];
+  reviews: any[];
+}> {
+  const res = await fetch(`${API_URL}/admin/search?q=${encodeURIComponent(q)}`);
+  if (!res.ok) return { leads: [], architects: [], reviews: [] };
+  return res.json();
+}
+
 export async function deleteAdminProject(id: string): Promise<{ deleted: boolean }> {
   const res = await fetch(`${API_URL}/admin/project-requests/${id}`, {
     method: "DELETE",

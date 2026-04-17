@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import {
-  ArrowLeft,
   User,
   Mail,
   Phone,
@@ -17,7 +16,6 @@ import {
   StickyNote,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   fetchAdminProjectRequest,
@@ -25,28 +23,12 @@ import {
   deleteAdminProject,
   requestVerificationEmail,
   updateAdminProjectNote,
+  fetchProjectAuditLog,
 } from "@/lib/api";
-
-const STATUS_LABELS: Record<string, { label: string; color: string }> = {
-  submitted: { label: "Soumis", color: "bg-blue-100 text-blue-700" },
-  viewed: { label: "Vu", color: "bg-amber-100 text-amber-700" },
-  quoted: { label: "Devis envoyé", color: "bg-purple-100 text-purple-700" },
-  accepted: { label: "Accepté", color: "bg-emerald-100 text-emerald-700" },
-  rejected: { label: "Refusé", color: "bg-red-100 text-red-700" },
-  completed: { label: "Terminé", color: "bg-stone-100 text-stone-600" },
-  to_verify: { label: "🔍 À vérifier", color: "bg-yellow-100 text-yellow-800" },
-  verified: { label: "✅ Vérifié", color: "bg-green-100 text-green-700" },
-  invalid: { label: "🚫 Invalide", color: "bg-stone-200 text-stone-500" },
-};
-
-const STATUS_ACTIONS = [
-  { value: "submitted", label: "Soumis" },
-  { value: "viewed", label: "Vu" },
-  { value: "quoted", label: "Devis envoyé" },
-  { value: "accepted", label: "Accepté" },
-  { value: "rejected", label: "Refusé" },
-  { value: "completed", label: "Terminé" },
-];
+import { STATUS_ACTIONS, getStatusLabel, getLeadTypeLabel } from "@/lib/admin-constants";
+import StatusBadge from "@/components/admin/StatusBadge";
+import LeadTypeBadge from "@/components/admin/LeadTypeBadge";
+import AdminBreadcrumb from "@/components/admin/AdminBreadcrumb";
 
 export default function AdminProjetDetailPage() {
   const params = useParams();
@@ -58,13 +40,18 @@ export default function AdminProjetDetailPage() {
   const [updating, setUpdating] = useState(false);
   const [noteDraft, setNoteDraft] = useState("");
   const [savingNote, setSavingNote] = useState(false);
+  const [auditLog, setAuditLog] = useState<any[]>([]);
 
   useEffect(() => {
     (async () => {
       try {
-        const data = await fetchAdminProjectRequest(id);
+        const [data, log] = await Promise.all([
+          fetchAdminProjectRequest(id),
+          fetchProjectAuditLog(id),
+        ]);
         setProjet(data.project_request);
         setNoteDraft(data.project_request?.admin_note || "");
+        setAuditLog(log.logs || []);
       } catch {}
       setLoading(false);
     })();
@@ -149,7 +136,6 @@ export default function AdminProjetDetailPage() {
     );
   }
 
-  const status = STATUS_LABELS[projet.status] || STATUS_LABELS.submitted;
   const budget =
     projet.budget_min && projet.budget_max
       ? `${Number(projet.budget_min).toLocaleString("fr-MA")} - ${Number(projet.budget_max).toLocaleString("fr-MA")} MAD`
@@ -161,21 +147,22 @@ export default function AdminProjetDetailPage() {
 
   return (
     <div>
-      <button
-        onClick={() => router.back()}
-        className="flex items-center gap-1.5 text-sm text-stone-500 hover:text-stone-900 mb-4 transition-colors"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        Retour
-      </button>
+      <AdminBreadcrumb
+        items={[
+          { label: "Admin", href: "/dashboard/admin" },
+          { label: "Projets", href: "/dashboard/admin/projets" },
+          { label: projet.client_name || projet.title },
+        ]}
+      />
 
       <div className="flex items-start justify-between gap-4 mb-6">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <Badge className={`${status.color}`}>{status.label}</Badge>
-            <Badge variant="secondary">{projet.project_type}</Badge>
+          <div className="flex items-center gap-2 mb-1 flex-wrap">
+            <StatusBadge status={projet.status} />
+            <LeadTypeBadge leadType={projet.lead_type} />
+            <span className="text-xs text-stone-400">{projet.project_type}</span>
             <span className="text-xs text-stone-400">
-              Source : {projet.source || "website"}
+              · Source : {projet.source || "website"}
             </span>
           </div>
           <h2 className="text-xl font-bold text-stone-900">{projet.title}</h2>
@@ -379,6 +366,50 @@ export default function AdminProjetDetailPage() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Audit log / Historique */}
+      {auditLog.length > 0 && (
+        <Card className="mt-6">
+          <CardContent className="pt-5">
+            <h3 className="font-semibold text-stone-900 mb-3 flex items-center gap-2">
+              <Clock className="h-4 w-4 text-stone-500" /> Historique des actions admin
+            </h3>
+            <ul className="space-y-2.5">
+              {auditLog.map((log) => {
+                const actionLabel: Record<string, string> = {
+                  delete: "🗑️ Suppression",
+                  verify_request: "✉️ Email de vérification envoyé",
+                  note_update: "📝 Note / statut modifié",
+                  status_change: "🔄 Statut changé",
+                  approve: "✅ Approuvé",
+                  reject: "❌ Rejeté",
+                };
+                return (
+                  <li
+                    key={log.id}
+                    className="flex items-start gap-3 pb-2.5 border-b border-stone-100 last:border-0 last:pb-0 text-sm"
+                  >
+                    <div className="min-w-0 flex-1">
+                      <p className="font-medium text-stone-800">
+                        {actionLabel[log.action] || log.action}
+                      </p>
+                      <p className="text-xs text-stone-500">
+                        Par {log.actor_email} ·{" "}
+                        {new Date(log.created_at).toLocaleString("fr-FR")}
+                      </p>
+                      {log.diff?.after?.status && (
+                        <p className="text-xs text-stone-600 mt-1">
+                          → Nouveau statut : <strong>{log.diff.after.status}</strong>
+                        </p>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

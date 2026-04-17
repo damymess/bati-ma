@@ -2,49 +2,20 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { MapPin, Calendar, User, Search, Trash2, Mail, AlertTriangle, StickyNote } from "lucide-react";
+import { MapPin, Calendar, User, Search, Trash2, Mail, AlertTriangle, StickyNote, Download } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { fetchAdminProjectRequests, deleteAdminProject, requestVerificationEmail, updateAdminProjectNote } from "@/lib/api";
-
-const STATUS_LABELS: Record<string, { label: string; color: string }> = {
-  submitted: { label: "Soumis", color: "bg-blue-100 text-blue-700" },
-  viewed: { label: "Vu", color: "bg-amber-100 text-amber-700" },
-  quoted: { label: "Devis envoyé", color: "bg-purple-100 text-purple-700" },
-  accepted: { label: "Accepté", color: "bg-emerald-100 text-emerald-700" },
-  rejected: { label: "Refusé", color: "bg-red-100 text-red-700" },
-  completed: { label: "Terminé", color: "bg-stone-100 text-stone-600" },
-  to_verify: { label: "🔍 À vérifier", color: "bg-yellow-100 text-yellow-800" },
-  verified: { label: "✅ Vérifié", color: "bg-green-100 text-green-700" },
-  invalid: { label: "🚫 Invalide", color: "bg-stone-200 text-stone-500 line-through" },
-};
-
-const LEAD_TYPE_LABELS: Record<string, { label: string; color: string }> = {
-  cold: { label: "❄️ Cold", color: "bg-sky-100 text-sky-700 border-sky-300" },
-  warm: { label: "🟡 Warm", color: "bg-yellow-100 text-yellow-700 border-yellow-300" },
-  hot: { label: "🔥 Hot", color: "bg-orange-100 text-orange-700 border-orange-300" },
-  exclusive: { label: "⭐ Exclusive", color: "bg-purple-100 text-purple-700 border-purple-300" },
-};
-
-const STATUS_FILTERS = [
-  { value: "all", label: "Tous" },
-  { value: "submitted", label: "Soumis" },
-  { value: "to_verify", label: "🔍 À vérifier" },
-  { value: "verified", label: "✅ Vérifiés" },
-  { value: "viewed", label: "Vus" },
-  { value: "quoted", label: "Devis" },
-  { value: "accepted", label: "Acceptés" },
-  { value: "completed", label: "Terminés" },
-  { value: "invalid", label: "🚫 Invalides" },
-];
-
-const LEAD_FILTERS = [
-  { value: "all", label: "Tous les leads" },
-  { value: "hot", label: "🔥 Hot" },
-  { value: "warm", label: "🟡 Warm" },
-  { value: "cold", label: "❄️ Cold" },
-  { value: "exclusive", label: "⭐ Exclusive" },
-];
+import {
+  fetchAdminProjectRequests,
+  deleteAdminProject,
+  requestVerificationEmail,
+  updateAdminProjectNote,
+  getExportCsvUrl,
+} from "@/lib/api";
+import { STATUS_FILTERS, LEAD_FILTERS } from "@/lib/admin-constants";
+import StatusBadge from "@/components/admin/StatusBadge";
+import LeadTypeBadge from "@/components/admin/LeadTypeBadge";
+import AdminBreadcrumb from "@/components/admin/AdminBreadcrumb";
+import ActionMenu from "@/components/admin/ActionMenu";
 
 export default function AdminProjetsPage() {
   const [projets, setProjets] = useState<any[]>([]);
@@ -53,6 +24,20 @@ export default function AdminProjetsPage() {
   const [leadFilter, setLeadFilter] = useState("all");
   const [search, setSearch] = useState("");
   const [acting, setActing] = useState<string | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      try {
+        const data = await fetchAdminProjectRequests({
+          status: statusFilter !== "all" ? statusFilter : undefined,
+          limit: 200,
+        });
+        setProjets(data.project_requests);
+      } catch {}
+      setLoading(false);
+    })();
+  }, [statusFilter]);
 
   async function handleDelete(p: any, e: React.MouseEvent) {
     e.preventDefault();
@@ -80,7 +65,11 @@ export default function AdminProjetsPage() {
     setActing(p.id);
     try {
       await requestVerificationEmail(p.id);
-      setProjets((list) => list.map((x) => x.id === p.id ? { ...x, status: "to_verify", verification_sent_at: new Date().toISOString() } : x));
+      setProjets((list) =>
+        list.map((x) =>
+          x.id === p.id ? { ...x, status: "to_verify", verification_sent_at: new Date().toISOString() } : x,
+        ),
+      );
       alert("Email envoyé !");
     } catch (err: any) {
       alert("Erreur : " + (err?.message || "envoi échoué"));
@@ -97,27 +86,13 @@ export default function AdminProjetsPage() {
     setActing(p.id);
     try {
       await updateAdminProjectNote(p.id, { status: "invalid", admin_note: note });
-      setProjets((list) => list.map((x) => x.id === p.id ? { ...x, status: "invalid", admin_note: note } : x));
+      setProjets((list) => list.map((x) => (x.id === p.id ? { ...x, status: "invalid", admin_note: note } : x)));
     } catch (err: any) {
       alert("Erreur : " + (err?.message || "maj échouée"));
     } finally {
       setActing(null);
     }
   }
-
-  useEffect(() => {
-    (async () => {
-      setLoading(true);
-      try {
-        const data = await fetchAdminProjectRequests({
-          status: statusFilter !== "all" ? statusFilter : undefined,
-          limit: 100,
-        });
-        setProjets(data.project_requests);
-      } catch {}
-      setLoading(false);
-    })();
-  }, [statusFilter]);
 
   const filtered = projets.filter((p) => {
     if (leadFilter !== "all" && (p.lead_type || "cold") !== leadFilter) return false;
@@ -135,15 +110,30 @@ export default function AdminProjetsPage() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h2 className="text-xl font-bold text-stone-900">Projets soumis</h2>
-        <p className="text-sm text-stone-500">
-          {filtered.length} projet{filtered.length > 1 ? "s" : ""}
-        </p>
+      <AdminBreadcrumb
+        items={[
+          { label: "Admin", href: "/dashboard/admin" },
+          { label: "Projets soumis" },
+        ]}
+      />
+
+      <div className="mb-6 flex items-start justify-between gap-3 flex-wrap">
+        <div>
+          <h2 className="text-xl font-bold text-stone-900">Projets soumis</h2>
+          <p className="text-sm text-stone-500">
+            {filtered.length} projet{filtered.length > 1 ? "s" : ""}
+          </p>
+        </div>
+        <a
+          href={getExportCsvUrl({ status: statusFilter, lead_type: leadFilter })}
+          className="inline-flex items-center gap-1.5 text-xs px-3 py-2 rounded-full border border-stone-200 bg-white hover:bg-stone-50 text-stone-700 transition"
+        >
+          <Download className="h-3.5 w-3.5" /> Exporter CSV
+        </a>
       </div>
 
       {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-6">
+      <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-stone-400" />
           <input
@@ -201,98 +191,98 @@ export default function AdminProjetsPage() {
       ) : (
         <div className="space-y-3">
           {filtered.map((p: any) => {
-            const status = STATUS_LABELS[p.status] || STATUS_LABELS.submitted;
             const budget =
               p.budget_min && p.budget_max
                 ? `${Number(p.budget_min).toLocaleString("fr-MA")} - ${Number(p.budget_max).toLocaleString("fr-MA")} MAD`
                 : p.budget_min
-                ? `À partir de ${Number(p.budget_min).toLocaleString("fr-MA")} MAD`
-                : null;
+                  ? `À partir de ${Number(p.budget_min).toLocaleString("fr-MA")} MAD`
+                  : null;
+
+            const actions = [
+              {
+                label: "Demander confirmation",
+                Icon: Mail,
+                variant: "default" as const,
+                onClick: (e: React.MouseEvent) => handleRequestVerification(p, e),
+                disabled: acting === p.id || !p.client_email,
+              },
+              {
+                label: "Marquer invalide",
+                Icon: AlertTriangle,
+                variant: "default" as const,
+                onClick: (e: React.MouseEvent) => handleMarkInvalid(p, e),
+                disabled: acting === p.id,
+              },
+              {
+                label: "Supprimer",
+                Icon: Trash2,
+                variant: "danger" as const,
+                onClick: (e: React.MouseEvent) => handleDelete(p, e),
+                disabled: acting === p.id,
+              },
+            ];
 
             return (
               <Card key={p.id} className="hover:shadow-md transition-shadow">
                 <CardContent className="pt-5">
                   <div className="flex items-start justify-between gap-3">
-                    <Link href={`/dashboard/admin/projets/${p.id}`} className="min-w-0 flex-1 cursor-pointer">
+                    <Link
+                      href={`/dashboard/admin/projets/${p.id}`}
+                      className="min-w-0 flex-1 cursor-pointer"
+                    >
                       <div className="flex items-center gap-2 mb-1 flex-wrap">
-                        {(() => {
-                          const lt = LEAD_TYPE_LABELS[p.lead_type || "cold"];
-                          return <Badge className={`text-xs ${lt.color} border`}>{lt.label}</Badge>;
-                        })()}
-                        <Badge className={`text-xs ${status.color}`}>{status.label}</Badge>
-                        <Badge variant="secondary" className="text-xs">{p.project_type}</Badge>
-                        {budget && (
-                          <span className="text-xs text-stone-400">{budget}</span>
-                        )}
+                        <LeadTypeBadge leadType={p.lead_type} />
+                        <StatusBadge status={p.status} />
+                        <span className="text-xs text-stone-400">{p.project_type}</span>
+                        {budget && <span className="text-xs text-stone-400">· {budget}</span>}
                         {p.admin_note && (
-                          <span className="inline-flex items-center gap-1 text-xs text-amber-700" title={p.admin_note}>
+                          <span
+                            className="inline-flex items-center gap-1 text-xs text-amber-700"
+                            title={p.admin_note}
+                          >
                             <StickyNote className="h-3 w-3" /> Note
                           </span>
                         )}
                       </div>
-                        <h3 className="font-semibold text-stone-900 truncate">{p.title}</h3>
-                        <div className="flex flex-wrap gap-3 mt-2 text-xs text-stone-500">
-                          <span className="flex items-center gap-1">
-                            <User className="h-3 w-3" /> {p.client_name}
+                      <h3 className="font-semibold text-stone-900 truncate">{p.title}</h3>
+                      <div className="flex flex-wrap gap-3 mt-2 text-xs text-stone-500">
+                        <span className="flex items-center gap-1">
+                          <User className="h-3 w-3" /> {p.client_name}
+                        </span>
+                        {p.client_email && (
+                          <span className="flex items-center gap-1 text-stone-600">
+                            ✉️ {p.client_email}
                           </span>
-                          {p.client_email && (
-                            <span className="flex items-center gap-1 text-stone-600">
-                              ✉️ {p.client_email}
-                            </span>
-                          )}
-                          {p.client_phone && (
-                            <span className="flex items-center gap-1 text-stone-600 font-medium">
-                              📱 {p.client_phone}
-                            </span>
-                          )}
-                          <span className="flex items-center gap-1">
-                            <MapPin className="h-3 w-3" /> {p.location}
+                        )}
+                        {p.client_phone && (
+                          <span className="flex items-center gap-1 text-stone-600 font-medium">
+                            📱 {p.client_phone}
                           </span>
-                          {p.timeline && (
-                            <span className="flex items-center gap-1 text-amber-700 font-medium">
-                              ⏱️ {p.timeline}
-                            </span>
-                          )}
-                          {p.created_at && (
-                            <span className="flex items-center gap-1">
-                              <Calendar className="h-3 w-3" />
-                              {new Date(p.created_at).toLocaleDateString("fr-FR", {
-                                day: "numeric",
-                                month: "short",
-                                hour: "2-digit",
-                                minute: "2-digit",
-                              })}
-                            </span>
-                          )}
-                        </div>
+                        )}
+                        <span className="flex items-center gap-1">
+                          <MapPin className="h-3 w-3" /> {p.location}
+                        </span>
+                        {p.timeline && (
+                          <span className="flex items-center gap-1 text-amber-700 font-medium">
+                            ⏱️ {p.timeline}
+                          </span>
+                        )}
+                        {p.created_at && (
+                          <span className="flex items-center gap-1">
+                            <Calendar className="h-3 w-3" />
+                            {new Date(p.created_at).toLocaleDateString("fr-FR", {
+                              day: "numeric",
+                              month: "short",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}
+                          </span>
+                        )}
+                      </div>
                     </Link>
 
-                    {/* Action buttons (stopPropagation pour éviter navigation) */}
-                    <div className="flex flex-col gap-1.5 shrink-0">
-                      <button
-                        onClick={(e) => handleRequestVerification(p, e)}
-                        disabled={acting === p.id}
-                        className="inline-flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-md border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition"
-                        title="Envoyer email de confirmation"
-                      >
-                        <Mail className="h-3.5 w-3.5" /> Vérifier
-                      </button>
-                      <button
-                        onClick={(e) => handleMarkInvalid(p, e)}
-                        disabled={acting === p.id}
-                        className="inline-flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-md border border-stone-200 bg-stone-50 text-stone-700 hover:bg-stone-100 transition"
-                        title="Marquer comme invalide"
-                      >
-                        <AlertTriangle className="h-3.5 w-3.5" /> Invalide
-                      </button>
-                      <button
-                        onClick={(e) => handleDelete(p, e)}
-                        disabled={acting === p.id}
-                        className="inline-flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-md border border-red-200 bg-red-50 text-red-700 hover:bg-red-100 transition"
-                        title="Supprimer définitivement"
-                      >
-                        <Trash2 className="h-3.5 w-3.5" /> Supprimer
-                      </button>
+                    <div className="shrink-0">
+                      <ActionMenu actions={actions} />
                     </div>
                   </div>
                 </CardContent>

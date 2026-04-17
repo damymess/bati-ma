@@ -282,6 +282,22 @@ model Subscription {
   @@map("subscription")
 }
 
+// ─── Admin Action Log (audit trail) ─────────────────────────────────────────
+
+model AdminActionLog {
+  id          String   @id @default(cuid())
+  entity_type String   // "project_request" | "review" | "verification_document" | "architect"
+  entity_id   String
+  action      String   // "delete" | "approve" | "reject" | "verify_request" | "note_update" | "status_change"
+  actor_email String   // email de l'admin qui a fait l'action (contact@bati.ma)
+  diff        Json?    // { before: {...}, after: {...} }
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+
+  @@index([entity_type, entity_id])
+  @@index([created_at])
+  @@map("admin_action_log")
+}
+
 // ─── Shortlist Credits (modèle MyBuilder — achat de leads à l'unité) ────────
 
 model ShortlistCredit {

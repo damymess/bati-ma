@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import {
@@ -16,6 +16,10 @@ import {
   Star,
 } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
+import { fetchAdminStats } from "@/lib/api";
+import AdminSearchBar from "@/components/admin/AdminSearchBar";
+
+type AdminStats = Awaited<ReturnType<typeof fetchAdminStats>>;
 
 export default function DashboardLayout({
   children,
@@ -25,12 +29,24 @@ export default function DashboardLayout({
   const { user, loading, logout } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
+  const [adminStats, setAdminStats] = useState<AdminStats | null>(null);
 
   useEffect(() => {
     if (!loading && !user) {
       router.push("/connexion");
     }
   }, [user, loading, router]);
+
+  // Fetch admin stats for sidebar badges (uniquement en mode admin)
+  const inAdminMode = pathname.startsWith("/dashboard/admin");
+  const isAdmin = user?.email === "contact@bati.ma";
+
+  useEffect(() => {
+    if (!inAdminMode || !isAdmin) return;
+    fetchAdminStats()
+      .then(setAdminStats)
+      .catch(() => {});
+  }, [inAdminMode, isAdmin, pathname]);
 
   if (loading) {
     return (
@@ -43,40 +59,55 @@ export default function DashboardLayout({
   if (!user) return null;
 
   const isArchitect = user.role === "architect";
-  const isAdmin = user.email === "contact@bati.ma";
   const basePath = pathname.startsWith("/dashboard/admin")
     ? "/dashboard/admin"
     : isArchitect
     ? "/dashboard/architecte"
     : "/dashboard/client";
 
+  // Sidebar items avec badges pour l'admin
   const navItems = pathname.startsWith("/dashboard/admin") && isAdmin
     ? [
-        { href: "/dashboard/admin", icon: LayoutDashboard, label: "Vue d'ensemble" },
-        { href: "/dashboard/admin/projets", icon: FolderOpen, label: "Projets soumis" },
-        { href: "/dashboard/admin/avis", icon: Star, label: "Avis à modérer" },
-        { href: "/dashboard/admin/verifications", icon: ShieldCheck, label: "Vérifications" },
+        { href: "/dashboard/admin", icon: LayoutDashboard, label: "Vue d'ensemble", badge: 0 },
+        {
+          href: "/dashboard/admin/projets",
+          icon: FolderOpen,
+          label: "Projets soumis",
+          badge: adminStats ? (adminStats.leads.hot + adminStats.leads.to_verify) : 0,
+        },
+        {
+          href: "/dashboard/admin/avis",
+          icon: Star,
+          label: "Avis à modérer",
+          badge: adminStats?.reviews_pending || 0,
+        },
+        {
+          href: "/dashboard/admin/verifications",
+          icon: ShieldCheck,
+          label: "Vérifications",
+          badge: adminStats?.verifications_pending || 0,
+        },
       ]
     : isArchitect
     ? [
-        { href: basePath, icon: LayoutDashboard, label: "Vue d'ensemble" },
-        { href: `${basePath}/profil`, icon: User, label: "Mon profil" },
-        { href: `${basePath}/projets`, icon: FolderOpen, label: "Demandes de devis" },
-        { href: `${basePath}/abonnement`, icon: Crown, label: "Abonnement" },
-        { href: `${basePath}/verification`, icon: ShieldCheck, label: "Vérification" },
-        { href: `${basePath}/forum`, icon: MessageSquare, label: "Forum" },
+        { href: basePath, icon: LayoutDashboard, label: "Vue d'ensemble", badge: 0 },
+        { href: `${basePath}/profil`, icon: User, label: "Mon profil", badge: 0 },
+        { href: `${basePath}/projets`, icon: FolderOpen, label: "Demandes de devis", badge: 0 },
+        { href: `${basePath}/abonnement`, icon: Crown, label: "Abonnement", badge: 0 },
+        { href: `${basePath}/verification`, icon: ShieldCheck, label: "Vérification", badge: 0 },
+        { href: `${basePath}/forum`, icon: MessageSquare, label: "Forum", badge: 0 },
       ]
     : [
-        { href: basePath, icon: LayoutDashboard, label: "Vue d'ensemble" },
-        { href: `${basePath}/projets`, icon: FolderOpen, label: "Mes projets" },
-        { href: `${basePath}/devis`, icon: Building2, label: "Devis reçus" },
+        { href: basePath, icon: LayoutDashboard, label: "Vue d'ensemble", badge: 0 },
+        { href: `${basePath}/projets`, icon: FolderOpen, label: "Mes projets", badge: 0 },
+        { href: `${basePath}/devis`, icon: Building2, label: "Devis reçus", badge: 0 },
       ];
 
   return (
     <div className="min-h-[calc(100vh-10rem)]">
       <div className="border-b border-stone-200 bg-stone-50">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-3">
             <div>
               <h1 className="text-lg font-bold text-stone-900">
                 {pathname.startsWith("/dashboard/admin")
@@ -90,6 +121,7 @@ export default function DashboardLayout({
               </p>
             </div>
             <div className="flex items-center gap-3">
+              {inAdminMode && isAdmin && <AdminSearchBar />}
               {isAdmin && !pathname.startsWith("/dashboard/admin") && (
                 <Link
                   href="/dashboard/admin"
@@ -145,7 +177,12 @@ export default function DashboardLayout({
                       }`}
                     >
                       <Icon className={`h-4 w-4 ${isActive ? "text-[#b5522a]" : ""}`} />
-                      {item.label}
+                      <span className="flex-1">{item.label}</span>
+                      {item.badge > 0 && (
+                        <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 text-xs font-semibold bg-red-500 text-white rounded-full">
+                          {item.badge > 99 ? "99+" : item.badge}
+                        </span>
+                      )}
                     </Link>
                   </li>
                 );

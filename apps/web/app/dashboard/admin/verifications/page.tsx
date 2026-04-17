@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getToken } from "@/lib/auth";
+import AdminBreadcrumb from "@/components/admin/AdminBreadcrumb";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:9000";
 
@@ -69,6 +70,12 @@ export default function AdminVerificationsPage() {
 
   return (
     <div>
+      <AdminBreadcrumb
+        items={[
+          { label: "Admin", href: "/dashboard/admin" },
+          { label: "Vérifications" },
+        ]}
+      />
       <h2 className="text-xl font-bold text-stone-900 mb-1">Modération des vérifications</h2>
       <p className="text-sm text-stone-500 mb-6">
         Validez les documents des architectes pour attribuer le badge « Vérifié »
