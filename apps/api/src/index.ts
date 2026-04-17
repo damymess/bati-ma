@@ -19,6 +19,7 @@ import { reviews } from "./routes/reviews.js"
 import { verifications } from "./routes/verifications.js"
 import { cron } from "./routes/cron.js"
 import { authRateLimit } from "./middleware/rateLimit.js"
+import { adminMiddleware } from "./middleware/admin.js"
 
 const app = new Hono()
 
@@ -69,7 +70,8 @@ app.route("/store/subscriptions", subscriptions)
 app.route("/store/reviews", reviews)
 app.route("/store/verifications", verifications)
 
-// Admin routes
+// Admin routes (toutes protégées par adminMiddleware — JWT admin OU x-admin-api-key)
+app.use("/admin/*", adminMiddleware)
 app.route("/admin", admin)
 app.route("/admin/reviews", reviews)
 app.route("/admin/verifications", verifications)

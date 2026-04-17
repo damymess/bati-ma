@@ -6,7 +6,7 @@ import { join } from "node:path"
 import { randomUUID } from "node:crypto"
 
 const UPLOAD_DIR = process.env.UPLOAD_DIR || "./uploads"
-const MAX_FILE_SIZE = 2 * 1024 * 1024 // 2MB
+const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB (compression client-side réduit à ~500KB en moyenne)
 const MAX_IMAGES = 5
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"]
 

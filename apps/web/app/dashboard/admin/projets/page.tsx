@@ -9,7 +9,7 @@ import {
   deleteAdminProject,
   requestVerificationEmail,
   updateAdminProjectNote,
-  getExportCsvUrl,
+  downloadLeadsCsv,
 } from "@/lib/api";
 import { STATUS_FILTERS, LEAD_FILTERS } from "@/lib/admin-constants";
 import StatusBadge from "@/components/admin/StatusBadge";
@@ -124,12 +124,16 @@ export default function AdminProjetsPage() {
             {filtered.length} projet{filtered.length > 1 ? "s" : ""}
           </p>
         </div>
-        <a
-          href={getExportCsvUrl({ status: statusFilter, lead_type: leadFilter })}
+        <button
+          onClick={() =>
+            downloadLeadsCsv({ status: statusFilter, lead_type: leadFilter }).catch((e) =>
+              alert("Erreur export : " + e.message),
+            )
+          }
           className="inline-flex items-center gap-1.5 text-xs px-3 py-2 rounded-full border border-stone-200 bg-white hover:bg-stone-50 text-stone-700 transition"
         >
           <Download className="h-3.5 w-3.5" /> Exporter CSV
-        </a>
+        </button>
       </div>
 
       {/* Filters */}

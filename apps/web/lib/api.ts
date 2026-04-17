@@ -1,6 +1,20 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:9000";
 const API_KEY = process.env.NEXT_PUBLIC_MEDUSA_KEY || "";
 
+/**
+ * Helper pour les appels aux endpoints /admin/*.
+ * Inclut automatiquement le JWT token du user connecté.
+ * Le backend vérifie que l'email du token correspond à ADMIN_EMAIL.
+ */
+function adminFetch(path: string, opts: RequestInit = {}): Promise<Response> {
+  const token = typeof window !== "undefined" ? localStorage.getItem("bati_token") : null;
+  const headers: Record<string, string> = {
+    ...(opts.headers as Record<string, string>),
+  };
+  if (token) headers.Authorization = `Bearer ${token}`;
+  return fetch(`${API_URL}${path}`, { ...opts, headers });
+}
+
 export type ArchitectAPI = {
   id: string;
   name: string;
@@ -181,7 +195,7 @@ export async function fetchAdminProjectRequests(opts?: {
   if (opts?.limit) params.set("limit", String(opts.limit));
   if (opts?.offset) params.set("offset", String(opts.offset));
 
-  const res = await fetch(`${API_URL}/admin/project-requests?${params}`);
+  const res = await adminFetch(`/admin/project-requests?${params}`);
   if (!res.ok) return { project_requests: [], count: 0 };
   return res.json();
 }
@@ -189,7 +203,7 @@ export async function fetchAdminProjectRequests(opts?: {
 export async function fetchAdminProjectRequest(
   id: string
 ): Promise<{ project_request: any }> {
-  const res = await fetch(`${API_URL}/admin/project-requests/${id}`);
+  const res = await adminFetch(`/admin/project-requests/${id}`);
   if (!res.ok) throw new Error("Projet non trouvé");
   return res.json();
 }
@@ -198,7 +212,7 @@ export async function updateAdminProjectRequestStatus(
   id: string,
   status: string
 ): Promise<{ project_request: any }> {
-  const res = await fetch(`${API_URL}/admin/project-requests/${id}`, {
+  const res = await adminFetch(`/admin/project-requests/${id}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ status }),
@@ -208,13 +222,13 @@ export async function updateAdminProjectRequestStatus(
 }
 
 export async function fetchRegisteredArchitects(): Promise<{ architects: any[]; count: number }> {
-  const res = await fetch(`${API_URL}/admin/architects/registered`);
+  const res = await adminFetch(`/admin/architects/registered`);
   if (!res.ok) return { architects: [], count: 0 };
   return res.json();
 }
 
 export async function sendArchitectReactivation(id: string): Promise<{ sent: boolean; email: string }> {
-  const res = await fetch(`${API_URL}/admin/architects/${id}/send-reactivation`, {
+  const res = await adminFetch(`/admin/architects/${id}/send-reactivation`, {
     method: "POST",
   });
   if (!res.ok) throw new Error("Erreur envoi relance");
@@ -252,16 +266,26 @@ export async function fetchArchitectStats(token: string): Promise<any> {
 }
 
 export async function fetchProjectAuditLog(id: string): Promise<{ logs: any[] }> {
-  const res = await fetch(`${API_URL}/admin/project-requests/${id}/audit-log`);
+  const res = await adminFetch(`/admin/project-requests/${id}/audit-log`);
   if (!res.ok) return { logs: [] };
   return res.json();
 }
 
-export function getExportCsvUrl(filters: { status?: string; lead_type?: string } = {}): string {
+export async function downloadLeadsCsv(filters: { status?: string; lead_type?: string } = {}): Promise<void> {
   const params = new URLSearchParams();
   if (filters.status && filters.status !== "all") params.set("status", filters.status);
   if (filters.lead_type && filters.lead_type !== "all") params.set("lead_type", filters.lead_type);
-  return `${API_URL}/admin/project-requests/export/csv?${params}`;
+  const res = await adminFetch(`/admin/project-requests/export/csv?${params}`);
+  if (!res.ok) throw new Error("Export CSV échoué");
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `leads-${new Date().toISOString().slice(0, 10)}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
 }
 
 export async function fetchAdminStats(): Promise<{
@@ -277,7 +301,7 @@ export async function fetchAdminStats(): Promise<{
   verifications_pending: number;
   architects_total: number;
 }> {
-  const res = await fetch(`${API_URL}/admin/stats`);
+  const res = await adminFetch(`/admin/stats`);
   if (!res.ok) {
     return {
       leads: { total: 0, hot: 0, warm: 0, submitted: 0, to_verify: 0, last_7_days: 0 },
@@ -294,13 +318,13 @@ export async function adminGlobalSearch(q: string): Promise<{
   architects: any[];
   reviews: any[];
 }> {
-  const res = await fetch(`${API_URL}/admin/search?q=${encodeURIComponent(q)}`);
+  const res = await adminFetch(`/admin/search?q=${encodeURIComponent(q)}`);
   if (!res.ok) return { leads: [], architects: [], reviews: [] };
   return res.json();
 }
 
 export async function deleteAdminProject(id: string): Promise<{ deleted: boolean }> {
-  const res = await fetch(`${API_URL}/admin/project-requests/${id}`, {
+  const res = await adminFetch(`/admin/project-requests/${id}`, {
     method: "DELETE",
   });
   if (!res.ok) {
@@ -313,7 +337,7 @@ export async function deleteAdminProject(id: string): Promise<{ deleted: boolean
 export async function requestVerificationEmail(
   id: string
 ): Promise<{ sent: boolean; token: string }> {
-  const res = await fetch(`${API_URL}/admin/project-requests/${id}/request-verification`, {
+  const res = await adminFetch(`/admin/project-requests/${id}/request-verification`, {
     method: "POST",
   });
   if (!res.ok) {
@@ -327,7 +351,7 @@ export async function updateAdminProjectNote(
   id: string,
   data: { admin_note?: string; status?: string }
 ): Promise<{ project_request: any }> {
-  const res = await fetch(`${API_URL}/admin/project-requests/${id}/note`, {
+  const res = await adminFetch(`/admin/project-requests/${id}/note`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),

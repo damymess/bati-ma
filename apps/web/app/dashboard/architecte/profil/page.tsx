@@ -55,41 +55,136 @@ export default function ProfilArchitectePage() {
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:9000";
 
-  async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const files = e.target.files;
-    if (!files?.length) return;
+  /**
+   * Compresse une image côté client avant upload (réduit taille + poids).
+   * Max 1600x1600 pour économiser bandwidth, qualité JPEG 0.85.
+   */
+  async function compressImage(file: File): Promise<File> {
+    return new Promise((resolve, reject) => {
+      if (!file.type.startsWith("image/")) return resolve(file);
+      const img = new window.Image();
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        img.onload = () => {
+          const MAX_SIZE = 1600;
+          let { width, height } = img;
+          if (width > MAX_SIZE || height > MAX_SIZE) {
+            if (width > height) {
+              height = Math.round((height * MAX_SIZE) / width);
+              width = MAX_SIZE;
+            } else {
+              width = Math.round((width * MAX_SIZE) / height);
+              height = MAX_SIZE;
+            }
+          }
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          if (!ctx) return resolve(file);
+          ctx.drawImage(img, 0, 0, width, height);
+          canvas.toBlob(
+            (blob) => {
+              if (!blob) return resolve(file);
+              const compressed = new File([blob], file.name.replace(/\.[^.]+$/, ".jpg"), {
+                type: "image/jpeg",
+                lastModified: Date.now(),
+              });
+              // Si la compression augmente la taille (petite image), garder l'originale
+              resolve(compressed.size < file.size ? compressed : file);
+            },
+            "image/jpeg",
+            0.85,
+          );
+        };
+        img.onerror = () => reject(new Error("Image invalide"));
+        img.src = e.target?.result as string;
+      };
+      reader.onerror = () => reject(new Error("Lecture fichier échouée"));
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function uploadSingle(file: File): Promise<string | null> {
+    try {
+      const compressed = await compressImage(file);
+      if (compressed.size > 5 * 1024 * 1024) {
+        setError(`"${file.name}" trop lourd même après compression (max 5 Mo)`);
+        return null;
+      }
+      const formData = new FormData();
+      formData.append("file", compressed);
+      const token = localStorage.getItem("bati_token");
+      const res = await fetch(`${API_URL}/store/architects/portfolio/upload`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ message: "Erreur upload" }));
+        setError(err.message || "Erreur upload");
+        return null;
+      }
+      const data = await res.json();
+      return data.url;
+    } catch {
+      setError("Erreur réseau");
+      return null;
+    }
+  }
+
+  async function processFiles(files: File[]) {
+    if (!files.length) return;
     setUploading(true);
     setError("");
 
-    for (const file of Array.from(files)) {
-      if (file.size > 2 * 1024 * 1024) {
-        setError("Image trop lourde (max 2 Mo)");
-        continue;
-      }
-      const formData = new FormData();
-      formData.append("file", file);
+    // Filtrer seulement images + limiter au nombre restant
+    const slots = 10 - portfolioImages.length;
+    const images = files.filter((f) => f.type.startsWith("image/")).slice(0, slots);
 
-      try {
-        const token = localStorage.getItem("bati_token");
-        const res = await fetch(`${API_URL}/store/architects/portfolio/upload`, {
-          method: "POST",
-          headers: { Authorization: `Bearer ${token}` },
-          body: formData,
-        });
-        if (!res.ok) {
-          const err = await res.json();
-          setError(err.message || "Erreur upload");
-          break;
-        }
-        const data = await res.json();
-        setPortfolioImages((prev) => [...prev, data.url]);
-      } catch {
-        setError("Erreur réseau");
-        break;
-      }
+    if (images.length === 0) {
+      setError("Aucune image valide trouvée");
+      setUploading(false);
+      return;
     }
+
+    // Upload parallèle (all-at-once)
+    const results = await Promise.all(images.map((f) => uploadSingle(f)));
+    const newUrls = results.filter((u): u is string => !!u);
+    if (newUrls.length > 0) {
+      setPortfolioImages((prev) => [...prev, ...newUrls]);
+    }
+
     setUploading(false);
     if (fileInputRef.current) fileInputRef.current.value = "";
+  }
+
+  async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files;
+    if (!files?.length) return;
+    await processFiles(Array.from(files));
+  }
+
+  const [isDragOver, setIsDragOver] = useState(false);
+
+  function handleDragOver(e: React.DragEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!isDragOver) setIsDragOver(true);
+  }
+
+  function handleDragLeave(e: React.DragEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(false);
+  }
+
+  async function handleDrop(e: React.DragEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(false);
+    const files = Array.from(e.dataTransfer.files);
+    await processFiles(files);
   }
 
   async function handleDeleteImage(index: number) {
@@ -235,13 +330,20 @@ export default function ProfilArchitectePage() {
 
         {/* Portfolio */}
         <div className="rounded-xl border border-stone-200 p-5">
-          <h3 className="text-sm font-semibold text-stone-900 mb-3">
-            Portfolio ({portfolioImages.length}/5)
-          </h3>
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-stone-900">
+              Portfolio ({portfolioImages.length}/10)
+            </h3>
+            {portfolioImages.length < 3 && (
+              <span className="text-xs text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full">
+                Minimum 3 photos pour être visible
+              </span>
+            )}
+          </div>
 
           {/* Image grid */}
           {portfolioImages.length > 0 && (
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-4">
               {portfolioImages.map((url, i) => (
                 <div key={i} className="group relative aspect-[4/3] rounded-lg overflow-hidden bg-stone-100">
                   <Image
@@ -253,7 +355,8 @@ export default function ProfilArchitectePage() {
                   <button
                     type="button"
                     onClick={() => handleDeleteImage(i)}
-                    className="absolute top-1.5 right-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute top-1.5 right-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-black/70 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                    aria-label="Supprimer"
                   >
                     <X className="h-3.5 w-3.5" />
                   </button>
@@ -262,28 +365,46 @@ export default function ProfilArchitectePage() {
             </div>
           )}
 
-          {/* Upload zone */}
-          {portfolioImages.length < 5 && (
-            <label className="block cursor-pointer border-2 border-dashed border-stone-300 rounded-xl p-8 text-center hover:border-[#b5522a]/50 transition-colors">
+          {/* Upload zone — drag & drop */}
+          {portfolioImages.length < 10 && (
+            <label
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              className={`block cursor-pointer border-2 border-dashed rounded-xl p-8 text-center transition-colors ${
+                isDragOver
+                  ? "border-[#b5522a] bg-[#b5522a]/5"
+                  : "border-stone-300 hover:border-[#b5522a]/50"
+              }`}
+            >
               <input
                 ref={fileInputRef}
                 type="file"
-                accept="image/jpeg,image/png,image/webp"
+                accept="image/jpeg,image/png,image/webp,image/heic"
                 multiple
                 onChange={handleFileUpload}
                 className="hidden"
               />
               {uploading ? (
-                <Loader2 className="h-8 w-8 text-[#b5522a] mx-auto mb-2 animate-spin" />
+                <>
+                  <Loader2 className="h-8 w-8 text-[#b5522a] mx-auto mb-2 animate-spin" />
+                  <p className="text-sm text-stone-600 font-medium">Compression + upload en cours...</p>
+                  <p className="text-xs text-stone-400 mt-1">Patientez quelques secondes</p>
+                </>
               ) : (
-                <Upload className="h-8 w-8 text-stone-400 mx-auto mb-2" />
+                <>
+                  <Upload className={`h-10 w-10 mx-auto mb-2 ${isDragOver ? "text-[#b5522a]" : "text-stone-400"}`} />
+                  <p className="text-sm font-medium text-stone-700">
+                    {isDragOver ? "Déposez vos images ici" : "Glissez vos photos ici"}
+                  </p>
+                  <p className="text-xs text-stone-500 mt-1">
+                    ou <span className="text-[#b5522a] font-medium">cliquez pour sélectionner</span> plusieurs fichiers
+                  </p>
+                  <p className="text-xs text-stone-400 mt-3">
+                    JPG, PNG, WebP, HEIC · Compression auto · jusqu'à {10 - portfolioImages.length} image{portfolioImages.length < 9 ? "s" : ""} encore
+                  </p>
+                </>
               )}
-              <p className="text-sm text-stone-500">
-                {uploading ? "Upload en cours..." : "Cliquez pour ajouter des photos"}
-              </p>
-              <p className="text-xs text-stone-400 mt-1">
-                JPG, PNG, WebP — max 2 Mo par image
-              </p>
             </label>
           )}
         </div>
