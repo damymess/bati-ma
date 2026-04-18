@@ -516,11 +516,27 @@ function DemandeDevisForm() {
               {step === 3 && (
                 <div className="space-y-4">
                   <h2 className="text-lg font-semibold text-stone-900 mb-1">
-                    Vos coordonnées
+                    Dernière étape : vos coordonnées
                   </h2>
                   <p className="text-sm text-stone-500">
-                    Tous les champs sont obligatoires
+                    On les utilise uniquement pour que les architectes vous contactent.
+                    <span className="block text-xs mt-1 text-stone-400">
+                      🔒 Confidentiel — aucune revente à des tiers
+                    </span>
                   </p>
+
+                  {/* Trust signals pré-formulaire */}
+                  <div className="flex gap-2 flex-wrap text-xs text-stone-600 mb-2">
+                    <span className="inline-flex items-center gap-1.5 bg-green-50 text-green-700 px-2.5 py-1 rounded-full">
+                      ✓ Gratuit
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 bg-green-50 text-green-700 px-2.5 py-1 rounded-full">
+                      ✓ Sans engagement
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full">
+                      ⏱ Réponse sous 24-48h
+                    </span>
+                  </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label htmlFor="client_last_name" className="mb-1 block text-sm font-medium text-stone-700">
@@ -703,16 +719,31 @@ function DemandeDevisForm() {
                   <Button
                     onClick={handleSubmit}
                     disabled={loading}
+                    size="lg"
+                    className="bg-[#b5522a] hover:bg-[#a0441f] text-white font-semibold px-6 shadow-md"
                   >
-                    {loading ? "Envoi..." : "Envoyer ma demande"}{" "}
+                    {loading ? "Envoi..." : "Recevoir mes 3 devis gratuits"}{" "}
                     <ArrowRight className="ml-1 h-4 w-4" />
                   </Button>
                 )}
               </div>
 
-              <p className="text-center text-xs text-stone-400">
-                Gratuit et sans engagement. Vos données sont confidentielles.
-              </p>
+              {step === 3 && (
+                <div className="mt-3 bg-stone-50 rounded-lg p-3 text-center">
+                  <p className="text-xs text-stone-600 mb-1">
+                    🏆 <strong>3 400+ architectes vérifiés</strong> sur Bati.ma
+                  </p>
+                  <p className="text-xs text-stone-400">
+                    Vos coordonnées ne sont jamais revendues. Désinscription en 1 clic.
+                  </p>
+                </div>
+              )}
+
+              {step < 3 && (
+                <p className="text-center text-xs text-stone-400">
+                  Gratuit et sans engagement. Vos données sont confidentielles.
+                </p>
+              )}
             </CardContent>
           </Card>
         </div>
