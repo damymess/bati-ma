@@ -7,7 +7,6 @@ import Footer from "@/components/Footer";
 import MobileTabBar from "@/components/MobileTabBar";
 import { Providers } from "@/components/Providers";
 import ExitIntentPopup from "@/components/ExitIntentPopup";
-import SocialProofFeed from "@/components/SocialProofFeed";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -130,7 +129,6 @@ export default function RootLayout({
           </div>
           <MobileTabBar />
           <ExitIntentPopup />
-          <SocialProofFeed />
         </Providers>
       </body>
     </html>
